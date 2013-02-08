@@ -1,0 +1,57 @@
+- content_for :javascripts do
+  = javascript_include_tag "home"
+
+.row-fluid
+  .span4
+    %p
+      The Chicago Health Atlas visualizes aggregate health-related information so that people can see the prevalence of specific health conditions in their area and find out how they can improve their health.
+      %a{:href => '/about'} Read more &raquo;
+
+    #view_accordion.accordion
+
+      .accordion-group
+        .accordion-heading
+          %a.accordion-toggle#accordionDiabetes{"data-parent" => "#view_accordion", "data-toggle" => "collapse", :href => "#viewDiabetes", "data-view" => "2006 diabetes percent", "data-colors" => '["#B2E2E2", "#66C2A4", "#2CA25F", "#006D2C"]'}
+            %span.filter-box{:style => 'background-color: #2CA25F;'}
+            Hospital diabetes cases
+        .accordion-body.collapse{:id => "viewDiabetes"}
+          .accordion-inner
+            %p
+              Percent of diabetes cases by zip code from 2006 to 2010.
+
+            %h4
+              Year:
+              %span#diabetes-year-selected
+            #diabetes-year
+            %span.pull-left 2006
+            %span.pull-right 2010
+
+            %hr
+            %h4 Chicago Health Clinics
+            %p
+              %img{:src => '/assets/lightblue.png'} Open
+              %img{:src => '/assets/red.png'} Closed
+
+
+      - atlas_view_modes.each do |name, attributes|
+        .accordion-group
+          .accordion-heading
+            %a.accordion-toggle{"data-parent" => "#view_accordion", "data-toggle" => "collapse", :href => "#group_#{to_dom_id(name)}", "data-view" => name}
+              %span.filter-box{:style => "background-color: #{attributes['colors'][2]};"}
+              = name
+          .accordion-body.collapse{:id => "group_#{to_dom_id(name)}"}
+            .accordion-inner{:id => "group_inner_#{to_dom_id(name)}"}
+
+              - attributes["views"].each do |view|
+                .accordion-group
+                  .accordion-heading
+                    %a.accordion-toggle{"data-parent" => "#group_inner_#{to_dom_id(name)}", "data-toggle" => "collapse", :href => "#view_#{to_dom_id(view)}", "data-view" => view, "data-colors" => attributes['colors']}
+                      %span.filter-box{:style => "background-color: #{attributes['colors'][2]};"}
+                      = view
+                  .accordion-body.collapse{:id => "view_#{to_dom_id(view)}"}
+                    .accordion-inner
+                      Description of
+                      = view
+
+  .span8
+    #mapCanvas
