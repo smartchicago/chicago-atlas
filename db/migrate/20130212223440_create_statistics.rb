@@ -8,10 +8,12 @@ class CreateStatistics < ActiveRecord::Migration
       t.float :value
       t.float :lower_ci
       t.float :upper_ci
+      t.references :category
       t.references :geography
       t.timestamps
     end
 
     add_index :statistics, :geography_id
+    add_index :statistics, :category_id
   end
 end

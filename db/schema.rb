@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130212203440) do
+ActiveRecord::Schema.define(:version => 20130212223440) do
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "geographies", :force => true do |t|
     t.string   "geo_type"
@@ -24,15 +31,18 @@ ActiveRecord::Schema.define(:version => 20130212203440) do
 
   create_table "statistics", :force => true do |t|
     t.string   "stat_type"
+    t.string   "slug"
     t.integer  "year"
     t.float    "value"
     t.float    "lower_ci"
     t.float    "upper_ci"
+    t.integer  "category_id"
     t.integer  "geography_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
 
+  add_index "statistics", ["category_id"], :name => "index_statistics_on_category_id"
   add_index "statistics", ["geography_id"], :name => "index_statistics_on_geography_id"
 
 end

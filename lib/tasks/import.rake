@@ -32,7 +32,12 @@ namespace :db do
       Statistic.delete_all
 
       datasets = [
-        {:name => 'Births and Birth Rate', :parse_token => 'Birth Rate', :socrata_id => '4arr-givg'}
+        {:category => 'Births', :name => 'Births and Birth Rate', :parse_token => 'Birth Rate', :socrata_id => '4arr-givg'},
+        {:category => 'Births', :name => 'General Fertility Rate', :parse_token => 'Fertility Rate', :socrata_id => 'g5zk-9ycw'},
+        {:category => 'Births', :name => 'Low Birth Weight', :parse_token => 'Percent', :socrata_id => 'fbxr-9u99'},
+        {:category => 'Births', :name => 'Parental Care', :parse_token => 'Percent', :socrata_id => '2q9j-hh6g'},
+        {:category => 'Births', :name => 'Preterm Births', :parse_token => 'Percent', :socrata_id => 'rhy3-4x2f'},
+        {:category => 'Births', :name => 'Teen Births', :parse_token => 'Teen Birth Rate', :socrata_id => '9kva-bt6k'},
       ]
 
       datasets.each do |d|
@@ -42,13 +47,24 @@ namespace :db do
       
         csv_text = File.read("tmp/#{handle}.csv")
         csv = CSV.parse(csv_text, :headers => true)
+
+        puts "first row: "
+        puts csv.inspect
+
         csv.each do |row|
           row = row.to_hash.with_indifferent_access
+
+          # sometimes Community Area is named differently
+          community_area = row['Community Area']
+          if community_area.nil? || community_area == ''
+            community_area = row['Community Area Number']
+          end
 
           (1980..2013).each do |year|
             if (row.has_key?("Birth Rate #{year}"))
               stat = Statistic.new(
-                :geography_id => row['Community Area'],
+                :category_id => Category.where(:name => d[:category]).first.id,
+                :geography_id => community_area,
                 :stat_type => d[:name],
                 :slug => handle,
                 :year => year,
@@ -66,7 +82,7 @@ namespace :db do
               stat.save!
             end
           end
-          puts "importing Community Area #{row['Community Area']}"
+          # puts "importing Community Area #{row['Community Area']}"
         end
         puts 'Done!'
       end
