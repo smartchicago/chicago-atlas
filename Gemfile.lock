@@ -31,9 +31,6 @@ GEM
     addressable (2.3.2)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
-    bson (1.8.2)
-    bson_ext (1.8.2)
-      bson (~> 1.8.2)
     builder (3.0.4)
     commonjs (0.2.6)
     dalli (2.6.2)
@@ -63,7 +60,7 @@ GEM
     hike (1.2.1)
     i18n (0.6.1)
     journey (1.0.4)
-    json (1.7.6)
+    json (1.7.7)
     kgio (2.8.0)
     launchy (2.2.0)
       addressable (~> 2.3)
@@ -78,20 +75,12 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     memcachier (0.0.2)
-    mime-types (1.20.1)
-    mongo (1.8.2)
-      bson (~> 1.8.2)
-    mongo_mapper (0.12.0)
-      activemodel (~> 3.0)
-      activesupport (~> 3.0)
-      plucky (~> 0.5.2)
-    multi_json (1.5.0)
+    mime-types (1.21)
+    multi_json (1.6.0)
     netrc (0.7.7)
     newrelic_rpm (3.5.6.46)
     orm_adapter (0.4.0)
     pg (0.14.1)
-    plucky (0.5.2)
-      mongo (~> 1.5)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -136,7 +125,7 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
-    twitter-bootstrap-rails (2.2.1)
+    twitter-bootstrap-rails (2.2.3)
       actionpack (>= 3.1)
       execjs
       railties (>= 3.1)
@@ -155,15 +144,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bson_ext
   dalli
   devise
   haml-rails
   heroku
   less-rails
   memcachier
-  mongo
-  mongo_mapper
   newrelic_rpm
   pg
   rails (= 3.2.11)

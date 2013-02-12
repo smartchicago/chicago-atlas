@@ -1,10 +1,3 @@
-class Statistic
-  include MongoMapper::EmbeddedDocument
-
-  key :type, String
-  key :year, Integer
-  key :value, Float
-  key :lower_ci, Float
-  key :upper_ci, Float
-
+class Statistic < ActiveRecord::Base
+  # attr_accessible :title, :body
 end

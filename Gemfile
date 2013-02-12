@@ -8,11 +8,6 @@ gem 'rails', '3.2.11'
 # database
 gem 'pg'
 
-# mongodb for unstructured partner data
-gem 'mongo'
-gem 'mongo_mapper'
-gem 'bson_ext'
-
 # caching
 gem 'memcachier'
 gem 'dalli'

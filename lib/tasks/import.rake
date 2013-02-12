@@ -2,26 +2,26 @@ namespace :db do
   namespace :import do
     
     desc "Fetch Chicago Community Areas from the tribapps Boundary Service"
-    task :community_areas do
-      db = MongoMapper.database
+    task :community_areas => :environment do
       require 'open-uri'
+      require 'json'
+      Geography.delete_all
+
       community_area_endpoints = JSON.parse(open("http://api.boundaries.tribapps.com/1.0/boundary-set/community-areas/").read)['boundaries']
       community_area_endpoints.each do |endpoint|
         area_json = JSON.parse(open("http://api.boundaries.tribapps.com/#{endpoint}").read)
         puts area_json.inspect
 
         area = Geography.new(
-          :type => "Community Area",
+          :geo_type => "Community Area",
           :name => area_json['name'],
           :external_id => area_json['external_id'],
           :slug => area_json['external_id'],
           :geometry => area_json['simple_shape']['coordinates']
           )
 
-        puts area.inspect
+        puts "importing #{area.name}"
         area.save!
-
-        break
       end
     end
 
@@ -40,12 +40,6 @@ namespace :db do
         sh "mongoimport -d chicago-atlas-#{Rails.env} -c cdph_import --type csv --file tmp/#{handle}.csv --headerline"
       end
 
-    end
-  end
-
-  namespace :test do
-    task :prepare do
-      # Stub out for MongoDB
     end
   end
 end

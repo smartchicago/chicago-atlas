@@ -1,12 +1,3 @@
-class Geography
-  include MongoMapper::Document
-
-  key :type, String
-  key :name, String
-  key :external_id, Integer
-  key :slug, String
-  key :geometry, Array
-  many :statistics
-  timestamps!
-    
+class Geography < ActiveRecord::Base
+  attr_accessible :geo_type, :name, :external_id, :slug, :geometry
 end
