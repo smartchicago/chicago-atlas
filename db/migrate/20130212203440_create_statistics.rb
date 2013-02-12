@@ -3,6 +3,7 @@ class CreateStatistics < ActiveRecord::Migration
     create_table :statistics do |t|
 
       t.string :stat_type
+      t.string :slug
       t.integer :year
       t.float :value
       t.float :lower_ci
