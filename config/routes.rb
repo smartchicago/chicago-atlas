@@ -4,8 +4,9 @@ ChicagoAtlas::Application.routes.draw do
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
-  root :to => 'home#index'
+  get "map" => 'home#map'
   get "about" => 'home#about'
+  root :to => 'home#index'
 
   # Keep in mind you can assign values other than :controller and :action
 
