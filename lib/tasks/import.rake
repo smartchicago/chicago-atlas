@@ -17,7 +17,7 @@ namespace :db do
           :name => area_json['name'],
           :slug => area_json['slug'],
           :geometry => area_json['simple_shape']['coordinates']
-          )
+        )
         area.id = area_json['external_id']
         puts "importing #{area.name}"
         area.save!
@@ -29,7 +29,11 @@ namespace :db do
     desc "Fetch CDPH datasets from the Chicago Data Portal and import to database"
     task :chicago_dph => :environment do
       require 'csv' 
-      Statistic.delete_all
+
+      Dataset.where(:provider => "Chicago Department of Public Health").each do |d|
+        Statistic.delete_all("dataset_id = #{d.id}")
+        d.delete
+      end
 
       datasets = [
         {:category => 'Births', :name => 'Births and Birth Rate', :parse_token => 'Birth Rate', :socrata_id => '4arr-givg'},
@@ -42,15 +46,24 @@ namespace :db do
 
       datasets.each do |d|
         handle = d[:name].gsub(/\s+/, "_").downcase.to_sym
+        
+        dataset = Dataset.new(
+          :name => d[:name],
+          :slug => handle,
+          :description => '', # leaving blank for now
+          :provider => 'Chicago Department of Public Health',
+          :url => "https://data.cityofchicago.org/views/#{d[:socrata_id]}",
+          :category_id => Category.where(:name => d[:category]).first.id
+        )
+        dataset.save!
+
         puts "downloading '#{d[:name]}'"
         sh "curl -o tmp/#{handle}.csv https://data.cityofchicago.org/api/views/#{d[:socrata_id]}/rows.csv?accessType=DOWNLOAD"
       
         csv_text = File.read("tmp/#{handle}.csv")
         csv = CSV.parse(csv_text, :headers => true)
 
-        puts "first row: "
-        puts csv.inspect
-
+        puts csv.first.inspect
         csv.each do |row|
           row = row.to_hash.with_indifferent_access
 
@@ -61,32 +74,30 @@ namespace :db do
           end
 
           (1980..2013).each do |year|
-            if (row.has_key?("Birth Rate #{year}"))
+            if (row.has_key?("#{d[:parse_token]} #{year}"))
               stat = Statistic.new(
-                :category_id => Category.where(:name => d[:category]).first.id,
+                :dataset_id => dataset.id,
                 :geography_id => community_area,
-                :stat_type => d[:name],
-                :slug => handle,
                 :year => year,
-                :value => row["Birth Rate #{year}"],
-                )
+                :value => row["d[:parse_token] #{year}"],
+              )
 
-              if (row.has_key?("Birth Rate #{year} Lower CI"))
-                stat.lower_ci = row["Birth Rate #{year} Lower CI"]
+              if (row.has_key?("d[:parse_token] #{year} Lower CI"))
+                stat.lower_ci = row["d[:parse_token] #{year} Lower CI"]
               end
 
-              if (row.has_key?("Birth Rate #{year} Upper CI"))
-                stat.upper_ci = row["Birth Rate #{year} Upper CI"]
+              if (row.has_key?("d[:parse_token] #{year} Upper CI"))
+                stat.upper_ci = row["d[:parse_token] #{year} Upper CI"]
               end
 
               stat.save!
             end
           end
-          # puts "importing Community Area #{row['Community Area']}"
         end
-        puts 'Done!'
+        stat_count = Statistic.count(:conditions => "dataset_id = #{dataset.id}")
+        puts "imported #{stat_count} statistics"
       end
-
+      puts 'Done!'
     end
   end
 end
