@@ -1,0 +1,10 @@
+%h1
+  = @geography.name
+  %small
+    = @geography.geo_type
+
+%hr
+
+- @datasets.each do |dataset|
+  %h3
+    = dataset.name

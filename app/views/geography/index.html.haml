@@ -1,0 +1,8 @@
+%h1
+  Geographies
+
+%ul
+  - @geographies.each do |geography|
+    %li
+      %a{:href => "/geography/#{geography.slug}"}
+        = geography.name
