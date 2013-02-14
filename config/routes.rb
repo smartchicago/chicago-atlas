@@ -1,9 +1,12 @@
 ChicagoAtlas::Application.routes.draw do
+  get "dataset/show"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
+  match 'geography/:id' => 'geography#show'
+  get "geography" => 'geography#index'
+
   get "map" => 'home#map'
   get "about" => 'home#about'
   root :to => 'home#index'

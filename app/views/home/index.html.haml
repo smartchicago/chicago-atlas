@@ -12,3 +12,26 @@
 
 %p
   To get started, choose a condition from the list below.
+
+- Category.all.each do |category|
+  %h2
+    = category.name
+
+  %table.table.table-bordered.table-hover
+    %thead
+      %tr
+        %th Name
+        %th Description
+        %th Provider
+
+    %tbody
+      - Dataset.where(:category_id => category.id).each do |dataset|
+        %tr
+          %td
+            %a{:href => "/dataset/#{dataset.slug}"}
+              = dataset.name 
+          %td
+            = dataset.description
+          %td
+            %a{:href => dataset.url }
+              = dataset.provider

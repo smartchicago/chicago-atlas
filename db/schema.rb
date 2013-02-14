@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20130212223440) do
 
   create_table "statistics", :force => true do |t|
     t.integer  "year"
+    t.string   "name"
     t.float    "value"
     t.float    "lower_ci"
     t.float    "upper_ci"

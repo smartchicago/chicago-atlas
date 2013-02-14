@@ -1,3 +1,6 @@
 class Statistic < ActiveRecord::Base
-  attr_accessible  :dataset_id, :geography_id, :year, :key, :value, :lower_ci, :upper_ci
+  belongs_to :dataset
+  belongs_to :geography
+
+  attr_accessible  :dataset_id, :geography_id, :year, :name, :value, :lower_ci, :upper_ci
 end
