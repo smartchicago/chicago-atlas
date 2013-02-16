@@ -8,6 +8,18 @@ module ApplicationHelper
     return "active" if current_menu == menu_name
   end
 
+  def stats_as_array(dataset_id, geography_id, stat_name)
+    stats = Statistic.where(:dataset_id => dataset_id, :name => stat_name, :geography_id => geography_id)
+
+    puts stats.inspect
+    stats_array = []
+    stats.each do |s|
+      stats_array << s[:value]
+    end
+
+    stats_array.join(',')
+  end
+
   def to_dom_id(s)
     #strip the string
     ret = s.strip.downcase

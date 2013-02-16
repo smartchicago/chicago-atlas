@@ -5,6 +5,24 @@
 
 %hr
 
+= stats_as_array(1, 1, "Birth Rate")
+
 - @datasets.each do |dataset|
   %h3
     = dataset.name
+
+  #chart_dataset.chart
+
+  - content_for :javascripts do
+    
+    :javascript
+      $(function () {
+
+        var seriesData = [{
+          data: [53.4,52.6,51.2,50.5,50.8,50.2,49.9],
+          name: "Dataset"
+        }];
+
+
+        ChartHelper.create("chart_dataset", "column", seriesData, Date.UTC(2005, 0, 1), "year", null);
+      });

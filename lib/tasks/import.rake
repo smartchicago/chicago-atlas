@@ -1,7 +1,7 @@
 namespace :db do
   namespace :import do
     
-    desc "Fetch Chicago Community Areas from the tribapps Boundary Service"
+    desc "Fetch Chicago Community Areas from the TribApps Boundary Service"
     task :community_areas => :environment do
       require 'open-uri'
       require 'json'
