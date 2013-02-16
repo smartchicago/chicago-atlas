@@ -4,7 +4,7 @@ class GeographyController < ApplicationController
   end
 
   def show
-    @geography = Geography.where(:slug => params[:id]).first
+    @geography = Geography.where(:slug => params[:slug]).first
     @datasets = Dataset.joins(:statistics)
       .select("datasets.name")
       .where("statistics.geography_id" => @geography.id)
