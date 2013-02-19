@@ -1,6 +1,6 @@
 class GeographyController < ApplicationController
   def index
-    @geographies = Geography.all
+    @geographies = Geography.order("name").all
   end
 
   def show

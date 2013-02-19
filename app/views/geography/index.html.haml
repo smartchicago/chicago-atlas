@@ -1,8 +1,8 @@
 %h1
-  Geographies
+  Places
 
 %ul
   - @geographies.each do |geography|
     %li
-      %a{:href => "/geography/#{geography.slug}"}
+      %a{:href => "/place/#{geography.slug}"}
         = geography.name

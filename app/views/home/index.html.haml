@@ -28,7 +28,7 @@
       - Dataset.where(:category_id => category.id).each do |dataset|
         %tr
           %td
-            %a{:href => "/dataset/#{dataset.slug}"}
+            %a{:href => "/condition/#{dataset.slug}"}
               = dataset.name 
           %td
             = dataset.description

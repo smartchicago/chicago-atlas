@@ -1,7 +1,7 @@
 class DatasetController < ApplicationController
   
   def index
-    @datasets = Dataset.joins(:category).all
+    @datasets = Dataset.joins(:category).order("categories.id, datasets.name").all
   end
 
   def show
