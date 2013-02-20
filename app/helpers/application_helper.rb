@@ -9,15 +9,15 @@ module ApplicationHelper
   end
 
   def stats_as_array(dataset_id, geography_id, stat_name)
-    stats = Statistic.where(:dataset_id => dataset_id, :name => stat_name, :geography_id => geography_id)
+    stats = Statistic.where("dataset_id = #{dataset_id} AND name = '#{stat_name}' AND geography_id = #{geography_id}")
+                     .order("year")
 
-    puts stats.inspect
     stats_array = []
     stats.each do |s|
       stats_array << s[:value]
     end
 
-    stats_array.join(',')
+    {:data => stats_array.join(','), :start_year => stats.first.year.to_s, :end_year => stats.last.year.to_s}
   end
 
   def to_dom_id(s)

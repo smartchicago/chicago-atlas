@@ -1,9 +1,9 @@
 var ChartHelper = {};
 ChartHelper.create = function(element, type, seriesData, startDate, pointInterval, stacking) {
-  console.log("rendering to: #chart_" + element);
-  console.log("seriesData: " + seriesData);
-  console.log("startDate: " + startDate);
-  console.log("pointInterval: " + pointInterval);
+  // console.log("rendering to: #chart_" + element);
+  // console.log("seriesData: " + seriesData);
+  // console.log("startDate: " + startDate);
+  // console.log("pointInterval: " + pointInterval);
 
   //$("#charts").append("<div class='chart' id='chart_grouping_" + iteration + "'></div>")
   return new Highcharts.Chart({
@@ -55,7 +55,7 @@ ChartHelper.create = function(element, type, seriesData, startDate, pointInterva
           formatter: function() {
             var s = "<strong>" + ChartHelper.toolTipDateFormat(pointInterval, this.x) + "</strong>";
             $.each(this.points, function(i, point) {
-              s += "<br /><span style='color: " + point.series.color + "'>" + point.series.name + ":</span> " + point.y + "%";
+              s += "<br /><span style='color: " + point.series.color + "'>" + point.series.name + ":</span> " + point.y;
               console.log("s: " + s);
             });
             return s;
@@ -139,17 +139,3 @@ ChartHelper.toolTipDateFormat = function(interval, x) {
   else
     return 1;
 }
-
-ChartHelper.getColors = function(name) {
-  if (name == "Business-Licenses")
-    return {"raw": "#FDAE61", "trend": "#1B9E77"}
-  else if (name == "Unemployment")
-    return {"raw": "#FEE08B", "trend": "#D95F02"}
-  else if (name == "Building-Permits")
-    return {"raw": "", "trend": "#7570B3"}
-  else if (name == "Foreclosures")
-    return {"raw": "", "trend": "#E7298A"}
-  else
-    return {"raw": "", "trend": ""}
-}
-

@@ -5,24 +5,33 @@
 
 %hr
 
-/ = stats_as_array(1, 1, "Birth Rate")
+:javascript
+  var colorHash = ["#A6761D", "#7570B3", "#D95F02", "#66A61E", "#E7298A", "#E6AB02", "#1B9E77"];
 
-- @datasets.each do |dataset|
-  %h3
-    = dataset.name
+.row
+  - @datasets.each do |dataset|
+    .span6
 
-  / #chart_dataset.chart
+      %h3
+        = dataset.name
+        %small
+          = dataset.stat_name
 
-  / - content_for :javascripts do
-    
-  /   :javascript
-  /     $(function () {
+      - chart_stats = stats_as_array(dataset.id, @geography.id, dataset.stat_name)
+      - chart_id = "chart_#{dataset.id}_#{dataset.stat_name.parameterize.underscore.to_sym}"
 
-  /       var seriesData = [{
-  /         data: [53.4,52.6,51.2,50.5,50.8,50.2,49.9],
-  /         name: "Dataset"
-  /       }];
+      .chart{:id => chart_id}
+      - content_for :javascripts do
+        
+        :javascript
+          $(function () {
+
+            var seriesData = [{
+              color: colorHash[(#{dataset.id} % 7)],
+              data: [#{chart_stats[:data]}],
+              name: "#{dataset.stat_name}"
+            }];
 
 
-  /       ChartHelper.create("chart_dataset", "column", seriesData, Date.UTC(2005, 0, 1), "year", null);
-  /     });
+            ChartHelper.create("#{chart_id}", "column", seriesData, Date.UTC(#{chart_stats[:start_year]}, 0, 1), "year", null);
+          });

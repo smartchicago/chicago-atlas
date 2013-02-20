@@ -83,15 +83,15 @@ namespace :db do
                   :geography_id => community_area,
                   :year => year,
                   :name => parse_token,
-                  :value => row["d[:parse_token] #{year}"],
+                  :value => row["#{parse_token} #{year}"]
                 )
 
-                if (row.has_key?("d[:parse_token] #{year} Lower CI"))
-                  stat.lower_ci = row["d[:parse_token] #{year} Lower CI"]
+                if (row.has_key?("#{parse_token} #{year} Lower CI"))
+                  stat.lower_ci = row["#{parse_token} #{year} Lower CI"]
                 end
 
-                if (row.has_key?("d[:parse_token] #{year} Upper CI"))
-                  stat.upper_ci = row["d[:parse_token] #{year} Upper CI"]
+                if (row.has_key?("#{parse_token} #{year} Upper CI"))
+                  stat.upper_ci = row["#{parse_token} #{year} Upper CI"]
                 end
 
                 stat.save!
