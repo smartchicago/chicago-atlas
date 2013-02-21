@@ -16,7 +16,22 @@ module ApplicationHelper
       .order("datasets.name, statistics.name")
   end
 
-  def stats_as_array(dataset_id, geography_id, stat_name)
+  # def fetch_chart_average_data(dataset_id, stat_name, start_year, end_year)
+  #   sum_query = ""
+  #   (start_year..end_year).each do |year|
+  #     sum_query = ""
+  #   stats = Statistic.select().where("dataset_id = #{dataset_id} AND name = '#{stat_name}'")
+  #                    .order("year")
+
+  #   stats_array = []
+  #   stats.each do |s|
+  #     stats_array << s[:value]
+  #   end
+
+  #   {:data => stats_array.join(','), :start_year => stats.first.year.to_s, :end_year => stats.last.year.to_s}
+  # end
+
+  def fetch_chart_data(dataset_id, geography_id, stat_name)
     stats = Statistic.where("dataset_id = #{dataset_id} AND name = '#{stat_name}' AND geography_id = #{geography_id}")
                      .order("year")
 
@@ -25,7 +40,14 @@ module ApplicationHelper
       stats_array << s[:value]
     end
 
-    {:data => stats_array.join(','), :start_year => stats.first.year.to_s, :end_year => stats.last.year.to_s}
+    error_bars = []
+    stats.each do |s|
+      unless (s[:lower_ci].nil? or s[:upper_ci].nil?)
+        error_bars << [s[:lower_ci],s[:upper_ci]]
+      end
+    end
+
+    {:data => stats_array, :error_bars => error_bars, :start_year => stats.first.year.to_s, :end_year => stats.last.year.to_s}
   end
 
   def to_dom_id(s)

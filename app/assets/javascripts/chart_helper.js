@@ -1,5 +1,5 @@
 var ChartHelper = {};
-ChartHelper.create = function(element, type, seriesData, startDate, pointInterval, stacking) {
+ChartHelper.create = function(element, type, title, seriesData, startDate, pointInterval, stacking) {
   // console.log("rendering to: #chart_" + element);
   // console.log("seriesData: " + seriesData);
   // console.log("startDate: " + startDate);
@@ -19,7 +19,7 @@ ChartHelper.create = function(element, type, seriesData, startDate, pointInterva
       credits: { 
         enabled: false 
       },
-      title: "Commuting Patterns for Chicago",
+      title: title,
       xAxis: {
           dateTimeLabelFormats: { year: "%Y" },
           type: "datetime"
@@ -56,7 +56,6 @@ ChartHelper.create = function(element, type, seriesData, startDate, pointInterva
             var s = "<strong>" + ChartHelper.toolTipDateFormat(pointInterval, this.x) + "</strong>";
             $.each(this.points, function(i, point) {
               s += "<br /><span style='color: " + point.series.color + "'>" + point.series.name + ":</span> " + point.y;
-              console.log("s: " + s);
             });
             return s;
           },

@@ -13,4 +13,5 @@
 //= require jquery
 //= require twitter/bootstrap
 //= require highcharts
+//= require highcharts-more
 //= require chart_helper
