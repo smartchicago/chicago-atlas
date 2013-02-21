@@ -42,12 +42,7 @@ ChartHelper.create = function(element, type, title, seriesData, startDate, point
           },
           pointInterval: ChartHelper.pointInterval(pointInterval),  
           pointStart: startDate,
-          shadow: false,
-          states: {
-             hover: {
-                lineWidth: 3
-             }
-          }
+          shadow: false
         }
       },
       tooltip: {
