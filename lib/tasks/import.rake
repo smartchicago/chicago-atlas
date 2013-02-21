@@ -10,7 +10,6 @@ namespace :db do
       community_area_endpoints = JSON.parse(open("http://api.boundaries.tribapps.com/1.0/boundary-set/community-areas/").read)['boundaries']
       community_area_endpoints.each do |endpoint|
         area_json = JSON.parse(open("http://api.boundaries.tribapps.com/#{endpoint}").read)
-        # puts area_json.inspect
 
         area = Geography.new(
           :geo_type => "Community Area",
@@ -74,16 +73,6 @@ namespace :db do
       datasets.each do |d|
         handle = d[:name].parameterize.underscore.to_sym
         
-        dataset = Dataset.new(
-          :name => d[:name],
-          :slug => handle,
-          :description => '', # leaving blank for now
-          :provider => 'Chicago Department of Public Health',
-          :url => d[:url],
-          :category_id => Category.where(:name => d[:category]).first.id
-        )
-        dataset.save!
-
         puts "downloading '#{d[:name]}'"
         sh "curl -o tmp/#{handle}.csv https://data.cityofchicago.org/api/views/#{d[:socrata_id]}/rows.csv?accessType=DOWNLOAD"
       
@@ -91,23 +80,40 @@ namespace :db do
         csv = CSV.parse(csv_text, :headers => true)
 
         puts csv.first.inspect
-        csv.each do |row|
-          row = row.to_hash.with_indifferent_access
 
-          # sometimes Community Area is named differently
-          community_area = row['Community Area']
-          if community_area.nil? || community_area == ''
-            community_area = row['Community Area Number']
-          end
+        d[:parse_tokens].each do |parse_token|
+          # save each data portal set and parse_token combination as a separate dataset
+          dataset = Dataset.new(
+            :name => "#{d[:name]} - #{parse_token}",
+            :slug => handle,
+            :description => '', # leaving blank for now
+            :provider => 'Chicago Department of Public Health',
+            :url => d[:url],
+            :category_id => Category.where(:name => d[:category]).first.id
+          )
+          dataset.save!
 
-          (1980..2013).each do |year|
-            d[:parse_tokens].each do |parse_token|
+          csv.each do |row|
+            row = row.to_hash.with_indifferent_access
+
+            # sometimes Community Area is named differently
+            community_area = row['Community Area']
+            if community_area.nil? || community_area == ''
+              community_area = row['Community Area Number']
+            end
+
+            # special case for Chicago - given an ID of 0 by CDPH
+            if community_area == '0'
+              community_area = '100' # Chicago is manually imported, see seeds.rb
+            end
+
+            (1980..Time.now.year).each do |year|
               if (row.has_key?("#{parse_token} #{year}"))
                 stat = Statistic.new(
                   :dataset_id => dataset.id,
                   :geography_id => community_area,
                   :year => year,
-                  :name => parse_token,
+                  :name => parse_token, 
                   :value => row["#{parse_token} #{year}"]
                 )
 
@@ -123,9 +129,9 @@ namespace :db do
               end
             end
           end
+          stat_count = Statistic.count(:conditions => "dataset_id = #{dataset.id}")
+          puts "#{parse_token}: imported #{stat_count} statistics"
         end
-        stat_count = Statistic.count(:conditions => "dataset_id = #{dataset.id}")
-        puts "imported #{stat_count} statistics"
       end
       puts 'Done!'
     end

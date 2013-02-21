@@ -10,10 +10,10 @@ module ApplicationHelper
 
   def get_datasets(geography_id, category_id)
     Dataset.joins(:statistics)
-      .select("datasets.id, datasets.name, statistics.name as stat_name")
+      .select("datasets.id, datasets.name")
       .where("statistics.geography_id = #{geography_id} AND datasets.category_id = #{category_id}")
-      .group("datasets.id, datasets.name, statistics.name")
-      .order("datasets.name, statistics.name")
+      .group("datasets.id, datasets.name")
+      .order("datasets.name")
   end
 
   # def fetch_chart_average_data(dataset_id, stat_name, start_year, end_year)
@@ -31,9 +31,13 @@ module ApplicationHelper
   #   {:data => stats_array.join(','), :start_year => stats.first.year.to_s, :end_year => stats.last.year.to_s}
   # end
 
-  def fetch_chart_data(dataset_id, geography_id, stat_name)
-    stats = Statistic.where("dataset_id = #{dataset_id} AND name = '#{stat_name}' AND geography_id = #{geography_id}")
+  def fetch_chart_data(dataset_id, geography_id)
+    stats = Statistic.where("dataset_id = #{dataset_id} AND geography_id = #{geography_id}")
                      .order("year")
+
+    if stats.length == 0
+      return {:data => [], :error_bars => [], :start_year => '', :end_year => ''}
+    end
 
     stats_array = []
     stats.each do |s|

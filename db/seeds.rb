@@ -13,3 +13,12 @@ categories = Category.create([
   { name: 'Infectious disease', description: "Information from the City of Chicago relating to cases of tuberculosis, gonorrhea, and other diseases. Data covers various time periods." },
   { name: 'Chronic disease', description: "Information from the City of Chicago relating to diabetes and asthma by community area for the years 2000 - 2011." }
 ])
+
+chicago = Geography.new(
+  :geo_type => "City",
+  :name => 'Chicago',
+  :slug => 'chicago',
+  :geometry => ''
+)
+chicago.id = 100
+chicago.save!

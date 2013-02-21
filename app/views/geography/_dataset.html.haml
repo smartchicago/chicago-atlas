@@ -1,15 +1,14 @@
 %h3
   = dataset.name
-  %small
-    = dataset.stat_name
 
 .span4
   %p 
     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
 .span7
-  - chart_stats = fetch_chart_data(dataset.id, @geography.id, dataset.stat_name)
-  - chart_id = "chart_#{dataset.id}_#{dataset.stat_name.parameterize.underscore.to_sym}"
+  - chart_stats = fetch_chart_data(dataset.id, @geography.id)
+  - chicago_avg_stats = fetch_chart_data(dataset.id, 78)
+  - chart_id = "chart_#{dataset.id}_#{dataset.name.parameterize.underscore.to_sym}"
 
   .chart{:id => chart_id}
   - content_for :javascripts do
@@ -19,10 +18,9 @@
 
         var seriesData = [{
           color: colorHash[(#{dataset.id} % 7)],
-          type: 'column',
+          type: 'line',
           data: #{chart_stats[:data]},
-          name: "#{dataset.stat_name}",
-          lineWidth: 4
+          name: "#{dataset.name}"
         },{
           name: 'Confidence interval',
           type: 'errorbar',
@@ -30,7 +28,13 @@
           tooltip: {
             pointFormat: '(Confidence interval: {point.low}-{point.high} mm)<br/>'
           }
-        }];
+        }, {
+          color: "#666",
+          type: 'line',
+          data: #{chicago_avg_stats[:data]},
+          name: "Chicago average"
+        }
+        ];
 
 
         ChartHelper.create("#{chart_id}", "line", "", seriesData, Date.UTC(#{chart_stats[:start_year]}, 0, 1), "year", null);
