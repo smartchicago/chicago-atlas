@@ -43,13 +43,14 @@ namespace :db do
         {:category => 'Births', :name => 'Teen Births', :parse_tokens => ['Teen Births', 'Teen Birth Rate'], :socrata_id => '9kva-bt6k', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Births-to-mothers-aged-15/9kva-bt6k'},
 
         # special case: blown up rows for 1ST TRIMESTER, 2ND TRIMESTER, 3RD TRIMESTER, NO PRENATAL CARE, NOT GIVEN
-        # {:category => 'Births', :name => 'Parental Care', :parse_tokens => ['Percent'], :socrata_id => '2q9j-hh6g', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Prenatal-care-in-Chicago-/2q9j-hh6g'},
+        {:category => 'Births', :name => 'Prenatal Care', :group_column => 'Trimester Prenatal Care Began', :groups => ['1ST TRIMESTER', '2ND TRIMESTER', '3RD TRIMESTER', 'NO PRENATAL CARE', 'NOT GIVEN'], :parse_tokens => ['Percent'], :socrata_id => '2q9j-hh6g', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Prenatal-care-in-Chicago-/2q9j-hh6g'},
         
         # Deaths
+        {:category => 'Deaths', :name => 'Infant Mortality', :parse_tokens => ['Deaths'], :socrata_id => 'bfhr-4ckq', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Infant-mortality-in-Chica/bfhr-4ckq'},
+
         # special case: broken down by death cause
         # causes: All causes in females,All causes in males,Alzheimers disease,Assault (homicide),Breast cancer in females,Cancer (all sites),Colorectal cancer,Coronary heart disease,Diabetes-related,Firearm-related,Injury, unintentional,Kidney disease (nephritis, nephrotic syndrome and nephrosis),Liver disease and cirrhosis,Lung cancer,Prostate cancer in males,Stroke (cerebrovascular disease),Suicide (intentional self-harm)
-        #{:category => 'Deaths', :name => 'Mortality', :parse_tokens => [], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444'},
-        {:category => 'Deaths', :name => 'Infant Mortality', :parse_tokens => ['Deaths'], :socrata_id => 'bfhr-4ckq', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Infant-mortality-in-Chica/bfhr-4ckq'},
+        # {:category => 'Deaths', :name => 'Mortality', :parse_tokens => [], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444'},
       
         # Environmental Health
         {:category => 'Environmental Health', :name => 'Lead', :parse_tokens => ['Screened for Lead in', 'Lead Screening Rate', 'Elevated Blood Lead Level in', 'Percent Elevated'], :socrata_id => 'v2z5-jyrq', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Screening-for-elevated-bl/v2z5-jyrq'},
@@ -82,58 +83,99 @@ namespace :db do
         puts csv.first.inspect
 
         d[:parse_tokens].each do |parse_token|
-          # save each data portal set and parse_token combination as a separate dataset
-          dataset = Dataset.new(
-            :name => "#{d[:name]} - #{parse_token}",
-            :slug => handle,
-            :description => '', # leaving blank for now
-            :provider => 'Chicago Department of Public Health',
-            :url => d[:url],
-            :category_id => Category.where(:name => d[:category]).first.id
-          )
-          dataset.save!
 
-          csv.each do |row|
-            row = row.to_hash.with_indifferent_access
+          if d.has_key?(:group_column) and d.has_key?(:groups)
+            puts "unpacking groups based on '#{d[:group_column]}' column"
+            d[:groups].each do |group|
+              # save each data portal set, parse_token and group combination as a separate dataset
+              dataset = save_cdph_dataset(d, parse_token, handle, group)
 
-            # sometimes Community Area is named differently
-            community_area = row['Community Area']
-            if community_area.nil? || community_area == ''
-              community_area = row['Community Area Number']
-            end
-
-            # special case for Chicago - given an ID of 0, 88 or 100 by CDPH
-            if community_area == '0' or community_area == '88'
-              community_area = '100' # Chicago is manually imported, see seeds.rb
-            end
-
-            (1980..Time.now.year).each do |year|
-              if (row.has_key?("#{parse_token} #{year}"))
-                stat = Statistic.new(
-                  :dataset_id => dataset.id,
-                  :geography_id => community_area,
-                  :year => year,
-                  :name => parse_token, 
-                  :value => row["#{parse_token} #{year}"]
-                )
-
-                if (row.has_key?("#{parse_token} #{year} Lower CI"))
-                  stat.lower_ci = row["#{parse_token} #{year} Lower CI"]
-                end
-
-                if (row.has_key?("#{parse_token} #{year} Upper CI"))
-                  stat.upper_ci = row["#{parse_token} #{year} Upper CI"]
-                end
-
-                stat.save!
+              csv.each do |row|
+                process_cdph_row(row, dataset, parse_token, d[:group_column], group)
               end
+
+              stat_count = Statistic.count(:conditions => "dataset_id = #{dataset.id}")
+              puts "#{parse_token}, #{group}: imported #{stat_count} statistics"
             end
+          else
+            # save each data portal set and parse_token combination as a separate dataset
+            dataset = save_cdph_dataset(d, parse_token, handle)
+
+            csv.each do |row|
+              process_cdph_row(row, dataset, parse_token)
+            end
+
+            stat_count = Statistic.count(:conditions => "dataset_id = #{dataset.id}")
+            puts "#{parse_token}: imported #{stat_count} statistics"
           end
-          stat_count = Statistic.count(:conditions => "dataset_id = #{dataset.id}")
-          puts "#{parse_token}: imported #{stat_count} statistics"
         end
       end
       puts 'Done!'
+    end
+
+    def save_cdph_dataset(d, parse_token, handle, group='')
+
+      name = "#{d[:name]} - #{parse_token}"
+      if group != ''
+        name << " - #{group}"
+      end
+      dataset = Dataset.new(
+        :name => name,
+        :slug => handle,
+        :description => '', # leaving blank for now
+        :provider => 'Chicago Department of Public Health',
+        :url => d[:url],
+        :category_id => Category.where(:name => d[:category]).first.id
+      )
+      dataset.save!
+      dataset
+    end
+
+    def process_cdph_row(row, dataset, parse_token, group_column='', group='')
+      row = row.to_hash.with_indifferent_access
+
+      # sometimes Community Area is named differently
+      community_area = row['Community Area']
+      if community_area.nil? || community_area == ''
+        community_area = row['Community Area Number']
+      end
+
+      # special case for Chicago - given an ID of 0, 88 or 100 by CDPH
+      if community_area == '0' or community_area == '88'
+        community_area = '100' # Chicago is manually imported, see seeds.rb
+      end
+
+      if group != '' and group_column != ''
+        if row[group_column] == group
+          save_cdph_statistic(row, dataset, community_area, parse_token)
+        end
+      else
+        save_cdph_statistic(row, dataset, community_area, parse_token)
+      end
+    end
+
+    def save_cdph_statistic(row, dataset, community_area, parse_token)
+      (1980..Time.now.year).each do |year|
+        if (row.has_key?("#{parse_token} #{year}"))
+          stat = Statistic.new(
+            :dataset_id => dataset.id,
+            :geography_id => community_area,
+            :year => year,
+            :name => parse_token, 
+            :value => row["#{parse_token} #{year}"]
+          )
+
+          if (row.has_key?("#{parse_token} #{year} Lower CI"))
+            stat.lower_ci = row["#{parse_token} #{year} Lower CI"]
+          end
+
+          if (row.has_key?("#{parse_token} #{year} Upper CI"))
+            stat.upper_ci = row["#{parse_token} #{year} Upper CI"]
+          end
+
+          stat.save!
+        end
+      end
     end
   end
 end
