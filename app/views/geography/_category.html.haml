@@ -1,10 +1,10 @@
-%h2
+%h2{:id => category.name.parameterize.underscore}
   = category.name
 
 %p
   = category.description
 
-.row
+.row-fluid
   - @datasets = get_datasets(geography.id, category.id)
 
   - @datasets.each do |dataset|
