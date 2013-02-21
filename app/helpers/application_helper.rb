@@ -8,6 +8,14 @@ module ApplicationHelper
     return "active" if current_menu == menu_name
   end
 
+  def get_datasets(geography_id, category_id)
+    Dataset.joins(:statistics)
+      .select("datasets.id, datasets.name, statistics.name as stat_name")
+      .where("statistics.geography_id = #{geography_id} AND datasets.category_id = #{category_id}")
+      .group("datasets.id, datasets.name, statistics.name")
+      .order("datasets.name, statistics.name")
+  end
+
   def stats_as_array(dataset_id, geography_id, stat_name)
     stats = Statistic.where("dataset_id = #{dataset_id} AND name = '#{stat_name}' AND geography_id = #{geography_id}")
                      .order("year")

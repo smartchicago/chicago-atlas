@@ -36,6 +36,7 @@ namespace :db do
       end
 
       datasets = [
+        # Births
         {:category => 'Births', :name => 'Births and Birth Rate', :parse_tokens => ['Births', 'Birth Rate'], :socrata_id => '4arr-givg', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Births-and-birth-rates-in/4arr-givg'},
         {:category => 'Births', :name => 'General Fertility Rate', :parse_tokens => ['Fertility Rate'], :socrata_id => 'g5zk-9ycw', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-General-fertility-rates-i/g5zk-9ycw'},
         {:category => 'Births', :name => 'Low Birth Weight', :parse_tokens => ['Births', 'Percent'], :socrata_id => 'fbxr-9u99', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Low-birth-weight-in-Chica/fbxr-9u99'},
@@ -44,10 +45,34 @@ namespace :db do
 
         # special case: blown up rows for 1ST TRIMESTER, 2ND TRIMESTER, 3RD TRIMESTER, NO PRENATAL CARE, NOT GIVEN
         # {:category => 'Births', :name => 'Parental Care', :parse_tokens => ['Percent'], :socrata_id => '2q9j-hh6g', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Prenatal-care-in-Chicago-/2q9j-hh6g'},
+        
+        # Deaths
+        # special case: broken down by death cause
+        # causes: All causes in females,All causes in males,Alzheimers disease,Assault (homicide),Breast cancer in females,Cancer (all sites),Colorectal cancer,Coronary heart disease,Diabetes-related,Firearm-related,Injury, unintentional,Kidney disease (nephritis, nephrotic syndrome and nephrosis),Liver disease and cirrhosis,Lung cancer,Prostate cancer in males,Stroke (cerebrovascular disease),Suicide (intentional self-harm)
+        #{:category => 'Deaths', :name => 'Mortality', :parse_tokens => [], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444'},
+        {:category => 'Deaths', :name => 'Infant Mortality', :parse_tokens => ['Deaths'], :socrata_id => 'bfhr-4ckq', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Infant-mortality-in-Chica/bfhr-4ckq'},
+      
+        # Environmental Health
+        {:category => 'Environmental Health', :name => 'Lead', :parse_tokens => ['Screened for Lead in', 'Lead Screening Rate', 'Elevated Blood Lead Level in', 'Percent Elevated'], :socrata_id => 'v2z5-jyrq', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Screening-for-elevated-bl/v2z5-jyrq'},
+
+        # Infectious disease
+        {:category => 'Infectious disease', :name => 'Tuberculosis', :parse_tokens => ['Cases'], :socrata_id => 'ndk3-zftj', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Tuberculosis-cases-and-av/ndk3-zftj'},
+        {:category => 'Infectious disease', :name => 'Gonorrhea in females', :parse_tokens => ['Incidence Rate'], :socrata_id => 'cgjw-mn43', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Gonorrhea-cases-for-femal/cgjw-mn43'},
+
+        # TODO: accomodate 'Cases 2000 Male 15-44'
+        {:category => 'Infectious disease', :name => 'Gonorrhea in males', :parse_tokens => ['Incidence Rate'], :socrata_id => 'm5qn-gmjx', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-health-statistics-Gonorrhea-cases-for-males/m5qn-gmjx'},
+
+        # TODO: accomodate 'Cases 2000 Female 15-44'
+        {:category => 'Infectious disease', :name => 'Chlamydia in females', :parse_tokens => ['Incidence Rate'], :socrata_id => 'bz6k-73ti', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Chlamydia-cases-among-fem/bz6k-73ti'},
+
+        # Chronic disease
+        # these are aggregated by zip code
+        # {:category => 'Chronic disease', :name => 'Diabetes Hospitalizations', :parse_tokens => ['Hospitalizations', 'Crude Rate', 'Adjusted Rate'], :socrata_id => 'vekt-28b5', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Diabetes-hospitalizations/vekt-28b5'},
+        # {:category => 'Chronic disease', :name => 'Diabetes Hospitalizations', :parse_tokens => ['Hospitalizations', 'Crude Rate', 'Adjusted Rate'], :socrata_id => 'vazh-t57q', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Asthma-hospitalizations-i/vazh-t57q'},
       ]
 
       datasets.each do |d|
-        handle = d[:name].gsub(/\s+/, "_").downcase.to_sym
+        handle = d[:name].parameterize.underscore.to_sym
         
         dataset = Dataset.new(
           :name => d[:name],
