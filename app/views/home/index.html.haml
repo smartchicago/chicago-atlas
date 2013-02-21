@@ -11,27 +11,12 @@
   This way, we can be better informed about health in our city and take greater control of our own health, right in our own neighborhoods.
 
 %p
-  To get started, choose a condition from the list below.
+  To get started, choose a community area from the list below.
 
-- Category.all.each do |category|
-  %h2
-    = category.name
-
-  %table.table.table-bordered.table-hover
-    %thead
-      %tr
-        %th Name
-        %th Description
-        %th Provider
-
-    %tbody
-      - Dataset.where(:category_id => category.id).each do |dataset|
-        %tr
-          %td
-            %a{:href => "/condition/#{dataset.slug}"}
-              = dataset.name 
-          %td
-            = dataset.description
-          %td
-            %a{:href => dataset.url }
-              = dataset.provider
+%hr
+.row
+  - @geographies.each do |geography|
+    .span4
+      %h4
+        %a{:href => "/place/#{geography.slug}"}
+          = geography.name

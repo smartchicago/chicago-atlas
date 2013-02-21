@@ -1,9 +1,7 @@
 class HomeController < ApplicationController
 
   def index
-  end
-
-  def index
+    @geographies = Geography.order("name").all
   end
 
   def about

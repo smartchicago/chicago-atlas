@@ -102,8 +102,8 @@ namespace :db do
               community_area = row['Community Area Number']
             end
 
-            # special case for Chicago - given an ID of 0 by CDPH
-            if community_area == '0'
+            # special case for Chicago - given an ID of 0, 88 or 100 by CDPH
+            if community_area == '0' or community_area == '88'
               community_area = '100' # Chicago is manually imported, see seeds.rb
             end
 

@@ -7,7 +7,7 @@
 
 .span7
   - chart_stats = fetch_chart_data(dataset.id, @geography.id)
-  - chicago_avg_stats = fetch_chart_data(dataset.id, 78)
+  - chicago_avg_stats = fetch_chart_data(dataset.id, 100)
   - chart_id = "chart_#{dataset.id}_#{dataset.name.parameterize.underscore.to_sym}"
 
   .chart{:id => chart_id}
@@ -20,7 +20,7 @@
           color: colorHash[(#{dataset.id} % 7)],
           type: 'line',
           data: #{chart_stats[:data]},
-          name: "#{dataset.name}"
+          name: "#{geography.name}"
         },{
           name: 'Confidence interval',
           type: 'errorbar',
