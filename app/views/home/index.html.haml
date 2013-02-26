@@ -1,22 +1,14 @@
-%p 
-  The Chicago Health Atlas is a place where you can view citywide information about health trends and take action near you to improve your own health.
+.row-fluid
+  .span8
+    %p
+      Chicago Health Atlas is undergoing maintenance. We are creating a new website with more features and more data partners. If you are a health provider and would like to partner on this project, please complete the form below.
 
-%p
-  We display large amounts of data from sources like the City of Chicago and local hospitals so you can get big-picture views of health outcomes in Chicago. For example, you can browse data for neighborhood and zip code-level rates of diabetes, births, and homicides. 
+    <iframe src="https://docs.google.com/forms/d/1UDPW-_kUUfcI6j2etDT_wR28AnLTnLt9z1WIzg27Spc/viewform?embedded=true" width="760" height="700" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe> 
 
-%p
-  Then we show you concrete ways you can improve your own health in light of these outcomes— from healthy eating classes to neo-natal care clinics to places you can turn in weapons.
-
-%p
-  This way, we can be better informed about health in our city and take greater control of our own health, right in our own neighborhoods.
-
-%p
-  To get started, choose a community area from the list below.
-
-%hr
-.row
-  - @geographies.each do |geography|
-    .span4
-      %h4
-        %a{:href => "/place/#{geography.slug}"}
-          = geography.name
+    %p
+      If you would like to see the current status of our new website, 
+      = succeed '.' do
+        %a{:href => 'http://www.chicagohealthatlas.org'} go here
+      If you have any questions, please contact the project manager, Kyla Williams, at 
+      = succeed '.' do
+        %a{:href => 'mailto:kwilliams@cct.org'} kwilliams@cct.org

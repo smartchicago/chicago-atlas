@@ -1,8 +1,25 @@
 %h1
   Places
 
-%ul
-  - @geographies.each do |geography|
-    %li
+%p 
+The Chicago Health Atlas is a place where you can view citywide information about health trends and take action near you to improve your own health.
+
+%p
+We display large amounts of data from sources like the City of Chicago and local hospitals so you can get big-picture views of health outcomes in Chicago. For example, you can browse data for neighborhood and zip code-level rates of diabetes, births, and homicides. 
+
+%p
+Then we show you concrete ways you can improve your own health in light of these outcomes— from healthy eating classes to neo-natal care clinics to places you can turn in weapons.
+
+%p
+This way, we can be better informed about health in our city and take greater control of our own health, right in our own neighborhoods.
+
+%p
+To get started, choose a community area from the list below.
+
+%hr
+.row
+- @geographies.each do |geography|
+  .span4
+    %h4
       %a{:href => "/place/#{geography.slug}"}
         = geography.name
