@@ -177,5 +177,51 @@ namespace :db do
         end
       end
     end
+
+    desc "Populate dataset descriptions"
+    task :chicago_dph_descriptions => :environment do
+      descriptions = [
+        # Births
+        {:name => 'Births and Birth Rate - Birth Rate', :description => "Crude birth rate (births per 1,000 residents) with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009."},
+        {:name => 'Births and Birth Rate - Births', :description => "Annual number of births by Chicago community area, for the years 1999 - 2009." },
+        {:name => 'General Fertility Rate - Fertility Rate', :description => "Annual general fertility rate (births per 1,000 females aged 15-44 years) with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
+        {:name => 'Low Birth Weight - Births', :description => "Annual number of low birth weight births by Chicago community area, for the years 1999 - 2009." },
+        {:name => 'Low Birth Weight - Percent', :description => "Percent of total births these low birth weight births represent, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
+        {:name => 'Parental Care - Percent - 1ST TRIMESTER', :description => "Percent of live births by the trimester in which the mother began prenatal care, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
+        {:name => 'Parental Care - Percent - 2ND TRIMESTER', :description => "Percent of live births by the trimester in which the mother began prenatal care, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
+        {:name => 'Parental Care - Percent - 3RD TRIMESTER', :description => "Percent of live births by the trimester in which the mother began prenatal care, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
+        {:name => 'Parental Care - Percent - NO PRENATAL CARE', :description => "Percent of live births by the trimester in which the mother began prenatal care, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
+        {:name => 'Parental Care - Percent - NOT GIVEN', :description => "Percent of live births by the trimester in which the mother began prenatal care, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
+        {:name => 'Preterm Births - Percent', :description => "Percent of total births these preterm births represent, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
+        {:name => 'Preterm Births - Pre-term Births', :description => "Annual number of preterm births  by Chicago community area, for the years 1999 - 2009." },
+        {:name => 'Teen Births - Teen Birth Rate', :description => "Annual birth rate (births per 1,000 females aged 15-19 years) with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
+        {:name => 'Teen Births - Teen Births', :description => "Annual number of births to mothers aged 15-19 years old by Chicago community area, for the years 1999 - 2009." },
+        
+        # Deaths
+        {:name => 'Infant Mortality - Deaths', :description => "Annual number of infant deaths, by Chicago community area, for the years 2004 - 2008." },
+        
+        # Environmental Health
+        {:name => 'Lead - Elevated Blood Lead Level in', :description => "Annual number and estimated rate per 1,000 children aged 0-6 years receiving a blood lead level test, and the annual number and estimated percentage of those tested found to have an elevated blood lead level, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2011." },
+        {:name => 'Lead - Lead Screening Rate', :description => "Annual number and estimated rate per 1,000 children aged 0-6 years receiving a blood lead level test, and the annual number and estimated percentage of those tested found to have an elevated blood lead level, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2011." },
+        {:name => 'Lead - Percent Elevated', :description => "Annual number and estimated rate per 1,000 children aged 0-6 years receiving a blood lead level test, and the annual number and estimated percentage of those tested found to have an elevated blood lead level, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2011." },
+        {:name => 'Lead - Screened for Lead in', :description => "Annual number and estimated rate per 1,000 children aged 0-6 years receiving a blood lead level test, and the annual number and estimated percentage of those tested found to have an elevated blood lead level, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2011." },
+        
+        # Infectious disease
+        {:name => 'Chlamydia in females - Incidence Rate', :description => "Annual number of newly reported, laboratory-confirmed cases of chlamydia (Chlamydia trachomatis) among females aged 15-44 years and annual chlamydia incidence rate (cases per 100,000 females aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011. " },
+        {:name => 'Gonorrhea in females - Incidence Rate', :description => "Annual number of newly reported, laboratory-confirmed cases of gonorrhea (Neisseria gonorrhoeae) among females aged 15-44 years and annual gonorrhea incidence rate (cases per 100,000 females aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011." },
+        {:name => 'Gonorrhea in males - Incidence Rate', :description => "Annual number of newly reported, laboratory-confirmed cases of gonorrhea (Neisseria gonorrhoeae) among males aged 15-44 years and annual gonorrhea incidence rate (cases per 100,000 males aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011. " },
+        {:name => 'Tuberculosis - Cases', :description => "Annual number of new cases of tuberculosis by Chicago community area, for the years 2007 - 2011." },
+
+
+      ]
+
+      descriptions.each do |d|
+        dataset = Dataset.where(:name => d[:name]).first
+        puts "populating description for #{dataset.name}"
+        dataset.description = d[:description]
+        dataset.save!
+      end
+    end
+
   end
 end
