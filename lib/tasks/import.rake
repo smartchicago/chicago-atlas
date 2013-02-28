@@ -179,22 +179,22 @@ namespace :db do
     end
 
     desc "Populate dataset descriptions"
-    task :chicago_dph_descriptions => :environment do
+    task :chicago_dph_metadata => :environment do
       descriptions = [
         # Births
-        {:name => 'Births and Birth Rate - Birth Rate', :description => "Crude birth rate (births per 1,000 residents) with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009."},
+        {:name => 'Births and Birth Rate - Birth Rate', :description => "Crude birth rate (births per 1,000 residents) with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[6.0,12.0,18.0,24]"},
         {:name => 'Births and Birth Rate - Births', :description => "Annual number of births by Chicago community area, for the years 1999 - 2009." },
-        {:name => 'General Fertility Rate - Fertility Rate', :description => "Annual general fertility rate (births per 1,000 females aged 15-44 years) with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
+        {:name => 'General Fertility Rate - Fertility Rate', :description => "Annual general fertility rate (births per 1,000 females aged 15-44 years) with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[20,60,80,100]" },
         {:name => 'Low Birth Weight - Births', :description => "Annual number of low birth weight births by Chicago community area, for the years 1999 - 2009." },
-        {:name => 'Low Birth Weight - Percent', :description => "Percent of total births these low birth weight births represent, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
-        {:name => 'Prenatal Care - Percent - 1ST TRIMESTER', :description => "Percent of live births by the trimester in which the mother began prenatal care, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
+        {:name => 'Low Birth Weight - Percent', :description => "Percent of total births these low birth weight births represent, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[2.6,7.50,12.50,17.50]" },
+        {:name => 'Prenatal Care - Percent - 1ST TRIMESTER', :description => "Percent of live births by the trimester in which the mother began prenatal care, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,65,73,81]" },
         {:name => 'Prenatal Care - Percent - 2ND TRIMESTER', :description => "Percent of live births by the trimester in which the mother began prenatal care, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
         {:name => 'Prenatal Care - Percent - 3RD TRIMESTER', :description => "Percent of live births by the trimester in which the mother began prenatal care, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
         {:name => 'Prenatal Care - Percent - NO PRENATAL CARE', :description => "Percent of live births by the trimester in which the mother began prenatal care, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
         {:name => 'Prenatal Care - Percent - NOT GIVEN', :description => "Percent of live births by the trimester in which the mother began prenatal care, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
-        {:name => 'Preterm Births - Percent', :description => "Percent of total births these preterm births represent, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
+        {:name => 'Preterm Births - Percent', :description => "Percent of total births these preterm births represent, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[3,10,14,18]" },
         {:name => 'Preterm Births - Pre-term Births', :description => "Annual number of preterm births  by Chicago community area, for the years 1999 - 2009." },
-        {:name => 'Teen Births - Teen Birth Rate', :description => "Annual birth rate (births per 1,000 females aged 15-19 years) with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009." },
+        {:name => 'Teen Births - Teen Birth Rate', :description => "Annual birth rate (births per 1,000 females aged 15-19 years) with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,40.0,80.0,120]" },
         {:name => 'Teen Births - Teen Births', :description => "Annual number of births to mothers aged 15-19 years old by Chicago community area, for the years 1999 - 2009." },
         
         # Deaths
@@ -208,9 +208,9 @@ namespace :db do
         
         # Infectious disease
         {:name => 'Chlamydia in females - Incidence Rate', :description => "Annual number of newly reported, laboratory-confirmed cases of chlamydia (Chlamydia trachomatis) among females aged 15-44 years and annual chlamydia incidence rate (cases per 100,000 females aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011. " },
-        {:name => 'Gonorrhea in females - Incidence Rate', :description => "Annual number of newly reported, laboratory-confirmed cases of gonorrhea (Neisseria gonorrhoeae) among females aged 15-44 years and annual gonorrhea incidence rate (cases per 100,000 females aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011." },
-        {:name => 'Gonorrhea in males - Incidence Rate', :description => "Annual number of newly reported, laboratory-confirmed cases of gonorrhea (Neisseria gonorrhoeae) among males aged 15-44 years and annual gonorrhea incidence rate (cases per 100,000 males aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011. " },
-        {:name => 'Tuberculosis - Cases', :description => "Annual number of new cases of tuberculosis by Chicago community area, for the years 2007 - 2011." },
+        {:name => 'Gonorrhea in females - Incidence Rate', :description => "Annual number of newly reported, laboratory-confirmed cases of gonorrhea (Neisseria gonorrhoeae) among females aged 15-44 years and annual gonorrhea incidence rate (cases per 100,000 females aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011.", :choropleth_cutoffs => "[34,600,1200,1800]" },
+        {:name => 'Gonorrhea in males - Incidence Rate', :description => "Annual number of newly reported, laboratory-confirmed cases of gonorrhea (Neisseria gonorrhoeae) among males aged 15-44 years and annual gonorrhea incidence rate (cases per 100,000 males aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011. ", :choropleth_cutoffs => "[40,600,1200,1800]" },
+        {:name => 'Tuberculosis - Cases', :description => "Annual number of new cases of tuberculosis by Chicago community area, for the years 2007 - 2011.", :choropleth_cutoffs => "[0,4.0,8.0,12]" },
 
 
       ]
@@ -219,6 +219,11 @@ namespace :db do
         dataset = Dataset.where(:name => d[:name]).first
         puts "populating description for #{dataset.name}"
         dataset.description = d[:description]
+
+        if (d.has_key?(:choropleth_cutoffs))
+          dataset.choropleth_cutoffs = d[:choropleth_cutoffs]
+        end
+
         dataset.save!
       end
     end
