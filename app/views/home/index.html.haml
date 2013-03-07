@@ -1,13 +1,22 @@
 .row-fluid
   .span8
-    %p
-      Chicago Health Atlas is undergoing maintenance. We are creating a new website with more features and more data partners. If you are a health provider and would like to partner on this project, please complete the form below.
+    .alert.alert-block
+      %h4 Chicago Health Atlas is undergoing maintenance
+      %p
+        We are creating a new website with more features and more data partners.
 
     %p
-      If you would like to see the current status of our new website, 
-      = succeed '.' do
-        %a{:href => 'http://www.chicagohealthatlas.org'} go here
-      If you have any questions, please contact the project manager, Kyla Williams, at 
+      The Chicago Health Atlas is a place where you can view citywide information about health trends and take action near you to improve your own health.
+    
+    %p
+      We display large amounts of data from sources like the City of Chicago and local hospitals so you can get big-picture views of health outcomes in Chicago. 
+
+    %p
+      If you are a health data provider and would like to take part in this project, please complete the form below and we will contact you right away!
+
+    %p
+      %strong Questions? 
+      Contact project manager Kyla Williams, at 
       = succeed '.' do
         %a{:href => 'mailto:kwilliams@cct.org'} kwilliams@cct.org
 
