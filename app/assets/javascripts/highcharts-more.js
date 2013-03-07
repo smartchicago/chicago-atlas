@@ -2480,4 +2480,4 @@ wrap(pointerProto, 'getCoordinates', function (proceed, e) {
   return ret;
 });
 }(Highcharts));
-window.console && console.log('--- Running highcharts-more.src.js from GitHub, branch v3.0Beta ---');
+//window.console && console.log('--- Running highcharts-more.src.js from GitHub, branch v3.0Beta ---');

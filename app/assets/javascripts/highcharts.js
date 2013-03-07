@@ -16345,4 +16345,4 @@ extend(Highcharts, {
 	version: VERSION
 });
 }());
-window.console && console.log('--- Running highcharts.src.js from GitHub, branch v3.0Beta ---');
+//window.console && console.log('--- Running highcharts.src.js from GitHub, branch v3.0Beta ---');
