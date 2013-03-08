@@ -21,11 +21,12 @@ module ApplicationHelper
     Geography.where(:geo_type => 'Community Area').all.each do |c|
       geojson << {
         "type" => "Feature", 
+        "id" => c.id,
         "properties" => {
             "name" => c.name,
-            "density": "100"
+            "density" => "100"
         },
-        "geometry": c.geometry
+        "geometry" => ActiveSupport::JSON.decode(c.geometry)
       }
     end
 
