@@ -11,7 +11,7 @@
         "geometry": #{@community_area.geometry}
     };
 
-    var map = L.map('map').setView([41.8781136, -87.63], 14);
+    var map = L.map('map').setView(#{@community_area.centroid_as_lat_lng}, 14);
 
     var cloudmade = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
@@ -85,15 +85,10 @@
         info.update();
     }
 
-    function zoomToFeature(e) {
-        map.fitBounds(e.target.getBounds());
-    }
-
     function onEachFeature(feature, layer) {
         layer.on({
             mouseover: highlightFeature,
-            mouseout: resetHighlight,
-            click: zoomToFeature
+            mouseout: resetHighlight
         });
     }
 

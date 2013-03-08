@@ -6,7 +6,6 @@ class GeographyController < ApplicationController
   def show
     @geography = Geography.where(:slug => params[:slug]).first
     @categories = Category.all
-    
   end
 
 end

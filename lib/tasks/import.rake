@@ -12,10 +12,11 @@ namespace :db do
         area_json = JSON.parse(open("http://api.boundaries.tribapps.com/#{endpoint}").read)
 
         area = Geography.new(
-          :geo_type => "Community Area",
+          :geo_type => area_json['kind'],
           :name => area_json['name'],
           :slug => area_json['name'].parameterize.underscore.to_sym,
-          :geometry => ActiveSupport::JSON.encode(area_json['simple_shape'])
+          :geometry => ActiveSupport::JSON.encode(area_json['simple_shape']),
+          :centroid => ActiveSupport::JSON.encode(area_json['centroid']['coordinates'])
         )
         area.id = area_json['external_id']
         puts "importing #{area.name}"

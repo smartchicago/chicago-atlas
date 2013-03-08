@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130228204530) do
+ActiveRecord::Schema.define(:version => 20130308205657) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20130228204530) do
     t.text     "geometry"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "centroid"
   end
 
   create_table "statistics", :force => true do |t|
