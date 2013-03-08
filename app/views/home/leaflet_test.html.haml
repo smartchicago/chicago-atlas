@@ -2,6 +2,22 @@
   = javascript_include_tag "leaflet"
 
   :javascript
-    var map = L.map('map').setView([51.505, -0.09], 13);
+    var map = L.map('map').setView([41.8781136, -87.66677856445312], 13);
+
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+        maxZoom: 18
+    }).addTo(map);
+
+    var geojsonFeature = {
+        "type": "Feature",
+        "properties": {
+            "name": "#{@community_area.name}",
+            "popupContent": "#{@community_area.geo_type}"
+        },
+        "geometry": #{@community_area.geometry}
+    };
+
+    L.geoJson(geojsonFeature).addTo(map);
 
 #map

@@ -14,8 +14,8 @@ namespace :db do
         area = Geography.new(
           :geo_type => "Community Area",
           :name => area_json['name'],
-          :slug => area_json['slug'],
-          :geometry => area_json['simple_shape']['coordinates']
+          :slug => area_json['name'].parameterize.underscore.to_sym,
+          :geometry => ActiveSupport::JSON.encode(area_json['simple_shape'])
         )
         area.id = area_json['external_id']
         puts "importing #{area.name}"
