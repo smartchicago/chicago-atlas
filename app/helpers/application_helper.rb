@@ -16,15 +16,21 @@ module ApplicationHelper
       .order("datasets.name")
   end
 
-  def community_area_geojson
+  def community_area_geojson(dataset_id, year)
+
+    area_stats = Geography.joins(:statistics)
+      .select("geographies.id, geographies.name, geographies.geometry, statistics.name as condition_title, statistics.value as condition_value")
+      .where("dataset_id = #{dataset_id} and year = #{year} and geo_type = 'Community Area'")
+
     geojson = []
-    Geography.where(:geo_type => 'Community Area').all.each do |c|
+    area_stats.all.each do |c|
       geojson << {
         "type" => "Feature", 
         "id" => c.id,
         "properties" => {
             "name" => c.name,
-            "density" => "100"
+            "condition_title" => c.condition_title,
+            "condition_value" => c.condition_value
         },
         "geometry" => ActiveSupport::JSON.decode(c.geometry)
       }
@@ -32,6 +38,8 @@ module ApplicationHelper
 
     ActiveSupport::JSON.encode({"type" => "FeatureCollection", "features" => geojson})
   end
+
+  
 
   def fetch_chart_data(dataset_id, geography_id)
     stats = Statistic.where("dataset_id = #{dataset_id} AND geography_id = #{geography_id}")

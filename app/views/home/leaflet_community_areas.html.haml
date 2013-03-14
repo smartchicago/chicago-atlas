@@ -10,7 +10,7 @@
     }).resize();
 
 
-    var geojsonFeature = #{community_area_geojson};
+    var geojsonFeature = #{@display_geojson};
 
     var map = L.map('map').setView([41.8781136, -87.66677856445312], 11);
 
@@ -32,14 +32,14 @@
 
     info.update = function (props) {
         this._div.innerHTML = '<h4>Community area</h4>' +  (props ?
-            '<b>' + props.name + '</b>'
+            '<b>' + props.name + '</b><br />' + props.condition_title + ': ' + props.condition_value
             : 'Hover over a community area');
     };
 
     info.addTo(map);
 
 
-    // get color depending on population density value
+    // get color depending on condition_title
     function getColor(d) {
         return d > 1000 ? '#800026' :
                d > 500  ? '#BD0026' :
@@ -58,7 +58,7 @@
             color: 'white',
             dashArray: '3',
             fillOpacity: 0.7,
-            fillColor: getColor(feature.properties.density)
+            fillColor: getColor(feature.properties.condition_value)
         };
     }
 
@@ -123,4 +123,30 @@
 
     legend.addTo(map);
 
-#map
+.row-fluid
+  .span4
+    %h3 Year
+    %ul.inline
+      - (1999..2009).each do |y|
+        %li
+          - if y.to_s == params[:year]
+            %strong
+              = y
+          - else
+            %a{:href => "/leaflet_community_areas/#{params[:dataset_id]}/#{y}"} 
+              = y
+
+    %h3 Condition
+
+    %ul
+      - @datasets.each do |d|
+        %li
+          - if d.id.to_s == params[:dataset_id]
+            %strong
+              = d.name
+          - else
+            %a{:href => "/leaflet_community_areas/#{d.id}/#{params[:year]}"} 
+              = d.name
+
+  .span8
+    #map
