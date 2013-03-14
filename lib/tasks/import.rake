@@ -111,6 +111,7 @@ namespace :db do
           end
         end
       end
+      Rake::Task["chicago_dph_metadata"].invoke
       puts 'Done!'
     end
 
@@ -179,7 +180,7 @@ namespace :db do
       end
     end
 
-    desc "Populate dataset descriptions"
+    desc "Populate dataset descriptions and choropleth cutoffs"
     task :chicago_dph_metadata => :environment do
       descriptions = [
         # Births
