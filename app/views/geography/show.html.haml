@@ -1,10 +1,8 @@
 .row-fluid
-  .span9
+  .span8
 
     %h1
       = @geography.name
-      %small
-        = @geography.geo_type
 
     %hr
 
@@ -14,8 +12,22 @@
     - @categories.each do |category|
       = render :partial => "geography/category", :locals => {:category => category, :geography => @geography}
 
-  .span3
+  .span4
     .well
+      - content_for :javascripts do
+        = javascript_include_tag "leaflet"
+        = javascript_include_tag "leaflet_lib"
+
+        :javascript
+          var geojsonFeature = {
+              "type": "Feature",
+              "geometry": #{@geography.geometry}
+          };
+
+          LeafletLib.initialize("map_detail", geojsonFeature, #{@geography.centroid_as_lat_lng}, 13);
+
+      #map_detail
+
       %h3 Conditions
       %ul
         - @categories.each do |category|
