@@ -39,7 +39,7 @@ module ApplicationHelper
     ActiveSupport::JSON.encode({"type" => "FeatureCollection", "features" => geojson})
   end
 
-  
+  # def choropleth_cutoffs
 
   def fetch_chart_data(dataset_id, geography_id)
     stats = Statistic.where("dataset_id = #{dataset_id} AND geography_id = #{geography_id}")
