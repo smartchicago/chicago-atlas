@@ -19,7 +19,7 @@ module ApplicationHelper
   def community_area_geojson(dataset_id, year)
 
     area_stats = Geography.joins(:statistics)
-      .select("geographies.id, geographies.name, geographies.geometry, statistics.name as condition_title, statistics.value as condition_value")
+      .select("geographies.id, geographies.name, geographies.slug, geographies.geometry, statistics.name as condition_title, statistics.value as condition_value")
       .where("dataset_id = #{dataset_id} and year = #{year} and geo_type = 'Community Area'")
 
     geojson = []
@@ -29,6 +29,7 @@ module ApplicationHelper
         "id" => c.id,
         "properties" => {
             "name" => c.name,
+            "slug" => c.slug,
             "condition_title" => c.condition_title,
             "condition_value" => c.condition_value
         },
@@ -39,7 +40,18 @@ module ApplicationHelper
     ActiveSupport::JSON.encode({"type" => "FeatureCollection", "features" => geojson})
   end
 
-  # def choropleth_cutoffs
+  def choropleth_function(grades)
+    grades = Array.new(grades).reverse
+
+    color_hash = ['#08519C', '#3182BD', '#6BAED6', '#BDD7E7']
+
+    color_block = "";
+    grades.each_with_index do |c, i|
+      color_block += "d > #{c} ? '#{color_hash[i]}' : "
+    end
+
+    "return #{color_block} '#EFF3FF';"
+  end
 
   def fetch_chart_data(dataset_id, geography_id)
     stats = Statistic.where("dataset_id = #{dataset_id} AND geography_id = #{geography_id}")

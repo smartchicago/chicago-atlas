@@ -8,12 +8,14 @@ class HomeController < ApplicationController
     @community_area = Geography.where(:name => 'Loop').first 
   end
 
-  def leaflet_community_areas
+  def map
     if params[:dataset_id].nil? or params[:year].nil?
-        redirect_to :action => "leaflet_community_areas", :dataset_id => Dataset.first.id, :year => 2009
+        redirect_to :action => "map", :dataset_id => Dataset.order("name").first.id, :year => 2009
     else
         @display_geojson = community_area_geojson(params[:dataset_id], params[:year])
-        @datasets = Dataset.all
+        @categories = Category.all
+
+        @current_dataset = Dataset.find(params[:dataset_id])
     end
   end
 

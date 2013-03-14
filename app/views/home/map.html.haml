@@ -1,58 +1,153 @@
 - content_for :javascripts do
-  = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false" 
-  = javascript_include_tag "map"
+  = javascript_include_tag "leaflet"
+
+  :javascript
+    $(window).resize(function () {
+      var h = $(window).height(),
+        offsetTop = 70; // Calculate the top offset
+
+      $('#map').css('height', (h - offsetTop));
+    }).resize();
+
+
+    var geojsonFeature = #{@display_geojson};
+
+    var map = L.map('map').setView([41.8781136, -87.66677856445312], 11);
+
+    var cloudmade = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
+        key: 'BC9A493B41014CAABB98F0471D759707',
+        styleId: 22677
+    }).addTo(map);
+
+
+    // control that shows info on hover
+    var info = L.control();
+
+    info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'info');
+        this.update();
+        return this._div;
+    };
+
+    info.update = function (props) {
+        this._div.innerHTML = '<h4>Community area</h4>' +  (props ?
+            '<b>' + props.name + '</b><br />' + props.condition_title + ': ' + props.condition_value
+            : 'Hover over a community area');
+    };
+
+    info.addTo(map);
+
+
+    // get color depending on condition_title
+    function getColor(d) {
+        #{choropleth_function(@current_dataset.choropleth_cutoffs_json)}
+    }
+
+    function style(feature) {
+        return {
+            weight: 2,
+            opacity: 1,
+            color: 'white',
+            dashArray: '3',
+            fillOpacity: 0.7,
+            fillColor: getColor(feature.properties.condition_value)
+        };
+    }
+
+    function highlightFeature(e) {
+        var layer = e.target;
+
+        layer.setStyle({
+            weight: 5,
+            color: '#666',
+            dashArray: '',
+            fillOpacity: 0.7
+        });
+
+        if (!L.Browser.ie && !L.Browser.opera) {
+            layer.bringToFront();
+        }
+
+        info.update(layer.feature.properties);
+    }
+
+    var geojson;
+
+    function resetHighlight(e) {
+        geojson.resetStyle(e.target);
+        info.update();
+    }
+
+    function onEachFeature(feature, layer) {
+        layer.on({
+            mouseover: highlightFeature,
+            mouseout: resetHighlight,
+            click: linkToDetail
+        });
+    }
+
+    function linkToDetail(e) {
+        window.location = '/place/' + e.target.feature.properties.slug;
+    }
+
+    geojson = L.geoJson(geojsonFeature, {
+        style: style,
+        onEachFeature: onEachFeature
+    }).addTo(map);
+
+
+    var legend = L.control({position: 'bottomright'});
+
+    legend.onAdd = function (map) {
+
+        var div = L.DomUtil.create('div', 'info legend'),
+            grades = #{@current_dataset.choropleth_cutoffs_json},
+            labels = [],
+            from, to;
+
+        for (var i = 0; i < grades.length; i++) {
+            from = grades[i];
+            to = grades[i + 1];
+
+            labels.push(
+                '<i style="background:' + getColor(from + 1) + '"></i> ' +
+                from + (to ? '&ndash;' + to : '+'));
+        }
+
+        div.innerHTML = labels.join('<br>');
+        return div;
+    };
+
+    legend.addTo(map);
 
 .row-fluid
   .span4
-    %p
-      The Chicago Health Atlas visualizes aggregate health-related information so that people can see the prevalence of specific health conditions in their area and find out how they can improve their health.
-      %a{:href => '/about'} Read more &raquo;
+    %h4 Year
+    %ul.inline
+      - (@current_dataset.start_year..@current_dataset.end_year).each do |y|
+        %li
+          - if y.to_s == params[:year]
+            %strong
+              = y
+          - else
+            %a{:href => "/map/#{params[:dataset_id]}/#{y}"} 
+              = y
 
-    #view_accordion.accordion
+    %hr
+    - @categories.each do |c|
+      %h4
+        = c.name
 
-      .accordion-group
-        .accordion-heading
-          %a.accordion-toggle#accordionDiabetes{"data-parent" => "#view_accordion", "data-toggle" => "collapse", :href => "#viewDiabetes", "data-view" => "2006 diabetes percent", "data-colors" => '["#B2E2E2", "#66C2A4", "#2CA25F", "#006D2C"]'}
-            %span.filter-box{:style => 'background-color: #2CA25F;'}
-            Hospital diabetes cases
-        .accordion-body.collapse{:id => "viewDiabetes"}
-          .accordion-inner
-            %p
-              Percent of diabetes cases by zip code from 2006 to 2010.
-
-            %h4
-              Year:
-              %span#diabetes-year-selected
-            #diabetes-year
-            %span.pull-left 2006
-            %span.pull-right 2010
-
-            %hr
-            %h4 Chicago Health Clinics
-            %p
-              %img{:src => '/assets/lightblue.png'} Open
-              %img{:src => '/assets/red.png'} Closed
-
-
-      - atlas_view_modes.each do |name, attributes|
-        .accordion-group
-          .accordion-heading
-            %a.accordion-toggle{"data-parent" => "#view_accordion", "data-toggle" => "collapse", :href => "#group_#{to_dom_id(name)}", "data-view" => name}
-              %span.filter-box{:style => "background-color: #{attributes['colors'][2]};"}
-              = name
-          .accordion-body.collapse{:id => "group_#{to_dom_id(name)}"}
-            .accordion-inner{:id => "group_inner_#{to_dom_id(name)}"}
-
-              - attributes["views"].each do |view|
-                .accordion-group
-                  .accordion-heading
-                    %a.accordion-toggle{"data-parent" => "#group_inner_#{to_dom_id(name)}", "data-toggle" => "collapse", :href => "#view_#{to_dom_id(view)}", "data-view" => view, "data-colors" => attributes['colors']}
-                      %span.filter-box{:style => "background-color: #{attributes['colors'][2]};"}
-                      = view
-                  .accordion-body.collapse{:id => "view_#{to_dom_id(view)}"}
-                    .accordion-inner
-                      Description of
-                      = view
+      %ul
+        - Dataset.where(:category_id => c.id).order("name").each do |d|
+          %li
+            - if d.id.to_s == params[:dataset_id]
+              %strong
+                = d.name
+            - else
+              %a{:href => "/map/#{d.id}/#{params[:year]}"} 
+                = d.name
 
   .span8
-    #mapCanvas
+    #map
