@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(:version => 20130322195844) do
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
     t.text     "choropleth_cutoffs", :default => ""
-    t.string   "type"
+    t.string   "data_type"
   end
 
   add_index "datasets", ["category_id"], :name => "index_datasets_on_category_id"

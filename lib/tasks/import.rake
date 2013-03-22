@@ -127,7 +127,8 @@ namespace :db do
         :description => '', # leaving blank for now
         :provider => 'Chicago Department of Public Health',
         :url => d[:url],
-        :category_id => Category.where(:name => d[:category]).first.id
+        :category_id => Category.where(:name => d[:category]).first.id,
+        :data_type => 'condition'
       )
       dataset.save!
       dataset
@@ -213,8 +214,6 @@ namespace :db do
         {:name => 'Gonorrhea in females - Incidence Rate', :description => "Annual number of newly reported, laboratory-confirmed cases of gonorrhea (Neisseria gonorrhoeae) among females aged 15-44 years and annual gonorrhea incidence rate (cases per 100,000 females aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011.", :choropleth_cutoffs => "[0,600,1200,1800]" },
         {:name => 'Gonorrhea in males - Incidence Rate', :description => "Annual number of newly reported, laboratory-confirmed cases of gonorrhea (Neisseria gonorrhoeae) among males aged 15-44 years and annual gonorrhea incidence rate (cases per 100,000 males aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011. ", :choropleth_cutoffs => "[0,600,1200,1800]" },
         {:name => 'Tuberculosis - Cases', :description => "Annual number of new cases of tuberculosis by Chicago community area, for the years 2007 - 2011.", :choropleth_cutoffs => "[0,4.0,8.0,12]" },
-
-
       ]
 
       descriptions.each do |d|
@@ -229,6 +228,71 @@ namespace :db do
         dataset.save!
       end
     end
+
+    desc "Fetch Metro Chicago Health Facilities"
+    task :chicago_health_facilities => :environment do
+      require 'csv' 
+
+      Dataset.where(:provider => "Metro Chicago Data").each do |d|
+        InterventionLocation.delete_all("dataset_id = #{d.id}")
+        d.delete
+      end
+
+      datasets = [{:name => 'Metro Chicago Health Facilities', :socrata_id => 'kt59-57by', :url => 'https://www.metrochicagodata.org/dataset/Metro-Chicago-Health-Facilities/kt59-57by'}]
+
+      datasets.each do |d|
+        handle = d[:name].parameterize.underscore.to_sym
+
+        # puts "downloading '#{d[:name]}'"
+        # sh "curl -o tmp/#{handle}.csv https://www.metrochicagodata.org/api/views/#{d[:socrata_id]}/rows.csv?accessType=DOWNLOAD"
+        
+        csv_text = File.read("db/import/#{handle}.csv")
+        csv = CSV.parse(csv_text, :headers => true)
+
+        puts csv.first.inspect
+
+        dataset = Dataset.new(
+          :name => d[:name],
+          :slug => handle,
+          :description => '', # leaving blank for now
+          :provider => 'Metro Chicago Data',
+          :url => d[:url],
+          # :category_id => Category.where(:name => d[:category]).first.id,
+          :data_type => 'intervention'
+        )
+        dataset.save!
+        dataset
+
+        csv.each do |row|
+
+          # regex to pluck out the lat/long from the LOCATION column
+          matches = /([^\-]*)\((\-?\d+\.\d+?),\s*(\-?\d+\.\d+?)\)/.match(row["LOCATION"])
+          # puts matches.inspect
+          unless matches.nil?
+            address = matches[0].gsub('\n', '')
+            latitude = matches[1]
+            longitude = matches[2]
+
+            intervention = InterventionLocation.new(
+              :name => row["SITE NAME"],
+              :hours => row["HOURS"],
+              :phone => row["PHONE"],
+              :address => address,
+              :latitude => latitude,
+              :longitude => longitude,
+              :dataset_id => dataset.id
+            )
+            intervention.save!
+            intervention
+          end
+        end
+
+        stat_count = InterventionLocation.count(:conditions => "dataset_id = #{dataset.id}")
+        puts "imported #{stat_count} intervention locations"
+
+      end
+    end
+
 
   end
 end
