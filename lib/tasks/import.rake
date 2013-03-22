@@ -264,11 +264,10 @@ namespace :db do
         dataset
 
         csv.each do |row|
-
           # regex to pluck out the lat/long from the LOCATION column
           matches = /([^\-]*)\((\-?\d+\.\d+?),\s*(\-?\d+\.\d+?)\)/.match(row["LOCATION"])
           # puts matches.inspect
-          unless matches.nil?
+          if not matches.nil? and matches[1].downcase.include? "chicago"
             address = matches[1].gsub('\n', '')
             latitude = matches[2]
             longitude = matches[3]

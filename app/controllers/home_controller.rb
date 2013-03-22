@@ -9,7 +9,7 @@ class HomeController < ApplicationController
   end
 
   def interventions_test
-    @interventions = InterventionLocation.limit(100)
+    @interventions = InterventionLocation.all
 
     @points = []
     @interventions.each do |p|
