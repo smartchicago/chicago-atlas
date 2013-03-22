@@ -8,6 +8,16 @@ class HomeController < ApplicationController
     @community_area = Geography.where(:name => 'Loop').first 
   end
 
+  def interventions_test
+    @interventions = InterventionLocation.limit(100)
+
+    @points = []
+    @interventions.each do |p|
+      @points << [p[:name], p[:address], p[:latitude], p[:longitude]]
+    end
+    puts @points.inspect
+  end
+
   def map
     if params[:dataset_id].nil? or params[:year].nil?
       @current_dataset = Dataset.order("name").first

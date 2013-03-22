@@ -1,0 +1,19 @@
+- content_for :javascripts do
+  = javascript_include_tag "leaflet"
+  = javascript_include_tag "leaflet_lib"
+
+  :javascript
+    var map = L.map('map').setView([41.8781136, -87.66677856445312], 11);
+
+    var tiles = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
+        key: 'BC9A493B41014CAABB98F0471D759707',
+        styleId: 22677
+    }).addTo(map);
+
+    var markerList = #{@points};
+
+    for (point in markerList) {
+        L.marker([markerList[point][2], markerList[point][3]]).addTo(map).bindPopup("<b>" + markerList[point][0] + "</b><br />" + markerList[point][1]);
+    }
+
+#map

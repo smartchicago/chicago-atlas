@@ -13,6 +13,7 @@ ChicagoAtlas::Application.routes.draw do
   get "about" => 'home#about'
   
   get "leaflet_test" => 'home#leaflet_test'
+  get "interventions_test" => 'home#interventions_test'
 
   root :to => 'home#index'
 

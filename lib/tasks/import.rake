@@ -269,9 +269,9 @@ namespace :db do
           matches = /([^\-]*)\((\-?\d+\.\d+?),\s*(\-?\d+\.\d+?)\)/.match(row["LOCATION"])
           # puts matches.inspect
           unless matches.nil?
-            address = matches[0].gsub('\n', '')
-            latitude = matches[1]
-            longitude = matches[2]
+            address = matches[1].gsub('\n', '')
+            latitude = matches[2]
+            longitude = matches[3]
 
             intervention = InterventionLocation.new(
               :name => row["SITE NAME"],
