@@ -24,7 +24,7 @@ navigate to http://localhost:8080/
 
 ## Dependencies
 
-* Rails 3.2.8
+* Rails 3.2.12
 * Ruby 1.9.3-p194
 * Haml
 * Heroku
