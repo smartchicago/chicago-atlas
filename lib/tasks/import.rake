@@ -1,5 +1,12 @@
 namespace :db do
   namespace :import do
+
+    desc "Fetch and import all Health Atlas Data"
+    task :all => :environment do
+      Rake::Task["community_areas"].invoke
+      Rake::Task["chicago_dph"].invoke
+      Rake::Task["chicago_health_facilities"].invoke
+    end
     
     desc "Fetch Chicago Community Areas from the TribApps Boundary Service"
     task :community_areas => :environment do
