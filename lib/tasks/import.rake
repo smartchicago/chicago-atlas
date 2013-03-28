@@ -110,21 +110,6 @@ namespace :db do
             # save each data portal set and parse_token combination as a separate dataset
             dataset = save_cdph_dataset(d, parse_token, handle)
 
-            (1999..2011).each do |year|
-              row = csv.first.to_hash.with_indifferent_access
-              unless (row.has_key?("#{parse_token}_#{year}"))
-                puts "key not found: #{parse_token}_#{year}"
-              end
-
-              unless (row.has_key?("#{parse_token}_#{year}_lower_ci"))
-                puts "key not found: #{parse_token}_#{year}_lower_ci"
-              end
-
-              unless (row.has_key?("#{parse_token}_#{year}_upper_ci"))
-                puts "key not found: #{parse_token}_#{year}_upper_ci"
-              end
-            end
-
             csv.each do |row|
               process_cdph_row(row, dataset, parse_token)
             end

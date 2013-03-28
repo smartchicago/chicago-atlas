@@ -50,7 +50,10 @@ ChartHelper.create = function(element, type, title, seriesData, startDate, point
           formatter: function() {
             var s = "<strong>" + ChartHelper.toolTipDateFormat(pointInterval, this.x) + "</strong>";
             $.each(this.points, function(i, point) {
-              s += "<br /><span style='color: " + point.series.color + "'>" + point.series.name + ":</span> " + point.y;
+              if (point.point.low != null && point.point.high != null)
+                s += "<br /><span style='color: " + point.series.color + "'>" + point.series.name + ":</span> " + point.point.low + " - " + point.point.high;
+              else
+                s += "<br /><span style='color: " + point.series.color + "'>" + point.series.name + ":</span> " + point.y;
             });
             return s;
           },
