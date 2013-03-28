@@ -3,9 +3,9 @@ namespace :db do
 
     desc "Fetch and import all Health Atlas Data"
     task :all => :environment do
-      Rake::Task["community_areas"].invoke
-      Rake::Task["chicago_dph"].invoke
-      Rake::Task["chicago_health_facilities"].invoke
+      Rake::Task["db:import:community_areas"].invoke
+      Rake::Task["db:import:chicago_dph"].invoke
+      Rake::Task["db:import:chicago_health_facilities"].invoke
     end
     
     desc "Fetch Chicago Community Areas from the TribApps Boundary Service"
@@ -44,34 +44,35 @@ namespace :db do
 
       datasets = [
         # Births
-        {:category => 'Births', :name => 'Births and Birth Rate', :parse_tokens => ['Birth Rate'], :socrata_id => '4arr-givg', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Births-and-birth-rates-in/4arr-givg'},
-        {:category => 'Births', :name => 'General Fertility Rate', :parse_tokens => ['Fertility Rate'], :socrata_id => 'g5zk-9ycw', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-General-fertility-rates-i/g5zk-9ycw'},
-        {:category => 'Births', :name => 'Low Birth Weight', :parse_tokens => ['Percent'], :socrata_id => 'fbxr-9u99', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Low-birth-weight-in-Chica/fbxr-9u99'},
-        {:category => 'Births', :name => 'Preterm Births', :parse_tokens => ['Percent'], :socrata_id => 'rhy3-4x2f', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Preterm-births-in-Chicago/rhy3-4x2f'},
-        {:category => 'Births', :name => 'Teen Births', :parse_tokens => ['Teen Birth Rate'], :socrata_id => '9kva-bt6k', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Births-to-mothers-aged-15/9kva-bt6k'},
+        {:category => 'Births', :name => 'Birth Rate', :parse_tokens => ['birth_rate'], :socrata_id => '4arr-givg', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Births-and-birth-rates-in/4arr-givg', :description => "Crude birth rate (births per 1,000 residents) with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,12.0,18.0,24]"},
+        {:category => 'Births', :name => 'Fertility Rate', :parse_tokens => ['fertility_rate'], :socrata_id => 'g5zk-9ycw', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-General-fertility-rates-i/g5zk-9ycw', :description => "Annual general fertility rate (births per 1,000 females aged 15-44 years) with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,60,80,100]"},
+        {:category => 'Births', :name => 'Percent of Low Weight Births', :parse_tokens => ['percent'], :socrata_id => 'fbxr-9u99', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Low-birth-weight-in-Chica/fbxr-9u99', :description => "Percent of total births that were low birth weight with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,7.50,12.50,17.50]"},
+        {:category => 'Births', :name => 'Percent of Preterm Births', :parse_tokens => ['percent'], :socrata_id => 'rhy3-4x2f', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Preterm-births-in-Chicago/rhy3-4x2f', :description => "Percent of total births these preterm births represent, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,10,14,18]"},
+        {:category => 'Births', :name => 'Teen Birth Rate', :parse_tokens => ['teen_birth_rate'], :socrata_id => '9kva-bt6k', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Births-to-mothers-aged-15/9kva-bt6k', :description => "Annual birth rate (births per 1,000 females aged 15-19 years) with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,40.0,80.0,120]"},
 
         # special case: blown up rows for 1ST TRIMESTER, 2ND TRIMESTER, 3RD TRIMESTER, NO PRENATAL CARE, NOT GIVEN
-        {:category => 'Births', :name => 'Prenatal Care', :group_column => 'Trimester Prenatal Care Began', :groups => ['1ST TRIMESTER', '2ND TRIMESTER', '3RD TRIMESTER', 'NO PRENATAL CARE', 'NOT GIVEN'], :parse_tokens => ['Percent'], :socrata_id => '2q9j-hh6g', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Prenatal-care-in-Chicago-/2q9j-hh6g'},
+        {:category => 'Births', :name => 'Prenatal Care Obtained in 1st Trimester', :group_column => 'trimester_prenatal_care_began', :groups => ['1ST TRIMESTER'], :parse_tokens => ['percent'], :socrata_id => '2q9j-hh6g', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Prenatal-care-in-Chicago-/2q9j-hh6g', :description => "Percent of live births in which the mother began prenatal care during the 1st trimester with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,65,73,81]"},
         
         # Deaths
-        {:category => 'Deaths', :name => 'Infant Mortality', :parse_tokens => ['Deaths'], :socrata_id => 'bfhr-4ckq', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Infant-mortality-in-Chica/bfhr-4ckq'},
+        {:category => 'Deaths', :name => 'Infant Mortality Rate', :parse_tokens => ['deaths'], :socrata_id => 'bfhr-4ckq', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Infant-mortality-in-Chica/bfhr-4ckq', :description => "Annual number of infant deaths, by Chicago community area, for the years 2004 - 2008."},
 
         # special case: broken down by death cause
         # causes: All causes in females,All causes in males,Alzheimers disease,Assault (homicide),Breast cancer in females,Cancer (all sites),Colorectal cancer,Coronary heart disease,Diabetes-related,Firearm-related,Injury, unintentional,Kidney disease (nephritis, nephrotic syndrome and nephrosis),Liver disease and cirrhosis,Lung cancer,Prostate cancer in males,Stroke (cerebrovascular disease),Suicide (intentional self-harm)
         # {:category => 'Deaths', :name => 'Mortality', :parse_tokens => [], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444'},
       
         # Environmental Health
-        {:category => 'Environmental Health', :name => 'Lead', :parse_tokens => ['Lead Screening Rate', 'Percent Elevated'], :socrata_id => 'v2z5-jyrq', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Screening-for-elevated-bl/v2z5-jyrq'},
-
+        {:category => 'Environmental Health', :name => 'Lead Screening Rate', :parse_tokens => ['lead_screening_rate'], :socrata_id => 'v2z5-jyrq', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Screening-for-elevated-bl/v2z5-jyrq', :description => "Estimated rate per 1,000 children aged 0-6 years receiving a blood lead level test, by Chicago community area, for the years 1999 - 2011."},
+        {:category => 'Environmental Health', :name => 'Elevated Blood Lead Levels', :parse_tokens => ['percent_elevated'], :socrata_id => 'v2z5-jyrq', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Screening-for-elevated-bl/v2z5-jyrq', :description => "Estimated percentage of children aged 0-6 years tested found to have an elevated blood lead level with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2011."},
+        
         # Infectious disease
-        {:category => 'Infectious disease', :name => 'Tuberculosis', :parse_tokens => ['Cases'], :socrata_id => 'ndk3-zftj', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Tuberculosis-cases-and-av/ndk3-zftj'},
-        {:category => 'Infectious disease', :name => 'Gonorrhea in females', :parse_tokens => ['Incidence Rate'], :socrata_id => 'cgjw-mn43', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Gonorrhea-cases-for-femal/cgjw-mn43'},
+        {:category => 'Infectious disease', :name => 'Tuberculosis', :parse_tokens => ['cases'], :socrata_id => 'ndk3-zftj', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Tuberculosis-cases-and-av/ndk3-zftj', :description => "Annual number of new cases of tuberculosis by Chicago community area, for the years 2007 - 2011.", :choropleth_cutoffs => "[0,4.0,8.0,12]"},
+        {:category => 'Infectious disease', :name => 'Gonorrhea in females', :parse_tokens => ['incidence_rate'], :socrata_id => 'cgjw-mn43', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Gonorrhea-cases-for-femal/cgjw-mn43', :description => "Annual number of newly reported, laboratory-confirmed cases of gonorrhea (Neisseria gonorrhoeae) among females aged 15-44 years and annual gonorrhea incidence rate (cases per 100,000 females aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011.", :choropleth_cutoffs => "[0,600,1200,1800]"},
 
         # TODO: accomodate 'Cases 2000 Male 15-44'
-        {:category => 'Infectious disease', :name => 'Gonorrhea in males', :parse_tokens => ['Incidence Rate'], :socrata_id => 'm5qn-gmjx', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-health-statistics-Gonorrhea-cases-for-males/m5qn-gmjx'},
+        {:category => 'Infectious disease', :name => 'Gonorrhea in males', :parse_tokens => ['incidence_rate'], :socrata_id => 'm5qn-gmjx', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-health-statistics-Gonorrhea-cases-for-males/m5qn-gmjx', :description => "Annual number of newly reported, laboratory-confirmed cases of gonorrhea (Neisseria gonorrhoeae) among males aged 15-44 years and annual gonorrhea incidence rate (cases per 100,000 males aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011. ", :choropleth_cutoffs => "[0,600,1200,1800]"},
 
         # TODO: accomodate 'Cases 2000 Female 15-44'
-        {:category => 'Infectious disease', :name => 'Chlamydia in females', :parse_tokens => ['Incidence Rate'], :socrata_id => 'bz6k-73ti', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Chlamydia-cases-among-fem/bz6k-73ti'},
+        {:category => 'Infectious disease', :name => 'Chlamydia in females', :parse_tokens => ['incidence_rate'], :socrata_id => 'bz6k-73ti', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Chlamydia-cases-among-fem/bz6k-73ti', :description => "Annual number of newly reported, laboratory-confirmed cases of chlamydia (Chlamydia trachomatis) among females aged 15-44 years and annual chlamydia incidence rate (cases per 100,000 females aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011. "},
 
         # Chronic disease
         # these are aggregated by zip code
@@ -86,7 +87,7 @@ namespace :db do
         sh "curl -o tmp/#{handle}.csv https://data.cityofchicago.org/api/views/#{d[:socrata_id]}/rows.csv?accessType=DOWNLOAD"
       
         csv_text = File.read("tmp/#{handle}.csv")
-        csv = CSV.parse(csv_text, :headers => true)
+        csv = CSV.parse(csv_text, {:headers => true, :header_converters => :symbol})
 
         puts csv.first.inspect
 
@@ -109,6 +110,21 @@ namespace :db do
             # save each data portal set and parse_token combination as a separate dataset
             dataset = save_cdph_dataset(d, parse_token, handle)
 
+            (1999..2011).each do |year|
+              row = csv.first.to_hash.with_indifferent_access
+              unless (row.has_key?("#{parse_token}_#{year}"))
+                puts "key not found: #{parse_token}_#{year}"
+              end
+
+              unless (row.has_key?("#{parse_token}_#{year}_lower_ci"))
+                puts "key not found: #{parse_token}_#{year}_lower_ci"
+              end
+
+              unless (row.has_key?("#{parse_token}_#{year}_upper_ci"))
+                puts "key not found: #{parse_token}_#{year}_upper_ci"
+              end
+            end
+
             csv.each do |row|
               process_cdph_row(row, dataset, parse_token)
             end
@@ -118,25 +134,26 @@ namespace :db do
           end
         end
       end
-      Rake::Task["chicago_dph_metadata"].invoke
       puts 'Done!'
     end
 
     def save_cdph_dataset(d, parse_token, handle, group='')
 
-      name = "#{d[:name]} - #{parse_token}"
-      if group != ''
-        name << " - #{group}"
-      end
       dataset = Dataset.new(
-        :name => name,
-        :slug => handle,
+        :name => d[:name],
+        :slug => "#{handle}",
         :description => '', # leaving blank for now
         :provider => 'Chicago Department of Public Health',
         :url => d[:url],
         :category_id => Category.where(:name => d[:category]).first.id,
-        :data_type => 'condition'
+        :data_type => 'condition',
+        :description => d[:description]
       )
+
+      if (d.has_key?(:choropleth_cutoffs))
+        dataset.choropleth_cutoffs = d[:choropleth_cutoffs]
+      end
+
       dataset.save!
       dataset
     end
@@ -145,9 +162,9 @@ namespace :db do
       row = row.to_hash.with_indifferent_access
 
       # sometimes Community Area is named differently
-      community_area = row['Community Area']
+      community_area = row['community_area']
       if community_area.nil? || community_area == ''
-        community_area = row['Community Area Number']
+        community_area = row['community_area_number']
       end
 
       # special case for Chicago - given an ID of 0, 88 or 100 by CDPH
@@ -165,74 +182,31 @@ namespace :db do
     end
 
     def save_cdph_statistic(row, dataset, community_area, parse_token)
-      (1980..Time.now.year).each do |year|
-        if (row.has_key?("#{parse_token} #{year}"))
+      (1999..Time.now.year).each do |year|
+        if (row.has_key?("#{parse_token}_#{year}"))
           stat = Statistic.new(
             :dataset_id => dataset.id,
             :geography_id => community_area,
             :year => year,
             :name => parse_token, 
-            :value => row["#{parse_token} #{year}"]
+            :value => row["#{parse_token}_#{year}"]
           )
 
-          if (row.has_key?("#{parse_token} #{year} Lower CI"))
-            stat.lower_ci = row["#{parse_token} #{year} Lower CI"]
+          if (row.has_key?("#{parse_token}_#{year}_lower_ci"))
+            stat.lower_ci = row["#{parse_token}_#{year}_lower_ci"]
+          elsif (row.has_key?("#{parse_token}_#{year}_lower"))
+            stat.lower_ci = row["#{parse_token}_#{year}_lower"]
           end
 
-          if (row.has_key?("#{parse_token} #{year} Upper CI"))
-            stat.upper_ci = row["#{parse_token} #{year} Upper CI"]
+          if (row.has_key?("#{parse_token}_#{year}_upper_ci"))
+            stat.upper_ci = row["#{parse_token}_#{year}_upper_ci"]
+          elsif (row.has_key?("#{parse_token}_#{year}_upper"))
+            stat.upper_ci = row["#{parse_token}_#{year}_upper"]
           end
 
           stat.save!
         end
-      end
-    end
 
-    desc "Populate dataset descriptions and choropleth cutoffs"
-    task :chicago_dph_metadata => :environment do
-      descriptions = [
-        # Births
-        {:name => 'Births and Birth Rate - Birth Rate', :description => "Crude birth rate (births per 1,000 residents) with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,12.0,18.0,24]"},
-        # {:name => 'Births and Birth Rate - Births', :description => "Annual number of births by Chicago community area, for the years 1999 - 2009." },
-        {:name => 'General Fertility Rate - Fertility Rate', :description => "Annual general fertility rate (births per 1,000 females aged 15-44 years) with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,60,80,100]" },
-        # {:name => 'Low Birth Weight - Births', :description => "Annual number of low birth weight births by Chicago community area, for the years 1999 - 2009." },
-        {:name => 'Low Birth Weight - Percent', :description => "Percent of total births these low birth weight births represent, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,7.50,12.50,17.50]" },
-        {:name => 'Prenatal Care - Percent - 1ST TRIMESTER', :description => "Percent of live births by the trimester in which the mother began prenatal care, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,65,73,81]" },
-        {:name => 'Prenatal Care - Percent - 2ND TRIMESTER', :description => "Percent of live births by the trimester in which the mother began prenatal care, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,65,73,81]" },
-        {:name => 'Prenatal Care - Percent - 3RD TRIMESTER', :description => "Percent of live births by the trimester in which the mother began prenatal care, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,65,73,81]" },
-        {:name => 'Prenatal Care - Percent - NO PRENATAL CARE', :description => "Percent of live births by the trimester in which the mother began prenatal care, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,65,73,81]" },
-        {:name => 'Prenatal Care - Percent - NOT GIVEN', :description => "Percent of live births by the trimester in which the mother began prenatal care, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,65,73,81]" },
-        {:name => 'Preterm Births - Percent', :description => "Percent of total births these preterm births represent, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,10,14,18]" },
-        # {:name => 'Preterm Births - Pre-term Births', :description => "Annual number of preterm births  by Chicago community area, for the years 1999 - 2009." },
-        {:name => 'Teen Births - Teen Birth Rate', :description => "Annual birth rate (births per 1,000 females aged 15-19 years) with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,40.0,80.0,120]" },
-        # {:name => 'Teen Births - Teen Births', :description => "Annual number of births to mothers aged 15-19 years old by Chicago community area, for the years 1999 - 2009." },
-        
-        # Deaths
-        {:name => 'Infant Mortality - Deaths', :description => "Annual number of infant deaths, by Chicago community area, for the years 2004 - 2008." },
-        
-        # Environmental Health
-        # {:name => 'Lead - Elevated Blood Lead Level in', :description => "Annual number and estimated rate per 1,000 children aged 0-6 years receiving a blood lead level test, and the annual number and estimated percentage of those tested found to have an elevated blood lead level, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2011." },
-        {:name => 'Lead - Lead Screening Rate', :description => "Annual number and estimated rate per 1,000 children aged 0-6 years receiving a blood lead level test, and the annual number and estimated percentage of those tested found to have an elevated blood lead level, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2011." },
-        {:name => 'Lead - Percent Elevated', :description => "Annual number and estimated rate per 1,000 children aged 0-6 years receiving a blood lead level test, and the annual number and estimated percentage of those tested found to have an elevated blood lead level, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2011." },
-        # {:name => 'Lead - Screened for Lead in', :description => "Annual number and estimated rate per 1,000 children aged 0-6 years receiving a blood lead level test, and the annual number and estimated percentage of those tested found to have an elevated blood lead level, with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2011." },
-        
-        # Infectious disease
-        {:name => 'Chlamydia in females - Incidence Rate', :description => "Annual number of newly reported, laboratory-confirmed cases of chlamydia (Chlamydia trachomatis) among females aged 15-44 years and annual chlamydia incidence rate (cases per 100,000 females aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011. " },
-        {:name => 'Gonorrhea in females - Incidence Rate', :description => "Annual number of newly reported, laboratory-confirmed cases of gonorrhea (Neisseria gonorrhoeae) among females aged 15-44 years and annual gonorrhea incidence rate (cases per 100,000 females aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011.", :choropleth_cutoffs => "[0,600,1200,1800]" },
-        {:name => 'Gonorrhea in males - Incidence Rate', :description => "Annual number of newly reported, laboratory-confirmed cases of gonorrhea (Neisseria gonorrhoeae) among males aged 15-44 years and annual gonorrhea incidence rate (cases per 100,000 males aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011. ", :choropleth_cutoffs => "[0,600,1200,1800]" },
-        {:name => 'Tuberculosis - Cases', :description => "Annual number of new cases of tuberculosis by Chicago community area, for the years 2007 - 2011.", :choropleth_cutoffs => "[0,4.0,8.0,12]" },
-      ]
-
-      descriptions.each do |d|
-        dataset = Dataset.where(:name => d[:name]).first
-        puts "populating description for #{dataset.name}"
-        dataset.description = d[:description]
-
-        if (d.has_key?(:choropleth_cutoffs))
-          dataset.choropleth_cutoffs = d[:choropleth_cutoffs]
-        end
-
-        dataset.save!
       end
     end
 

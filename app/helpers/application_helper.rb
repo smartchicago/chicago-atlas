@@ -63,13 +63,15 @@ module ApplicationHelper
 
     stats_array = []
     stats.each do |s|
-      stats_array << s[:value]
+      stats_array << ((s[:value].nil? or s[:value] == '') ? 0 : s[:value])
     end
 
     error_bars = []
     stats.each do |s|
       unless (s[:lower_ci].nil? or s[:upper_ci].nil?)
         error_bars << [s[:lower_ci],s[:upper_ci]]
+      else
+        error_bars << [0,0]
       end
     end
 
