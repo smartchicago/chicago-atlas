@@ -87,9 +87,10 @@ namespace :db do
         sh "curl -o tmp/#{handle}.csv https://data.cityofchicago.org/api/views/#{d[:socrata_id]}/rows.csv?accessType=DOWNLOAD"
       
         csv_text = File.read("tmp/#{handle}.csv")
-        csv = CSV.parse(csv_text, {:headers => true, :header_converters => :symbol})
+        csv_text = csv_text.gsub(', ', ',') # hack to remove leading spaces in column headers
 
-        puts csv.first.inspect
+        csv = CSV.parse(csv_text, {:headers => true, :header_converters => :symbol})
+        # puts csv.first.inspect
 
         d[:parse_tokens].each do |parse_token|
 
@@ -179,14 +180,10 @@ namespace :db do
 
           if (row.has_key?("#{parse_token}_#{year}_lower_ci"))
             stat.lower_ci = row["#{parse_token}_#{year}_lower_ci"]
-          elsif (row.has_key?("#{parse_token}_#{year}_lower"))
-            stat.lower_ci = row["#{parse_token}_#{year}_lower"]
           end
 
           if (row.has_key?("#{parse_token}_#{year}_upper_ci"))
             stat.upper_ci = row["#{parse_token}_#{year}_upper_ci"]
-          elsif (row.has_key?("#{parse_token}_#{year}_upper"))
-            stat.upper_ci = row["#{parse_token}_#{year}_upper"]
           end
 
           stat.save!
