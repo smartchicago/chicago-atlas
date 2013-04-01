@@ -33,9 +33,9 @@ navigate to http://localhost:8080/
 
 ## Team
 
-* Derek Eder mailto:derek.eder+git@gmail.com
+* [Derek Eder](mailto:derek.eder+git@gmail.com)
 * Aaron Salmon
-* Dan O'Neil mailto:doneil@cct.org
+* [Dan O'Neil](mailto:doneil@cct.org)
 
 ## Errors / Bugs
 
