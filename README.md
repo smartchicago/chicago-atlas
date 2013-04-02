@@ -33,9 +33,9 @@ navigate to http://localhost:8080/
 
 ## Team
 
-* Derek Eder mailto:derek.eder+git@gmail.com
+* [Derek Eder](mailto:derek.eder+git@gmail.com)
 * Aaron Salmon
-* Dan O'Neil mailto:doneil@cct.org
+* [Dan O'Neil](mailto:doneil@cct.org)
 
 ## Errors / Bugs
 
@@ -49,6 +49,6 @@ Report it here: https://github.com/smartchicago/chicago-atlas/issues
 * Commit, do not mess with rakefile, version, or history.
 * Send me a pull request. Bonus points for topic branches.
 
-== Copyright
+## Copyright
 
 Copyright (c) 2013 DataMade. Released under the MIT License.
