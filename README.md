@@ -9,7 +9,6 @@ git clone git@github.com:smartchicago/chicago-atlas.git
 cd chicago-atlas
 gem install bundler
 bundle install
-cp config/config.yml.example config/config.yml
 rake db:setup
 rake db:import:all
 ```
