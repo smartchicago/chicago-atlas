@@ -93,7 +93,7 @@
         });
         
         var props = layer.feature.properties;
-        layer.bindLabel( '<h4>Community area</h4><b>' + props.name + '</b><br />' + props.condition_title + ': ' + props.condition_value );
+        layer.bindLabel( '<h4>' + props.name + '</h4>' + props.condition_title + ': ' + props.condition_value );
     }
 
     function linkToDetail(e) {
