@@ -42,7 +42,7 @@
             : 'Hover over a community area');
     };
 
-    info.addTo(map);
+    // info.addTo(map);
 
 
     // get color depending on condition_title
@@ -75,14 +75,14 @@
             layer.bringToFront();
         }
 
-        info.update(layer.feature.properties);
+        //info.update(layer.feature.properties);
     }
 
     var geojson;
 
     function resetHighlight(e) {
         geojson.resetStyle(e.target);
-        info.update();
+        //info.update();
     }
 
     function onEachFeature(feature, layer) {
@@ -91,6 +91,9 @@
             mouseout: resetHighlight,
             click: linkToDetail
         });
+        
+        var props = layer.feature.properties;
+        layer.bindLabel( '<h4>Community area</h4><b>' + props.name + '</b><br />' + props.condition_title + ': ' + props.condition_value );
     }
 
     function linkToDetail(e) {
