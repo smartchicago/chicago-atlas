@@ -137,7 +137,6 @@ namespace :db do
       end
 
       dataset.save!
-      dataset
     end
 
     def process_cdph_row(row, dataset, parse_token, group_column='', group='')
@@ -220,7 +219,6 @@ namespace :db do
           :data_type => 'intervention'
         )
         dataset.save!
-        dataset
 
         csv.each do |row|
           # regex to pluck out the lat/long from the LOCATION column
@@ -230,8 +228,6 @@ namespace :db do
             address = matches[1].gsub('\n', '')
             latitude = matches[2]
             longitude = matches[3]
-
-            
 
             intervention = InterventionLocation.new(
               :name => row["SITE NAME"],
@@ -243,7 +239,20 @@ namespace :db do
               :dataset_id => dataset.id
             )
             intervention.save!
-            intervention
+
+            if row["SITE NAME"].upcase.include? '(WIC)'
+              wic_dataset = ['birth_rate']
+
+              wic_dataset.each do |dataset_slug|
+                intervention_relation = InterventionLocationDataset.new(
+                  :intervention_location_id => intervention.id,
+                  :dataset_id => Dataset.where(:slug => dataset_slug).first.id,
+                )
+                intervention_relation.save!
+              end
+
+            end
+
           end
         end
 

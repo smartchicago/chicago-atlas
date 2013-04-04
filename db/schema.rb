@@ -46,12 +46,12 @@ ActiveRecord::Schema.define(:version => 20130404163427) do
     t.string   "centroid"
   end
 
-  create_table "intervention_location_dataset", :force => true do |t|
+  create_table "intervention_location_datasets", :force => true do |t|
     t.integer "intervention_location_id"
     t.integer "dataset_id"
   end
 
-  add_index "intervention_location_dataset", ["intervention_location_id", "dataset_id"], :name => "index_intervention_location_dataset_idx"
+  add_index "intervention_location_datasets", ["intervention_location_id", "dataset_id"], :name => "index_intervention_location_dataset_idx"
 
   create_table "intervention_locations", :force => true do |t|
     t.string   "name"
