@@ -231,6 +231,8 @@ namespace :db do
             latitude = matches[2]
             longitude = matches[3]
 
+            
+
             intervention = InterventionLocation.new(
               :name => row["SITE NAME"],
               :hours => row["HOURS"],
