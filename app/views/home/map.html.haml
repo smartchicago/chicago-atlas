@@ -1,3 +1,7 @@
+= stylesheet_link_tag "//cdn.leafletjs.com/leaflet-0.5/leaflet.css"
+/[if lte IE 8]
+  = stylesheet_link_tag "//cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css"
+
 - content_for :javascripts do
   = javascript_include_tag "leaflet"
 
