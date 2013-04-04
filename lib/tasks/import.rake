@@ -240,6 +240,8 @@ namespace :db do
             )
             intervention.save!
 
+            InterventionLocationDataset.delete_all("intervention_location_id = #{intervention.id}")
+
             # Connect WIC locations to birth-related topics
             if row["SITE NAME"].upcase.include? '(WIC)'
               wic_dataset = ['birth_rate', 'fertility_rate', 'percent_of_low_weight_births', 'percent_of_preterm_births', 'teen_birth_rate', 'prenatal_care_obtained_in_1st_trimester']
@@ -255,7 +257,7 @@ namespace :db do
             end
 
             # Connect STI clinic locations to infectious diseases topics
-            if row["NAME"].include? 'STI '
+            if row["SITE NAME"].include? 'STI '
               sti_dataset = ['chlamydia_in_females', 'gonorrhea_in_females', 'gonorrhea_in_males', 'tuberculosis']
 
               sti_dataset.each do |dataset_slug|
