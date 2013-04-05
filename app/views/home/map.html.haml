@@ -1,6 +1,7 @@
 - content_for :javascripts do
   = javascript_include_tag "leaflet"
   = javascript_include_tag "leaflet.label"
+  = javascript_include_tag "jquery-ui-slider.min"
 
   :javascript
     $(window).resize(function () {
@@ -91,12 +92,6 @@
         });
         allLayers.push(layer);
     }
-    function update_year(year){
-        for(layer in allLayers){
-            var props = allLayers[layer].feature.properties;
-            layer.bindLabel( '<h4>' + props.name + '</h4>' + props.condition_title + ': ' + props.condition_value[ year ] );
-        }
-    }
 
     function linkToDetail(e) {
         window.location = '/place/' + e.target.feature.properties.slug;
@@ -107,7 +102,27 @@
         onEachFeature: onEachFeature
     }).addTo(map);
     
-    update_year(#{:year});
+ 
+    function update_year(year){
+    	$("#year_label").text(year);
+        for(layer in allLayers){
+            var props = allLayers[layer].feature.properties;
+            layer.bindLabel( '<h4>' + props.name + '</h4>' + props.condition_title + ': ' + props.condition_value[ year ] );
+        }
+    }
+
+    var start_year = #{@current_dataset.start_year};
+    var end_year = #{@current_dataset.end_year};
+    update_year(start_year);
+    $("#slider").slider({
+      min: start_year,
+      max: end_year,
+      step: 1,
+      value: end_year,
+      slide: function(event, ui){
+        update_year(ui.value);
+      }
+    });
 
     var clinicIcon = L.icon({
         iconUrl: '/assets/firstaid.png',
@@ -146,15 +161,20 @@
 .row-fluid
   .span4
     %h4 Year
-    %ul.inline
-      - (@current_dataset.start_year..@current_dataset.end_year).each do |y|
-        %li
-          - if y.to_s == params[:year]
-            %strong
-              = y
-          - else
-            %a{:href => "/map/#{params[:dataset_id]}/#{y}"} 
-              = y
+    
+    %div{ :id => "slider" }
+    %strong{ :id => "year_label" }
+    
+    /
+      %ul.inline
+        - (@current_dataset.start_year..@current_dataset.end_year).each do |y|
+          %li
+            - if y.to_s == params[:year]
+              %strong
+                = y
+            - else
+              %a{:href => "/map/#{params[:dataset_id]}/#{y}"} 
+                = y
 
     %hr
     - @categories.each do |c|
