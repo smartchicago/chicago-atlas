@@ -5,9 +5,6 @@ gem 'rails', '3.2.12'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-# database
-gem 'pg'
-
 # caching
 gem 'memcachier'
 gem 'dalli'
@@ -46,3 +43,6 @@ gem 'newrelic_rpm'
 
 # To use debugger
 # gem 'debugger'
+
+# database
+gem 'pg'

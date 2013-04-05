@@ -82,15 +82,20 @@
         //info.update();
     }
 
+    var allLayers = [];
     function onEachFeature(feature, layer) {
         layer.on({
             mouseover: highlightFeature,
             mouseout: resetHighlight,
             click: linkToDetail
         });
-        
-        var props = layer.feature.properties;
-        layer.bindLabel( '<h4>' + props.name + '</h4>' + props.condition_title + ': ' + props.condition_value );
+        allLayers.push(layer);
+    }
+    function update_year(year){
+        for(layer in allLayers){
+            var props = allLayers[layer].feature.properties;
+            layer.bindLabel( '<h4>' + props.name + '</h4>' + props.condition_title + ': ' + props.condition_value[ year ] );
+        }
     }
 
     function linkToDetail(e) {
@@ -101,6 +106,8 @@
         style: style,
         onEachFeature: onEachFeature
     }).addTo(map);
+    
+    update_year(#{:year});
 
     var clinicIcon = L.icon({
         iconUrl: '/assets/firstaid.png',
