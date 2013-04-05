@@ -15,6 +15,8 @@ var LeafletLib = {
         }).addTo(LeafletLib.map);
 
         LeafletLib.map.fitBounds(LeafletLib.geojson.getBounds());
+        
+        LeafletLib.map.attributionControl.setPrefix('');
     },
 
     style: function(feature) {

@@ -15,7 +15,7 @@ class HomeController < ApplicationController
     @interventions.each do |p|
       @points << [p[:name], p[:address], p[:latitude], p[:longitude]]
     end
-    puts @points.inspect
+    # puts @points.inspect
   end
 
   def map
@@ -33,6 +33,7 @@ class HomeController < ApplicationController
       end
       
       @display_geojson = community_area_geojson(params[:dataset_id], params[:year])
+      @intervention_locations = intervention_locations(params[:dataset_id])
       @categories = Category.all
 
     end
