@@ -67,11 +67,7 @@ namespace :db do
         # Infectious disease
         {:category => 'Infectious disease', :name => 'Tuberculosis', :parse_tokens => ['cases'], :socrata_id => 'ndk3-zftj', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Tuberculosis-cases-and-av/ndk3-zftj', :description => "Annual number of new cases of tuberculosis by Chicago community area, for the years 2007 - 2011.", :choropleth_cutoffs => "[0,4.0,8.0,12]"},
         {:category => 'Infectious disease', :name => 'Gonorrhea in females', :parse_tokens => ['incidence_rate'], :socrata_id => 'cgjw-mn43', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Gonorrhea-cases-for-femal/cgjw-mn43', :description => "Annual number of newly reported, laboratory-confirmed cases of gonorrhea (Neisseria gonorrhoeae) among females aged 15-44 years and annual gonorrhea incidence rate (cases per 100,000 females aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011.", :choropleth_cutoffs => "[0,600,1200,1800]"},
-
-        # TODO: accomodate 'Cases 2000 Male 15-44'
         {:category => 'Infectious disease', :name => 'Gonorrhea in males', :parse_tokens => ['incidence_rate'], :socrata_id => 'm5qn-gmjx', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-health-statistics-Gonorrhea-cases-for-males/m5qn-gmjx', :description => "Annual number of newly reported, laboratory-confirmed cases of gonorrhea (Neisseria gonorrhoeae) among males aged 15-44 years and annual gonorrhea incidence rate (cases per 100,000 males aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011. ", :choropleth_cutoffs => "[0,600,1200,1800]"},
-
-        # TODO: accomodate 'Cases 2000 Female 15-44'
         {:category => 'Infectious disease', :name => 'Chlamydia in females', :parse_tokens => ['incidence_rate'], :socrata_id => 'bz6k-73ti', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Chlamydia-cases-among-fem/bz6k-73ti', :description => "Annual number of newly reported, laboratory-confirmed cases of chlamydia (Chlamydia trachomatis) among females aged 15-44 years and annual chlamydia incidence rate (cases per 100,000 females aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011. ", :choropleth_cutoffs => "[0,700,1400,2100,2800]"},
 
         # Chronic disease
@@ -141,7 +137,6 @@ namespace :db do
       end
 
       dataset.save!
-      dataset
     end
 
     def process_cdph_row(row, dataset, parse_token, group_column='', group='')
@@ -224,7 +219,6 @@ namespace :db do
           :data_type => 'intervention'
         )
         dataset.save!
-        dataset
 
         csv.each do |row|
           # regex to pluck out the lat/long from the LOCATION column
@@ -245,7 +239,37 @@ namespace :db do
               :dataset_id => dataset.id
             )
             intervention.save!
-            intervention
+
+            InterventionLocationDataset.delete_all("intervention_location_id = #{intervention.id}")
+
+            # Connect WIC locations to birth-related topics
+            if row["SITE NAME"].upcase.include? '(WIC)'
+              wic_dataset = ['birth_rate', 'fertility_rate', 'percent_of_low_weight_births', 'percent_of_preterm_births', 'teen_birth_rate', 'prenatal_care_obtained_in_1st_trimester']
+
+              wic_dataset.each do |dataset_slug|
+                intervention_relation = InterventionLocationDataset.new(
+                  :intervention_location_id => intervention.id,
+                  :dataset_id => Dataset.where(:slug => dataset_slug).first.id,
+                )
+                intervention_relation.save!
+              end
+
+            end
+
+            # Connect STI clinic locations to infectious diseases topics
+            if row["SITE NAME"].include? 'STI '
+              sti_dataset = ['chlamydia_in_females', 'gonorrhea_in_females', 'gonorrhea_in_males', 'tuberculosis']
+
+              sti_dataset.each do |dataset_slug|
+                intervention_relation = InterventionLocationDataset.new(
+                  :intervention_location_id => intervention.id,
+                  :dataset_id => Dataset.where(:slug => dataset_slug).first.id,
+                )
+                intervention_relation.save!
+              end
+
+            end
+
           end
         end
 

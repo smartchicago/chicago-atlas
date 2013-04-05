@@ -40,6 +40,19 @@ module ApplicationHelper
     ActiveSupport::JSON.encode({"type" => "FeatureCollection", "features" => geojson})
   end
 
+  def intervention_locations(dataset_id)
+    interventions = InterventionLocation
+      .select('intervention_locations.name, address, latitude, longitude')
+      .joins('join intervention_location_datasets on intervention_location_datasets.intervention_location_id = intervention_locations.id')
+      .where("intervention_location_datasets.dataset_id = #{dataset_id}")
+
+    locations = []
+    interventions.each do |p|
+      locations << [p[:name], p[:address], p[:latitude], p[:longitude]]
+    end
+    locations
+  end
+
   def choropleth_function(grades)
     grades = Array.new(grades).reverse
 

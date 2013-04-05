@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130322195844) do
+ActiveRecord::Schema.define(:version => 20130404163427) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -45,6 +45,13 @@ ActiveRecord::Schema.define(:version => 20130322195844) do
     t.datetime "updated_at", :null => false
     t.string   "centroid"
   end
+
+  create_table "intervention_location_datasets", :force => true do |t|
+    t.integer "intervention_location_id"
+    t.integer "dataset_id"
+  end
+
+  add_index "intervention_location_datasets", ["intervention_location_id", "dataset_id"], :name => "index_intervention_location_dataset_idx"
 
   create_table "intervention_locations", :force => true do |t|
     t.string   "name"

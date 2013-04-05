@@ -1,5 +1,6 @@
 - content_for :javascripts do
   = javascript_include_tag "leaflet"
+  = javascript_include_tag "leaflet.label"
 
   :javascript
     $(window).resize(function () {
@@ -11,6 +12,8 @@
 
 
     var geojsonFeature = #{@display_geojson};
+
+    var intervention_locations = #{@intervention_locations};
 
     var map = L.map('map').setView([41.8781136, -87.66677856445312], 11);
 
@@ -36,7 +39,7 @@
             : 'Hover over a community area');
     };
 
-    info.addTo(map);
+    // info.addTo(map);
 
 
     // get color depending on condition_title
@@ -69,14 +72,14 @@
             layer.bringToFront();
         }
 
-        info.update(layer.feature.properties);
+        //info.update(layer.feature.properties);
     }
 
     var geojson;
 
     function resetHighlight(e) {
         geojson.resetStyle(e.target);
-        info.update();
+        //info.update();
     }
 
     function onEachFeature(feature, layer) {
@@ -85,6 +88,9 @@
             mouseout: resetHighlight,
             click: linkToDetail
         });
+        
+        var props = layer.feature.properties;
+        layer.bindLabel( '<h4>' + props.name + '</h4>' + props.condition_title + ': ' + props.condition_value );
     }
 
     function linkToDetail(e) {
@@ -95,6 +101,15 @@
         style: style,
         onEachFeature: onEachFeature
     }).addTo(map);
+
+    var clinicIcon = L.icon({
+        iconUrl: '/assets/firstaid.png',
+        shadowUrl: '/assets/square-shadow.png'
+    });
+
+    for (point in intervention_locations) {
+        L.marker([intervention_locations[point][2], intervention_locations[point][3]], {icon: clinicIcon}).addTo(map).bindPopup("<b>" + intervention_locations[point][0] + "</b><br />" + intervention_locations[point][1]);
+    }
 
 
     var legend = L.control({position: 'bottomright'});
@@ -145,6 +160,8 @@
             - if d.id.to_s == params[:dataset_id]
               %strong
                 = d.name
+              - if @intervention_locations.length > 0
+                = "(showing #{@intervention_locations.length} clinics)"
             - else
               %a{:href => "/map/#{d.id}/#{params[:year]}"} 
                 = d.name
