@@ -11,7 +11,7 @@ ChicagoAtlas::Application.routes.draw do
   get "places" => 'geography#index'
 
   # static pages
-  match 'map(/:dataset_id/:year)' => 'home#map'
+  match 'map(/:dataset_slug)' => 'home#map'
   get "about" => 'home#about'
   get "partners" => 'home#partners'
   get "partner_sign_up" => 'home#partner_sign_up'
