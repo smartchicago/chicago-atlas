@@ -16,24 +16,62 @@ module ApplicationHelper
       .order("datasets.name")
   end
 
-  def community_area_geojson(dataset_id, year)
+  def community_area_geojson(dataset_id)
 
     area_stats = Geography.joins(:statistics)
-      .select("geographies.id, geographies.name, geographies.slug, geographies.geometry, statistics.name as condition_title, statistics.value as condition_value")
-      .where("dataset_id = #{dataset_id} and year = #{year} and geo_type = 'Community Area'")
+      .select("geographies.id, geographies.name, geographies.slug, geographies.geometry, statistics.name as condition_title, statistics.value as condition_value, statistics.year as condition_year")
+      .where("dataset_id = #{dataset_id} and geo_type = 'Community Area'")
+      .order("geographies.id, statistics.year")
 
     geojson = []
+    values_by_year = { }
+    last_geo = { "id" => nil }
+    
     area_stats.all.each do |c|
+      if c['id'] == last_geo['id']
+        # append value to existing timeline of values for this geography
+        values_by_year[ c.condition_year ] = c.condition_value
+      else
+        if last_geo['id'] != nil
+          # there are no more points for the previous geo; output it
+          geojson << {
+            "type" => "Feature", 
+            "id" => last_geo['id'],
+            "properties" => {
+              "name" => last_geo['name'],
+              "slug" => last_geo['slug'],
+              "condition_title" => last_geo['title'],
+              "condition_value" => values_by_year
+            },
+            "geometry" => ActiveSupport::JSON.decode(last_geo['geometry'])
+          }
+        end
+        # reset to accept this and next geo
+        values_by_year = {
+          c.condition_year => c.condition_value
+        }
+        last_geo = {
+          "id" => c.id,
+          "name" => c.name,
+          "slug" => c.slug,
+          "title" => c.condition_title,
+          "geometry" => c.geometry
+        }
+      end
+    end
+    # output last geo
+    if last_geo['id'] != nil
+      # there are no more points for the previous geo; output it
       geojson << {
         "type" => "Feature", 
-        "id" => c.id,
+        "id" => last_geo['id'],
         "properties" => {
-            "name" => c.name,
-            "slug" => c.slug,
-            "condition_title" => c.condition_title,
-            "condition_value" => c.condition_value
+          "name" => last_geo['name'],
+          "slug" => last_geo['slug'],
+          "condition_title" => last_geo['title'],
+          "condition_value" => values_by_year
         },
-        "geometry" => ActiveSupport::JSON.decode(c.geometry)
+        "geometry" => ActiveSupport::JSON.decode(last_geo['geometry'])
       }
     end
 

@@ -19,21 +19,14 @@ class HomeController < ApplicationController
   end
 
   def map
-    if params[:dataset_id].nil? or params[:year].nil?
+    if params[:dataset_slug].nil?
       @current_dataset = Dataset.order("name").first
-      redirect_to :action => "map", :dataset_id => @current_dataset.id, :year => @current_dataset.end_year
+      redirect_to :action => "map", :dataset_slug => @current_dataset.slug
     else
-      @current_dataset = Dataset.find(params[:dataset_id])
-
-      # when toggling between datasets, year ranges are inconsistent so we need to check for them
-      if @current_dataset.start_year > params[:year].to_i
-        redirect_to :action => "map", :dataset_id => @current_dataset.id, :year => @current_dataset.start_year
-      elsif @current_dataset.end_year < params[:year].to_i
-        redirect_to :action => "map", :dataset_id => @current_dataset.id, :year => @current_dataset.end_year
-      end
+      @current_dataset = Dataset.where("slug = '#{params[:dataset_slug]}'").first
       
-      @display_geojson = community_area_geojson(params[:dataset_id], params[:year])
-      @intervention_locations = intervention_locations(params[:dataset_id])
+      @display_geojson = community_area_geojson(@current_dataset.id)
+      @intervention_locations = intervention_locations(@current_dataset.id)
       @categories = Category.all
 
     end
