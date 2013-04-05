@@ -13,6 +13,8 @@
 
     var geojsonFeature = #{@display_geojson};
 
+    var intervention_locations = #{@intervention_locations};
+
     var map = L.map('map').setView([41.8781136, -87.66677856445312], 11);
 
     var cloudmade = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
@@ -100,6 +102,15 @@
         onEachFeature: onEachFeature
     }).addTo(map);
 
+    var clinicIcon = L.icon({
+        iconUrl: '/assets/firstaid.png',
+        shadowUrl: '/assets/square-shadow.png'
+    });
+
+    for (point in intervention_locations) {
+        L.marker([intervention_locations[point][2], intervention_locations[point][3]], {icon: clinicIcon}).addTo(map).bindPopup("<b>" + intervention_locations[point][0] + "</b><br />" + intervention_locations[point][1]);
+    }
+
 
     var legend = L.control({position: 'bottomright'});
 
@@ -149,6 +160,8 @@
             - if d.id.to_s == params[:dataset_id]
               %strong
                 = d.name
+              - if @intervention_locations.length > 0
+                = "(showing #{@intervention_locations.length} clinics)"
             - else
               %a{:href => "/map/#{d.id}/#{params[:year]}"} 
                 = d.name
