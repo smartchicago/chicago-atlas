@@ -137,6 +137,7 @@ namespace :db do
       end
 
       dataset.save!
+      dataset
     end
 
     def process_cdph_row(row, dataset, parse_token, group_column='', group='')
@@ -182,6 +183,7 @@ namespace :db do
           end
 
           stat.save!
+          stat
         end
 
       end
