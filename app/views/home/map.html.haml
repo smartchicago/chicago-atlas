@@ -107,18 +107,23 @@
     	$("#year_label").text(year);
         for(layer in allLayers){
             var props = allLayers[layer].feature.properties;
-            layer.bindLabel( '<h4>' + props.name + '</h4>' + props.condition_title + ': ' + props.condition_value[ year ] );
+            allLayers[layer].bindLabel( '<h4>' + props.name + '</h4>' + props.condition_title + ': ' + props.condition_value[ year ] );
+            allLayers[layer].setStyle({fillColor: getColor(props.condition_value[year])});
         }
     }
 
     var start_year = #{@current_dataset.start_year};
     var end_year = #{@current_dataset.end_year};
+
+    $('#start_year').html(start_year);
+    $('#end_year').html(end_year);
+
     update_year(end_year);
     $("#slider").slider({
       min: start_year,
       max: end_year,
       step: 1,
-      value: end_year,
+      value: start_year,
       slide: function(event, ui){
         update_year(ui.value);
       }
@@ -126,7 +131,9 @@
 
     var clinicIcon = L.icon({
         iconUrl: '/assets/firstaid.png',
-        shadowUrl: '/assets/square-shadow.png'
+        shadowUrl: '/assets/square-shadow.png',
+        iconSize:     [32, 37], // size of the icon
+        shadowSize:   [51, 37] // size of the shadow
     });
 
     for (point in intervention_locations) {
@@ -160,10 +167,13 @@
 
 .row-fluid
   .span4
-    %h4 Year
+    %h4 
+      Year
+      %small#year_label
     
     %div{ :id => "slider" }
-    %strong{ :id => "year_label" }
+    %strong.pull-left#start_year
+    %strong.pull-right#end_year
     
     /
       %ul.inline
@@ -184,13 +194,13 @@
       %ul
         - Dataset.where(:category_id => c.id).order("name").each do |d|
           %li
-            - if d.id.to_s == params[:dataset_id]
+            - if d.slug == params[:dataset_slug]
               %strong
                 = d.name
               - if @intervention_locations.length > 0
                 = "(showing #{@intervention_locations.length} clinics)"
             - else
-              %a{:href => "/map/#{d.id}/#{params[:year]}"} 
+              %a{:href => "/map/#{d.slug}"} 
                 = d.name
 
   .span8
