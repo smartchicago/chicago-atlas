@@ -163,7 +163,27 @@ var LeafletLib = {
             && (c = !c);
           }
           return c;
-       }
+        }
+        else if( typeof shape.geojson != "undefined" ){
+          var foundMatch = false;
+          L.geoJson(shape.geojson, {
+            onEachFeature: function(feature, layer){
+               if(foundMatch){ return; }
+               if(typeof layer.getLatLngs != "undefined"){
+                 foundMatch = LeafletLib.ptInShape(pt, { polygon: layer });
+               }
+               else if(typeof layer.eachLayer != "undefined"){
+                 layer.eachLayer(function(l){
+                   if(foundMatch){ return; }
+                   if(typeof l.getLatLngs != "undefined"){
+                     foundMatch = LeafletLib.ptInShape(pt, { polygon: l });
+                   }
+                 });
+               }
+            }
+          });
+          return foundMatch;
+        }
     },
 
     filterMarkers: function( boundary ){

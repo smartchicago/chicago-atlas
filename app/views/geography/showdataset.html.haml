@@ -1,5 +1,5 @@
 .row-fluid
-  .span8
+  .span10
 
     %h1
       = #{@dataset.name} in #{@geography.name}
@@ -11,21 +11,40 @@
 
     = render :partial => "geography/dataset", :locals => { :dataset => @dataset, :geography => @geography }
 
-  .span4
-    .well
-      - content_for :javascripts do
-        = javascript_include_tag "leaflet"
-        = javascript_include_tag "leaflet_lib"
+    %a{:href => "/place/#{@geography.slug}"} All Datasets for #{@geography.name}
 
-        :javascript
-          var geojsonFeature = {
-              "type": "Feature",
-              "geometry": #{@geography.geometry}
-          };
+.row-fluid
+  .span10
+    - content_for :javascripts do
+      = javascript_include_tag "leaflet"
+      = javascript_include_tag "leaflet_lib"
 
-          LeafletLib.initialize("map_detail", { geojson: geojsonFeature }, #{@geography.centroid_as_lat_lng}, 13);
+      :javascript
+        var geojsonFeature = {
+            "type": "Feature",
+            "geometry": #{@geography.geometry}
+        };
 
-      #map_detail
+        LeafletLib.initialize("map_detail", { geojson: geojsonFeature }, #{@geography.centroid_as_lat_lng}, 13);
 
-      %h3 Other Conditions
-      %a{:href => "/place/#{@geography.slug}"} Health Report for #{@geography.name}
+        var interventions = #{@intervention_locations};
+
+        var clinicIcon = L.icon({
+            iconUrl: '/assets/firstaid.png',
+            shadowUrl: '/assets/square-shadow.png',
+            iconSize:     [32, 37],
+            shadowSize:   [51, 37],
+            shadowAnchor: [16, 16]            
+        });
+
+        for(var i=0;i<interventions.length;i++){
+          LeafletLib.addMarker(
+            new L.Marker(
+              new L.LatLng( interventions[i][2], interventions[i][3] ),
+              { icon: clinicIcon }
+            )
+          );
+        }
+        LeafletLib.filterMarkers({ geojson: geojsonFeature });
+
+    #map_detail

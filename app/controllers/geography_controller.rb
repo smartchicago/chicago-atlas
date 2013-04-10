@@ -1,4 +1,6 @@
 class GeographyController < ApplicationController
+  include ApplicationHelper
+
   def index
     @geographies = Geography.order("name").all
   end
@@ -11,6 +13,7 @@ class GeographyController < ApplicationController
   def showdataset
     @geography = Geography.where(:slug => params[:geo_slug]).first
     @dataset = Dataset.where(:slug => params[:dataset_slug]).first
+    @intervention_locations = intervention_locations(@dataset.id)
   end
 
 end

@@ -131,8 +131,9 @@
     var clinicIcon = L.icon({
         iconUrl: '/assets/firstaid.png',
         shadowUrl: '/assets/square-shadow.png',
-        iconSize:     [32, 37], // size of the icon
-        shadowSize:   [51, 37] // size of the shadow
+        iconSize:     [32, 37],
+        shadowSize:   [51, 37],
+        shadowAnchor: [16, 16]
     });
 
     for (point in intervention_locations) {
