@@ -2,16 +2,17 @@
   .span10
 
     %h1
-      = #{@dataset.name} in #{@geography.name}
+      #{@geography.name}
+      %small #{@dataset.name}
 
     %hr
+
+    %a{:href => "/place/#{@geography.slug}"} All datasets for #{@geography.name}
 
     :javascript
       var colorHash = ["#A6761D", "#7570B3", "#D95F02", "#66A61E", "#E7298A", "#E6AB02", "#1B9E77"];
 
-    = render :partial => "geography/dataset", :locals => { :dataset => @dataset, :geography => @geography }
-
-    %a{:href => "/place/#{@geography.slug}"} All Datasets for #{@geography.name}
+    = render :partial => "geography/dataset", :locals => { :dataset => @dataset, :geography => @geography, :show_header => false }
 
 .row-fluid
   .span10
@@ -27,8 +28,6 @@
 
         LeafletLib.initialize("map_detail", { geojson: geojsonFeature }, #{@geography.centroid_as_lat_lng}, 13);
 
-        var interventions = #{@intervention_locations};
-
         var clinicIcon = L.icon({
             iconUrl: '/assets/firstaid.png',
             shadowUrl: '/assets/square-shadow.png',
@@ -37,14 +36,22 @@
             shadowAnchor: [16, 16]            
         });
 
-        for(var i=0;i<interventions.length;i++){
-          LeafletLib.addMarker(
-            new L.Marker(
-              new L.LatLng( interventions[i][2], interventions[i][3] ),
-              { icon: clinicIcon }
-            )
-          );
+        var bounds = [LeafletLib.latmax, LeafletLib.lngmax, LeafletLib.latmin, LeafletLib.lngmin];
+        for(var coord=0;coord<bounds.length;coord++){
+          bounds[coord] = (bounds[coord] + "").replace(".",",");
         }
-        LeafletLib.filterMarkers({ geojson: geojsonFeature });
+        $.getJSON("/interventions/#{@dataset.id}/" + bounds.join("/") + ".json", function(interventions){
+          for(var i=0;i<interventions.length;i++){
+            LeafletLib.addMarker(
+              new L.Marker(
+                new L.LatLng( interventions[i][2], interventions[i][3] ),
+                { icon: clinicIcon }
+              )
+            );
+          }
+        });
+        //LeafletLib.filterMarkers({ geojson: geojsonFeature });
+
+    %h3 Local resources
 
     #map_detail

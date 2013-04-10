@@ -78,11 +78,22 @@ module ApplicationHelper
     ActiveSupport::JSON.encode({"type" => "FeatureCollection", "features" => geojson})
   end
 
-  def intervention_locations(dataset_id)
+  def intervention_locations(dataset_id, bounds=nil)
+    # send boundary with [ north, east, south, west ]
+
     interventions = InterventionLocation
       .select('intervention_locations.name, address, latitude, longitude')
       .joins('join intervention_location_datasets on intervention_location_datasets.intervention_location_id = intervention_locations.id')
       .where("intervention_location_datasets.dataset_id = #{dataset_id}")
+
+    if bounds
+      bounds[0] = bounds[0].gsub(/[,]/, '.').to_f
+      bounds[1] = bounds[1].gsub(/[,]/, '.').to_f
+      bounds[2] = bounds[2].gsub(/[,]/, '.').to_f
+      bounds[3] = bounds[3].gsub(/[,]/, '.').to_f
+
+      interventions = interventions.where("latitude < #{bounds[0]} AND longitude < #{bounds[1]} AND latitude > #{bounds[2]} AND longitude > #{bounds[3]}")
+    end
 
     locations = []
     interventions.each do |p|
