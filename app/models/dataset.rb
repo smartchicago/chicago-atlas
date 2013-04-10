@@ -2,7 +2,7 @@ class Dataset < ActiveRecord::Base
   belongs_to :category
   has_many :statistics
 
-  attr_accessible :description, :metadata, :name, :slug, :provider, :url, :category_id, :data_type
+  attr_accessible :description, :metadata, :name, :slug, :provider, :url, :category_id, :data_type, :stat_type
 
   def choropleth_cutoffs_json
     if choropleth_cutoffs == ''

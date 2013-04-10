@@ -8,7 +8,7 @@
   - @datasets = get_datasets(geography.id, category.id)
 
   - @datasets.each do |dataset|
-    = render :partial => "geography/dataset", :locals => {:dataset => dataset, :geography => geography}
+    = render :partial => "geography/dataset", :locals => {:dataset => dataset, :geography => geography, :show_header => true }
 
 .clearfix
 %hr

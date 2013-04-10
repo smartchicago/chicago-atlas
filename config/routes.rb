@@ -10,6 +10,8 @@ ChicagoAtlas::Application.routes.draw do
   match 'place/:slug' => 'geography#show'
   get "places" => 'geography#index'
 
+  match 'place/:geo_slug/:dataset_slug' => 'geography#showdataset'
+
   # static pages
   match 'map(/:dataset_slug)' => 'home#map'
   get "about" => 'home#about'
@@ -19,6 +21,7 @@ ChicagoAtlas::Application.routes.draw do
   # test pages
   get "leaflet_test" => 'home#leaflet_test'
   get "interventions_test" => 'home#interventions_test'
+  match "interventions/:dataset/:north/:east/:south/:west" => 'dataset#interventions'
 
   root :to => 'home#index'
 

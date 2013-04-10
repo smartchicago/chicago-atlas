@@ -10,7 +10,7 @@
       var colorHash = ["#A6761D", "#7570B3", "#D95F02", "#66A61E", "#E7298A", "#E6AB02", "#1B9E77"];
 
     - @categories.each do |category|
-      = render :partial => "geography/category", :locals => {:category => category, :geography => @geography}
+      = render :partial => "geography/category", :locals => {:category => category, :geography => @geography }
 
   .span4
     .well
@@ -24,7 +24,7 @@
               "geometry": #{@geography.geometry}
           };
 
-          LeafletLib.initialize("map_detail", geojsonFeature, #{@geography.centroid_as_lat_lng}, 13);
+          LeafletLib.initialize("map_detail", { geojson: geojsonFeature }, #{@geography.centroid_as_lat_lng}, 13);
 
       #map_detail
 

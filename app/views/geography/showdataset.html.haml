@@ -1,0 +1,62 @@
+.row-fluid
+  .span10
+
+    %h1
+      #{@geography.name}
+      %small #{@dataset.name}
+
+    %a{:href => "/place/#{@geography.slug}"} All datasets for #{@geography.name}
+
+    %hr
+
+    :javascript
+      var colorHash = ["#A6761D", "#7570B3", "#D95F02", "#66A61E", "#E7298A", "#E6AB02", "#1B9E77"];
+
+    = render :partial => "geography/dataset", :locals => { :dataset => @dataset, :geography => @geography, :show_header => false }
+
+.row-fluid
+  .span10
+    - content_for :javascripts do
+      = javascript_include_tag "leaflet"
+      = javascript_include_tag "leaflet_lib"
+
+      :javascript
+        var geojsonFeature = {
+            "type": "Feature",
+            "geometry": #{@geography.geometry}
+        };
+
+        LeafletLib.initialize("map_detail", { geojson: geojsonFeature }, #{@geography.centroid_as_lat_lng}, 13);
+
+        var clinicIcon = L.icon({
+            iconUrl: '/assets/firstaid.png',
+            shadowUrl: '/assets/square-shadow.png',
+            iconSize:     [32, 37],
+            shadowSize:   [51, 37],
+            shadowAnchor: [16, 16]            
+        });
+
+        var bounds = [LeafletLib.latmax, LeafletLib.lngmax, LeafletLib.latmin, LeafletLib.lngmin];
+        bounds[0] = (bounds[0] + "").replace(".",",");
+        bounds[1] = (bounds[1] + "").replace(".",",");
+        bounds[2] = (bounds[2] + "").replace(".",",");
+        bounds[3] = (bounds[3] + "").replace(".",",");
+
+        $.getJSON("/interventions/#{@dataset.id}/" + bounds.join("/") + ".json", function(interventions){
+          for(var i=0;i<interventions.length;i++){
+            LeafletLib.addMarker(
+              (new L.Marker(
+                new L.LatLng( interventions[i][2], interventions[i][3] ),
+                { icon: clinicIcon }
+              )).bindPopup("<b>" + interventions[i][0] + "</b><br/>" + interventions[i][1])
+            );
+            $("#intervention_list").append("<li><h4>" + interventions[i][0] + "<br/><small>" + interventions[i][1] + "</small></h4></li>");
+          }
+        });
+        //LeafletLib.filterMarkers({ geojson: geojsonFeature });
+
+    %h3 Local resources
+
+    #map_detail
+
+    %ul#intervention_list
