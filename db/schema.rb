@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130404163427) do
+ActiveRecord::Schema.define(:version => 20130410213503) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20130404163427) do
     t.datetime "updated_at",                         :null => false
     t.text     "choropleth_cutoffs", :default => ""
     t.string   "data_type"
+    t.string   "stat_type"
   end
 
   add_index "datasets", ["category_id"], :name => "index_datasets_on_category_id"

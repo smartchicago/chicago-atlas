@@ -1,11 +1,9 @@
 var ChartHelper = {};
-ChartHelper.create = function(element, type, title, seriesData, startDate, pointInterval, stacking) {
-  // console.log("rendering to: #chart_" + element);
-  // console.log("seriesData: " + seriesData);
-  // console.log("startDate: " + startDate);
-  // console.log("pointInterval: " + pointInterval);
+ChartHelper.create = function(element, type, title, seriesData, startDate, pointInterval, statType) {
+  var percentSuffix = '';
+  if(statType == 'percent')
+    percentSuffix = '%';
 
-  //$("#charts").append("<div class='chart' id='chart_grouping_" + iteration + "'></div>")
   return new Highcharts.Chart({
       chart: {
           renderTo: element,
@@ -30,7 +28,6 @@ ChartHelper.create = function(element, type, title, seriesData, startDate, point
       },
       plotOptions: {
         series: {
-          stacking: stacking,
           marker: {
             radius: 0,
             states: {
@@ -51,9 +48,9 @@ ChartHelper.create = function(element, type, title, seriesData, startDate, point
             var s = "<strong>" + ChartHelper.toolTipDateFormat(pointInterval, this.x) + "</strong>";
             $.each(this.points, function(i, point) {
               if (point.point.low != null && point.point.high != null)
-                s += "<br /><span style='color: " + point.series.color + "'>" + point.series.name + ":</span> " + point.point.low + " - " + point.point.high;
+                s += "<br /><span style='color: " + point.series.color + "'>" + point.series.name + ":</span> " + point.point.low + percentSuffix + " - " + point.point.high + percentSuffix;
               else
-                s += "<br /><span style='color: " + point.series.color + "'>" + point.series.name + ":</span> " + point.y;
+                s += "<br /><span style='color: " + point.series.color + "'>" + point.series.name + ":</span> " + point.y + percentSuffix;
             });
             return s;
           },

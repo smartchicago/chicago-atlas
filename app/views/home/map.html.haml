@@ -34,15 +34,6 @@
         return this._div;
     };
 
-    info.update = function (props) {
-        this._div.innerHTML = '<h4>Community area</h4>' +  (props ?
-            '<b>' + props.name + '</b><br />' + props.condition_title + ': ' + props.condition_value
-            : 'Hover over a community area');
-    };
-
-    // info.addTo(map);
-
-
     // get color depending on condition_title
     function getColor(d) {
         #{choropleth_function(@current_dataset.choropleth_cutoffs_json)}
@@ -54,8 +45,7 @@
             opacity: 1,
             color: 'white',
             dashArray: '3',
-            fillOpacity: 0.7,
-            fillColor: getColor(feature.properties.condition_value)
+            fillOpacity: 0.7
         };
     }
 
@@ -72,15 +62,12 @@
         if (!L.Browser.ie && !L.Browser.opera) {
             layer.bringToFront();
         }
-
-        //info.update(layer.feature.properties);
     }
 
     var geojson;
 
     function resetHighlight(e) {
         geojson.resetStyle(e.target);
-        //info.update();
     }
 
     var allLayers = [];
@@ -94,7 +81,7 @@
     }
 
     function linkToDetail(e) {
-        window.location = '/place/' + e.target.feature.properties.slug;
+        window.location = '/place/' + e.target.feature.properties.slug + '/#{@current_dataset.slug}';
     }
 
     geojson = L.geoJson(geojsonFeature, {
@@ -107,7 +94,9 @@
     	$("#year_label").text(year);
         for(layer in allLayers){
             var props = allLayers[layer].feature.properties;
-            allLayers[layer].bindLabel( '<h4>' + props.name + '</h4>' + props.condition_title + ': ' + props.condition_value[ year ] );
+            var percentSuffix = '';
+            if (props.stat_type == 'percent') percentSuffix = '%';
+            allLayers[layer].bindLabel( '<h4>' + props.name + '</h4>' + props.condition_title + ': ' + props.condition_value[ year ] + percentSuffix);
             allLayers[layer].setStyle({fillColor: getColor(props.condition_value[year])});
         }
     }
@@ -123,7 +112,7 @@
       min: start_year,
       max: end_year,
       step: 1,
-      value: start_year,
+      value: end_year,
       slide: function(event, ui){
         update_year(ui.value);
       }
@@ -132,8 +121,9 @@
     var clinicIcon = L.icon({
         iconUrl: '/assets/firstaid.png',
         shadowUrl: '/assets/square-shadow.png',
-        iconSize:     [32, 37], // size of the icon
-        shadowSize:   [51, 37] // size of the shadow
+        iconSize:     [32, 37],
+        shadowSize:   [51, 37],
+        shadowAnchor: [16, 16]
     });
 
     for (point in intervention_locations) {
@@ -159,7 +149,7 @@
                 from + (to ? '&ndash;' + to : '+'));
         }
 
-        div.innerHTML = labels.join('<br>');
+        div.innerHTML = "<strong>#{@current_dataset.name}</strong><br>" + labels.join('<br>');
         return div;
     };
 

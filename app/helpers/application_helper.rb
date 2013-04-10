@@ -10,7 +10,7 @@ module ApplicationHelper
 
   def get_datasets(geography_id, category_id)
     Dataset.joins(:statistics)
-      .select("datasets.id, datasets.name, datasets.description")
+      .select("datasets.id, datasets.name, datasets.description, datasets.stat_type")
       .where("statistics.geography_id = #{geography_id} AND datasets.category_id = #{category_id}")
       .group("datasets.id, datasets.name")
       .order("datasets.name")
@@ -18,8 +18,10 @@ module ApplicationHelper
 
   def community_area_geojson(dataset_id)
 
-    area_stats = Geography.joins(:statistics)
-      .select("geographies.id, geographies.name, geographies.slug, geographies.geometry, statistics.name as condition_title, statistics.value as condition_value, statistics.year as condition_year")
+    area_stats = Geography
+      .select("geographies.id, geographies.name, geographies.slug, geographies.geometry, statistics.name as condition_title, statistics.value as condition_value, statistics.year as condition_year, datasets.stat_type, datasets.name as dataset_name")
+      .joins("join statistics on statistics.geography_id = geographies.id")
+      .joins("join datasets on datasets.id = statistics.dataset_id")
       .where("dataset_id = #{dataset_id} and geo_type = 'Community Area'")
       .order("geographies.id, statistics.year")
 
@@ -40,21 +42,21 @@ module ApplicationHelper
             "properties" => {
               "name" => last_geo['name'],
               "slug" => last_geo['slug'],
-              "condition_title" => last_geo['title'],
+              "stat_type" => last_geo['stat_type'],
+              "condition_title" => last_geo['dataset_name'],
               "condition_value" => values_by_year
             },
             "geometry" => ActiveSupport::JSON.decode(last_geo['geometry'])
           }
         end
         # reset to accept this and next geo
-        values_by_year = {
-          c.condition_year => c.condition_value
-        }
+        values_by_year = { c.condition_year => c.condition_value }
         last_geo = {
           "id" => c.id,
           "name" => c.name,
           "slug" => c.slug,
-          "title" => c.condition_title,
+          "stat_type" => c.stat_type,
+          "dataset_name" => c.dataset_name,
           "geometry" => c.geometry
         }
       end
@@ -68,7 +70,8 @@ module ApplicationHelper
         "properties" => {
           "name" => last_geo['name'],
           "slug" => last_geo['slug'],
-          "condition_title" => last_geo['title'],
+          "stat_type" => last_geo['stat_type'],
+          "condition_title" => last_geo['dataset_name'],
           "condition_value" => values_by_year
         },
         "geometry" => ActiveSupport::JSON.decode(last_geo['geometry'])
@@ -78,11 +81,22 @@ module ApplicationHelper
     ActiveSupport::JSON.encode({"type" => "FeatureCollection", "features" => geojson})
   end
 
-  def intervention_locations(dataset_id)
+  def intervention_locations(dataset_id, bounds=nil)
+    # send boundary with [ north, east, south, west ]
+
     interventions = InterventionLocation
       .select('intervention_locations.name, address, latitude, longitude')
       .joins('join intervention_location_datasets on intervention_location_datasets.intervention_location_id = intervention_locations.id')
       .where("intervention_location_datasets.dataset_id = #{dataset_id}")
+
+    if bounds
+      bounds[0] = bounds[0].gsub(/[,]/, '.').to_f
+      bounds[1] = bounds[1].gsub(/[,]/, '.').to_f
+      bounds[2] = bounds[2].gsub(/[,]/, '.').to_f
+      bounds[3] = bounds[3].gsub(/[,]/, '.').to_f
+
+      interventions = interventions.where("latitude < #{bounds[0]} AND longitude < #{bounds[1]} AND latitude > #{bounds[2]} AND longitude > #{bounds[3]}")
+    end
 
     locations = []
     interventions.each do |p|
