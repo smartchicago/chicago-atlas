@@ -149,7 +149,7 @@
                 from + (to ? '&ndash;' + to : '+'));
         }
 
-        div.innerHTML = labels.join('<br>');
+        div.innerHTML = "<strong>#{@current_dataset.name}</strong><br>" + labels.join('<br>');
         return div;
     };
 
