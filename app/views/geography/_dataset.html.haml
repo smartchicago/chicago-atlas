@@ -38,7 +38,7 @@
         ];
 
 
-        ChartHelper.create("#{chart_id}", "line", "", seriesData, Date.UTC(#{chart_stats[:start_year]}, 1, 1), "year", null);
+        ChartHelper.create("#{chart_id}", "line", "", seriesData, Date.UTC(#{chart_stats[:start_year]}, 1, 1), "year", "#{dataset.stat_type}");
       });
 
 .clearfix
