@@ -13,7 +13,8 @@ class GeographyController < ApplicationController
   def showdataset
     @geography = Geography.where(:slug => params[:geo_slug]).first
     @dataset = Dataset.where(:slug => params[:dataset_slug]).first
-    @intervention_locations = intervention_locations(@dataset.id)
+    @intervention_locations = [ ]
+    #intervention_locations(@dataset.id, @geography.bounds)
   end
 
 end
