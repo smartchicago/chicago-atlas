@@ -2,15 +2,14 @@
   .span8
 
     %h1
-      = @geography.name
+      = #{@dataset.name} in #{@geography.name}
 
     %hr
 
     :javascript
       var colorHash = ["#A6761D", "#7570B3", "#D95F02", "#66A61E", "#E7298A", "#E6AB02", "#1B9E77"];
 
-    - @categories.each do |category|
-      = render :partial => "geography/category", :locals => {:category => category, :geography => @geography}
+    = render :partial => "geography/dataset", :locals => { :dataset => @dataset, :geography => @geography }
 
   .span4
     .well
@@ -28,9 +27,5 @@
 
       #map_detail
 
-      %h3 Conditions
-      %ul
-        - @categories.each do |category|
-          %li
-            %a{:href => "##{category.name.parameterize.underscore}"} 
-              = category.name
+      %h3 Other Conditions
+      %a{:href => "/place/#{@geography.slug}"} Health Report for #{@geography.name}

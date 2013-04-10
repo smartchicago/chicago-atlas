@@ -8,4 +8,9 @@ class GeographyController < ApplicationController
     @categories = Category.all
   end
 
+  def showdataset
+    @geography = Geography.where(:slug => params[:geo_slug]).first
+    @dataset = Dataset.where(:slug => params[:dataset_slug]).first
+  end
+
 end

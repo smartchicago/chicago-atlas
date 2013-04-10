@@ -1,5 +1,6 @@
 %h3
   = dataset.name
+  %a.btn.btn-info.pull-right{ :href => "/place/#{@geography.slug}/#{dataset.name.parameterize.underscore.to_sym}" } Details
 
 .span4
   %p 
