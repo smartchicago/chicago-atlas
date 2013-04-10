@@ -129,7 +129,8 @@ namespace :db do
         :url => d[:url],
         :category_id => Category.where(:name => d[:category]).first.id,
         :data_type => 'condition',
-        :description => d[:description]
+        :description => d[:description],
+        :stat_type => d[:stat_type]
       )
 
       if (d.has_key?(:choropleth_cutoffs))
