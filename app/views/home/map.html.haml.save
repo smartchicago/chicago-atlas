@@ -24,7 +24,6 @@
         styleId: 22677
     }).addTo(map);
 
-    map.attributionControl.setPrefix('');
 
     // control that shows info on hover
     var info = L.control();
@@ -34,6 +33,15 @@
         this.update();
         return this._div;
     };
+
+    info.update = function (props) {
+        this._div.innerHTML = '<h4>Community area</h4>' +  (props ?
+            '<b>' + props.name + '</b><br />' + props.condition_title + ': ' + props.condition_value
+            : 'Hover over a community area');
+    };
+
+    // info.addTo(map);
+
 
     // get color depending on condition_title
     function getColor(d) {
@@ -63,12 +71,15 @@
         if (!L.Browser.ie && !L.Browser.opera) {
             layer.bringToFront();
         }
+
+        //info.update(layer.feature.properties);
     }
 
     var geojson;
 
     function resetHighlight(e) {
         geojson.resetStyle(e.target);
+        //info.update();
     }
 
     var allLayers = [];
@@ -95,9 +106,7 @@
     	$("#year_label").text(year);
         for(layer in allLayers){
             var props = allLayers[layer].feature.properties;
-            var percentSuffix = '';
-            if (props.stat_type == 'percent') percentSuffix = '%';
-            allLayers[layer].bindLabel( '<h4>' + props.name + '</h4>' + props.condition_title + ': ' + props.condition_value[ year ] + percentSuffix);
+            allLayers[layer].bindLabel( '<h4>' + props.name + '</h4>' + props.condition_title + ': ' + props.condition_value[ year ] );
             allLayers[layer].setStyle({fillColor: getColor(props.condition_value[year])});
         }
     }
@@ -116,11 +125,7 @@
       value: end_year,
       slide: function(event, ui){
         update_year(ui.value);
-      },
-      change: function(event, ui){
-        update_year(ui.value);
-      },
-      range: "min"
+      }
     });
 
     var clinicIcon = L.icon({
@@ -132,7 +137,9 @@
     });
 
     for (point in intervention_locations) {
-        L.marker([intervention_locations[point][2], intervention_locations[point][3]], {icon: clinicIcon}).addTo(map).bindPopup("<b>" + intervention_locations[point][0] + "</b><br />" + intervention_locations[point][1]);
+        new L.marker([intervention_locations[point][2], intervention_locations[point][3]], {icon: clinicIcon})
+          .addTo(map)
+          .bindPopup("<b>" + intervention_locations[point][0] + "</b><br />" + intervention_locations[point][1]);
     }
 
 
@@ -154,7 +161,7 @@
                 from + (to ? '&ndash;' + to : '+'));
         }
 
-        div.innerHTML = "<strong>#{@current_dataset.name}</strong><br>" + labels.join('<br>');
+        div.innerHTML = labels.join('<br>');
         return div;
     };
 
