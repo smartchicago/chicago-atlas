@@ -5,6 +5,9 @@ gem 'rails', '3.2.13'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
+# database
+gem 'pg'
+
 # caching
 gem 'memcachier'
 gem 'dalli'
@@ -35,14 +38,8 @@ gem 'devise'
 # Use unicorn as the app server
 gem 'unicorn'
 
-# Deploy with Heroku
-gem 'heroku'
-
 # Performance and monitoring
 gem 'newrelic_rpm'
 
 # To use debugger
 # gem 'debugger'
-
-# database
-gem 'pg'

@@ -28,7 +28,6 @@ GEM
     activesupport (3.2.13)
       i18n (= 0.6.1)
       multi_json (~> 1.0)
-    addressable (2.3.3)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
     builder (3.0.4)
@@ -40,7 +39,6 @@ GEM
       railties (~> 3.1)
       warden (~> 1.2.1)
     erubis (2.7.0)
-    excon (0.20.1)
     execjs (1.4.0)
       multi_json (~> 1.0)
     haml (4.0.2)
@@ -50,21 +48,11 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
-    heroku (2.37.2)
-      heroku-api (~> 0.3.7)
-      launchy (>= 0.3.2)
-      netrc (~> 0.7.7)
-      rest-client (~> 1.6.1)
-      rubyzip
-    heroku-api (0.3.9)
-      excon (~> 0.20.1)
     hike (1.2.2)
     i18n (0.6.1)
     journey (1.0.4)
     json (1.7.7)
     kgio (2.8.0)
-    launchy (2.2.0)
-      addressable (~> 2.3)
     less (2.3.1)
       commonjs (~> 0.2.6)
     less-rails (2.3.2)
@@ -78,7 +66,6 @@ GEM
     memcachier (0.0.2)
     mime-types (1.22)
     multi_json (1.7.2)
-    netrc (0.7.7)
     newrelic_rpm (3.6.0.83)
     orm_adapter (0.4.0)
     pg (0.15.1)
@@ -110,9 +97,6 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.4)
-    rest-client (1.6.7)
-      mime-types (>= 1.16)
-    rubyzip (0.9.9)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -148,7 +132,6 @@ DEPENDENCIES
   dalli
   devise
   haml-rails
-  heroku
   less-rails
   memcachier
   newrelic_rpm

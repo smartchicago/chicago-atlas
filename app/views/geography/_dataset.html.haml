@@ -2,7 +2,8 @@
 - if show_header
   %h3
     = dataset.name
-    %a.btn.btn-info.pull-right{ :href => "/place/#{@geography.slug}/#{dataset.name.parameterize.underscore.to_sym}" } Details
+    %small
+      %a{ :href => "/place/#{@geography.slug}/#{dataset.name.parameterize.underscore.to_sym}" } details &raquo;
 
 .span4
   %p 
