@@ -18,7 +18,17 @@ To get started, choose a community area from the list below.
 
 %hr
 .row
-- @geographies.each do |geography|
+%h2 Community areas
+- @community_areas.each do |geography|
+  .span4
+    %h4
+      %a{:href => "/place/#{geography.slug}"}
+        = geography.name
+
+.row
+%hr
+%h2 Zip codes
+- @zip_codes.each do |geography|
   .span4
     %h4
       %a{:href => "/place/#{geography.slug}"}

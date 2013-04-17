@@ -27,7 +27,10 @@ class HomeController < ApplicationController
       
       @display_geojson = community_area_geojson(@current_dataset.id)
       @intervention_locations = intervention_locations(@current_dataset.id)
-      @categories = Category.all
+      @categories = Category.select('categories.id, categories.name, categories.description')
+                            .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
+                            .group('categories.id, categories.name, categories.description')
+                            .having('count(datasets.id) > 0')
 
     end
   end
