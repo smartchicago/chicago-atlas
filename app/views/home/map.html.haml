@@ -24,6 +24,7 @@
         styleId: 22677
     }).addTo(map);
 
+    map.attributionControl.setPrefix('');
 
     // control that shows info on hover
     var info = L.control();
@@ -115,7 +116,11 @@
       value: end_year,
       slide: function(event, ui){
         update_year(ui.value);
-      }
+      },
+      change: function(event, ui){
+        update_year(ui.value);
+      },
+      range: "min"
     });
 
     var clinicIcon = L.icon({
