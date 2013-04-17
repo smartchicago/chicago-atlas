@@ -4,6 +4,7 @@ namespace :db do
     desc "Fetch and import all Health Atlas Data"
     task :all => :environment do
       Rake::Task["db:import:community_areas"].invoke
+      Rake::Task["db:import:zip_codes"].invoke
       Rake::Task["db:import:chicago_dph"].invoke
       Rake::Task["db:import:chicago_health_facilities"].invoke
     end
@@ -33,7 +34,7 @@ namespace :db do
       puts 'Done!'
     end
 
-    desc "Import zip codes from local file"
+    desc "Import zip code geographies from local file"
     task :zip_codes => :environment do
       require 'json'
       Geography.delete_all("geo_type = 'Zip'")

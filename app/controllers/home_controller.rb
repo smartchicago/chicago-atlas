@@ -6,7 +6,6 @@ class HomeController < ApplicationController
 
   def leaflet_test
     @zip = Geography.where(:name => '60614').first 
-    puts @zip
   end
 
   def interventions_test
