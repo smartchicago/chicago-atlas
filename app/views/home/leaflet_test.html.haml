@@ -6,12 +6,12 @@
     var geojsonFeature = {
         "type": "Feature",
         "properties": {
-            "name": "#{@community_area.name}",
+            "name": "#{@zip.name}",
             "density": "100"
         },
-        "geometry": #{@community_area.geometry}
+        "geometry": #{@zip.geometry}
     };
 
-    LeafletLib.initialize(geojsonFeature, #{@community_area.centroid_as_lat_lng}, 14);
+    LeafletLib.initialize("map", { geojson: geojsonFeature }, #{@zip.centroid_as_lat_lng}, 14);
 
 #map

@@ -5,7 +5,8 @@ class HomeController < ApplicationController
   end
 
   def leaflet_test
-    @community_area = Geography.where(:name => 'Loop').first 
+    @zip = Geography.where(:name => '60614').first 
+    puts @zip
   end
 
   def interventions_test

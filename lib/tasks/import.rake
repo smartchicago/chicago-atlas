@@ -12,14 +12,14 @@ namespace :db do
     task :community_areas => :environment do
       require 'open-uri'
       require 'json'
-      Geography.delete_all
+      Geography.delete_all("geo_type = 'Community Area'")
 
       community_area_endpoints = JSON.parse(open("http://api.boundaries.tribapps.com/1.0/boundary-set/community-areas/").read)['boundaries']
       community_area_endpoints.each do |endpoint|
         area_json = JSON.parse(open("http://api.boundaries.tribapps.com/#{endpoint}").read)
 
         area = Geography.new(
-          :geo_type => area_json['kind'],
+          :geo_type => 'Community Area',
           :name => area_json['name'],
           :slug => area_json['name'].parameterize.underscore.to_sym,
           :geometry => ActiveSupport::JSON.encode(area_json['simple_shape']),
@@ -27,6 +27,38 @@ namespace :db do
         )
         area.id = area_json['external_id']
         puts "importing #{area.name}"
+        area.save!
+      end
+
+      puts 'Done!'
+    end
+
+    desc "Import zip codes from local file"
+    task :zip_codes => :environment do
+      require 'json'
+      Geography.delete_all("geo_type = 'Zip'")
+
+      zips = JSON.parse(open("db/import/zipcodes.geojson").read)['features']
+      zips.each do |zip|
+
+        area = Geography.new(
+          :geo_type => 'Zip',
+          :name => zip['properties']['ZIP'],
+          :slug => zip['properties']['ZIP'],
+          :geometry => ActiveSupport::JSON.encode(zip['geometry']),
+        )
+        area.id = zip['properties']['ZIP']
+        puts "importing #{area.name}"
+        area.save!
+      end
+
+      # add centroid attribute from separate file
+      centroids = JSON.parse(open("db/import/zipcode_centroids.geojson").read)['features']
+      centroids.each do |centroid|
+
+        area = Geography.find(centroid['properties']['ZIP'])
+        area.centroid= ActiveSupport::JSON.encode(centroid['geometry']['coordinates'])
+        puts "adding centroid for #{area.name}"
         area.save!
       end
 
