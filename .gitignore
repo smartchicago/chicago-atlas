@@ -12,6 +12,6 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
-/tmp
+/tmp/*.csv
 .DS_Store
 logfile
