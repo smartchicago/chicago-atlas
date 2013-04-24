@@ -13,7 +13,7 @@ namespace :db do
     task :community_areas => :environment do
       require 'open-uri'
       require 'json'
-      Geography.delete_all("geo_type = 'Community Area'")
+      Geography.delete_all(:geo_type => 'Community Area')
 
       community_area_endpoints = JSON.parse(open("http://api.boundaries.tribapps.com/1.0/boundary-set/community-areas/").read)['boundaries']
       community_area_endpoints.each do |endpoint|
@@ -37,30 +37,42 @@ namespace :db do
     desc "Import zip code geographies from local file"
     task :zip_codes => :environment do
       require 'json'
-      Geography.delete_all("geo_type = 'Zip'")
+      Geography.delete_all(:geo_type => 'Zip')
 
       zips = JSON.parse(open("db/import/zipcodes.geojson").read)['features']
       zips.each do |zip|
 
-        area = Geography.new(
-          :geo_type => 'Zip',
-          :name => zip['properties']['ZIP'],
-          :slug => zip['properties']['ZIP'],
-          :geometry => ActiveSupport::JSON.encode(zip['geometry']),
-        )
-        area.id = zip['properties']['ZIP']
-        puts "importing #{area.name}"
-        area.save!
+        unless zip['properties']['merged']
+
+          zip_name = zip['properties']['ZIP']
+          if zip['properties']['name']
+            zip_name = zip['properties']['name']
+          end
+
+          area = Geography.new(
+            :geo_type => 'Zip',
+            :name => zip_name,
+            :slug => zip['properties']['ZIP'],
+            :geometry => ActiveSupport::JSON.encode(zip['geometry']),
+          )
+          area.id = zip['properties']['ZIP']
+          puts "importing #{area.name}"
+          area.save!
+        end
       end
 
       # add centroid attribute from separate file
       centroids = JSON.parse(open("db/import/zipcode_centroids.geojson").read)['features']
       centroids.each do |centroid|
 
-        area = Geography.find(centroid['properties']['ZIP'])
-        area.centroid= ActiveSupport::JSON.encode(centroid['geometry']['coordinates'])
-        puts "adding centroid for #{area.name}"
-        area.save!
+        zip_boundary = Geography.where(:id => centroid['properties']['ZIP']).first
+
+        if zip_boundary
+          area = zip_boundary
+          area.centroid= ActiveSupport::JSON.encode(centroid['geometry']['coordinates'])
+          puts "adding centroid for #{area.name}"
+          area.save!
+        end
       end
 
       puts 'Done!'
