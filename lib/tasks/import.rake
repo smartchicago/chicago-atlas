@@ -13,7 +13,7 @@ namespace :db do
     task :community_areas => :environment do
       require 'open-uri'
       require 'json'
-      Geography.delete_all("geo_type = 'Community Area'")
+      Geography.delete_all(:geo_type => 'Community Area')
 
       community_area_endpoints = JSON.parse(open("http://api.boundaries.tribapps.com/1.0/boundary-set/community-areas/").read)['boundaries']
       community_area_endpoints.each do |endpoint|
@@ -37,30 +37,42 @@ namespace :db do
     desc "Import zip code geographies from local file"
     task :zip_codes => :environment do
       require 'json'
-      Geography.delete_all("geo_type = 'Zip'")
+      Geography.delete_all(:geo_type => 'Zip')
 
       zips = JSON.parse(open("db/import/zipcodes.geojson").read)['features']
       zips.each do |zip|
 
-        area = Geography.new(
-          :geo_type => 'Zip',
-          :name => zip['properties']['ZIP'],
-          :slug => zip['properties']['ZIP'],
-          :geometry => ActiveSupport::JSON.encode(zip['geometry']),
-        )
-        area.id = zip['properties']['ZIP']
-        puts "importing #{area.name}"
-        area.save!
+        unless zip['properties']['merged']
+
+          zip_name = zip['properties']['ZIP']
+          if zip['properties']['name']
+            zip_name = zip['properties']['name']
+          end
+
+          area = Geography.new(
+            :geo_type => 'Zip',
+            :name => zip_name,
+            :slug => zip['properties']['ZIP'],
+            :geometry => ActiveSupport::JSON.encode(zip['geometry']),
+          )
+          area.id = zip['properties']['ZIP']
+          puts "importing #{area.name}"
+          area.save!
+        end
       end
 
       # add centroid attribute from separate file
       centroids = JSON.parse(open("db/import/zipcode_centroids.geojson").read)['features']
       centroids.each do |centroid|
 
-        area = Geography.find(centroid['properties']['ZIP'])
-        area.centroid= ActiveSupport::JSON.encode(centroid['geometry']['coordinates'])
-        puts "adding centroid for #{area.name}"
-        area.save!
+        zip_boundary = Geography.where(:id => centroid['properties']['ZIP']).first
+
+        if zip_boundary
+          area = zip_boundary
+          area.centroid= ActiveSupport::JSON.encode(centroid['geometry']['coordinates'])
+          puts "adding centroid for #{area.name}"
+          area.save!
+        end
       end
 
       puts 'Done!'
@@ -221,6 +233,89 @@ namespace :db do
         end
 
       end
+    end
+
+    desc "Import CHITREC datasets from csv"
+    task :chitrec => :environment do
+      require 'csv' 
+
+      Dataset.where(:provider => "CHITREC").each do |d|
+        Statistic.delete_all(:dataset_id => d.id)
+        d.delete
+      end
+
+      datasets = [
+        # Breast_cancer,Colorectal_cancer,Prostate_cancer,Lung_cancer,Diabetes,HTN,Asthma,COPD,CHD
+        {:category => 'Chronic disease', :name => 'Breast cancer', :parse_token => 'breast_cancer', :description => "Estimated Breast Cancer prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "", :stat_type => 'range, percent'},
+        {:category => 'Chronic disease', :name => 'Colorectal cancer', :parse_token => 'colorectal_cancer', :description => "Estimated Colorectal Cancer prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "", :stat_type => 'range, percent'},
+      ]
+
+      csv_text = File.read("db/import/chitrec-data.csv")
+      csv = CSV.parse(csv_text, {:headers => true, :header_converters => :symbol})
+
+      datasets.each do |d|
+        handle = d[:name].parameterize.underscore.to_sym
+
+        dataset = Dataset.new(
+          :name => d[:name],
+          :slug => handle,
+          :description => d[:description],
+          :provider => 'CHITREC',
+          :url => d[:url],
+          :category_id => Category.where(:name => d[:category]).first.id,
+          :data_type => 'condition',
+          :description => d[:description],
+          :stat_type => d[:stat_type]
+        )
+
+        if (d.has_key?(:choropleth_cutoffs))
+          dataset.choropleth_cutoffs = d[:choropleth_cutoffs]
+        end
+
+        dataset.save!
+
+        chicago_numerator = 0
+        chicago_denominator = 0
+
+        csv.each do |row|
+          row = row.to_hash.with_indifferent_access
+
+          numerator = row[d[:parse_token]]
+          denominator = row['count']
+
+          if (numerator == "NULL")
+            val = 0
+          else
+            val = (100 * Integer(numerator).to_f / Integer(denominator)).round(2)
+            chicago_numerator = chicago_numerator + Integer(numerator)
+            chicago_denominator = chicago_denominator + Integer(denominator)
+          end 
+
+          stat = Statistic.new(
+            :dataset_id => dataset.id,
+            :geography_id => row['zipcode'],
+            :year => 2006,
+            :name => d[:parse_token], 
+            :value => val
+          )
+          stat.save!
+        end
+
+        chicago_val = (100 * Integer(chicago_numerator).to_f / Integer(chicago_denominator)).round(2)
+        chicago_stat = Statistic.new(
+          :dataset_id => dataset.id,
+          :geography_id => 100, # hard coded ID for Chicago
+          :year => 2006,
+          :name => d[:parse_token], 
+          :value => chicago_val
+        )
+        chicago_stat.save!
+
+        stat_count = Statistic.count(:conditions => "dataset_id = #{dataset.id}")
+        puts "#{d[:parse_token]}: imported #{stat_count} statistics"
+
+      end
+      puts 'Done!'
     end
 
     desc "Fetch Metro Chicago Health Facilities"
