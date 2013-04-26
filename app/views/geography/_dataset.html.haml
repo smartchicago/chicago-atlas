@@ -15,33 +15,56 @@
   - chart_id = "chart_#{dataset.id}_#{dataset.name.parameterize.underscore.to_sym}"
 
   .chart{:id => chart_id}
-  - content_for :javascripts do
-    
-    :javascript
-      $(function () {
 
-        var seriesData = [{
-          color: colorHash[(#{dataset.id} % 7)],
-          type: 'line',
-          data: #{chart_stats[:data]},
-          name: "#{geography.name}"
-        },{
-          name: 'Confidence interval',
-          type: 'errorbar',
-          data: #{chart_stats[:error_bars]},
-          tooltip: {
-            pointFormat: '(Confidence interval: {point.low}-{point.high} mm)<br/>'
+  - if dataset.stat_type.include? 'range'
+    - content_for :javascripts do
+      
+      :javascript
+        $(function () {
+
+          var seriesData = [{
+            color: colorHash[(#{dataset.id} % 7)],
+            type: 'column',
+            data: #{chart_stats[:data]},
+            name: "#{geography.name}"
+          }, {
+            color: "#666",
+            type: 'column',
+            data: #{chicago_avg_stats[:data]},
+            name: "Chicago"
           }
-        }, {
-          color: "#666",
-          type: 'line',
-          data: #{chicago_avg_stats[:data]},
-          name: "Chicago"
-        }
-        ];
+          ];
+
+          ChartHelper.create("#{chart_id}", "column", "", seriesData, Date.UTC(#{chart_stats[:start_year]}, 1, 1), "year", "#{dataset.stat_type.gsub('range, ', '') }");
+        });
+  - else
+    - content_for :javascripts do
+      
+      :javascript
+        $(function () {
+
+          var seriesData = [{
+            color: colorHash[(#{dataset.id} % 7)],
+            type: 'line',
+            data: #{chart_stats[:data]},
+            name: "#{geography.name}"
+          },{
+            name: 'Confidence interval',
+            type: 'errorbar',
+            data: #{chart_stats[:error_bars]},
+            tooltip: {
+              pointFormat: '(Confidence interval: {point.low}-{point.high} mm)<br/>'
+            }
+          }, {
+            color: "#666",
+            type: 'line',
+            data: #{chicago_avg_stats[:data]},
+            name: "Chicago"
+          }
+          ];
 
 
-        ChartHelper.create("#{chart_id}", "line", "", seriesData, Date.UTC(#{chart_stats[:start_year]}, 1, 1), "year", "#{dataset.stat_type}");
-      });
+          ChartHelper.create("#{chart_id}", "line", "", seriesData, Date.UTC(#{chart_stats[:start_year]}, 1, 1), "year", "#{dataset.stat_type}");
+        });
 
 .clearfix

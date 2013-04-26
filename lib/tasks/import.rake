@@ -247,6 +247,7 @@ namespace :db do
       datasets = [
         # Breast_cancer,Colorectal_cancer,Prostate_cancer,Lung_cancer,Diabetes,HTN,Asthma,COPD,CHD
         {:category => 'Chronic disease', :name => 'Breast cancer', :parse_token => 'breast_cancer', :description => "Estimated Breast Cancer prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "", :stat_type => 'range, percent'},
+        {:category => 'Chronic disease', :name => 'Colorectal cancer', :parse_token => 'colorectal_cancer', :description => "Estimated Colorectal Cancer prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "", :stat_type => 'range, percent'},
       ]
 
       csv_text = File.read("db/import/chitrec-data.csv")
@@ -273,6 +274,9 @@ namespace :db do
 
         dataset.save!
 
+        chicago_numerator = 0
+        chicago_denominator = 0
+
         csv.each do |row|
           row = row.to_hash.with_indifferent_access
 
@@ -283,6 +287,8 @@ namespace :db do
             val = 0
           else
             val = (100 * Integer(numerator).to_f / Integer(denominator)).round(2)
+            chicago_numerator = chicago_numerator + Integer(numerator)
+            chicago_denominator = chicago_denominator + Integer(denominator)
           end 
 
           stat = Statistic.new(
@@ -294,6 +300,16 @@ namespace :db do
           )
           stat.save!
         end
+
+        chicago_val = (100 * Integer(chicago_numerator).to_f / Integer(chicago_denominator)).round(2)
+        chicago_stat = Statistic.new(
+          :dataset_id => dataset.id,
+          :geography_id => 100, # hard coded ID for Chicago
+          :year => 2006,
+          :name => d[:parse_token], 
+          :value => chicago_val
+        )
+        chicago_stat.save!
 
         stat_count = Statistic.count(:conditions => "dataset_id = #{dataset.id}")
         puts "#{d[:parse_token]}: imported #{stat_count} statistics"
