@@ -6,7 +6,7 @@ class Dataset < ActiveRecord::Base
 
   def choropleth_cutoffs_json
     if choropleth_cutoffs == ''
-      return []
+      return [0,1,5,10,50,100]
     end
 
     json_cutoffs = ActiveSupport::JSON.decode(choropleth_cutoffs)

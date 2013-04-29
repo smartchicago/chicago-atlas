@@ -25,7 +25,7 @@ class HomeController < ApplicationController
     else
       @current_dataset = Dataset.where("slug = '#{params[:dataset_slug]}'").first
       
-      @display_geojson = community_area_geojson(@current_dataset.id)
+      @display_geojson = geography_geojson(@current_dataset.id)
       @intervention_locations = intervention_locations(@current_dataset.id)
       @categories = Category.select('categories.id, categories.name, categories.description')
                             .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
