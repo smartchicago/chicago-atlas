@@ -110,6 +110,13 @@
     $('#start_year').html(start_year);
     $('#end_year').html(end_year);
 
+    if(start_year == end_year){
+      // only one year in system - remove slider
+      $("#slider, #start_year, #end_year").css({
+        display: "none"
+      });
+    }
+
     var active_year = end_year;
     update_year(end_year);
 
