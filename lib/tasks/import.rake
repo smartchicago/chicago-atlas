@@ -7,6 +7,8 @@ namespace :db do
       Rake::Task["db:import:zip_codes"].invoke
       Rake::Task["db:import:chicago_dph"].invoke
       Rake::Task["db:import:chicago_health_facilities"].invoke
+      Rake::Task["db:import:chitrec"].invoke
+      Rake::Task["db:import:crime"].invoke
     end
     
     desc "Fetch Chicago Community Areas from the TribApps Boundary Service"
@@ -417,6 +419,100 @@ namespace :db do
       end
     end
 
+    desc "Import Chicago homicide, assault, and battery from CSV"
+    task :crime => :environment do
+      require 'csv' 
+
+      Dataset.where(:provider => "Chicago Police").each do |d|
+        Statistic.delete_all(:dataset_id => d.id)
+        d.delete
+      end
+
+      datasets = [
+        {:category => 'Crime', :name => 'Homicide', :table_id => "sa26-e74f", :parse_token => 'crime-h', :description => "Homicides each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
+        #{:category => 'Crime', :name => 'Aggravated Assault', :table_id => "y8t6-k4ji", :parse_token => 'crime-aa', :description => "Aggravated Assault each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Simple Assault', :table_id => "y8t6-k4ji", :parse_token => 'crime-sa', :description => "Simple Assault each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
+        # {:category => 'Crime', :name => 'Aggravated Battery', :table_id => "4fnn-3ezf", :parse_token => 'crime-ab', :description => "Aggravated Battery each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Simple Battery', :table_id => "4fnn-3ezf", :parse_token => 'crime-sb', :description => "Simple battery each year in each community area", :choropleth_cutoffs => "", :stat_type => ''}
+      ]
+
+      datasets.each do |d|
+        handle = d[:name].parameterize.underscore.to_sym
+
+        dataset = Dataset.new(
+          :name => d[:name],
+          :slug => handle,
+          :description => d[:description],
+          :provider => 'Chicago Police',
+          :url => d[:url],
+          :category_id => Category.where(:name => d[:category]).first.id,
+          :data_type => 'condition',
+          :description => d[:description],
+          :stat_type => d[:stat_type]
+        )
+
+        if (d.has_key?(:choropleth_cutoffs))
+          dataset.choropleth_cutoffs = d[:choropleth_cutoffs]
+        end
+
+        dataset.save!
+
+        puts "downloading " + d[:name]
+        sh "curl -o tmp/crime_#{handle}.csv https://data.cityofchicago.org/api/views/#{d[:table_id]}/rows.csv?accessType=DOWNLOAD"
+        csv_text = File.read("tmp/crime_#{handle}.csv")
+
+        csv = CSV.parse(csv_text, {:headers => true, :header_converters => :symbol})
+
+        community_areas = { }
+
+        csv.each do |row|
+          row = row.to_hash.with_indifferent_access
+
+          # filter between Aggravated and Simple
+          if dataset.name.index('Aggravated').nil?
+            unless row['primary_type'].index('Aggravated').nil?
+              # this is a more serious crime
+              next
+            end
+          else
+            if row['primary_type'].index('Aggravated').nil?
+              # this is a less serious crime
+              next
+            end
+          end
+
+          year = row['date'][6, 4].to_i
+
+          if community_areas.has_key?( row['community_area'] )
+            if community_areas[ row['community_area'] ].has_key?(year)
+              community_areas[ row['community_area'] ][year] += 1
+            else
+              community_areas[ row['community_area'] ][ year ] = 1
+            end
+          else
+            community_areas[ row['community_area'] ] = { }
+            community_areas[ row['community_area'] ][ year ] = 1
+          end
+
+        end
+
+        community_areas.each do |area_num, area|
+          last_year = Time.now.year - 1
+          (2001 .. last_year).each do |year|
+            stat = Statistic.new(
+              :dataset_id => dataset.id,
+              :geography_id => area_num,
+              :year => year,
+              :name => d[:parse_token], 
+              :value => (area[year] or 0)
+            )
+            stat.save!
+          end
+        end
+
+      end
+      puts 'Done!'
+    end
 
   end
 end

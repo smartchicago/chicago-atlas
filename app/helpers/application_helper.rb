@@ -113,7 +113,11 @@ module ApplicationHelper
 
     color_block = "";
     grades.each_with_index do |c, i|
-      color_block += "d > #{c} ? '#{color_hash[i]}' : "
+      if c == 0
+        color_block += "d >= #{c} ? '#{color_hash[i]}' : "
+      else 
+        color_block += "d > #{c} ? '#{color_hash[i]}' : "
+      end
     end
 
     "return #{color_block} '#EFF3FF';"
