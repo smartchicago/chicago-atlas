@@ -430,10 +430,10 @@ namespace :db do
 
       datasets = [
         {:category => 'Crime', :name => 'Homicide', :table_id => "sa26-e74f", :parse_token => 'crime-h', :description => "Homicides each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
-        #{:category => 'Crime', :name => 'Aggravated Assault', :table_id => "y8t6-k4ji", :parse_token => 'crime-aa', :description => "Aggravated Assault each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Aggravated Assault', :table_id => "y8t6-k4ji", :parse_token => 'crime-aa', :description => "Aggravated Assault each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
         {:category => 'Crime', :name => 'Simple Assault', :table_id => "y8t6-k4ji", :parse_token => 'crime-sa', :description => "Simple Assault each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
         # {:category => 'Crime', :name => 'Aggravated Battery', :table_id => "4fnn-3ezf", :parse_token => 'crime-ab', :description => "Aggravated Battery each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
-        {:category => 'Crime', :name => 'Simple Battery', :table_id => "4fnn-3ezf", :parse_token => 'crime-sb', :description => "Simple battery each year in each community area", :choropleth_cutoffs => "", :stat_type => ''}
+        # {:category => 'Crime', :name => 'Simple Battery', :table_id => "4fnn-3ezf", :parse_token => 'crime-sb', :description => "Simple battery each year in each community area", :choropleth_cutoffs => "", :stat_type => ''}
       ]
 
       datasets.each do |d|
@@ -470,12 +470,12 @@ namespace :db do
 
           # filter between Aggravated and Simple
           if dataset.name.index('Aggravated').nil?
-            unless row['primary_type'].index('Aggravated').nil?
+            unless row['description'].index('AGGRAVATED').nil?
               # this is a more serious crime
               next
             end
           else
-            if row['primary_type'].index('Aggravated').nil?
+            if row['description'].index('AGGRAVATED').nil?
               # this is a less serious crime
               next
             end
