@@ -464,7 +464,7 @@ namespace :db do
         json_text = File.read("tmp/#{handle}.json")
         stats = ActiveSupport::JSON.decode( json_text )
         stats.each do |stat|
-          if (stat['year'].to_i < 2002) or (stat['year'].to_i > last_year)
+          if (stat['year'].to_i <= 2002) or (stat['year'].to_i > last_year)
             # don't add incomplete years
             next
           end
@@ -489,7 +489,7 @@ namespace :db do
         end
 
         found_stats.each do |community_area, year|
-          (2002 .. last_year).each do |year|
+          (2003 .. last_year).each do |year|
             if found_stats[community_area].index(year).nil?
               # add a zero
               store = Statistic.new(
