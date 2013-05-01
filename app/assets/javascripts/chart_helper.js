@@ -24,7 +24,10 @@ ChartHelper.create = function(element, type, title, seriesData, startDate, point
       },
       yAxis: {
           title: null,
-          min: 0
+          min: 0,
+          labels: {
+            formatter: function() { return this.value + percentSuffix; }
+          },
       },
       plotOptions: {
         series: {
@@ -48,9 +51,9 @@ ChartHelper.create = function(element, type, title, seriesData, startDate, point
             var s = "<strong>" + ChartHelper.toolTipDateFormat(pointInterval, this.x) + "</strong>";
             $.each(this.points, function(i, point) {
               if (point.point.low != null && point.point.high != null)
-                s += "<br /><span style='color: " + point.series.color + "'>" + point.series.name + ":</span> " + point.point.low + percentSuffix + " - " + point.point.high + percentSuffix;
+                s += "<br /><span style=\"color: " + point.series.color + "\">" + point.series.name + ":</span> " + point.point.low + percentSuffix + " - " + point.point.high + percentSuffix;
               else
-                s += "<br /><span style='color: " + point.series.color + "'>" + point.series.name + ":</span> " + point.y + percentSuffix;
+                s += "<br /><span style=\"color: " + point.series.color + "\">" + point.series.name + ":</span> " + point.y + percentSuffix;
             });
             return s;
           },

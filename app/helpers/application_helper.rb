@@ -16,13 +16,14 @@ module ApplicationHelper
       .order("datasets.name")
   end
 
-  def community_area_geojson(dataset_id)
+  def geography_geojson(dataset_id)
 
     area_stats = Geography
       .select("geographies.id, geographies.name, geographies.slug, geographies.geometry, statistics.name as condition_title, statistics.value as condition_value, statistics.year as condition_year, datasets.stat_type, datasets.name as dataset_name")
       .joins("join statistics on statistics.geography_id = geographies.id")
       .joins("join datasets on datasets.id = statistics.dataset_id")
-      .where("dataset_id = #{dataset_id} and geo_type = 'Community Area'")
+      .where("dataset_id = #{dataset_id}")
+      .where("geo_type = 'Community Area' or geo_type = 'Zip'")
       .order("geographies.id, statistics.year")
 
     geojson = []
@@ -112,7 +113,11 @@ module ApplicationHelper
 
     color_block = "";
     grades.each_with_index do |c, i|
-      color_block += "d > #{c} ? '#{color_hash[i]}' : "
+      if c == 0
+        color_block += "d >= #{c} ? '#{color_hash[i]}' : "
+      else 
+        color_block += "d > #{c} ? '#{color_hash[i]}' : "
+      end
     end
 
     "return #{color_block} '#EFF3FF';"

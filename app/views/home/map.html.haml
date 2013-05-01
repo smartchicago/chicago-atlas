@@ -42,6 +42,7 @@
 
     function style(feature) {
         return {
+            fillColor: getColor(feature.properties.condition_value[active_year]),
             weight: 2,
             opacity: 1,
             color: 'white',
@@ -92,6 +93,7 @@
     
  
     function update_year(year){
+        active_year = year;
     	$("#year_label").text(year);
         for(layer in allLayers){
             var props = allLayers[layer].feature.properties;
@@ -108,7 +110,16 @@
     $('#start_year').html(start_year);
     $('#end_year').html(end_year);
 
+    if(start_year == end_year){
+      // only one year in system - remove slider
+      $("#slider, #start_year, #end_year").css({
+        display: "none"
+      });
+    }
+
+    var active_year = end_year;
     update_year(end_year);
+
     $("#slider").slider({
       min: start_year,
       max: end_year,
