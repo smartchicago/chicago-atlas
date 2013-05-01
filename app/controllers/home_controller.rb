@@ -20,8 +20,9 @@ class HomeController < ApplicationController
 
   def map
     if params[:dataset_slug].nil?
-      @current_dataset = Dataset.order("name").first
-      redirect_to :action => "map", :dataset_slug => @current_dataset.slug
+      #@current_dataset = Dataset.order("name").first
+      #redirect_to :action => "map", :dataset_slug => @current_dataset.slug
+      redirect_to :action => "map", :dataset_slug => "birth_rate"
     else
       @current_dataset = Dataset.where("slug = '#{params[:dataset_slug]}'").first
       

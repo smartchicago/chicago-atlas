@@ -421,7 +421,6 @@ namespace :db do
 
     desc "Import Chicago homicide, assault, and battery from CSV"
     task :crime => :environment do
-      require 'csv' 
 
       Dataset.where(:provider => "Chicago Police").each do |d|
         Statistic.delete_all(:dataset_id => d.id)
@@ -429,11 +428,11 @@ namespace :db do
       end
 
       datasets = [
-        {:category => 'Crime', :name => 'Homicide', :table_id => "sa26-e74f", :parse_token => 'crime-h', :description => "Homicides each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
-        {:category => 'Crime', :name => 'Aggravated Assault', :table_id => "y8t6-k4ji", :parse_token => 'crime-aa', :description => "Aggravated Assault each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
-        {:category => 'Crime', :name => 'Simple Assault', :table_id => "y8t6-k4ji", :parse_token => 'crime-sa', :description => "Simple Assault each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
-        # {:category => 'Crime', :name => 'Aggravated Battery', :table_id => "4fnn-3ezf", :parse_token => 'crime-ab', :description => "Aggravated Battery each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
-        # {:category => 'Crime', :name => 'Simple Battery', :table_id => "4fnn-3ezf", :parse_token => 'crime-sb', :description => "Simple battery each year in each community area", :choropleth_cutoffs => "", :stat_type => ''}
+        {:category => 'Crime', :name => 'Homicide', :fbi_code => "01A", :parse_token => 'crime-h', :description => "Homicides each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Aggravated Assault', :fbi_code => "04A", :parse_token => 'crime-aa', :description => "Aggravated Assault each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Simple Assault', :fbi_code => "08A", :parse_token => 'crime-sa', :description => "Simple Assault each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Aggravated Battery', :fbi_code => "04B", :parse_token => 'crime-ab', :description => "Aggravated Battery each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Simple Battery', :fbi_code => "08B", :parse_token => 'crime-sb', :description => "Simple battery each year in each community area", :choropleth_cutoffs => "", :stat_type => ''}
       ]
 
       datasets.each do |d|
@@ -457,56 +456,51 @@ namespace :db do
 
         dataset.save!
 
-        puts "downloading " + d[:name]
-        sh "curl -o tmp/crime_#{handle}.csv https://data.cityofchicago.org/api/views/#{d[:table_id]}/rows.csv?accessType=DOWNLOAD"
-        csv_text = File.read("tmp/crime_#{handle}.csv")
+        found_stats = { }
+        last_year = Time.now.year - 1
 
-        csv = CSV.parse(csv_text, {:headers => true, :header_converters => :symbol})
-
-        community_areas = { }
-
-        csv.each do |row|
-          row = row.to_hash.with_indifferent_access
-
-          # filter between Aggravated and Simple
-          if dataset.name.index('Aggravated').nil?
-            unless row['description'].index('AGGRAVATED').nil?
-              # this is a more serious crime
-              next
-            end
-          else
-            if row['description'].index('AGGRAVATED').nil?
-              # this is a less serious crime
-              next
-            end
+        puts "Downloading #{handle}.json"
+        sh "curl -o tmp/#{handle}.json 'https://data.cityofchicago.org/resource/ijzp-q8t2.json?$select=community_area,year,count%28id%29&$where=fbi_code=%27#{d[:fbi_code]}%27&$group=community_area,year,fbi_code'"
+        json_text = File.read("tmp/#{handle}.json")
+        stats = ActiveSupport::JSON.decode( json_text )
+        stats.each do |stat|
+          if (stat['year'].to_i < 2002) or (stat['year'].to_i > last_year)
+            # don't add incomplete years
+            next
           end
+          if stat['community_area'].nil?
+            next
+          end
+          store = Statistic.new(
+            :dataset_id => dataset.id,
+            :geography_id => stat['community_area'],
+            :year => stat['year'],
+            :name => d[:parse_token],
+            :value => ( stat['count_id'] or 0 )
+          )
+          store.save!
 
-          year = row['date'][6, 4].to_i
-
-          if community_areas.has_key?( row['community_area'] )
-            if community_areas[ row['community_area'] ].has_key?(year)
-              community_areas[ row['community_area'] ][year] += 1
-            else
-              community_areas[ row['community_area'] ][ year ] = 1
-            end
+          if found_stats.has_key?( "area" + stat['community_area'] )
+            found_stats[ "area" + stat['community_area'] ] << stat['year'].to_i
           else
-            community_areas[ row['community_area'] ] = { }
-            community_areas[ row['community_area'] ][ year ] = 1
+            found_stats[ "area" + stat['community_area'] ] = [ stat['year'].to_i ]
           end
 
         end
 
-        community_areas.each do |area_num, area|
-          last_year = Time.now.year - 1
-          (2001 .. last_year).each do |year|
-            stat = Statistic.new(
-              :dataset_id => dataset.id,
-              :geography_id => area_num,
-              :year => year,
-              :name => d[:parse_token], 
-              :value => (area[year] or 0)
-            )
-            stat.save!
+        found_stats.each do |community_area, year|
+          (2002 .. last_year).each do |year|
+            if found_stats[community_area].index(year).nil?
+              # add a zero
+              store = Statistic.new(
+                :dataset_id => dataset.id,
+                :geography_id => community_area.gsub("area",""),
+                :year => year,
+                :name => d[:parse_token],
+                :value => 0
+              )
+              store.save!
+            end
           end
         end
 
