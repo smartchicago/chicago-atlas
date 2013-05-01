@@ -7,6 +7,8 @@ namespace :db do
       Rake::Task["db:import:zip_codes"].invoke
       Rake::Task["db:import:chicago_dph"].invoke
       Rake::Task["db:import:chicago_health_facilities"].invoke
+      Rake::Task["db:import:chitrec"].invoke
+      Rake::Task["db:import:crime"].invoke
     end
     
     desc "Fetch Chicago Community Areas from the TribApps Boundary Service"
@@ -248,6 +250,13 @@ namespace :db do
         # Breast_cancer,Colorectal_cancer,Prostate_cancer,Lung_cancer,Diabetes,HTN,Asthma,COPD,CHD
         {:category => 'Chronic disease', :name => 'Breast cancer', :parse_token => 'breast_cancer', :description => "Estimated Breast Cancer prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "", :stat_type => 'range, percent'},
         {:category => 'Chronic disease', :name => 'Colorectal cancer', :parse_token => 'colorectal_cancer', :description => "Estimated Colorectal Cancer prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "", :stat_type => 'range, percent'},
+        {:category => 'Chronic disease', :name => 'Prostate cancer', :parse_token => 'prostate_cancer', :description => "Estimated Prostate Cancer prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "", :stat_type => 'range, percent'},
+        {:category => 'Chronic disease', :name => 'Lung cancer', :parse_token => 'lung_cancer', :description => "Estimated Lung Cancer prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "", :stat_type => 'range, percent'},
+        {:category => 'Chronic disease', :name => 'Diabetes', :parse_token => 'diabetes', :description => "", :choropleth_cutoffs => "Estimated diabetes prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :stat_type => 'range, percent'},
+        {:category => 'Chronic disease', :name => 'Hypertension', :parse_token => 'htn', :description => "Estimated hypertension prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "", :stat_type => 'range, percent'},
+        {:category => 'Chronic disease', :name => 'Asthma', :parse_token => 'asthma', :description => "Estimated asthma prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "", :stat_type => 'range, percent'},
+        {:category => 'Chronic disease', :name => 'Chronic Obstructive Pulmonary Disease', :parse_token => 'copd', :description => "Estimated Chronic Obstructive Pulmonary Disease (COPD) prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "", :stat_type => 'range, percent'},
+        {:category => 'Chronic disease', :name => 'Congestive Heart Failure', :parse_token => 'chd', :description => "Estimated Congestive Heart Failure (CHF) prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "", :stat_type => 'range, percent'},
       ]
 
       csv_text = File.read("db/import/chitrec-data.csv")
@@ -410,6 +419,94 @@ namespace :db do
       end
     end
 
+    desc "Import Chicago homicide, assault, and battery from CSV"
+    task :crime => :environment do
+
+      Dataset.where(:provider => "Chicago Police").each do |d|
+        Statistic.delete_all(:dataset_id => d.id)
+        d.delete
+      end
+
+      datasets = [
+        {:category => 'Crime', :name => 'Homicide', :fbi_code => "01A", :parse_token => 'crime-h', :description => "Homicides each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Aggravated Assault', :fbi_code => "04A", :parse_token => 'crime-aa', :description => "Aggravated Assault each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Simple Assault', :fbi_code => "08A", :parse_token => 'crime-sa', :description => "Simple Assault each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Aggravated Battery', :fbi_code => "04B", :parse_token => 'crime-ab', :description => "Aggravated Battery each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Simple Battery', :fbi_code => "08B", :parse_token => 'crime-sb', :description => "Simple battery each year in each community area", :choropleth_cutoffs => "", :stat_type => ''}
+      ]
+
+      datasets.each do |d|
+        handle = d[:name].parameterize.underscore.to_sym
+
+        dataset = Dataset.new(
+          :name => d[:name],
+          :slug => handle,
+          :description => d[:description],
+          :provider => 'Chicago Police',
+          :url => d[:url],
+          :category_id => Category.where(:name => d[:category]).first.id,
+          :data_type => 'condition',
+          :description => d[:description],
+          :stat_type => d[:stat_type]
+        )
+
+        if (d.has_key?(:choropleth_cutoffs))
+          dataset.choropleth_cutoffs = d[:choropleth_cutoffs]
+        end
+
+        dataset.save!
+
+        found_stats = { }
+        last_year = Time.now.year - 1
+
+        puts "Downloading #{handle}.json"
+        sh "curl -o tmp/#{handle}.json 'https://data.cityofchicago.org/resource/ijzp-q8t2.json?$select=community_area,year,count%28id%29&$where=fbi_code=%27#{d[:fbi_code]}%27&$group=community_area,year,fbi_code'"
+        json_text = File.read("tmp/#{handle}.json")
+        stats = ActiveSupport::JSON.decode( json_text )
+        stats.each do |stat|
+          if (stat['year'].to_i <= 2002) or (stat['year'].to_i > last_year)
+            # don't add incomplete years
+            next
+          end
+          if stat['community_area'].nil?
+            next
+          end
+          store = Statistic.new(
+            :dataset_id => dataset.id,
+            :geography_id => stat['community_area'],
+            :year => stat['year'],
+            :name => d[:parse_token],
+            :value => ( stat['count_id'] or 0 )
+          )
+          store.save!
+
+          if found_stats.has_key?( "area" + stat['community_area'] )
+            found_stats[ "area" + stat['community_area'] ] << stat['year'].to_i
+          else
+            found_stats[ "area" + stat['community_area'] ] = [ stat['year'].to_i ]
+          end
+
+        end
+
+        found_stats.each do |community_area, year|
+          (2003 .. last_year).each do |year|
+            if found_stats[community_area].index(year).nil?
+              # add a zero
+              store = Statistic.new(
+                :dataset_id => dataset.id,
+                :geography_id => community_area.gsub("area",""),
+                :year => year,
+                :name => d[:parse_token],
+                :value => 0
+              )
+              store.save!
+            end
+          end
+        end
+
+      end
+      puts 'Done!'
+    end
 
   end
 end
