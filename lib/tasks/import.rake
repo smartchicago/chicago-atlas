@@ -427,12 +427,13 @@ namespace :db do
         d.delete
       end
 
+      start_year = 2003 # 2001 and 2002 are years with incomplete data
       datasets = [
-        {:category => 'Crime', :name => 'Homicide', :fbi_code => "01A", :parse_token => 'crime-h', :description => "Homicides each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
-        {:category => 'Crime', :name => 'Aggravated Assault', :fbi_code => "04A", :parse_token => 'crime-aa', :description => "Aggravated Assault each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
-        {:category => 'Crime', :name => 'Simple Assault', :fbi_code => "08A", :parse_token => 'crime-sa', :description => "Simple Assault each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
-        {:category => 'Crime', :name => 'Aggravated Battery', :fbi_code => "04B", :parse_token => 'crime-ab', :description => "Aggravated Battery each year in each community area", :choropleth_cutoffs => "", :stat_type => ''},
-        {:category => 'Crime', :name => 'Simple Battery', :fbi_code => "08B", :parse_token => 'crime-sb', :description => "Simple battery each year in each community area", :choropleth_cutoffs => "", :stat_type => ''}
+        {:category => 'Crime', :name => 'Homicide', :fbi_code => "01A", :parse_token => 'crime-h', :description => "Number of reported homicides from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Aggravated Assault', :fbi_code => "04A", :parse_token => 'crime-aa', :description => "Number of reported aggravated assaults from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Simple Assault', :fbi_code => "08A", :parse_token => 'crime-sa', :description => "Number of reported simple assaults from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Aggravated Battery', :fbi_code => "04B", :parse_token => 'crime-ab', :description => "Number of reports of aggravated battery from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Simple Battery', :fbi_code => "08B", :parse_token => 'crime-sb', :description => "Number of reports of simple battery from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''}
       ]
 
       datasets.each do |d|
@@ -442,7 +443,7 @@ namespace :db do
           :name => d[:name],
           :slug => handle,
           :description => d[:description],
-          :provider => 'Chicago Police',
+          :provider => 'Chicago Police Department',
           :url => d[:url],
           :category_id => Category.where(:name => d[:category]).first.id,
           :data_type => 'condition',
@@ -464,8 +465,8 @@ namespace :db do
         json_text = File.read("tmp/#{handle}.json")
         stats = ActiveSupport::JSON.decode( json_text )
         stats.each do |stat|
-          if (stat['year'].to_i <= 2002) or (stat['year'].to_i > last_year)
-            # don't add incomplete years
+          if (stat['year'].to_i < start_year) or (stat['year'].to_i > last_year)
+            # skip incomplete years
             next
           end
           if stat['community_area'].nil?
@@ -489,7 +490,7 @@ namespace :db do
         end
 
         found_stats.each do |community_area, year|
-          (2003 .. last_year).each do |year|
+          (start_year .. last_year).each do |year| 
             if found_stats[community_area].index(year).nil?
               # add a zero
               store = Statistic.new(
