@@ -16,6 +16,7 @@ class GeographyController < ApplicationController
                           .where("statistics.geography_id = ?", @geography.id)
                           .group('categories.id, categories.name, categories.description')
                           .having('count(datasets.id) > 0')
+                          .order("categories.name")
   end
 
   def showdataset

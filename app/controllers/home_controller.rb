@@ -32,6 +32,7 @@ class HomeController < ApplicationController
                             .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
                             .group('categories.id, categories.name, categories.description')
                             .having('count(datasets.id) > 0')
+                            .order("categories.name")
 
     end
   end
