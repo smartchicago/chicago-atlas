@@ -92,7 +92,12 @@
  
     function update_year(year){
         active_year = year;
-    	$("#year_label").text(year);
+        var year_range = allLayers[0].feature.properties.condition_year_range;
+        if (year_range != '')
+            $("#year_label").text(year_range);
+        else
+    	    $("#year_label").text(year);
+
         for(layer in allLayers){
             var props = allLayers[layer].feature.properties;
             var percentSuffix = '';

@@ -35,7 +35,7 @@
           }
           ];
 
-          ChartHelper.create("#{chart_id}", "column", "", seriesData, Date.UTC(#{chart_stats[:start_year]}, 1, 1), "year", "#{dataset.stat_type.gsub('range, ', '') }");
+          ChartHelper.create("#{chart_id}", "column", "", seriesData, Date.UTC(#{chart_stats[:start_year]}, 1, 1), "#{chart_stats[:year_range]}", "year", "#{dataset.stat_type.gsub('range, ', '') }");
         });
   - else
     - content_for :javascripts do
@@ -64,7 +64,7 @@
           ];
 
 
-          ChartHelper.create("#{chart_id}", "line", "", seriesData, Date.UTC(#{chart_stats[:start_year]}, 1, 1), "year", "#{dataset.stat_type}");
+          ChartHelper.create("#{chart_id}", "line", "", seriesData, Date.UTC(#{chart_stats[:start_year]}, 1, 1), "", "year", "#{dataset.stat_type}");
         });
 
 .clearfix

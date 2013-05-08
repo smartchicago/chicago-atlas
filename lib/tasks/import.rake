@@ -304,6 +304,7 @@ namespace :db do
             :dataset_id => dataset.id,
             :geography_id => row['zipcode'],
             :year => 2006,
+            :year_range => '2006 - 2010',
             :name => d[:parse_token], 
             :value => val
           )
@@ -315,6 +316,7 @@ namespace :db do
           :dataset_id => dataset.id,
           :geography_id => 100, # hard coded ID for Chicago
           :year => 2006,
+          :year_range => '2006 - 2010',
           :name => d[:parse_token], 
           :value => chicago_val
         )

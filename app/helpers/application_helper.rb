@@ -19,7 +19,7 @@ module ApplicationHelper
   def geography_geojson(dataset_id)
 
     area_stats = Geography
-      .select("geographies.id, geographies.name, geographies.slug, geographies.geometry, statistics.name as condition_title, statistics.value as condition_value, statistics.year as condition_year, datasets.stat_type, datasets.name as dataset_name")
+      .select("geographies.id, geographies.name, geographies.slug, geographies.geometry, statistics.name as condition_title, statistics.value as condition_value, statistics.year as condition_year, statistics.year_range as condition_year_range, datasets.stat_type, datasets.name as dataset_name")
       .joins("join statistics on statistics.geography_id = geographies.id")
       .joins("join datasets on datasets.id = statistics.dataset_id")
       .where("dataset_id = #{dataset_id}")
@@ -45,7 +45,8 @@ module ApplicationHelper
               "slug" => last_geo['slug'],
               "stat_type" => last_geo['stat_type'],
               "condition_title" => last_geo['dataset_name'],
-              "condition_value" => values_by_year
+              "condition_value" => values_by_year,
+              "condition_year_range" => last_geo['condition_year_range']
             },
             "geometry" => ActiveSupport::JSON.decode(last_geo['geometry'])
           }
@@ -58,7 +59,8 @@ module ApplicationHelper
           "slug" => c.slug,
           "stat_type" => c.stat_type,
           "dataset_name" => c.dataset_name,
-          "geometry" => c.geometry
+          "geometry" => c.geometry,
+          "condition_year_range" => c.condition_year_range
         }
       end
     end
@@ -73,7 +75,8 @@ module ApplicationHelper
           "slug" => last_geo['slug'],
           "stat_type" => last_geo['stat_type'],
           "condition_title" => last_geo['dataset_name'],
-          "condition_value" => values_by_year
+          "condition_value" => values_by_year,
+          "condition_year_range" => last_geo['condition_year_range']
         },
         "geometry" => ActiveSupport::JSON.decode(last_geo['geometry'])
       }
@@ -128,7 +131,7 @@ module ApplicationHelper
                      .order("year")
 
     if stats.length == 0
-      return {:data => [], :error_bars => [], :start_year => '', :end_year => ''}
+      return {:data => [], :error_bars => [], :start_year => '', :end_year => '', :year_range => ''}
     end
 
     stats_array = []
@@ -145,7 +148,7 @@ module ApplicationHelper
       end
     end
 
-    {:data => stats_array, :error_bars => error_bars, :start_year => stats.first.year.to_s, :end_year => stats.last.year.to_s}
+    {:data => stats_array, :error_bars => error_bars, :start_year => stats.first.year.to_s, :end_year => stats.last.year.to_s, :year_range => stats.first.year_range}
   end
 
   def to_dom_id(s)
