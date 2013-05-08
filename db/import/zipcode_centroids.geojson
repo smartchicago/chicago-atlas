@@ -8,7 +8,7 @@
 ,
 { "type": "Feature", "id": 2, "properties": { "ZIP": "60707" }, "geometry": { "type": "Point", "coordinates": [ -87.795742851904023, 41.919956088052061 ] } }
 ,
-{ "type": "Feature", "id": 3, "properties": { "ZIP": "60622" }, "geometry": { "type": "Point", "coordinates": [ -87.684190773408716, 41.903132955152763 ] } }
+{ "type": "Feature", "id": 3, "properties": { "ZIP": "60622" }, "geometry": { "type": "Point", "coordinates": [ -87.673755866636967, 41.902481112193193 ] } }
 ,
 { "type": "Feature", "id": 4, "properties": { "ZIP": "60651" }, "geometry": { "type": "Point", "coordinates": [ -87.741053758839584, 41.902409821668087 ] } }
 ,
@@ -106,7 +106,7 @@
 ,
 { "type": "Feature", "id": 51, "properties": { "ZIP": "60610" }, "geometry": { "type": "Point", "coordinates": [ -87.636997697165882, 41.904125153168017 ] } }
 ,
-{ "type": "Feature", "id": 52, "properties": { "ZIP": "60654" }, "geometry": { "type": "Point", "coordinates": [ -87.637361811304501, 41.892429460845158 ] } }
+{ "type": "Feature", "id": 52, "properties": { "ZIP": "60654" }, "geometry": { "type": "Point", "coordinates": [ -87.637119352690277, 41.900217462057356 ] } }
 ,
 { "type": "Feature", "id": 53, "properties": { "ZIP": "60632" }, "geometry": { "type": "Point", "coordinates": [ -87.713649999031688, 41.811722097325436 ] } }
 ,
