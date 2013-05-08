@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130410213503) do
+ActiveRecord::Schema.define(:version => 20130508203202) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -77,8 +77,9 @@ ActiveRecord::Schema.define(:version => 20130410213503) do
     t.float    "upper_ci"
     t.integer  "geography_id"
     t.integer  "dataset_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.string   "year_range",   :default => ""
   end
 
   add_index "statistics", ["dataset_id"], :name => "index_statistics_on_dataset_id"

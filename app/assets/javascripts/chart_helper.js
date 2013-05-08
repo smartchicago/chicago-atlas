@@ -1,5 +1,5 @@
 var ChartHelper = {};
-ChartHelper.create = function(element, type, title, seriesData, startDate, pointInterval, statType) {
+ChartHelper.create = function(element, type, title, seriesData, startDate, yearRange, pointInterval, statType) {
   var percentSuffix = '';
   if(statType == 'percent')
     percentSuffix = '%';
@@ -19,8 +19,15 @@ ChartHelper.create = function(element, type, title, seriesData, startDate, point
       },
       title: title,
       xAxis: {
-          dateTimeLabelFormats: { year: "%Y" },
-          type: "datetime"
+          type: 'datetime',
+          labels: {
+            formatter: function() { 
+              if (yearRange != '')
+                return yearRange;
+              else
+                return Highcharts.dateFormat('%Y', this.value); 
+            }
+          }
       },
       yAxis: {
           title: null,
