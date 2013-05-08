@@ -4,20 +4,6 @@ class HomeController < ApplicationController
   def index
   end
 
-  def leaflet_test
-    @zip = Geography.where(:name => '60614').first 
-  end
-
-  def interventions_test
-    @interventions = InterventionLocation.all
-
-    @points = []
-    @interventions.each do |p|
-      @points << [p[:name], p[:address], p[:latitude], p[:longitude]]
-    end
-    # puts @points.inspect
-  end
-
   def map
     if params[:dataset_slug].nil?
       #@current_dataset = Dataset.order("name").first
@@ -27,7 +13,6 @@ class HomeController < ApplicationController
       @current_dataset = Dataset.where("slug = '#{params[:dataset_slug]}'").first
       
       @display_geojson = geography_geojson(@current_dataset.id)
-      @intervention_locations = intervention_locations(@current_dataset.id)
       @categories = Category.select('categories.id, categories.name, categories.description')
                             .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
                             .group('categories.id, categories.name, categories.description')
