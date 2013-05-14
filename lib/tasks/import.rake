@@ -119,8 +119,8 @@ namespace :db do
 
         # Chronic disease
         # these are aggregated by zip code
-        # {:category => 'Chronic disease', :name => 'Diabetes Hospitalizations', :parse_tokens => ['Hospitalizations', 'Crude Rate', 'Adjusted Rate'], :socrata_id => 'vekt-28b5', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Diabetes-hospitalizations/vekt-28b5'},
-        # {:category => 'Chronic disease', :name => 'Diabetes Hospitalizations', :parse_tokens => ['Hospitalizations', 'Crude Rate', 'Adjusted Rate'], :socrata_id => 'vazh-t57q', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Asthma-hospitalizations-i/vazh-t57q'},
+        {:category => 'Chronic disease', :name => 'Diabetes Hospitalizations', :parse_tokens => ['crude_rate'], :socrata_id => 'vekt-28b5', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Diabetes-hospitalizations/vekt-28b5', :description => "Age-adjusted hospitalization rates with corresponding 95% confidence intervals, for the years 2000 - 2011, by Chicago U.S. Postal Service ZIP code or ZIP code aggregate.", :choropleth_cutoffs => "[0,10,20,40]", :stat_type => 'rate', :area => 'zip'},
+        {:category => 'Chronic disease', :name => 'Asthma Hospitalizations', :parse_tokens => ['crude_rate'], :socrata_id => 'vazh-t57q', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Asthma-hospitalizations-i/vazh-t57q', :description => "Age-adjusted hospitalization rates (per 10,000 children and adults aged 5 to 64 years) with corresponding 95% confidence intervals, for the years 2000 - 2011, by Chicago U.S. Postal Service ZIP code or ZIP code aggregate.", :choropleth_cutoffs => "[0,10,20,40]", :stat_type => 'rate', :area => 'zip'},
       ]
 
       datasets.each do |d|
@@ -144,7 +144,7 @@ namespace :db do
               dataset = save_cdph_dataset(d, parse_token, handle, group)
 
               csv.each do |row|
-                process_cdph_row(row, dataset, parse_token, d[:group_column], group)
+                process_cdph_row(d, row, dataset, parse_token, d[:group_column], group)
               end
 
               stat_count = Statistic.count(:conditions => "dataset_id = #{dataset.id}")
@@ -155,7 +155,7 @@ namespace :db do
             dataset = save_cdph_dataset(d, parse_token, handle)
 
             csv.each do |row|
-              process_cdph_row(row, dataset, parse_token)
+              process_cdph_row(d, row, dataset, parse_token)
             end
 
             stat_count = Statistic.count(:conditions => "dataset_id = #{dataset.id}")
@@ -188,35 +188,52 @@ namespace :db do
       dataset
     end
 
-    def process_cdph_row(row, dataset, parse_token, group_column='', group='')
+    def process_cdph_row(d, row, dataset, parse_token, group_column='', group='')
       row = row.to_hash.with_indifferent_access
 
-      # sometimes Community Area is named differently
-      community_area = row['community_area']
-      if community_area.nil? || community_area == ''
-        community_area = row['community_area_number']
-      end
+      area = ''
+      if (d.has_key?(:area) and d[:area] == 'zip')
+        area = row['zip_code_or_aggregate']
 
-      # special case for Chicago - given an ID of 0, 88 or 100 by CDPH
-      if community_area == '0' or community_area == '88'
-        community_area = '100' # Chicago is manually imported, see seeds.rb
+        if area == '60601,60602,60603,60604,60605 & 60611'
+          area = '12311'
+        elsif area == '60606,60607 & 60661'
+          area = '6761'
+        elsif area == '60622 & 60642'
+          area = '60622'
+        elsif area == '60610 & 60654'
+          area = '60610'
+        elsif area == 'CHICAGO'
+          area = '100' # Chicago is manually imported, see seeds.rb
+        end
+      else
+        # sometimes Community Area is named differently
+        area = row['community_area']
+        if area.nil? || area == ''
+          area = row['community_area_number']
+        end
+
+        # special case for Chicago - given an ID of 0, 88 or 100 by CDPH
+        if area == '0' or area == '88'
+          area = '100' # Chicago is manually imported, see seeds.rb
+        end
       end
 
       if group != '' and group_column != ''
         if row[group_column] == group
-          save_cdph_statistic(row, dataset, community_area, parse_token)
+          save_cdph_statistic(row, dataset, area, parse_token)
         end
       else
-        save_cdph_statistic(row, dataset, community_area, parse_token)
+        save_cdph_statistic(row, dataset, area, parse_token)
       end
     end
 
-    def save_cdph_statistic(row, dataset, community_area, parse_token)
+    def save_cdph_statistic(row, dataset, area, parse_token)
       (1999..Time.now.year).each do |year|
         if (row.has_key?("#{parse_token}_#{year}"))
           stat = Statistic.new(
             :dataset_id => dataset.id,
-            :geography_id => community_area,
+            :geography_id => area,
             :year => year,
             :name => parse_token, 
             :value => row["#{parse_token}_#{year}"]
