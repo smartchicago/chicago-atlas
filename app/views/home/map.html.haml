@@ -163,6 +163,9 @@
 
 .row-fluid
   .span4
+    %h3 
+      #{@current_dataset.name}
+    %p #{@current_dataset.description}
     %h4 
       Year
       %small#year_label
@@ -170,32 +173,26 @@
     %div{ :id => "slider" }
     %strong.pull-left#start_year
     %strong.pull-right#end_year
-    
-    /
-      %ul.inline
-        - (@current_dataset.start_year..@current_dataset.end_year).each do |y|
-          %li
-            - if y.to_s == params[:year]
-              %strong
-                = y
-            - else
-              %a{:href => "/map/#{params[:dataset_id]}/#{y}"} 
-                = y
 
     %hr
-    - @categories.each do |c|
-      %h4
-        = c.name
 
-      %ul
-        - Dataset.where(:category_id => c.id).order("name").each do |d|
-          %li
-            - if d.slug == params[:dataset_slug]
-              %strong
-                = d.name
-            - else
-              %a{:href => "/map/#{d.slug}"} 
-                = d.name
+    #view_accordion.accordion
+      - @categories.each do |c|
+        .accordion-group
+          .accordion-heading
+            %a.accordion-toggle{"data-parent" => "#view_accordion", "data-toggle" => "collapse", :href => "#category_#{c.id}", "data-view" => c.name}
+              = c.name
+          .accordion-body{:id => "category_#{c.id}", :class => (@current_category.id == c.id) ? '' : 'collapse'}
+            .accordion-inner{:id => "category_inner_#{c.id}"}
+              %ul
+                - Dataset.where(:category_id => c.id).order("name").each do |d|
+                  %li
+                    - if d.slug == params[:dataset_slug]
+                      %strong
+                        = d.name
+                    - else
+                      %a{:href => "/map/#{d.slug}"} 
+                        = d.name
 
   .span8
     #map

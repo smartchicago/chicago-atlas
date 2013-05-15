@@ -481,7 +481,7 @@ namespace :db do
     desc "Import Chicago homicide, assault, and battery from CSV"
     task :crime => :environment do
 
-      Dataset.where(:provider => "Chicago Police").each do |d|
+      Dataset.where(:provider => "Chicago Police Department").each do |d|
         Statistic.delete_all(:dataset_id => d.id)
         d.delete
       end

@@ -11,6 +11,7 @@ class HomeController < ApplicationController
       redirect_to :action => "map", :dataset_slug => "birth_rate"
     else
       @current_dataset = Dataset.where("slug = '#{params[:dataset_slug]}'").first
+      @current_category = Category.find(@current_dataset.category_id)
       
       @display_geojson = geography_geojson(@current_dataset.id)
       @categories = Category.select('categories.id, categories.name, categories.description')
