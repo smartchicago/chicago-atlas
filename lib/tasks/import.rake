@@ -101,26 +101,44 @@ namespace :db do
         {:category => 'Births', :name => 'Prenatal Care Obtained in 1st Trimester', :group_column => 'trimester_prenatal_care_began', :groups => ['1ST TRIMESTER'], :parse_tokens => ['percent'], :socrata_id => '2q9j-hh6g', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Prenatal-care-in-Chicago-/2q9j-hh6g', :description => "Percent of live births in which the mother began prenatal care during the 1st trimester with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2009.", :choropleth_cutoffs => "[0,65,73,81]", :stat_type => 'percent'},
         
         # Deaths
-        # {:category => 'Deaths', :name => 'Infant Mortality Rate', :parse_tokens => ['deaths'], :socrata_id => 'bfhr-4ckq', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Infant-mortality-in-Chica/bfhr-4ckq', :description => "Annual number of infant deaths, by Chicago community area, for the years 2004 - 2008.", :stat_type => 'rate'},
+        {:category => 'Deaths', :name => 'Infant mortality', :parse_tokens => ['average_infant_mortality_rate_2004__2008'], :socrata_id => 'bfhr-4ckq', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Infant-mortality-in-Chica/bfhr-4ckq', :description => "Average annual infant mortality rate, by Chicago community area, for the years 2004 - 2008.", :stat_type => 'range, rate', :range => '2004 - 2008'},
 
         # special case: broken down by death cause
-        # causes: All causes in females,All causes in males,Alzheimers disease,Assault (homicide),Breast cancer in females,Cancer (all sites),Colorectal cancer,Coronary heart disease,Diabetes-related,Firearm-related,Injury, unintentional,Kidney disease (nephritis, nephrotic syndrome and nephrosis),Liver disease and cirrhosis,Lung cancer,Prostate cancer in males,Stroke (cerebrovascular disease),Suicide (intentional self-harm)
-        # {:category => 'Deaths', :name => 'Deaths from breast cancer', :group_column => 'cause_of_death', :groups => ['Breast cancer in females'], :parse_tokens => ['average_adjusted_rate_2004_-_2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "" , :choropleth_cutoffs => "[0,8,21,28,35]"},
+        # causes: All causes, All causes in females,All causes in males,Alzheimers disease,Assault (homicide),Breast cancer in females,Cancer (all sites),Colorectal cancer,Coronary heart disease,Diabetes-related,Firearm-related,Injury, unintentional,Kidney disease (nephritis, nephrotic syndrome and nephrosis),Liver disease and cirrhosis,Lung cancer,Prostate cancer in males,Stroke (cerebrovascular disease),Suicide (intentional self-harm)
+        
+        {:category => 'Deaths', :name => 'All causes', :group_column => 'cause_of_death', :groups => ['All causes'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted death rates from all causes by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "", :stat_type => 'range, rate', :range => '2004 - 2008'},
+        {:category => 'Deaths', :name => 'All causes in females', :group_column => 'cause_of_death', :groups => ['All causes in females'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted death rates from all causes in females by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "", :stat_type => 'range, rate', :range => '2004 - 2008'},
+        {:category => 'Deaths', :name => 'All causes in males', :group_column => 'cause_of_death', :groups => ['All causes in males'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted death rates  from all causes in males by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "", :stat_type => 'range, rate', :range => '2004 - 2008'},
+        {:category => 'Deaths', :name => 'Alzheimers disease', :group_column => 'cause_of_death', :groups => ['Alzheimers disease'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted death rates from Alzheimers disease by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "", :stat_type => 'range, rate', :range => '2004 - 2008'},
+        {:category => 'Deaths', :name => 'Assault (homicide)', :group_column => 'cause_of_death', :groups => ['Assault (homicide)'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted death rates from Assault (homicide) by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "[0,10,20,30]", :stat_type => 'range, rate', :range => '2004 - 2008'},
+        {:category => 'Deaths', :name => 'Breast cancer in females', :group_column => 'cause_of_death', :groups => ['Breast cancer in females'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted death rates from breast cancer in females by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "[0,8,21,28,35]", :stat_type => 'range, rate', :range => '2004 - 2008'},
+        {:category => 'Deaths', :name => 'Cancer (all sites)', :group_column => 'cause_of_death', :groups => ['Cancer (all sites)'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted death rates from cancer (all sites) by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "[0,170,220,270]", :stat_type => 'range, rate', :range => '2004 - 2008'},
+        {:category => 'Deaths', :name => 'Colorectal cancer', :group_column => 'cause_of_death', :groups => ['Colorectal cancer'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted death rates from colorectal cancer by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "[0,14,17,23,30]", :stat_type => 'range, rate', :range => '2004 - 2008'},
+        {:category => 'Deaths', :name => 'Coronary heart disease', :group_column => 'cause_of_death', :groups => ['Coronary heart disease'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted death rates from coronary heart disease by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "", :stat_type => 'range, rate', :range => '2004 - 2008'},
+        {:category => 'Deaths', :name => 'Diabetes-related', :group_column => 'cause_of_death', :groups => ['Diabetes-related'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted diabetes-related death rates by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "", :stat_type => 'range, rate', :range => '2004 - 2008'},
+        {:category => 'Deaths', :name => 'Firearm-related', :group_column => 'cause_of_death', :groups => ['Firearm-related'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted firearm-related death rates by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "[0,10,20,30]", :stat_type => 'range, rate', :range => '2004 - 2008'},
+        {:category => 'Deaths', :name => 'Injury, unintentional', :group_column => 'cause_of_death', :groups => ['Injury,unintentional'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted death rates from unintentional injury by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "", :stat_type => 'range, rate', :range => '2004 - 2008'},
+        {:category => 'Deaths', :name => 'Kidney disease', :group_column => 'cause_of_death', :groups => ['Kidney disease (nephritis, nephrotic syndrome and nephrosis)'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted death rates from kidney disease (nephritis, nephrotic syndrome and nephrosis) by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "", :stat_type => 'range, rate', :range => '2004 - 2008'},
+        {:category => 'Deaths', :name => 'Liver disease and cirrhosis', :group_column => 'cause_of_death', :groups => ['Liver disease and cirrhosis'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted death rates from liver disease and cirrhosis by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "", :stat_type => 'range, rate', :range => '2004 - 2008'},
+        {:category => 'Deaths', :name => 'Lung cancer', :group_column => 'cause_of_death', :groups => ['Lung cancer'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted death rates from lung cancer by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "[0,40,50,60]", :stat_type => 'range, rate', :range => '2004 - 2008'},
+        {:category => 'Deaths', :name => 'Prostate cancer in males', :group_column => 'cause_of_death', :groups => ['Prostate cancer in males'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted death rates from prostate cancer in males by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "[0,20,40,60]", :stat_type => 'range, rate', :range => '2004 - 2008'},
+        {:category => 'Deaths', :name => 'Stroke', :group_column => 'cause_of_death', :groups => ['Stroke (cerebrovascular disease)'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted death rates from stroke (cerebrovascular disease) by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "", :stat_type => 'range, rate', :range => '2004 - 2008'},
+        {:category => 'Deaths', :name => 'Suicide', :group_column => 'cause_of_death', :groups => ['Suicide (intentional self-harm)'], :parse_tokens => ['average_adjusted_rate_2004__2008'], :socrata_id => 'j6cj-r444', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-underlying-cause/j6cj-r444', :description => "Adjusted death rates from suicide (intentional self-harm) by Chicago community area from 2004 - 2008" , :choropleth_cutoffs => "", :stat_type => 'range, rate', :range => '2004 - 2008'},
       
         # Environmental Health
         {:category => 'Environmental Health', :name => 'Lead Screening Rate', :parse_tokens => ['lead_screening_rate'], :socrata_id => 'v2z5-jyrq', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Screening-for-elevated-bl/v2z5-jyrq', :description => "Estimated rate per 1,000 children aged 0-6 years receiving a blood lead level test, by Chicago community area, for the years 1999 - 2011." , :choropleth_cutoffs => "[0,70,250,350,450]", :stat_type => 'rate'},
         {:category => 'Environmental Health', :name => 'Elevated Blood Lead Levels', :parse_tokens => ['percent_elevated'], :socrata_id => 'v2z5-jyrq', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Screening-for-elevated-bl/v2z5-jyrq', :description => "Estimated percentage of children aged 0-6 years tested found to have an elevated blood lead level with corresponding 95% confidence intervals, by Chicago community area, for the years 1999 - 2011.", :choropleth_cutoffs => "[0,2,5,8]", :stat_type => 'percent'},
         
         # Infectious disease
-        # {:category => 'Infectious disease', :name => 'Tuberculosis', :parse_tokens => ['cases'], :socrata_id => 'ndk3-zftj', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Tuberculosis-cases-and-av/ndk3-zftj', :description => "Annual number of new cases of tuberculosis by Chicago community area, for the years 2007 - 2011.", :choropleth_cutoffs => "[0,4.0,8.0,12]", :stat_type => 'count'},
+        {:category => 'Infectious disease', :name => 'Tuberculosis', :parse_tokens => ['average_annual_incidence_rate_20072011'], :socrata_id => 'ndk3-zftj', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Tuberculosis-cases-and-av/ndk3-zftj', :description => "Annual number of new cases of tuberculosis by Chicago community area, for the years 2007 - 2011.", :choropleth_cutoffs => "[0,4.0,8.0,12]", :stat_type => 'range, count', :range => '2007 - 2011'},
         {:category => 'Infectious disease', :name => 'Gonorrhea in females', :parse_tokens => ['incidence_rate'], :socrata_id => 'cgjw-mn43', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Gonorrhea-cases-for-femal/cgjw-mn43', :description => "Annual number of newly reported, laboratory-confirmed cases of gonorrhea (Neisseria gonorrhoeae) among females aged 15-44 years and annual gonorrhea incidence rate (cases per 100,000 females aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011.", :choropleth_cutoffs => "[0,600,1200,1800]", :stat_type => 'rate'},
         {:category => 'Infectious disease', :name => 'Gonorrhea in males', :parse_tokens => ['incidence_rate'], :socrata_id => 'm5qn-gmjx', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-health-statistics-Gonorrhea-cases-for-males/m5qn-gmjx', :description => "Annual number of newly reported, laboratory-confirmed cases of gonorrhea (Neisseria gonorrhoeae) among males aged 15-44 years and annual gonorrhea incidence rate (cases per 100,000 males aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011. ", :choropleth_cutoffs => "[0,600,1200,1800]", :stat_type => 'rate'},
         {:category => 'Infectious disease', :name => 'Chlamydia in females', :parse_tokens => ['incidence_rate'], :socrata_id => 'bz6k-73ti', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Chlamydia-cases-among-fem/bz6k-73ti', :description => "Annual number of newly reported, laboratory-confirmed cases of chlamydia (Chlamydia trachomatis) among females aged 15-44 years and annual chlamydia incidence rate (cases per 100,000 females aged 15-44 years) with corresponding 95% confidence intervals by Chicago community area, for years 2000 - 2011. ", :choropleth_cutoffs => "[0,700,1400,2100,2800]", :stat_type => 'rate'},
 
         # Chronic disease
         # these are aggregated by zip code
-        # {:category => 'Chronic disease', :name => 'Diabetes Hospitalizations', :parse_tokens => ['Hospitalizations', 'Crude Rate', 'Adjusted Rate'], :socrata_id => 'vekt-28b5', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Diabetes-hospitalizations/vekt-28b5'},
-        # {:category => 'Chronic disease', :name => 'Diabetes Hospitalizations', :parse_tokens => ['Hospitalizations', 'Crude Rate', 'Adjusted Rate'], :socrata_id => 'vazh-t57q', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Asthma-hospitalizations-i/vazh-t57q'},
+        {:category => 'Chronic disease', :name => 'Diabetes Hospitalizations', :parse_tokens => ['crude_rate'], :socrata_id => 'vekt-28b5', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Diabetes-hospitalizations/vekt-28b5', :description => "Age-adjusted hospitalization rates with corresponding 95% confidence intervals, for the years 2000 - 2011, by Chicago U.S. Postal Service ZIP code or ZIP code aggregate.", :choropleth_cutoffs => "[0,10,20,40]", :stat_type => 'rate', :area => 'zip'},
+        {:category => 'Chronic disease', :name => 'Asthma Hospitalizations', :parse_tokens => ['crude_rate'], :socrata_id => 'vazh-t57q', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Asthma-hospitalizations-i/vazh-t57q', :description => "Age-adjusted hospitalization rates (per 10,000 children and adults aged 5 to 64 years) with corresponding 95% confidence intervals, for the years 2000 - 2011, by Chicago U.S. Postal Service ZIP code or ZIP code aggregate.", :choropleth_cutoffs => "[0,10,20,40]", :stat_type => 'rate', :area => 'zip'},
       ]
 
       datasets.each do |d|
@@ -144,7 +162,7 @@ namespace :db do
               dataset = save_cdph_dataset(d, parse_token, handle, group)
 
               csv.each do |row|
-                process_cdph_row(row, dataset, parse_token, d[:group_column], group)
+                process_cdph_row(d, row, dataset, parse_token, d[:group_column], group)
               end
 
               stat_count = Statistic.count(:conditions => "dataset_id = #{dataset.id}")
@@ -155,7 +173,7 @@ namespace :db do
             dataset = save_cdph_dataset(d, parse_token, handle)
 
             csv.each do |row|
-              process_cdph_row(row, dataset, parse_token)
+              process_cdph_row(d, row, dataset, parse_token)
             end
 
             stat_count = Statistic.count(:conditions => "dataset_id = #{dataset.id}")
@@ -188,52 +206,91 @@ namespace :db do
       dataset
     end
 
-    def process_cdph_row(row, dataset, parse_token, group_column='', group='')
+    def process_cdph_row(d, row, dataset, parse_token, group_column='', group='')
       row = row.to_hash.with_indifferent_access
 
-      # sometimes Community Area is named differently
-      community_area = row['community_area']
-      if community_area.nil? || community_area == ''
-        community_area = row['community_area_number']
-      end
+      area = ''
+      if (d.has_key?(:area) and d[:area] == 'zip')
+        area = row['zip_code_or_aggregate']
 
-      # special case for Chicago - given an ID of 0, 88 or 100 by CDPH
-      if community_area == '0' or community_area == '88'
-        community_area = '100' # Chicago is manually imported, see seeds.rb
+        if area == '60601,60602,60603,60604,60605 & 60611'
+          area = '12311'
+        elsif area == '60606,60607 & 60661'
+          area = '6761'
+        elsif area == '60622 & 60642'
+          area = '60622'
+        elsif area == '60610 & 60654'
+          area = '60610'
+        elsif area == 'CHICAGO'
+          area = '100' # Chicago is manually imported, see seeds.rb
+        end
+      else
+        # sometimes Community Area is named differently
+        area = row['community_area']
+        if area.nil? || area == ''
+          area = row['community_area_number']
+        end
+
+        # special case for Chicago - given an ID of 0, 88 or 100 by CDPH
+        if area == '0' or area == '88'
+          area = '100' # Chicago is manually imported, see seeds.rb
+        end
       end
 
       if group != '' and group_column != ''
         if row[group_column] == group
-          save_cdph_statistic(row, dataset, community_area, parse_token)
+          save_cdph_statistic(d, row, dataset, area, parse_token)
         end
       else
-        save_cdph_statistic(row, dataset, community_area, parse_token)
+        save_cdph_statistic(d, row, dataset, area, parse_token)
       end
     end
 
-    def save_cdph_statistic(row, dataset, community_area, parse_token)
-      (1999..Time.now.year).each do |year|
-        if (row.has_key?("#{parse_token}_#{year}"))
-          stat = Statistic.new(
-            :dataset_id => dataset.id,
-            :geography_id => community_area,
-            :year => year,
-            :name => parse_token, 
-            :value => row["#{parse_token}_#{year}"]
-          )
+    def save_cdph_statistic(d, row, dataset, area, parse_token)
 
-          if (row.has_key?("#{parse_token}_#{year}_lower_ci"))
-            stat.lower_ci = row["#{parse_token}_#{year}_lower_ci"]
-          end
+      if d.has_key?(:range)
+        stat = Statistic.new(
+          :dataset_id => dataset.id,
+          :geography_id => area,
+          :year => d[:range][0..3], # pluck out the first year in the range
+          :year_range => d[:range],
+          :name => parse_token, 
+          :value => row["#{parse_token}"]
+        )
 
-          if (row.has_key?("#{parse_token}_#{year}_upper_ci"))
-            stat.upper_ci = row["#{parse_token}_#{year}_upper_ci"]
-          end
-
-          stat.save!
-          stat
+        if (row.has_key?("#{parse_token}_lower_ci"))
+          stat.lower_ci = row["#{parse_token}_lower_ci"]
         end
 
+        if (row.has_key?("#{parse_token}_upper_ci"))
+          stat.upper_ci = row["#{parse_token}_upper_ci"]
+        end
+
+        stat.save!
+        stat
+      else
+        (1999..Time.now.year).each do |year|
+          if (row.has_key?("#{parse_token}_#{year}"))
+            stat = Statistic.new(
+              :dataset_id => dataset.id,
+              :geography_id => area,
+              :year => year,
+              :name => parse_token, 
+              :value => row["#{parse_token}_#{year}"]
+            )
+
+            if (row.has_key?("#{parse_token}_#{year}_lower_ci"))
+              stat.lower_ci = row["#{parse_token}_#{year}_lower_ci"]
+            end
+
+            if (row.has_key?("#{parse_token}_#{year}_upper_ci"))
+              stat.upper_ci = row["#{parse_token}_#{year}_upper_ci"]
+            end
+
+            stat.save!
+            stat
+          end
+        end
       end
     end
 
