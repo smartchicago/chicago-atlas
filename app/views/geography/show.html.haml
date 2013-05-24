@@ -12,6 +12,8 @@
     - @categories.each do |category|
       = render :partial => "geography/category", :locals => {:category => category, :geography => @geography }
 
+    = render :partial => "geography/demographics", :locals => {:geography => @geography }
+
   .span4
     .well
       - content_for :javascripts do

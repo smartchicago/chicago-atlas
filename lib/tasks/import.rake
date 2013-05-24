@@ -510,7 +510,7 @@ namespace :db do
               :provider => 'US Census',
               :url => d[:url],
               :category_id => Category.where(:name => d[:category]).first.id,
-              :data_type => 'condition',
+              :data_type => 'population',
               :stat_type => 'count'
             )
             dataset.save!

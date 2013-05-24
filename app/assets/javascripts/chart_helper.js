@@ -4,6 +4,10 @@ ChartHelper.create = function(element, type, title, seriesData, startDate, yearR
   if(statType == 'percent')
     percentSuffix = '%';
 
+  var area_config = {};
+  if (type == 'area')
+    area_config = { stacking: 'normal' };
+
   return new Highcharts.Chart({
       chart: {
           renderTo: element,
@@ -33,10 +37,11 @@ ChartHelper.create = function(element, type, title, seriesData, startDate, yearR
           title: null,
           min: 0,
           labels: {
-            formatter: function() { return this.value + percentSuffix; }
+            formatter: function() { return ChartHelper.formatNumber(this.value) + percentSuffix; }
           },
       },
       plotOptions: {
+        area: area_config,
         series: {
           marker: {
             radius: 0,
@@ -60,7 +65,7 @@ ChartHelper.create = function(element, type, title, seriesData, startDate, yearR
               if (point.point.low != null && point.point.high != null)
                 s += "<br /><span style=\"color: " + point.series.color + "\">" + point.series.name + ":</span> " + point.point.low + percentSuffix + " - " + point.point.high + percentSuffix;
               else
-                s += "<br /><span style=\"color: " + point.series.color + "\">" + point.series.name + ":</span> " + point.y + percentSuffix;
+                s += "<br /><span style=\"color: " + point.series.color + "\">" + point.series.name + ":</span> " + Highcharts.numberFormat(point.y, 0) + percentSuffix;
             });
             return s;
           },
@@ -142,4 +147,15 @@ ChartHelper.toolTipDateFormat = function(interval, x) {
     return Highcharts.dateFormat("%H:00", x);
   else
     return 1;
+}
+
+ChartHelper.formatNumber = function(value) {
+  if (value >= 1000000000)
+    return value / 1000000000 + "B";
+  else if (value >= 1000000)
+    return value / 1000000 + "M";
+  else if (value >= 1000)
+    return value / 1000 + "K";
+  else
+    return value;
 }

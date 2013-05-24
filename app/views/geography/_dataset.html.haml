@@ -3,7 +3,7 @@
   %h3
     = dataset.name
     %small
-      %a{ :href => "/place/#{@geography.slug}/#{dataset.name.parameterize.underscore.to_sym}" } details &raquo;
+      %a{ :href => "/place/#{@geography.slug}/#{dataset.slug}" } details &raquo;
 
 .span4
   %p 
@@ -12,7 +12,7 @@
 .span7
   - chart_stats = fetch_chart_data(dataset.id, @geography.id)
   - chicago_avg_stats = fetch_chart_data(dataset.id, 100) # ID for Chicago
-  - chart_id = "chart_#{dataset.id}_#{dataset.name.parameterize.underscore.to_sym}"
+  - chart_id = "chart_#{dataset.id}_#{dataset.slug}"
 
   .chart{:id => chart_id}
 
@@ -36,6 +36,21 @@
           ];
 
           ChartHelper.create("#{chart_id}", "column", "", seriesData, Date.UTC(#{chart_stats[:start_year]}, 1, 1), "#{chart_stats[:year_range]}", "year", "#{dataset.stat_type.gsub('range, ', '') }");
+        });
+  - elsif dataset.stat_type.include? 'count'
+    - content_for :javascripts do
+      
+      :javascript
+        $(function () {
+
+          var seriesData = [{
+            color: colorHash[(#{dataset.id} % 7)],
+            type: 'line',
+            data: #{chart_stats[:data]},
+            name: "#{geography.name}"
+          }];
+
+          ChartHelper.create("#{chart_id}", "line", "", seriesData, Date.UTC(#{chart_stats[:start_year]}, 1, 1), "", "year", "#{dataset.stat_type}");
         });
   - else
     - content_for :javascripts do

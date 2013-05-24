@@ -1,0 +1,34 @@
+%h3
+  Population
+
+.span4
+  %p Population from 1999 - 2011 by sex.
+
+.span7
+  - demographic_male = fetch_demographic_data('MALE', @geography.id)
+  - demographic_female = fetch_demographic_data('FEMALE', @geography.id)
+  - chart_id = "chart_demographics"
+
+  .chart{:id => chart_id}
+
+  - content_for :javascripts do
+    
+    :javascript
+      $(function () {
+
+        var seriesData = [{
+          color: colorHash[0],
+          data: #{demographic_male[:data]},
+          name: "Male"
+        },
+        {
+          color: colorHash[1],
+          data: #{demographic_female[:data]},
+          name: "Female"
+        }
+        ];
+
+        ChartHelper.create("#{chart_id}", "area", "", seriesData, Date.UTC(#{demographic_male[:start_year]}, 1, 1), "", "year", "count");
+      });
+
+.clearfix
