@@ -212,30 +212,15 @@ namespace :db do
       area = ''
       if (d.has_key?(:area) and d[:area] == 'zip')
         area = row['zip_code_or_aggregate']
-
-        if area == '60601,60602,60603,60604,60605 & 60611'
-          area = '12311'
-        elsif area == '60606,60607 & 60661'
-          area = '6761'
-        elsif area == '60622 & 60642'
-          area = '60622'
-        elsif area == '60610 & 60654'
-          area = '60610'
-        elsif area == 'CHICAGO'
-          area = '100' # Chicago is manually imported, see seeds.rb
-        end
       else
         # sometimes Community Area is named differently
         area = row['community_area']
         if area.nil? || area == ''
           area = row['community_area_number']
         end
-
-        # special case for Chicago - given an ID of 0, 88 or 100 by CDPH
-        if area == '0' or area == '88'
-          area = '100' # Chicago is manually imported, see seeds.rb
-        end
       end
+
+      area = get_area_id(area)
 
       if group != '' and group_column != ''
         if row[group_column] == group
@@ -244,6 +229,21 @@ namespace :db do
       else
         save_cdph_statistic(d, row, dataset, area, parse_token)
       end
+    end
+
+    def get_area_id(area)
+      if area == '60601,60602,60603,60604,60605 & 60611'
+        area = '12311'
+      elsif area == '60606,60607 & 60661'
+        area = '6761'
+      elsif area == '60622 & 60642'
+        area = '60622'
+      elsif area == '60610 & 60654'
+        area = '60610'
+      elsif area == 'CHICAGO' or area == 'CH' or area == '0' or area == '88'
+        area = '100' # Chicago is manually imported, see seeds.rb
+      end
+      area
     end
 
     def save_cdph_statistic(d, row, dataset, area, parse_token)
@@ -305,15 +305,15 @@ namespace :db do
 
       datasets = [
         # Breast_cancer,Colorectal_cancer,Prostate_cancer,Lung_cancer,Diabetes,HTN,Asthma,COPD,CHD
-        {:category => 'Chronic disease', :name => 'Breast cancer', :parse_token => 'breast_cancer', :description => "Estimated Breast Cancer prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "[0,.58,.78,.95]", :stat_type => 'range, percent'},
-        {:category => 'Chronic disease', :name => 'Colorectal cancer', :parse_token => 'colorectal_cancer', :description => "Estimated Colorectal Cancer prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "[0,0.25,.31,.37]", :stat_type => 'range, percent'},
-        {:category => 'Chronic disease', :name => 'Prostate cancer', :parse_token => 'prostate_cancer', :description => "Estimated Prostate Cancer prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "[0,.34,.44,.60]", :stat_type => 'range, percent'},
-        {:category => 'Chronic disease', :name => 'Lung cancer', :parse_token => 'lung_cancer', :description => "Estimated Lung Cancer prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "[0,.22,.27,.35]", :stat_type => 'range, percent'},
+        {:category => 'Chronic disease', :name => 'Breast cancer', :parse_token => 'breast_cancer', :description => "Estimated Breast Cancer prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "[0,0.58,0.78,0.95]", :stat_type => 'range, percent'},
+        {:category => 'Chronic disease', :name => 'Colorectal cancer', :parse_token => 'colorectal_cancer', :description => "Estimated Colorectal Cancer prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "[0,0.25,0.31,0.37]", :stat_type => 'range, percent'},
+        {:category => 'Chronic disease', :name => 'Prostate cancer', :parse_token => 'prostate_cancer', :description => "Estimated Prostate Cancer prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "[0,0.34,0.44,0.60]", :stat_type => 'range, percent'},
+        {:category => 'Chronic disease', :name => 'Lung cancer', :parse_token => 'lung_cancer', :description => "Estimated Lung Cancer prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "[0,0.22,0.27,0.35]", :stat_type => 'range, percent'},
         {:category => 'Chronic disease', :name => 'Diabetes', :parse_token => 'diabetes', :description => "Estimated diabetes prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "[0,5.6,6.5,6.89]", :stat_type => 'range, percent'},
         {:category => 'Chronic disease', :name => 'Hypertension', :parse_token => 'htn', :description => "Estimated hypertension prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "[0,12.5,13.58,14.69]", :stat_type => 'range, percent'},
         {:category => 'Chronic disease', :name => 'Asthma', :parse_token => 'asthma', :description => "Estimated asthma prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "[0,4.2,4.4,4.6]", :stat_type => 'range, percent'},
         {:category => 'Chronic disease', :name => 'Chronic Obstructive Pulmonary Disease', :parse_token => 'copd', :description => "Estimated Chronic Obstructive Pulmonary Disease (COPD) prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "[0,1,1.14,1.43]", :stat_type => 'range, percent'},
-        {:category => 'Chronic disease', :name => 'Congestive Heart Failure', :parse_token => 'chd', :description => "Estimated Congestive Heart Failure (CHF) prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "[0,.25,.31,.36]", :stat_type => 'range, percent'},
+        {:category => 'Chronic disease', :name => 'Congestive Heart Failure', :parse_token => 'chd', :description => "Estimated Congestive Heart Failure (CHF) prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :choropleth_cutoffs => "[0,0.25,0.31,0.36]", :stat_type => 'range, percent'},
       ]
 
       csv_text = File.read("db/import/chitrec-data.csv")
@@ -475,6 +475,74 @@ namespace :db do
         stat_count = InterventionLocation.count(:conditions => "dataset_id = #{dataset.id}")
         puts "imported #{stat_count} intervention locations"
 
+      end
+    end
+
+    desc "Import population by year by community area and zip code"
+    task :population => :environment do
+      require 'csv' 
+
+      Dataset.where(:category_id => Category.where("name = 'Demographics'").first).each do |d|
+        Statistic.delete_all("dataset_id = #{d.id}")
+        d.delete
+      end
+
+      age_groups = ['00-04','05-14','15-24','25-34','35-44','45-54','55-64','65-74','75-84','85+','TOTAL']
+      sex_groups = ['FEMALE', 'MALE', 'ALL']
+
+      datasets = [
+        {:category => 'Demographics', :name => 'Population', :file => 'population_estimates_1999_2011'},
+      ]
+
+      datasets.each do |d|
+        csv_text = File.read("db/import/#{d[:file]}.csv")
+        csv = CSV.parse(csv_text, :headers => true)
+
+        age_groups.each do |age_group|
+          sex_groups.each do |sex_group|
+            name = "#{d[:name]} #{sex_group} #{age_group}"
+            handle = name.parameterize.underscore.to_sym
+
+            dataset = Dataset.new(
+              :name => name,
+              :slug => handle,
+              :description => "Population of #{sex_group} aged #{age_group} based on US Census",
+              :provider => 'US Census',
+              :url => d[:url],
+              :category_id => Category.where(:name => d[:category]).first.id,
+              :data_type => 'condition',
+              :stat_type => 'count'
+            )
+            dataset.save!
+
+            csv.each do |row|
+              row = row.to_hash.with_indifferent_access
+
+              area = row["AREA"]
+              area = get_area_id(area)
+
+              if row['AGEGP'] == age_group and row['SEXGP'] == sex_group
+                (1999..Time.now.year).each do |year|
+                  if (row.has_key?("POP#{year}"))
+                    stat = Statistic.new(
+                      :dataset_id => dataset.id,
+                      :geography_id => area,
+                      :year => year,
+                      :name => 'population', 
+                      :value => row["POP#{year}"]
+                    )
+
+                    stat.save!
+                  end
+                end
+              end
+            end
+
+            stat_count = Statistic.count(:conditions => "dataset_id = #{dataset.id}")
+            puts "imported #{stat_count} statistics: #{sex_group}, #{age_group}"
+
+          end
+        end
       end
     end
 

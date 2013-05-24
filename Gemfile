@@ -30,7 +30,7 @@ end
 # gem 'jquery-rails'
 
 # authentication
-gem 'devise'
+# gem 'devise'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
