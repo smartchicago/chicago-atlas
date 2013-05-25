@@ -90,7 +90,7 @@ ChartHelper.createPie = function(element, pieData, sliceTitle) {
           text: null
       },
       tooltip: {
-          pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+          pointFormat: '{series.name}: <b>{point.y}</b>',
           percentageDecimals: 1
       },
       plotOptions: {
@@ -102,7 +102,7 @@ ChartHelper.createPie = function(element, pieData, sliceTitle) {
                   color: '#000000',
                   connectorColor: '#000000',
                   formatter: function() {
-                      return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
+                      return '<b>'+ this.point.name +'</b>: '+ this.y;
                   }
               }
           }
