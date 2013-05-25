@@ -155,6 +155,7 @@ module ApplicationHelper
     stats = Statistic.joins('INNER JOIN datasets ON datasets.id = statistics.dataset_id')
                      .where("datasets.name LIKE '% #{sex_group} TOTAL%'") # brittle way to get this data
                      .where("geography_id = #{geography_id}")
+                     .where("year in (2000,2010)")
                      .order("year")
 
     if stats.length == 0
@@ -173,6 +174,7 @@ module ApplicationHelper
     stats = Statistic.joins('INNER JOIN datasets ON datasets.id = statistics.dataset_id')
                      .where("datasets.name LIKE '% ALL #{age_group}%'") # brittle way to get this data
                      .where("geography_id = #{geography_id}")
+                     .where("year in (2000,2010)")
                      .order("year")
 
     if stats.length == 0

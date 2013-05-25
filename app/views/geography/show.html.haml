@@ -9,10 +9,10 @@
     :javascript
       var colorHash = ["#A6761D", "#7570B3", "#D95F02", "#66A61E", "#E7298A", "#E6AB02", "#1B9E77"];
 
+    = render :partial => "geography/demographics", :locals => {:geography => @geography }
+
     - @categories.each do |category|
       = render :partial => "geography/category", :locals => {:category => category, :geography => @geography }
-
-    = render :partial => "geography/demographics", :locals => {:geography => @geography }
 
   .span4
     .well

@@ -116,6 +116,8 @@ ChartHelper.createPie = function(element, pieData, sliceTitle) {
 }
 
 ChartHelper.pointInterval = function(interval) {
+  if (interval == "decade")
+    return 10 * 365 * 24 * 3600 * 1000;
   if (interval == "year")
     return 365 * 24 * 3600 * 1000;
   if (interval == "quarter")
@@ -133,6 +135,8 @@ ChartHelper.pointInterval = function(interval) {
 }
 
 ChartHelper.toolTipDateFormat = function(interval, x) {
+  if (interval == "decade")
+    return Highcharts.dateFormat("%Y", x);
   if (interval == "year")
     return Highcharts.dateFormat("%Y", x);
   if (interval == "quarter")

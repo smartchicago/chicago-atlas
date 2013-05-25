@@ -1,14 +1,9 @@
-%h3
-  Population
-
-.span4
-  %p Population from 1999 - 2011 by sex.
-
-.span7
+.span12
   - demographic_male = fetch_demographic_sex_data('MALE', @geography.id)
   - demographic_female = fetch_demographic_sex_data('FEMALE', @geography.id)
   - chart_id = "chart_demographics_sex"
 
+  %h3 Population by sex
   .chart{:id => chart_id}
 
   - content_for :javascripts do
@@ -28,15 +23,9 @@
         }
         ];
 
-        ChartHelper.create("#{chart_id}", "area", "", seriesData, Date.UTC(#{demographic_male[:start_year]}, 1, 1), "", "year", "count");
+        ChartHelper.create("#{chart_id}", "area", "", seriesData, Date.UTC(#{demographic_male[:start_year]}, 1, 1), "", "decade", "count");
       });
 
-.clearfix
-
-.span4
-  %p Population from 1999 - 2011 by age.
-
-.span7
   - age_groups = ['00-04','05-14','15-24','25-34','35-44','45-54','55-64','65-74','75-84','85+']
   - age_data = []
   - age_groups.each do |age_group|
@@ -44,6 +33,7 @@
 
   - chart_id = "chart_demographics_age"
 
+  %h3 Population by age
   .chart{:id => chart_id}
 
   - content_for :javascripts do
@@ -53,7 +43,7 @@
 
         var seriesData = #{ActiveSupport::JSON.encode(age_data)};
 
-        ChartHelper.create("#{chart_id}", "area", "", seriesData, Date.UTC(#{demographic_male[:start_year]}, 1, 1), "", "year", "count");
+        ChartHelper.create("#{chart_id}", "area", "", seriesData, Date.UTC(#{demographic_male[:start_year]}, 1, 1), "", "decade", "count");
       });
 
 .clearfix
