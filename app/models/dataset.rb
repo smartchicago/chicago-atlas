@@ -6,7 +6,15 @@ class Dataset < ActiveRecord::Base
 
   def choropleth_cutoffs_json
     if choropleth_cutoffs == ''
-      return [0,1,5,10,50,100]
+
+      # calculate the cutoffs ourselves. split in to 4 even buckets
+      max_value = Statistic.where('dataset_id = ?', id).order('value DESC').first.value
+      min_value = Statistic.where('dataset_id = ?', id).order('value').first.value
+
+      range = max_value - min_value
+      interval = (range.to_f / 4).round(2)
+      
+      return [ 0, (min_value + interval), (min_value + (interval*2).round(2)), (min_value + (interval*3).round(2)) ]
     end
 
     json_cutoffs = ActiveSupport::JSON.decode(choropleth_cutoffs)

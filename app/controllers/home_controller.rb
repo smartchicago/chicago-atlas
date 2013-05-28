@@ -15,6 +15,7 @@ class HomeController < ApplicationController
       
       @display_geojson = geography_geojson(@current_dataset.id)
       @categories = Category.select('categories.id, categories.name, categories.description')
+                            .where("datasets.data_type = 'condition'")
                             .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
                             .group('categories.id, categories.name, categories.description')
                             .having('count(datasets.id) > 0')

@@ -1,0 +1,52 @@
+.span12
+  - demographic_age_2000 = fetch_demographic_age_data(2000, @geography.id)
+  - demographic_age_2010 = fetch_demographic_age_data(2010, @geography.id)
+  - chart_id = "chart_demographics_age"
+
+  %h3 Population by age
+  .chart{:id => chart_id}
+
+  - content_for :javascripts do
+    
+    :javascript
+      $(function () {
+
+        var seriesData = [{
+          data: #{demographic_age_2000},
+          name: "2000"
+        },
+        {
+          data: #{demographic_age_2010},
+          name: "2010"
+        }
+        ];
+
+        ChartHelper.create("#{chart_id}", "column", seriesData, Date.UTC(2000, 1, 1), "", "decade", "count", #{GlobalConstants::AGE_GROUPS});
+      });
+
+  - demographic_sex_2000 = fetch_demographic_sex_data(2000, @geography.id)
+  - demographic_sex_2010 = fetch_demographic_sex_data(2010, @geography.id)
+  - chart_id = "chart_demographics_sex"
+
+  %h3 Population by sex
+  .chart{:id => chart_id}
+
+  - content_for :javascripts do
+    
+    :javascript
+      $(function () {
+
+        var seriesData = [{
+          data: #{demographic_sex_2000},
+          name: "2000"
+        },
+        {
+          data: #{demographic_sex_2010},
+          name: "2010"
+        }
+        ];
+
+        ChartHelper.create("#{chart_id}", "column", seriesData, Date.UTC(2000, 1, 1), "", "decade", "count", #{GlobalConstants::SEX_GROUPS});
+      });
+
+.clearfix
