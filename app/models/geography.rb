@@ -20,4 +20,8 @@ class Geography < ActiveRecord::Base
       0
     end
   end
+
+  def pop_change
+    1-(pop_total(2000).to_f / pop_total(2010))
+  end
 end
