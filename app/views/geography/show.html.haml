@@ -33,8 +33,8 @@
       %h3 Population
 
       %ul
-        %li 2010: #{@geography.pop_total(2010)} (#{@geography.pop_change})
-        %li 2000: #{@geography.pop_total(2000)}
+        %li 2010: #{number_with_delimiter @geography.population(2010)} #{raw @geography.population_change(2000,2010)}
+        %li 2000: #{number_with_delimiter @geography.population(2000)}
 
       %h3 Conditions
       %ul

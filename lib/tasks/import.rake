@@ -5,6 +5,7 @@ namespace :db do
     task :all => :environment do
       Rake::Task["db:import:community_areas"].invoke
       Rake::Task["db:import:zip_codes"].invoke
+      Rake::Task["db:import:population"].invoke
       Rake::Task["db:import:chicago_dph"].invoke
       Rake::Task["db:import:chicago_health_facilities"].invoke
       Rake::Task["db:import:chitrec"].invoke
@@ -487,12 +488,12 @@ namespace :db do
         d.delete
       end
 
-      age_groups = ['00-04','05-14','15-24','25-34','35-44','45-54','55-64','65-74','75-84','85+','TOTAL']
-      sex_groups = ['FEMALE', 'MALE', 'ALL']
-
       datasets = [
         {:category => 'Demographics', :name => 'Population', :file => 'population_estimates_1999_2011'},
       ]
+
+      age_groups = GlobalConstants::AGE_GROUPS << 'TOTAL'
+      sex_groups = GlobalConstants::SEX_GROUPS << 'ALL'
 
       datasets.each do |d|
         csv_text = File.read("db/import/#{d[:file]}.csv")
@@ -599,12 +600,18 @@ namespace :db do
           if stat['community_area'].nil?
             next
           end
+
+          # adjust count by community area population
+          comm_population = Geography.find(stat['community_area']).population(2010)
+          crime_count = stat['count_id'] or 0
+          crime_rate = crime_count / (comm_population / 1000) # rate per 1,000 residents
+
           store = Statistic.new(
             :dataset_id => dataset.id,
             :geography_id => stat['community_area'],
             :year => stat['year'],
             :name => d[:parse_token],
-            :value => ( stat['count_id'] or 0 )
+            :value => crime_rate
           )
           store.save!
 

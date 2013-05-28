@@ -1,5 +1,5 @@
 var ChartHelper = {};
-ChartHelper.create = function(element, type, title, seriesData, startDate, yearRange, pointInterval, statType) {
+ChartHelper.create = function(element, type, seriesData, startDate, yearRange, pointInterval, statType, categories) {
   var percentSuffix = '';
   if(statType == 'percent')
     percentSuffix = '%';
@@ -8,72 +8,85 @@ ChartHelper.create = function(element, type, title, seriesData, startDate, yearR
   if (type == 'area')
     area_config = { stacking: 'normal' };
 
+  var xaxis_config = {
+                      type: 'datetime',
+                      labels: {
+                        formatter: function() { 
+                          if (yearRange != '')
+                            return yearRange;
+                          else
+                            return Highcharts.dateFormat('%Y', this.value); 
+                        }
+                      }
+                    };
+
+  var pointInterval_config = ChartHelper.pointInterval(pointInterval);
+  var pointStart = startDate;
+
+  if (typeof categories !== "undefined") {
+    xaxis_config = { categories: categories };
+    pointInterval_config = null;
+    pointStart = null;
+  }
+
   return new Highcharts.Chart({
-      chart: {
-          renderTo: element,
-          type: type,
-          marginRight: 20
-      },
-      legend: {
-        backgroundColor: "#ffffff",
-        borderColor: "#cccccc"
-      },
-      credits: { 
-        enabled: false 
-      },
-      title: title,
-      xAxis: {
-          type: 'datetime',
-          labels: {
-            formatter: function() { 
-              if (yearRange != '')
-                return yearRange;
-              else
-                return Highcharts.dateFormat('%Y', this.value); 
+    chart: {
+        renderTo: element,
+        type: type,
+        marginRight: 20
+    },
+    legend: {
+      backgroundColor: "#ffffff",
+      borderColor: "#cccccc"
+    },
+    credits: { 
+      enabled: false 
+    },
+    title: "",
+    xAxis: xaxis_config,
+    yAxis: {
+        title: null,
+        min: 0,
+        labels: {
+          formatter: function() { return ChartHelper.formatNumber(this.value) + percentSuffix; }
+        },
+    },
+    plotOptions: {
+      area: area_config,
+      series: {
+        marker: {
+          radius: 0,
+          states: {
+            hover: {
+              enabled: true,
+              radius: 5
             }
           }
-      },
-      yAxis: {
-          title: null,
-          min: 0,
-          labels: {
-            formatter: function() { return ChartHelper.formatNumber(this.value) + percentSuffix; }
-          },
-      },
-      plotOptions: {
-        area: area_config,
-        series: {
-          marker: {
-            radius: 0,
-            states: {
-              hover: {
-                enabled: true,
-                radius: 5
-              }
-            }
-          },
-          pointInterval: ChartHelper.pointInterval(pointInterval),  
-          pointStart: startDate,
-          shadow: false
-        }
-      },
-      tooltip: {
-          borderColor: "#ccc",
-          formatter: function() {
-            var s = "<strong>" + ChartHelper.toolTipDateFormat(pointInterval, this.x) + "</strong>";
-            $.each(this.points, function(i, point) {
-              if (point.point.low != null && point.point.high != null)
-                s += "<br /><span style=\"color: " + point.series.color + "\">" + point.series.name + ":</span> " + point.point.low + percentSuffix + " - " + point.point.high + percentSuffix;
-              else
-                s += "<br /><span style=\"color: " + point.series.color + "\">" + point.series.name + ":</span> " + Highcharts.numberFormat(point.y, 0) + percentSuffix;
-            });
-            return s;
-          },
-          shared: true
-      },
-      series: seriesData
-    });
-  }
+        },
+        pointInterval: pointInterval_config,  
+        pointStart: pointStart,
+        shadow: false
+      }
+    },
+    tooltip: {
+        borderColor: "#ccc",
+        formatter: function() {
+          var s = "<strong>" + ChartHelper.toolTipDateFormat(pointInterval, this.x) + "</strong>";
+          if (typeof categories !== "undefined")
+            s = "<strong>" + this.x + "</strong>";
+          $.each(this.points, function(i, point) {
+            if (point.point.low != null && point.point.high != null)
+              s += "<br /><span style=\"color: " + point.series.color + "\">" + point.series.name + ":</span> " + point.point.low + percentSuffix + " - " + point.point.high + percentSuffix;
+            else
+              s += "<br /><span style=\"color: " + point.series.color + "\">" + point.series.name + ":</span> " + Highcharts.numberFormat(point.y, 0) + percentSuffix;
+          });
+          return s;
+        },
+        shared: true
+    },
+    series: seriesData
+  });
+}
 
 ChartHelper.createPie = function(element, pieData, sliceTitle) {
   return new Highcharts.Chart({
