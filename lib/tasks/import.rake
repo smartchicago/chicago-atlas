@@ -602,7 +602,7 @@ namespace :db do
           end
 
           # adjust count by community area population
-          comm_population = Geography.find(stat['community_area']).population(2010)
+          comm_population = Geography.find(stat['community_area']).population(stat['year'])
           crime_count = stat['count_id'] or 0
           crime_rate = crime_count.to_f / (comm_population / 1000)  # rate per 1,000 residents
 
