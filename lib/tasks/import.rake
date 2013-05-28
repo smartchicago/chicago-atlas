@@ -492,8 +492,8 @@ namespace :db do
         {:category => 'Demographics', :name => 'Population', :file => 'population_estimates_1999_2011'},
       ]
 
-      age_groups = GlobalConstants::AGE_GROUPS << 'TOTAL'
-      sex_groups = GlobalConstants::SEX_GROUPS << 'ALL'
+      age_groups = ['TOTAL'].concat( GlobalConstants::AGE_GROUPS )
+      sex_groups = ['ALL'].concat( GlobalConstants::SEX_GROUPS )
 
       datasets.each do |d|
         csv_text = File.read("db/import/#{d[:file]}.csv")
@@ -557,11 +557,11 @@ namespace :db do
 
       start_year = 2003 # 2001 and 2002 are years with incomplete data
       datasets = [
-        {:category => 'Crime', :name => 'Homicide', :fbi_code => "01A", :parse_token => 'crime-h', :description => "Number of reported homicides from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''},
-        {:category => 'Crime', :name => 'Aggravated Assault', :fbi_code => "04A", :parse_token => 'crime-aa', :description => "Number of reported aggravated assaults from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''},
-        {:category => 'Crime', :name => 'Simple Assault', :fbi_code => "08A", :parse_token => 'crime-sa', :description => "Number of reported simple assaults from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''},
-        {:category => 'Crime', :name => 'Aggravated Battery', :fbi_code => "04B", :parse_token => 'crime-ab', :description => "Number of reports of aggravated battery from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''},
-        {:category => 'Crime', :name => 'Simple Battery', :fbi_code => "08B", :parse_token => 'crime-sb', :description => "Number of reports of simple battery from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''}
+        {:category => 'Crime', :name => 'Homicide', :fbi_code => "01A", :parse_token => 'crime-h', :description => "Number of reported homicides per 1,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Aggravated Assault', :fbi_code => "04A", :parse_token => 'crime-aa', :description => "Number of reported aggravated assaults per 1,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Simple Assault', :fbi_code => "08A", :parse_token => 'crime-sa', :description => "Number of reported simple assaults per 1,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Aggravated Battery', :fbi_code => "04B", :parse_token => 'crime-ab', :description => "Number of reports of aggravated battery per 1,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''},
+        {:category => 'Crime', :name => 'Simple Battery', :fbi_code => "08B", :parse_token => 'crime-sb', :description => "Number of reports of simple battery per 1,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''}
       ]
 
       datasets.each do |d|
@@ -597,21 +597,21 @@ namespace :db do
             # skip incomplete years
             next
           end
-          if stat['community_area'].nil?
+          if stat['community_area'].nil? or stat['community_area'] == ' ' or stat['community_area'] == ' 0'
             next
           end
 
           # adjust count by community area population
           comm_population = Geography.find(stat['community_area']).population(2010)
           crime_count = stat['count_id'] or 0
-          crime_rate = crime_count / (comm_population / 1000) # rate per 1,000 residents
+          crime_rate = crime_count.to_f / (comm_population / 1000)  # rate per 1,000 residents
 
           store = Statistic.new(
             :dataset_id => dataset.id,
             :geography_id => stat['community_area'],
             :year => stat['year'],
             :name => d[:parse_token],
-            :value => crime_rate
+            :value => ('%.2f' % crime_rate) # rounded to 2 decimal places
           )
           store.save!
 
