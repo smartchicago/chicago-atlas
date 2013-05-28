@@ -14,6 +14,7 @@ class GeographyController < ApplicationController
                           .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
                           .joins('INNER JOIN statistics ON datasets.id = statistics.dataset_id')
                           .where("statistics.geography_id = ?", @geography.id)
+                          .where("datasets.data_type = 'condition'")
                           .group('categories.id, categories.name, categories.description')
                           .having('count(datasets.id) > 0')
                           .order("categories.name")

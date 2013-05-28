@@ -12,7 +12,8 @@ categories = Category.create([
   { name: 'Environmental Health', description: "Information from the City of Chicago relating to elevated blood lead level in blood tests on children aged 0-6 years by community area for the years 2004 - 2008." },
   { name: 'Infectious disease', description: "Information from the City of Chicago relating to cases of tuberculosis, gonorrhea, and other diseases. Data covers various time periods." },
   { name: 'Chronic disease', description: "Information from the City of Chicago relating to diabetes and asthma by zip code for the years 2000 - 2011." },
-  { name: 'Crime', description: "Information from the Chicago Police Department by community area for years 2001-2013" }
+  { name: 'Crime', description: "Information from the Chicago Police Department by community area for years 2001-2013" },
+  { name: 'Demographics', description: "Information from the US Census on population." }
 ])
 
 chicago = Geography.new(

@@ -182,7 +182,7 @@
           .accordion-heading
             %a.accordion-toggle{"data-parent" => "#view_accordion", "data-toggle" => "collapse", :href => "#category_#{c.id}", "data-view" => c.name}
               = c.name
-          .accordion-body{:id => "category_#{c.id}", :class => (@current_category.id == c.id) ? '' : 'collapse'}
+          .accordion-body.collapse{:id => "category_#{c.id}", :class => (@current_category.id == c.id) ? 'in' : ''}
             .accordion-inner{:id => "category_inner_#{c.id}"}
               %ul
                 - Dataset.where(:category_id => c.id).order("name").each do |d|
