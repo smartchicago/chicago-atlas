@@ -1,11 +1,16 @@
 namespace :db do
   namespace :import do
 
-    desc "Fetch and import all Health Atlas Data"
+    desc "Fetch and import all geography, demographic and health data"
     task :all => :environment do
       Rake::Task["db:import:community_areas"].invoke
       Rake::Task["db:import:zip_codes"].invoke
       Rake::Task["db:import:population"].invoke
+      Rake::Task["db:import:all_stats"].invoke
+    end
+
+    desc "Fetch and import all health data"
+    task :all_stats => :environment do
       Rake::Task["db:import:chicago_dph"].invoke
       Rake::Task["db:import:chicago_health_facilities"].invoke
       Rake::Task["db:import:chitrec"].invoke
@@ -143,7 +148,7 @@ namespace :db do
       ]
 
       datasets.each do |d|
-        handle = d[:name].parameterize.underscore.to_sym
+        handle = "#{d[:category]} #{d[:name]}".parameterize.underscore.to_sym
         
         puts "downloading '#{d[:name]}'"
         sh "curl -o tmp/#{handle}.csv https://data.cityofchicago.org/api/views/#{d[:socrata_id]}/rows.csv?accessType=DOWNLOAD"
@@ -321,7 +326,7 @@ namespace :db do
       csv = CSV.parse(csv_text, {:headers => true, :header_converters => :symbol})
 
       datasets.each do |d|
-        handle = d[:name].parameterize.underscore.to_sym
+        handle = "#{d[:category]} #{d[:name]}".parameterize.underscore.to_sym
 
         dataset = Dataset.new(
           :name => d[:name],
@@ -442,33 +447,33 @@ namespace :db do
 
             InterventionLocationDataset.delete_all("intervention_location_id = #{intervention.id}")
 
-            # Connect WIC locations to birth-related topics
-            if row["SITE NAME"].upcase.include? '(WIC)'
-              wic_dataset = ['birth_rate', 'fertility_rate', 'percent_of_low_weight_births', 'percent_of_preterm_births', 'teen_birth_rate', 'prenatal_care_obtained_in_1st_trimester']
+            # # Connect WIC locations to birth-related topics
+            # if row["SITE NAME"].upcase.include? '(WIC)'
+            #   wic_dataset = ['birth_rate', 'fertility_rate', 'percent_of_low_weight_births', 'percent_of_preterm_births', 'teen_birth_rate', 'prenatal_care_obtained_in_1st_trimester']
 
-              wic_dataset.each do |dataset_slug|
-                intervention_relation = InterventionLocationDataset.new(
-                  :intervention_location_id => intervention.id,
-                  :dataset_id => Dataset.where(:slug => dataset_slug).first.id,
-                )
-                intervention_relation.save!
-              end
+            #   wic_dataset.each do |dataset_slug|
+            #     intervention_relation = InterventionLocationDataset.new(
+            #       :intervention_location_id => intervention.id,
+            #       :dataset_id => Dataset.where(:slug => dataset_slug).first.id,
+            #     )
+            #     intervention_relation.save!
+            #   end
 
-            end
+            # end
 
-            # Connect STI clinic locations to infectious diseases topics
-            if row["SITE NAME"].include? 'STI '
-              sti_dataset = ['chlamydia_in_females', 'gonorrhea_in_females', 'gonorrhea_in_males'] #'tuberculosis' when its imported
+            # # Connect STI clinic locations to infectious diseases topics
+            # if row["SITE NAME"].include? 'STI '
+            #   sti_dataset = ['chlamydia_in_females', 'gonorrhea_in_females', 'gonorrhea_in_males'] #'tuberculosis' when its imported
 
-              sti_dataset.each do |dataset_slug|
-                intervention_relation = InterventionLocationDataset.new(
-                  :intervention_location_id => intervention.id,
-                  :dataset_id => Dataset.where(:slug => dataset_slug).first.id,
-                )
-                intervention_relation.save!
-              end
+            #   sti_dataset.each do |dataset_slug|
+            #     intervention_relation = InterventionLocationDataset.new(
+            #       :intervention_location_id => intervention.id,
+            #       :dataset_id => Dataset.where(:slug => dataset_slug).first.id,
+            #     )
+            #     intervention_relation.save!
+            #   end
 
-            end
+            # end
 
           end
         end
@@ -557,15 +562,15 @@ namespace :db do
 
       start_year = 2003 # 2001 and 2002 are years with incomplete data
       datasets = [
-        {:category => 'Crime', :name => 'Homicide', :fbi_code => "01A", :parse_token => 'crime-h', :description => "Number of reported homicides per 1,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''},
-        {:category => 'Crime', :name => 'Aggravated Assault', :fbi_code => "04A", :parse_token => 'crime-aa', :description => "Number of reported aggravated assaults per 1,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''},
-        {:category => 'Crime', :name => 'Simple Assault', :fbi_code => "08A", :parse_token => 'crime-sa', :description => "Number of reported simple assaults per 1,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''},
-        {:category => 'Crime', :name => 'Aggravated Battery', :fbi_code => "04B", :parse_token => 'crime-ab', :description => "Number of reports of aggravated battery per 1,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''},
-        {:category => 'Crime', :name => 'Simple Battery', :fbi_code => "08B", :parse_token => 'crime-sb', :description => "Number of reports of simple battery per 1,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => ''}
+        {:category => 'Crime', :name => 'Homicide', :fbi_code => "01A", :parse_token => 'crime-h', :description => "Number of reported homicides per 100,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => 'rate'},
+        {:category => 'Crime', :name => 'Aggravated Assault', :fbi_code => "04A", :parse_token => 'crime-aa', :description => "Number of reported aggravated assaults per 100,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => 'rate'},
+        {:category => 'Crime', :name => 'Simple Assault', :fbi_code => "08A", :parse_token => 'crime-sa', :description => "Number of reported simple assaults per 100,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => 'rate'},
+        {:category => 'Crime', :name => 'Aggravated Battery', :fbi_code => "04B", :parse_token => 'crime-ab', :description => "Number of reports of aggravated battery per 100,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => 'rate'},
+        {:category => 'Crime', :name => 'Simple Battery', :fbi_code => "08B", :parse_token => 'crime-sb', :description => "Number of reports of simple battery per 100,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => 'rate'}
       ]
 
       datasets.each do |d|
-        handle = d[:name].parameterize.underscore.to_sym
+        handle = "#{d[:category]} #{d[:name]}".parameterize.underscore.to_sym
 
         dataset = Dataset.new(
           :name => d[:name],
@@ -602,9 +607,15 @@ namespace :db do
           end
 
           # adjust count by community area population
-          comm_population = Geography.find(stat['community_area']).population(stat['year'])
+          if (stat['year'].to_i > 2010)
+            # until the 2020 census, we'll have to go on 2010 population
+            comm_population = Geography.find(stat['community_area']).population(2010)
+          else
+            comm_population = Geography.find(stat['community_area']).population(stat['year'])
+          end
+
           crime_count = stat['count_id'] or 0
-          crime_rate = crime_count.to_f / (comm_population / 1000)  # rate per 1,000 residents
+          crime_rate = crime_count.to_f / (comm_population / 100000.0)  # rate per 100,000 residents
 
           store = Statistic.new(
             :dataset_id => dataset.id,

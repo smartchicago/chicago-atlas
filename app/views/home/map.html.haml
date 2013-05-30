@@ -2,6 +2,7 @@
   = javascript_include_tag "leaflet"
   = javascript_include_tag "leaflet.label"
   = javascript_include_tag "jquery-ui-slider.min"
+  = javascript_include_tag "jenks"
 
   :javascript
     $(window).resize(function () {
@@ -13,6 +14,9 @@
 
 
     var geojsonFeature = #{@display_geojson};
+    var jenks_cutoffs = jenks(#{@current_statistics}, 3);
+    jenks_cutoffs[0] = 0;
+    //console.log(jenks_cutoffs);
 
     var map = L.map('map').setView([41.8781136, -87.66677856445312], 11);
 
@@ -35,7 +39,11 @@
 
     // get color depending on condition_title
     function getColor(d) {
-        #{choropleth_function(@current_dataset.choropleth_cutoffs_json)}
+        return  d >= jenks_cutoffs[3] ? '#08519C' : 
+                d >= jenks_cutoffs[2] ? '#3182BD' : 
+                d >= jenks_cutoffs[1] ? '#6BAED6' : 
+                d >= jenks_cutoffs[0] ? '#BDD7E7' :  
+                                        '#EFF3FF';
     }
 
     function style(feature) {
@@ -137,12 +145,12 @@
       range: "min"
     });
 
-    var legend = L.control({position: 'bottomright'});
+    var legend = L.control({position: 'topright'});
 
     legend.onAdd = function (map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
-            grades = #{@current_dataset.choropleth_cutoffs_json},
+            grades = jenks_cutoffs,
             labels = [],
             from, to;
 
@@ -151,7 +159,7 @@
             to = grades[i + 1];
 
             labels.push(
-                '<i style="background:' + getColor(from + 1) + '"></i> ' +
+                '<i style="background:' + getColor(from + 0.01) + '"></i> ' +
                 from + (to ? '&ndash;' + to : '+'));
         }
 
