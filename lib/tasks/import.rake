@@ -602,7 +602,13 @@ namespace :db do
           end
 
           # adjust count by community area population
-          comm_population = Geography.find(stat['community_area']).population(stat['year'])
+          if (stat['year'].to_i > 2010)
+            # until the 2020 census, we'll have to go on 2010 population
+            comm_population = Geography.find(stat['community_area']).population(2010)
+          else
+            comm_population = Geography.find(stat['community_area']).population(stat['year'])
+          end
+
           crime_count = stat['count_id'] or 0
           crime_rate = crime_count.to_f / (comm_population / 100000.0)  # rate per 100,000 residents
 
