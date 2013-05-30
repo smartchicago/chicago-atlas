@@ -1,11 +1,16 @@
 namespace :db do
   namespace :import do
 
-    desc "Fetch and import all Health Atlas Data"
+    desc "Fetch and import all geography, demographic and health data"
     task :all => :environment do
       Rake::Task["db:import:community_areas"].invoke
       Rake::Task["db:import:zip_codes"].invoke
       Rake::Task["db:import:population"].invoke
+      Rake::Task["db:import:all_stats"].invoke
+    end
+
+    desc "Fetch and import all health data"
+    task :all_stats => :environment do
       Rake::Task["db:import:chicago_dph"].invoke
       Rake::Task["db:import:chicago_health_facilities"].invoke
       Rake::Task["db:import:chitrec"].invoke
@@ -143,7 +148,7 @@ namespace :db do
       ]
 
       datasets.each do |d|
-        handle = d[:name].parameterize.underscore.to_sym
+        handle = "#{d[:category]} #{d[:name]}".parameterize.underscore.to_sym
         
         puts "downloading '#{d[:name]}'"
         sh "curl -o tmp/#{handle}.csv https://data.cityofchicago.org/api/views/#{d[:socrata_id]}/rows.csv?accessType=DOWNLOAD"
@@ -321,7 +326,7 @@ namespace :db do
       csv = CSV.parse(csv_text, {:headers => true, :header_converters => :symbol})
 
       datasets.each do |d|
-        handle = d[:name].parameterize.underscore.to_sym
+        handle = "#{d[:category]} #{d[:name]}".parameterize.underscore.to_sym
 
         dataset = Dataset.new(
           :name => d[:name],
@@ -442,33 +447,33 @@ namespace :db do
 
             InterventionLocationDataset.delete_all("intervention_location_id = #{intervention.id}")
 
-            # Connect WIC locations to birth-related topics
-            if row["SITE NAME"].upcase.include? '(WIC)'
-              wic_dataset = ['birth_rate', 'fertility_rate', 'percent_of_low_weight_births', 'percent_of_preterm_births', 'teen_birth_rate', 'prenatal_care_obtained_in_1st_trimester']
+            # # Connect WIC locations to birth-related topics
+            # if row["SITE NAME"].upcase.include? '(WIC)'
+            #   wic_dataset = ['birth_rate', 'fertility_rate', 'percent_of_low_weight_births', 'percent_of_preterm_births', 'teen_birth_rate', 'prenatal_care_obtained_in_1st_trimester']
 
-              wic_dataset.each do |dataset_slug|
-                intervention_relation = InterventionLocationDataset.new(
-                  :intervention_location_id => intervention.id,
-                  :dataset_id => Dataset.where(:slug => dataset_slug).first.id,
-                )
-                intervention_relation.save!
-              end
+            #   wic_dataset.each do |dataset_slug|
+            #     intervention_relation = InterventionLocationDataset.new(
+            #       :intervention_location_id => intervention.id,
+            #       :dataset_id => Dataset.where(:slug => dataset_slug).first.id,
+            #     )
+            #     intervention_relation.save!
+            #   end
 
-            end
+            # end
 
-            # Connect STI clinic locations to infectious diseases topics
-            if row["SITE NAME"].include? 'STI '
-              sti_dataset = ['chlamydia_in_females', 'gonorrhea_in_females', 'gonorrhea_in_males'] #'tuberculosis' when its imported
+            # # Connect STI clinic locations to infectious diseases topics
+            # if row["SITE NAME"].include? 'STI '
+            #   sti_dataset = ['chlamydia_in_females', 'gonorrhea_in_females', 'gonorrhea_in_males'] #'tuberculosis' when its imported
 
-              sti_dataset.each do |dataset_slug|
-                intervention_relation = InterventionLocationDataset.new(
-                  :intervention_location_id => intervention.id,
-                  :dataset_id => Dataset.where(:slug => dataset_slug).first.id,
-                )
-                intervention_relation.save!
-              end
+            #   sti_dataset.each do |dataset_slug|
+            #     intervention_relation = InterventionLocationDataset.new(
+            #       :intervention_location_id => intervention.id,
+            #       :dataset_id => Dataset.where(:slug => dataset_slug).first.id,
+            #     )
+            #     intervention_relation.save!
+            #   end
 
-            end
+            # end
 
           end
         end
@@ -565,7 +570,7 @@ namespace :db do
       ]
 
       datasets.each do |d|
-        handle = d[:name].parameterize.underscore.to_sym
+        handle = "#{d[:category]} #{d[:name]}".parameterize.underscore.to_sym
 
         dataset = Dataset.new(
           :name => d[:name],
