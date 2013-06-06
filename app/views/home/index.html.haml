@@ -1,23 +1,41 @@
 .row-fluid
-  .span8
-    .alert.alert-block
-      %h4 Chicago Health Atlas is undergoing maintenance
-      %p
-        We are creating a new website with more features and more data partners.
-
+  .span12
+    %h1
+      The Chicago Health Atlas
     %p
       The Chicago Health Atlas is a place where you can view citywide information about health trends and take action near you to improve your own health.
-    
-    %p
-      We display large amounts of data from sources like the City of Chicago and local hospitals so you can get big-picture views of health outcomes in Chicago. 
 
+.row-fluid
+  .span4
+    %a(href="#")
+      %img(src="foo.gif")
     %p
-      If you are a health data provider and would like to take part in this project, please complete the form below and we will contact you right away!
+      View citywide data from sources like the City of Chicago and local hospitals to get big-picture views of health outcomes in Chicago.
+  .span4
+    %a(href="#")
+      %img(src="foo.gif")
+    %p
+      Browse data for neighborhood and zip code-level data for specific info near you. 
+  .span4
+    %a(href="#")
+      %img(src="foo.gif")
+    %p
+      Find places where you can improve your own health.
 
+.row-fluid
+  %h2
+    Be better informed
+  .span5
     %p
-      %strong Questions? 
-      Contact project manager Kyla Williams, at 
+      foo
+  .span7
+    map
+
+.row-fluid
+  .span12
+    %h2
+      Partners
+    %p
+      If you are a health data provider and would like to take part in this project, please view our partner page and get in touch. Questions? Contact Kyla Williams of the Smart Chicago Collabrative, at 
       = succeed '.' do
         %a{:href => 'mailto:kwilliams@cct.org'} kwilliams@cct.org
-
-    <iframe src="https://docs.google.com/forms/d/1UDPW-_kUUfcI6j2etDT_wR28AnLTnLt9z1WIzg27Spc/viewform?embedded=true" width="760" height="700" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe> 
