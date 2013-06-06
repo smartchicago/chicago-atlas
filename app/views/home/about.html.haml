@@ -1,58 +1,49 @@
-.row-fluid
-  .span3
-    .well
-      %h3 Sections
-      %ol
-        %li
-          %a{:href => "#about-the-data"} About the data
-        %li
-          %a{:href => "#contact-us"} Contact us
-  .span8
-    %h2 About
+.span8.offset2
+  %h2 About
 
-    %p
-      The Chicago Health Atlas is a Web site for displaying aggregate health-related information on a map so that people can see the prevalence of specific health conditions in their area and find out how they can improve their health. 
+  %p
+    The Chicago Health Atlas is a Web site for displaying aggregate health-related information on a map so that people can see the prevalence of specific health conditions in their area and find out how they can improve their health. 
 
-    %p
-      The Smart Chicago Collaborative is working with the 
-      %a{:href => 'http://www.cityofchicago.org/city/en/depts/cdph.html'} Chicago Department of Public Health 
-      and five local hospitals through 
-      %a{:href => 'http://chitrec.org/'} Chicago Health Information Technology Regional Extension (CHITREC) 
-      to 
-      %a{:href => 'http://www.cityofchicago.org/city/en/depts/cdph/provdrs/pol_plan_report/svcs/office_of_epidemiologydataanalysisrequests.html?cq_ck=1338570736462'} visualize statistics related to public health 
-      along with anonymized diagnoses, medications, and laboratory tests as provided by local healthcare institutions. The project is funded by the 
+  %p
+    The Smart Chicago Collaborative is working with the 
+    %a{:href => 'http://www.cityofchicago.org/city/en/depts/cdph.html'} Chicago Department of Public Health 
+    and five local hospitals through 
+    %a{:href => 'http://chitrec.org/'} Chicago Health Information Technology Regional Extension (CHITREC) 
+    to 
+    %a{:href => 'http://www.cityofchicago.org/city/en/depts/cdph/provdrs/pol_plan_report/svcs/office_of_epidemiologydataanalysisrequests.html?cq_ck=1338570736462'} visualize statistics related to public health 
+    along with anonymized diagnoses, medications, and laboratory tests as provided by local healthcare institutions. The project is funded by the 
+    = succeed '.' do
+      %a{:href => 'http://www.spragueinstitute.org/'} Otho S. A. Sprague Memorial Institute
+
+  %h3#about-the-data About the data
+
+  %p
+    We currently have three types of data on the Health Atlas:
+
+  %ulx
+    %li
       = succeed '.' do
-        %a{:href => 'http://www.spragueinstitute.org/'} Otho S. A. Sprague Memorial Institute
+        %a{:href => 'http://www.cityofchicago.org/city/en/depts/cdph/provdrs/pol_plan_report/svcs/office_of_epidemiologydataanalysisrequests.html'} Statistics related to public health in Chicago
+      We obtain this information from the 
+      = succeed '.' do
+        %a{:href => 'http://www.cityofchicago.org/city/en/depts/cdph/provdrs/pol_plan_report/svcs/office_of_epidemiologydataanalysisrequests.html'}City of Chicago’s Open Data Portal
+      The data is provided by the Chicago Department of Public Health's Epidemiology & Public Health Informatics Program
+    %li
+      Anonymized clinical diagnosis information provided by CHITREC and its partners. Details on this data was presented at the 
+      = succeed '.' do
+        %a{:href => 'http://www.amia.org/amia2012/theater-style-demonstration'} American Medical Informatics Association (AMIA) National Symposium here in Chicago on November 6
+      See the 
+      = succeed '.' do
+        %a{:href => 'http://www.smartchicagocollaborative.org/projects/chicago-health-atlas/'} Smart Chicago project page for a description of that talk
+    %li
+      Data about clinics, programs, and other health resources that can be of use to people who want to improve their health. Most of this information is taken from the City's 
+      = succeed ',' do
+        %a{:href => 'https://data.cityofchicago.org/'} Open Data Portal
+      but we are open to other data types.
+  
+  %h3#contact-us Contact us
 
-    %h4#about-the-data About the data
-
-    %p
-      We currently have three types of data on the Health Atlas:
-
-    %ul
-      %li
-        = succeed '.' do
-          %a{:href => 'http://www.cityofchicago.org/city/en/depts/cdph/provdrs/pol_plan_report/svcs/office_of_epidemiologydataanalysisrequests.html'} Statistics related to public health in Chicago
-        We obtain this information from the 
-        = succeed '.' do
-          %a{:href => 'http://www.cityofchicago.org/city/en/depts/cdph/provdrs/pol_plan_report/svcs/office_of_epidemiologydataanalysisrequests.html'}City of Chicago’s Open Data Portal
-        The data is provided by the Chicago Department of Public Health's Epidemiology & Public Health Informatics Program
-      %li
-        Anonymized clinical diagnosis information provided by CHITREC and its partners. Details on this data was presented at the 
-        = succeed '.' do
-          %a{:href => 'http://www.amia.org/amia2012/theater-style-demonstration'} American Medical Informatics Association (AMIA) National Symposium here in Chicago on November 6
-        See the 
-        = succeed '.' do
-          %a{:href => 'http://www.smartchicagocollaborative.org/projects/chicago-health-atlas/'} Smart Chicago project page for a description of that talk
-      %li
-        Data about clinics, programs, and other health resources that can be of use to people who want to improve their health. Most of this information is taken from the City's 
-        = succeed ',' do
-          %a{:href => 'https://data.cityofchicago.org/'} Open Data Portal
-        but we are open to other data types.
-    
-    %h4#contact-us Contact us
-
-    %p
-      Do you have data to share, questions about our work, or just want to hear more? Contact Daniel X. O'Neil at (773) 960-6045 or 
-      %a{:href => 'mailto:doneil@cct.org'} doneil@cct.org 
-      today.
+  %p
+    Do you have data to share, questions about our work, or just want to hear more? Contact Daniel X. O'Neil at (773) 960-6045 or 
+    %a{:href => 'mailto:doneil@cct.org'} doneil@cct.org 
+    today.
