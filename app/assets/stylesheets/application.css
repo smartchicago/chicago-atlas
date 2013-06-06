@@ -84,3 +84,14 @@
   margin-right: 8px;
   opacity: 0.7;
 }
+
+ul.partners {
+  margin: 0;
+}
+ul.partners li{
+  list-style: none;
+  padding: 20px 0px;
+}
+ul.partners li img{
+  padding-left: 10px;
+}
