@@ -24,7 +24,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand(href="/") Chicago Atlas
+          %a.brand(href="/") Chicago Health Atlas
           
           .container.nav-collapse
             %ul.nav.pull-right
@@ -36,10 +36,12 @@
               /   %a{:href => "/conditions"} Conditions
               %li{:class => current_menu_class("place")}
                 %a{:href => "/places"} Places
+              %li{:class => current_menu_class("partners")}
+                %a{:href => "/partners"} Partners
               %li{:class => current_menu_class("about")}
                 %a{:href => "/about"} About
   
-    .container-fluid
+    .container
           
       = yield
     /

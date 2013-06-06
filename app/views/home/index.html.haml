@@ -1,23 +1,54 @@
 .row-fluid
-  .span8
-    .alert.alert-block
-      %h4 Chicago Health Atlas is undergoing maintenance
-      %p
-        We are creating a new website with more features and more data partners.
-
-    %p
+  .span12
+    %h1
+      The Chicago Health Atlas
+    %p.lead
       The Chicago Health Atlas is a place where you can view citywide information about health trends and take action near you to improve your own health.
-    
-    %p
-      We display large amounts of data from sources like the City of Chicago and local hospitals so you can get big-picture views of health outcomes in Chicago. 
 
+.row-fluid
+  .span4
+    %a(href="#")
+      %img.img-polaroid(src="foo.gif"alt="City")
     %p
-      If you are a health data provider and would like to take part in this project, please complete the form below and we will contact you right away!
+      View citywide data from sources like the City of Chicago and local hospitals to get big-picture views of health outcomes in Chicago.
+  .span4
+    %a(href="#")
+      %img.img-polaroid(src="foo.gif"alt="Neighborhood")
+    %p
+      Browse data for neighborhood and zip code-level data for specific info near you. 
+  .span4
+    %a(href="#")
+      %img.img-polaroid(src="foo.gif"alt="Location")
+    %p
+      Find places where you can improve your own health.
 
+.row-fluid
+  %h2
+    Be better informed
+  %p
+    Be better informed about health in your city and take greater control of your own health, right in your own neighborhood.
+
+  .row-fluid
+    .span5
+      %p
+        To get started, browse the map or choose a location.
+      %p
+        neighborhood dropdown
+      %p
+        zip code dropdown
+    .span7
+      map of neighborhood boundries
+
+.row-fluid
+  .span12
+    %h2
+      Partners
     %p
-      %strong Questions? 
-      Contact project manager Kyla Williams, at 
+      %a{:href => 'partners'} Learn more
+      about our partners. If you are a health data provider and would like to take part in this project, please view our
+      %a{:href => '/partner_sign_up'} partner sign up form
+      to get in touch. 
+    %p
+      Questions? Contact Kyla Williams of the Smart Chicago Collabrative, at 
       = succeed '.' do
         %a{:href => 'mailto:kwilliams@cct.org'} kwilliams@cct.org
-
-    <iframe src="https://docs.google.com/forms/d/1UDPW-_kUUfcI6j2etDT_wR28AnLTnLt9z1WIzg27Spc/viewform?embedded=true" width="760" height="700" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe> 
