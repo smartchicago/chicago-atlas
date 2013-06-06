@@ -95,3 +95,11 @@ ul.partners li{
 ul.partners li img{
   padding-left: 10px;
 }
+
+.img-polaroid {
+  display: block;
+  height: 100px;
+  margin-bottom: 14px;
+  padding: 4px;
+  width: 96%;
+}
