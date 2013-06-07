@@ -1,24 +1,26 @@
-%h1
-  Places
+.row-fluid
+  .span12
+    %h1
+      Places
 
-%p.lead
-  Choose a community area from the list below. You can also browse by 
-  = succeed '.' do
-    %a{:href => "#zipcode"} zip code
-%hr
-.row
-%h2 Community areas
-- @community_areas.each do |geography|
-  .span4
-    %h4
-      %a{:href => "/place/#{geography.slug}"}
-        = geography.name
+    %p.lead
+      Choose a community area from the list below. You can also browse by 
+      = succeed '.' do
+        %a{:href => "#zipcode"} zip code
+    %hr
+    .row
+    %h3 Community areas
+    - @community_areas.each do |geography|
+      .span4
+        %h4
+          %a{:href => "/place/#{geography.slug}"}
+            = geography.name
 
-.row
-%hr
-%h2#zipcode Zip codes
-- @zip_codes.each do |geography|
-  .span4
-    %h4
-      %a{:href => "/place/#{geography.slug}"}
-        = geography.name
+    .row
+    %hr
+    %h3#zipcode Zip codes
+    - @zip_codes.each do |geography|
+      .span4
+        %h4
+          %a{:href => "/place/#{geography.slug}"}
+            = geography.name
