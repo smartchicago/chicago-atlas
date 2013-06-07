@@ -11,9 +11,7 @@
  *= require_self
  *= require_tree .
  */
-body {
-  padding-bottom: 50px;
-}
+
  #mapCanvas img {
    max-width: none;
  }
@@ -107,4 +105,25 @@ ul.partners li img{
   margin-bottom: 14px;
   padding: 4px;
   width: auto;
+}
+.footer {
+    background-color: #F5F5F5;
+    border-top: 1px solid #E5E5E5;
+    margin-top: 70px;
+    padding: 20px 0;
+    text-align: center;
+}
+.footer p {
+    color: #777777;
+    margin-bottom: 0;
+}
+.footer-links {
+    margin: 10px 0;
+}
+.footer-links li {
+    display: inline;
+    padding: 0 2px;
+}
+.footer-links li:first-child {
+    padding-left: 0;
 }
