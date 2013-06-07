@@ -1,7 +1,24 @@
 .row-fluid
   .span12
     %h2 Partners
-    %p.lead Our partners are the cornerstone of Chicago Health Atlas.
+    %p 
+      %b Our partners are the cornerstone of Chicago Health Atlas. 
+      Initially, the Atlas was built on an existing partnership by informatics researchers at five major academic health centers in Chicago: 
+      = succeed ',' do
+        %a{:href => 'http://www.uic.edu/uic/'}University of Illinois at Chicago
+      = succeed ',' do
+        %a{:href => 'http://www.cookcountyhhs.org/locations/john-h-stroger-jr-hospital/'}Stroger Hospital
+      = succeed ',' do
+        %a{:href => 'http://www.uchicago.edu/'}University of Chicago
+      = succeed ',' do
+        %a{:href => 'http://www.northwestern.edu/'}Northwestern University
+      and 
+      = succeed '.' do
+        %a{:href => 'http://www.rushu.rush.edu/'}Rush University
+      Since that time, the Atlas has been expanded to include data and researchers from the Chicago Department of Public Health and soon, community-based organizations and other data contributing entities. The Atlas is a growing organic tool that relies heavily on partner participation and we are eager to continue this work with 
+      %a{:href => 'partner_sign_up'}new partners 
+      in the future.
+      %hr
     %ul.partners
       %li
 
@@ -33,8 +50,8 @@
           Dr. Sims is Associate Chief Medical Informatics Officer at Rush University Medical Center.  Dr. Sims’ leads the data warehouse/analytics team, clinical decision support, meaningful use, and quality measurement efforts at Rush.  Dr. Sims has extensive research experience in informatics topics including quality measurement, public health informatics, and care coordination.  He serves as the Rush site lead for the Chicago Health Atlas, where he and his investigative team contribute patient data.
       %li
         %img.pull-right(src="/assets/logo_partner_cchhs.png")
-        %h4 Bala Hota, MD
-        %h5 Cook County Health & Hospital System
+        %h4 Cook County Health & Hospital System
+        %h5 Bala Hota, MD
         %p
           Dr. Hota is a practicing physician at Cook County Health & Hospitals System with extensive research experience in infectious disease epidemiology. His investigative team has contributed data to the Chicago Health Atlas project.
       %li
