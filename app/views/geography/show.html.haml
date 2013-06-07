@@ -49,8 +49,8 @@
                 new L.LatLng( interventions[i][2], interventions[i][3] ),
                 { icon: clinicIcon }
               )).bindPopup("<b>" + interventions[i][0] + "</b><br/>" + interventions[i][1])
-              //LeafletLib.addMarker(markers[i]);
             }
+            $('#resource_count').html('(' + markers.length + ')');
           });
 
           function toggle_markers(){
@@ -79,7 +79,9 @@
       %br
       %label.checkbox
         %input#toggle_markers{:type => 'checkbox'} 
-          %span#toggle_label Show local resources
+          %span 
+            Show local resources
+            %span#resource_count
 
       %h3 Population
 

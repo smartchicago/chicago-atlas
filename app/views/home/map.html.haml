@@ -15,8 +15,9 @@
 
 
     var geojsonFeature = #{@display_geojson};
-    var jenks_cutoffs = jenks(#{@current_statistics}, 3);
-    jenks_cutoffs[0] = 0;
+    var jenks_cutoffs = jenks(#{@current_statistics}, 4);
+    jenks_cutoffs[0] = 0; // ensure the bottom value is 0
+    jenks_cutoffs.pop(); // last item is the max value, so dont use it
 
     var map = L.map('map').setView([41.8781136, -87.66677856445312], 11);
 
@@ -44,6 +45,7 @@
                 d >= jenks_cutoffs[1] ? '#6BAED6' : 
                 d >= jenks_cutoffs[0] ? '#BDD7E7' :  
                                         '#EFF3FF';
+
     }
 
     function style(feature) {
