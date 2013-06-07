@@ -33,7 +33,7 @@ navigate to http://localhost:8080/
 ## Team
 
 * [Derek Eder](mailto:derek.eder+git@gmail.com)
-* Aaron Salmon
+* [Aaron U. Salmon](mailto:aaronusalmon@gmail.com)
 * [Dan O'Neil](mailto:doneil@cct.org)
 
 ## Errors / Bugs

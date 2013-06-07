@@ -11,7 +11,9 @@
  *= require_self
  *= require_tree .
  */
-
+body {
+  padding-bottom: 50px;
+}
  #mapCanvas img {
    max-width: none;
  }
