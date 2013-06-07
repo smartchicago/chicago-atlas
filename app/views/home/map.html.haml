@@ -2,6 +2,7 @@
   = javascript_include_tag "leaflet"
   = javascript_include_tag "leaflet.label"
   = javascript_include_tag "jquery-ui-slider.min"
+  = javascript_include_tag "jquery.address.min"
   = javascript_include_tag "jenks"
 
   :javascript
@@ -16,7 +17,6 @@
     var geojsonFeature = #{@display_geojson};
     var jenks_cutoffs = jenks(#{@current_statistics}, 3);
     jenks_cutoffs[0] = 0;
-    //console.log(jenks_cutoffs);
 
     var map = L.map('map').setView([41.8781136, -87.66677856445312], 11);
 
@@ -100,6 +100,7 @@
  
     function update_year(year){
         active_year = year;
+        $.address.parameter('year', active_year);
         var year_range = allLayers[0].feature.properties.condition_year_range;
         if (year_range != '')
             $("#year_label").text(year_range);
@@ -129,13 +130,16 @@
     }
 
     var active_year = end_year;
-    update_year(end_year);
+    if ($.address.parameter('year') != null)
+        active_year = $.address.parameter('year');
+
+    update_year(active_year);
 
     $("#slider").slider({
       min: start_year,
       max: end_year,
       step: 1,
-      value: end_year,
+      value: active_year,
       slide: function(event, ui){
         update_year(ui.value);
       },
@@ -168,6 +172,12 @@
     };
 
     legend.addTo(map);
+
+    $.address.externalChange(function(event) {
+        update_year($.address.parameter('year'));
+        $('#slider').slider('value', $.address.parameter('year'));
+    });
+
 
 .row-fluid
   .span4
