@@ -72,6 +72,9 @@
   color: #777;
 }
 
+.row-fluid {
+  padding-top: 20px;
+}
 .legend {
   text-align: left;
   line-height: 18px;

@@ -7,37 +7,30 @@
 
 .row-fluid
   .span4
-    %a(href="#")
+    %a(href="map/births_birth_rate")
       %img.img-polaroid(src="/assets/home_city.png"alt="Citywide data")
     %p
-      View citywide data from sources like the City of Chicago and local hospitals to get big-picture views of health outcomes in Chicago.
+      View citywide data to get big-picture views of health outcomes in Chicago.
   .span4
-    %a(href="#")
+    %a(href="places")
       %img.img-polaroid(src="/assets/home_neighborhood.png"alt="Neighborhood level data")
     %p
-      Browse data for neighborhood and zip code-level data for specific info near you. 
+      Browse your 
+      %a{:href => 'places'}neighborhood or zip code 
+      for specific conditions and info near you. 
   .span4
     %a(href="#")
       %img.img-polaroid(src="/assets/home_location.png"alt="Locations")
     %p
-      Find places where you can improve your own health.
+      Find places where you can improve your own health, right in your own neighborhood.
 
 .row-fluid
-  %h2
-    Be better informed
-  %p
-    Be better informed about health in your city and take greater control of your own health, right in your own neighborhood.
-
-  .row-fluid
-    .span5
-      %p
-        To get started, browse the map or choose a location.
-      %p
-        neighborhood dropdown
-      %p
-        zip code dropdown
-    .span7
-      map of neighborhood boundries
+  %h3
+    To get started, 
+    %a{:href => 'map/births_birth_rate'} browse the map
+    or 
+    = succeed '.' do
+      %a{:href => 'places'} choose a location
 
 .row-fluid
   .span12
