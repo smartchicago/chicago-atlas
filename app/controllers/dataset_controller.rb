@@ -10,7 +10,7 @@ class DatasetController < ApplicationController
   end
 
   def interventions
-    interventionmap = intervention_locations( params[:dataset], [params[:north], params[:east], params[:south], params[:west] ])
+    interventionmap = intervention_locations( [params[:north], params[:east], params[:south], params[:west] ])
     respond_to do |format|
       format.json { render :json => interventionmap }
     end
