@@ -227,6 +227,11 @@ namespace :db do
 
     def save_cdph_dataset(d, parse_token, handle, group='')
 
+      data_type = 'condition'
+      if d[:category] == "Demographics"
+        data_type = 'demographics'
+      end
+      
       dataset = Dataset.new(
         :name => d[:name],
         :slug => "#{handle}",
@@ -234,7 +239,7 @@ namespace :db do
         :provider => 'Chicago Department of Public Health',
         :url => d[:url],
         :category_id => Category.where(:name => d[:category]).first.id,
-        :data_type => 'condition',
+        :data_type => data_type,
         :description => d[:description],
         :stat_type => d[:stat_type]
       )
@@ -514,7 +519,7 @@ namespace :db do
               :provider => 'US Census',
               :url => d[:url],
               :category_id => Category.where(:name => d[:category]).first.id,
-              :data_type => 'population',
+              :data_type => 'demographic',
               :stat_type => 'count'
             )
             dataset.save!
