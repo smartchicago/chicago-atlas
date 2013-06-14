@@ -30,11 +30,6 @@
            background-clip: padding-box; 
  }
 
- #view_accordion {
-   height: 500px;
-   overflow: scroll;
- }
-
  .accordion-group {
    background-color: #fff;
  }
