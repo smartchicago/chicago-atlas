@@ -401,7 +401,7 @@ namespace :db do
         d.delete
       end
 
-      datasets = [{:name => 'Metro Chicago Health Facilities', :socrata_id => 'kt59-57by', :url => 'https://www.metrochicagodata.org/dataset/Metro-Chicago-Health-Facilities/kt59-57by'}]
+      datasets = [{:name => 'Metro Chicago Health Facilities Cleaned', :socrata_id => 'kt59-57by', :url => 'https://www.metrochicagodata.org/dataset/Metro-Chicago-Health-Facilities/kt59-57by'}]
 
       datasets.each do |d|
         handle = d[:name].parameterize.underscore.to_sym
@@ -426,56 +426,19 @@ namespace :db do
         dataset.save!
 
         csv.each do |row|
-          # regex to pluck out the lat/long from the LOCATION column
-          matches = /([^\-]*)\((\-?\d+\.\d+?),\s*(\-?\d+\.\d+?)\)/.match(row["LOCATION"])
-          # puts matches.inspect
-          if not matches.nil? and matches[1].downcase.include? "chicago"
-            address = matches[1].gsub('\n', '')
-            latitude = matches[2]
-            longitude = matches[3]
+          intervention = InterventionLocation.new(
+            :name => row["Name"],
+            :hours => row["Hours"],
+            :phone => row["Phone"],
+            :address => row["Address"],
+            :latitude => row["Latitude"],
+            :longitude => row["Longitude"],
+            :dataset_id => dataset.id
+          )
+          intervention.save!
 
-            intervention = InterventionLocation.new(
-              :name => row["SITE NAME"],
-              :hours => row["HOURS"],
-              :phone => row["PHONE"],
-              :address => address,
-              :latitude => latitude,
-              :longitude => longitude,
-              :dataset_id => dataset.id
-            )
-            intervention.save!
+          InterventionLocationDataset.delete_all("intervention_location_id = #{intervention.id}")
 
-            InterventionLocationDataset.delete_all("intervention_location_id = #{intervention.id}")
-
-            # # Connect WIC locations to birth-related topics
-            # if row["SITE NAME"].upcase.include? '(WIC)'
-            #   wic_dataset = ['birth_rate', 'fertility_rate', 'percent_of_low_weight_births', 'percent_of_preterm_births', 'teen_birth_rate', 'prenatal_care_obtained_in_1st_trimester']
-
-            #   wic_dataset.each do |dataset_slug|
-            #     intervention_relation = InterventionLocationDataset.new(
-            #       :intervention_location_id => intervention.id,
-            #       :dataset_id => Dataset.where(:slug => dataset_slug).first.id,
-            #     )
-            #     intervention_relation.save!
-            #   end
-
-            # end
-
-            # # Connect STI clinic locations to infectious diseases topics
-            # if row["SITE NAME"].include? 'STI '
-            #   sti_dataset = ['chlamydia_in_females', 'gonorrhea_in_females', 'gonorrhea_in_males'] #'tuberculosis' when its imported
-
-            #   sti_dataset.each do |dataset_slug|
-            #     intervention_relation = InterventionLocationDataset.new(
-            #       :intervention_location_id => intervention.id,
-            #       :dataset_id => Dataset.where(:slug => dataset_slug).first.id,
-            #     )
-            #     intervention_relation.save!
-            #   end
-
-            # end
-
-          end
         end
 
         stat_count = InterventionLocation.count(:conditions => "dataset_id = #{dataset.id}")

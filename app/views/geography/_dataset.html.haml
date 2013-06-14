@@ -8,6 +8,8 @@
 .span4
   %p 
     = dataset.description
+    - unless dataset.url.nil? or dataset.url == ''
+      (<a href='#{dataset.url}'>source</a>)
 
 .span7
   - chart_stats = fetch_chart_data(dataset.id, @geography.id)

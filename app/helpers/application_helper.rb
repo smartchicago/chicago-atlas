@@ -10,7 +10,7 @@ module ApplicationHelper
 
   def get_datasets(geography_id, category_id)
     Dataset.joins(:statistics)
-      .select("datasets.id, datasets.name, datasets.description, datasets.stat_type, datasets.slug")
+      .select("datasets.id, datasets.name, datasets.description, datasets.url, datasets.stat_type, datasets.slug")
       .where("statistics.geography_id = #{geography_id} AND datasets.category_id = #{category_id}")
       .group("datasets.id, datasets.name")
       .order("datasets.name")
@@ -79,6 +79,32 @@ module ApplicationHelper
           "condition_year_range" => last_geo['condition_year_range']
         },
         "geometry" => ActiveSupport::JSON.decode(last_geo['geometry'])
+      }
+    end
+
+    ActiveSupport::JSON.encode({"type" => "FeatureCollection", "features" => geojson})
+  end
+
+  def geography_empty_geojson()
+
+    area_stats = Geography
+      .select("geographies.id, geographies.name, geographies.slug, geographies.geometry")
+      .where("geo_type = 'Community Area'")
+
+    geojson = []    
+    area_stats.all.each do |c|
+      geojson << {
+        "type" => "Feature", 
+        "id" => c.id,
+        "properties" => {
+          "name" => c.name,
+          "slug" => c.slug,
+          "stat_type" => '',
+          "condition_title" => '',
+          "condition_value" => '',
+          "condition_year_range" => ''
+        },
+        "geometry" => ActiveSupport::JSON.decode(c.geometry)
       }
     end
 
