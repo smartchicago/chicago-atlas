@@ -1,4 +1,12 @@
+- @category = Category.where("name = 'Demographics'").first
+
 .span12
+  %h2#demographics
+    = @category.name
+
+  %p
+    = @category.description
+
   - demographic_age_2000 = fetch_demographic_age_data(2000, @geography.id)
   - demographic_age_2010 = fetch_demographic_age_data(2010, @geography.id)
   - chart_id = "chart_demographics_age"
@@ -50,3 +58,13 @@
       });
 
 .clearfix
+
+.row-fluid
+  - @datasets = get_datasets(geography.id, @category.id)
+
+  - @datasets.each do |dataset|
+    - unless dataset.name.include? 'Population'
+      = render :partial => "geography/dataset", :locals => {:dataset => dataset, :geography => geography, :show_header => true }
+
+.clearfix
+%hr
