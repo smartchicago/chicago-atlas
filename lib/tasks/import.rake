@@ -145,6 +145,15 @@ namespace :db do
         # these are aggregated by zip code
         {:category => 'Chronic disease', :name => 'Diabetes Hospitalizations', :parse_tokens => ['crude_rate'], :socrata_id => 'vekt-28b5', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Diabetes-hospitalizations/vekt-28b5', :description => "Age-adjusted hospitalization rates with corresponding 95% confidence intervals, for the years 2000 - 2011, by Chicago U.S. Postal Service ZIP code or ZIP code aggregate.", :choropleth_cutoffs => "[0,10,20,40]", :stat_type => 'rate', :area => 'zip'},
         {:category => 'Chronic disease', :name => 'Asthma Hospitalizations', :parse_tokens => ['crude_rate'], :socrata_id => 'vazh-t57q', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Asthma-hospitalizations-i/vazh-t57q', :description => "Age-adjusted hospitalization rates (per 10,000 children and adults aged 5 to 64 years) with corresponding 95% confidence intervals, for the years 2000 - 2011, by Chicago U.S. Postal Service ZIP code or ZIP code aggregate.", :choropleth_cutoffs => "[0,10,20,40]", :stat_type => 'rate', :area => 'zip'},
+
+        # Demographic
+        {:category => 'Demographics', :name => 'Below Poverty Level', :parse_tokens => ['below_poverty_level'], :range => '2007-2011', :socrata_id => 'iqnk-2tcu', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-public-health-in/iqnk-2tcu', :description => "Percent of households under the poverty level for the years 2007-2011.", :stat_type => 'range, percent'},
+        {:category => 'Demographics', :name => 'Crowded Housing', :parse_tokens => ['crowded_housing'], :range => '2007-2011', :socrata_id => 'iqnk-2tcu', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-public-health-in/iqnk-2tcu', :description => "Percent of occupied crowded housing units for the years 2007-2011.", :stat_type => 'range, percent'},
+        {:category => 'Demographics', :name => 'Dependency', :parse_tokens => ['dependency'], :range => '2007-2011', :socrata_id => 'iqnk-2tcu', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-public-health-in/iqnk-2tcu', :description => "Percent of persons aged less than 16 or more than 64 years for the years 2007-2011.", :stat_type => 'range, percent'},
+        {:category => 'Demographics', :name => 'No High School Diploma', :parse_tokens => ['no_high_school_diploma'], :range => '2007-2011', :socrata_id => 'iqnk-2tcu', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-public-health-in/iqnk-2tcu', :description => "Percent of persons aged 25 years and older with no high school diploma for the years 2007-2011.", :stat_type => 'range, percent'},
+        {:category => 'Demographics', :name => 'Per capita income', :parse_tokens => ['per_capita_income'], :range => '2007-2011', :socrata_id => 'iqnk-2tcu', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-public-health-in/iqnk-2tcu', :description => "2011 inflation-adjusted dollars of annual income per person for the years 2007-2011", :stat_type => 'range, money'},
+        {:category => 'Demographics', :name => 'Unemployment', :parse_tokens => ['unemployment'], :range => '2007-2011', :socrata_id => 'iqnk-2tcu', :url => 'https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Selected-public-health-in/iqnk-2tcu', :description => "Percent of persons in labor force aged 16 years and older for the years 2007-2011", :stat_type => 'range, percent'},
+
       ]
 
       datasets.each do |d|
@@ -187,6 +196,32 @@ namespace :db do
           end
         end
       end
+
+      # manually import demographics for Chicago. Source PDF: https://data.cityofchicago.org/api/assets/2107948F-357D-4ED7-ACC2-2E9266BBFFA2
+      puts 'manually importing Chicago CDPH demographics'
+      chicago_demographics = {
+        'below_poverty_level' => 19, 
+        'crowded_housing' => 4.7, 
+        'dependency' => 33.8, 
+        'no_high_school_diploma' => 19.8, 
+        'per_capita_income' => 27940, 
+        'unemployment' => 12
+      }
+
+      chicago_demographics.each do |key,value|
+        dset_id = Dataset.where("slug = 'demographics_#{key}'").first.id
+
+        stat = Statistic.new(
+          :dataset_id => dset_id,
+          :geography_id => 100,
+          :year => 2007,
+          :year_range => '2007-2011',
+          :name => key, 
+          :value => value
+        )
+        stat.save!
+      end
+
       puts 'Done!'
     end
 
