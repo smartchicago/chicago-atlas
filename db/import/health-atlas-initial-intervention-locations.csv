@@ -1,942 +1,413 @@
 ID,Name,Hours,Phone,Address,Latitude,Longitude
-1,Northeast,,312-744-0784,"2019 Lawrence Avenue
-Chicago, IL 60625
-",41.9687225469,-87.680192382
-2,Southwest,,312-747-0440,"6117 Kedzie Avenue
-Chicago, IL 60629
-",41.7821299198,-87.7031976495
-3,Northwest,,312-744-6681,"3160 Milwaukee Avenue
-Chicago, IL 60618
-",41.9383689835,-87.7226883248
-4,Central West,,312-746-5300,"2102 Ogden Avenue
-Chicago, IL 60612
-",41.8710429941,-87.6785982482
-5,Southeast,,312-747-0189,"1767 79th Street
-Chicago, IL 60649
-",41.7515129435,-87.5819826459
-6,Renaissance Court,,312-744-4550,"78 Washington Street
-Chicago, IL 60602
-",41.8838541586,-87.6249552419
-7,Abbott Park,,312-745-3493,"49 95th Street
-Chicago, IL 60619
-",41.7216588599,-87.6223623885
-8,Edgewater,,312-744-4016,"5917 Broadway Street
-Chicago, IL 60660
-",41.9894833691,-87.660143328
-9,Englewood,,312-745-3328,"653 657 W 63rd Street
-Chicago, IL 60621
-",41.779925314,-87.6330832428
-10,West Town,,312-743-1016,"1613 Chicago Avenue
-Chicago, IL 60622
-",41.8957521891,-87.6682665908
-11,Kelvyn Park,,312-744-4016,"2715 Cicero Avenue
-Chicago, IL 60639
-",41.9299084397,-87.7460669395
-12,Auburn Gresham,,312-745-4798,"1040 79th Street
-Chicago, IL 60620
-",41.7505772162,-87.6502906179
-13,Norwood Park,,312-744-4016,"5801 Natoma Avenue
-Chicago, IL 60631
-",41.9865317763,-87.7941234622
-14,Garfield Ridge,,312-745-4250,"B Archer Avenue
-Chicago, IL 60638
-",41.7972264346,-87.7531547102
-15,Chatham,,312-745-0385,"8300 Cottage Grove Avenue
-Chicago, IL 60619
-",41.7433440848,-87.6055388793
-16,Austin,,312-743-1538,"5071 Congress Parkway
-Chicago, IL 60644
-",41.8739338463,-87.7520518412
-17,Truman College,,312-744-4016,"1145 Wilson Avenue
-Chicago, IL 60640
-",41.965371722,-87.6590156155
-18,North Center,,312-745-4029,"4040 Oakley Avenue
-Chicago, IL 60618
-",41.95484987,-87.6860880461
-19,Portage Park,,312-744-9022,"4100 Long Avenue
-Chicago, IL 60641
-",41.9549757316,-87.7621023199
-20,Pilsen,,312-743-0493,"2021 Morgan Street
-Chicago, IL 60608
-",41.855146,-87.651544
-21,Englewood Neighborhood Health Clinic,,312-747-7831,"641 W. 63rd St.
-Chicago, IL 60621
-",41.7797803161,-87.6415774096
-22,Lower West Neighborhood Health Clinic,,312-746-5157,"1713 S. Ashland Ave.
-Chicago, IL 60608
-",41.858594182,-87.6660674614
-23,Roseland Neighborhood Health Clinic,,312-747-9500,"200 E. 115th St.
-Chicago, IL 60628
-",41.6854046445,-87.6180457976
-24,South Chicago Women & Children Health Center,,312-747-5285,"2938 E. 89th St.
-Chicago, IL 60617
-",41.7337356022,-87.5525705791
-25,South Lawndale Women & Children Health Center,,312-747-0066,"3059 W. 26th St.
-Chicago, IL 60623
-",41.8436454707,-87.7019192211
-26,Uptown Neighborhood Health Center,,312-744-1938,"845 W. Wilson Ave.
-Chicago, IL 60640
-",41.9654892728,-87.6510703116
-27,West Town Neighborhood Health Center,,312-744-0943,"2418 W. Division St.
-Chicago, IL 60622
-",41.9033604534,-87.6877189263
-28,Englewood STI Specialty Clinic,,(312) 747-8900,"641 63rd St
-Chicago, IL 60621
-",41.7797803161,-87.6415774096
-29,South Austin STI Specialty Clinic,,(312) 746-4871,"4958 Madison
-Chicago, IL 60644
-",41.8805278567,-87.7495947862
-30,Lakeview STI Specialty Clinic,,(312) 744-5507,"2861 Clark
-Chicago, IL 60657
-",41.9342701516,-87.6456486418
-31,West Town STI Specialty Clinic,,(312) 742-4092,"2418 Division
-Chicago, IL 60622
-",41.9033604534,-87.6877189263
-32,Roseland  STI Specialty Clinic,,(312) 747-2817,"200 115th St
-Chicago, IL 60628
-",41.6854046445,-87.6180457976
-33,Women Infant Children (WIC) location,,312-744-0073,"845 Wilson Ave
-Chicago, IL 60640
-",41.9654892728,-87.6510703116
-34,Women Infant Children (WIC) location,,312-744-8118,"2418 Division St
-Chicago, IL 60622
-",41.9033604534,-87.6877189263
-35,Women Infant Children (WIC) location,,312-747-8126,"3059 26th St
-Chicago, IL 60623
-",41.8436454707,-87.7019192211
-36,Women Infant Children (WIC) location,,312-747-1650,"1643 Cermak St
-Chicago, IL 60608
-",41.8523074877,-87.6671271968
-37,Women Infant Children (WIC) location,,312-746-4797,"49O9 W. Division St. Chicago
-IL 60651
-",41.9024555846,-87.7414249559
-38,Women Infant Children (WIC) location,,773-702-3719,"800 55th St
-Chicago, IL 60615
-",41.7950140135,-87.606230235
-39,Women Infant Children (WIC) location,,312-747-4814,"641 63rd St
-Chicago, IL 60621
-",41.7797803161,-87.6415774096
-40,Women Infant Children (WIC) location,,312-747-7969,"2938 89th St
-Chicago, IL 60617
-",41.7337356022,-87.5525705791
-41,Women Infant Children (WIC) location,,312-747-0054,"200 115th St
-Chicago, IL 60628
-",41.6854046445,-87.6180457976
-42,Women Infant Children (WIC) location,,312-744-1027,"2849 Clark St
-Chicago, IL 60657
-",41.9342701516,-87.6456486418
-43,Women Infant Children (WIC) location,,312-746-8990,"2310 Roosevelt Rd
-Chicago, IL 60608
-",41.866928918,-87.6840227127
-44,Women Infant Children (WIC) location,,773-843-4220,"2355 Western Ave
-Chicago, IL 60608
-",41.8487266402,-87.6851468653
-45,Women Infant Children (WIC) location,,312-747-5415,"4150 55th St
-Chicago, IL 60632
-",41.7932214347,-87.7271972217
-46,Women Infant Children (WIC) location,,312-225-1982 ,"2850 Michigan Ave
-Chicago, IL 60616
-",41.8422785012,-87.6240109537
-47,Women Infant Children (WIC) location,,773-782-8902,"2840 Fullerton Ave
-Chicago, IL 60647
-",41.9250880737,-87.6991403161
-48,Women Infant Children (WIC) location,,773-522-0716,"2400 Kedzie Ave
-Chicago, IL 60623
-",41.8479891961,-87.7053906042
-49,Women Infant Children (WIC) location,,312-432-7372 ,"1701 Superior St
-Chicago, IL 60610
-",41.894852867,-87.6700472484
-50,Women Infant Children (WIC) location,,773-761-0011 ext. 116,"2424 Peterson Ave
-Chicago, IL 60659
-",41.9905570368,-87.6906768534
-51,Women Infant Children (WIC) location,,312-747-9140 ,"333 State St
-Chicago, IL 60604
-",41.8775319248,-87.6272125402
-52,Auburn Gresham MHC,,(312) 747-0881,"1140 79th St
-Chicago, IL 60620
-",41.7506016135,-87.6528522112
-53,Back of the Yards MHC,,(312) 747-3560,"4313 Ashland
-Chicago, IL 60609
-",41.8156584203,-87.6650112318
-54,Beverly Morgan Park MHC,,(312) 747-1100,"1987 111th St
-Chicago, IL 60643
-",41.6919148726,-87.6717647444
-55,Englewood MHC,,(312) 747-7496,"641 63rd St
-Chicago, IL 60621
-",41.7797803161,-87.6415774096
-56,Greater Grand/MID-South MHC ,,(312) 747-0036,"4314 Cottage Grove
-Chicago, IL 60653
-",41.8204689151,-87.606772
-57,Greater Lawn MHC,,(312) 747-1020,"4150 55th Street
-Chicago, IL 60632
-",41.7932214347,-87.7271972217
-58,Lawndale MHC  ,,(312) 746-5905,"1201 Campbell St
-Chicago, IL 60608
-",41.8653461113,-87.6884923432
-59,North River MHC,,(312) 744-1906,"5801 Pulaski Road
-Chicago, IL 60646
-",41.9863493809,-87.7284963041
-60,Northtown Rogers Park,,(312) 744-7617,"1607 Howard St
-Chicago, IL 60626
-",42.0191121918,-87.6714861637
-61,Northwest MHC ,,(312) 744-0993,"2354 Milwaukee
-Chicago, IL 60647
-",41.9239909008,-87.6994730652
-62,Roseland MHC,,(312) 747-7320,"200 115th Street
-Chicago, IL 60628
-",41.6854046445,-87.6180457976
-63,Woodlawn MHC,,(312) 747-0059,"6337 Woodlawn Ave
-Chicago, IL 60637
-",41.7792233021,-87.5961189076
-64,"Matsumoto, Michael Y., D.D.S.",,,"30 Michigan Ave
-Chicago, IL
-",41.8824406062,-87.6245123416
-65,"Bittmann, Brant W., D.D.S.",,,"201 Huron St
-Chicago, IL
-",41.8949468991,-87.6226713202
-66,Northwestern Dental Center,,,"201 Huron St
-Chicago, IL
-",41.8949468991,-87.6226713202
-67,Impressions Dental,,,"1439 Fullerton Ave
-Chicago, IL
-",41.925186912,-87.6647027332
-68,Dental Experts,,,"4039 North Ave
-Chicago, IL
-",41.8782499997,-87.6260679999
-69,"Sonrisa Dental, P.C.",,,"2001 California
-Chicago, IL
-",41.8782499997,-87.6260679999
-70,Dental Shine,,,"2902 63rd St
-Chicago, IL
-",41.7791122473,-87.6959479988
-71,"Cappello, Joseph V., D.D.S.",,,"4157 Archer Ave
-Chicago, IL 60632
-",41.8180182393,-87.6978887765
-72,"Jaconetti, Daniel, D.D.S.",,,"7601 Montrose
-Chicago, IL
-",41.8782499997,-87.6260679999
-73,"Salamah, Rabeh Mohammad, D.D.S.",,,"3138 Narragansett
-Chicago, IL
-",41.8782499997,-87.6260679999
-74,Brite Dental,,,"4849 Belmont
-Chicago, IL
-",41.8782499997,-87.6260679999
-75,Armitage Oral Surgery,,,"2220 Armitage Ave
-Chicago, IL
-",41.9176875425,-87.6830361222
-76,"Grinter, Jason M., D.D.S.",,,"1550 Cornelia Ave
-Chicago, IL
-",41.9452187788,-87.6677461507
-77,Department of Human Services Main Office - Chicago,,8008436154,"Chicago, IL
-",41.8782499997,-87.6260679999
-78,Community Alternatives Unlimited,,7738674000,"Chicago, IL
-",41.8782499997,-87.6260679999
-79,Community Service Options,,8882764467,"Chicago, IL
-",41.8782499997,-87.6260679999
-80,Child and Family Connections (CFC 11),,3129427800,"Chicago, IL
-",41.8782499997,-87.6260679999
-81,Easter Seals Society of Metropolitan Chicago (CFC 8),,7732331799,"Chicago, IL
-",41.8782499997,-87.6260679999
-82,Hektoen Institute for Medical Research Cook County ChildrenÌ s Hospital (CFC 9),,3128646575,"Chicago, IL
-",41.8782499997,-87.6260679999
-83,LaRabida ChildrenÌ s Hospital (CFC 10),,7733247434,"Chicago, IL
-",41.8782499997,-87.6260679999
-84,Advocate Northside,,7732963220,"Chicago, IL
-",41.8782499997,-87.6260679999
-85,Asian Human Services,,7737282235,"Chicago, IL
-",41.8782499997,-87.6260679999
-86,Association House,,7737728009,"Chicago, IL
-",41.8782499997,-87.6260679999
-87,Auburn Gresham MHC,,3127470881,"Chicago, IL
-",41.8782499997,-87.6260679999
-88,Beverly Morgan Park MHC,,3127471100,"Chicago, IL
-",41.8782499997,-87.6260679999
-89,Bobby E Wright MHC,,7737227900,"Chicago, IL
-",41.8782499997,-87.6260679999
-90,Circle Family Care,,7733791000,"Chicago, IL
-",41.8782499997,-87.6260679999
-91,Community Counseling Centers of Chicago (C-4),,7737690205,"Chicago, IL
-",41.8782499997,-87.6260679999
-92,Community Mental Health Council,,7737344033,"Chicago, IL
-",41.8782499997,-87.6260679999
-93,Counseling Center of Lake View,,7735495886,"Chicago, IL
-",41.8782499997,-87.6260679999
-94,Division of Mental Health - Region One North,,7737945525,"Chicago, IL
-",41.8782499997,-87.6260679999
-95,Englewood MHC,,3127477496,"Chicago, IL
-",41.8782499997,-87.6260679999
-96,Greater Grand MHC,,3127470036,"Chicago, IL
-",41.8782499997,-87.6260679999
-97,Greater Lawn MHC,,3127471020,"Chicago, IL
-",41.8782499997,-87.6260679999
-98,Heartland Health Outreach,,7737514103,"Chicago, IL
-",41.8782499997,-87.6260679999
-99,Lawndale MHC,,3127465905,"Chicago, IL
-",41.8782499997,-87.6260679999
-100,Loretto Hospital,,7738545290,"Chicago, IL
-",41.8782499997,-87.6260679999
-101,Lutheran Social Services of Illinois,,7737747555,"Chicago, IL
-",41.8782499997,-87.6260679999
-102,Mercy Hospital,,3125672291,"Chicago, IL
-",41.8782499997,-87.6260679999
-103,Metro Child and Adolescent Network,,7737944895,"Chicago, IL
-",41.8782499997,-87.6260679999
-104,Metropolitan Family Services,,7733712900,"Chicago, IL
-",41.8782499997,-87.6260679999
-105,Mt Sinai/Mile Square,,3128505800,"Chicago, IL
-",41.8782499997,-87.6260679999
-106,North River MHC,,3127441906,"Chicago, IL
-",41.8782499997,-87.6260679999
-107,Northtown Rogers Park MHC,,3127447617,"Chicago, IL
-",41.8782499997,-87.6260679999
-108,Northwest Community Mental Health Center,,3127440993,"Chicago, IL
-",41.8782499997,-87.6260679999
-109,Northwestern Memorial Hospital,,3129268200,"Chicago, IL
-",41.8782499997,-87.6260679999
-110,Pilsen-Little Village MHC,,3122261120,"Chicago, IL
-",41.8782499997,-87.6260679999
-111,Resurrection Healthcare/St Mary of Nazareth,,3127702606,"Chicago, IL
-",41.8782499997,-87.6260679999
-112,Roseland Mental Health Center,,3127477320,"Chicago, IL
-",41.8782499997,-87.6260679999
-113,Thresholds,,7733278668,"Chicago, IL
-",41.8782499997,-87.6260679999
-114,Trilogy,,7735086100,"Chicago, IL
-",41.8782499997,-87.6260679999
-115,Woodlawn MHC,,3127470059,"Chicago, IL
-",41.8782499997,-87.6260679999
-116,"Bethel New Life, Inc.",,7732613533,"CHICAGO, IL
-",41.8782499997,-87.6260679999
-117,"Bethel New Life, Inc.",,7739215112,"Chicago, IL
-",41.8782499997,-87.6260679999
-118,"Bethel New Life, Inc.",,7732767028,"Chicago, IL
-",41.8782499997,-87.6260679999
-119,"Bethel New Life, Inc.",,7738269620,"Chicago, IL
-",41.8782499997,-87.6260679999
-120,Chicago Department of Public Health,,3127471650,"Chicago, IL
-",41.8782499997,-87.6260679999
-121,Chicago Department of Public Health,,3127468990,"CHICAGO, IL
-",41.8782499997,-87.6260679999
-122,Chicago Department of Public Health,,7738434221,"Chicago, IL
-",41.8782499997,-87.6260679999
-123,Chicago Department of Public Health,,3126663494,"Chicago, IL
-",41.8782499997,-87.6260679999
-124,Chicago Department of Public Health,,7737023719,"Chicago, IL
-",41.8782499997,-87.6260679999
-125,Chicago Department of Public Health,,3129492129,"Chicago, IL
-",41.8782499997,-87.6260679999
-126,Chicago Department of Public Health,,3127477969,"Chicago, IL
-",41.8782499997,-87.6260679999
-127,Chicago Department of Public Health,,7738742870,"Chicago, IL
-",41.8782499997,-87.6260679999
-128,Chicago Department of Public Health,,3127474814,"Chicago, IL
-",41.8782499997,-87.6260679999
-129,Chicago Department of Public Health,,3127448118,"Chicago, IL
-",41.8782499997,-87.6260679999
-130,Chicago Department of Public Health,,7735220716,"Chicago, IL
-",41.8782499997,-87.6260679999
-131,Chicago Department of Public Health,,3127478126,"Chicago, IL
-",41.8782499997,-87.6260679999
-132,Chicago Department of Public Health,,3127470054,"Chicago, IL
-",41.8782499997,-87.6260679999
-133,Chicago Department of Public Health,,3127475415,"Chicago, IL
-",41.8782499997,-87.6260679999
-134,Chicago Department of Public Health,,3127440073,"Chicago, IL
-",41.8782499997,-87.6260679999
-135,Chicago Department of Public Health,,7737828902,"Chicago, IL
-",41.8782499997,-87.6260679999
-136,Chicago Department of Public Health,,3127464797,"Chicago, IL
-",41.8782499997,-87.6260679999
-137,Chicago Department of Public Health,,3127441027,"Chicago, IL
-",41.8782499997,-87.6260679999
-138,Community and Economic Development Association of Cook County,,7087542788,"Chicago Heights, IL
-",41.5102569999,-87.6416010004
-139,Community and Economic Development Association of Cook County,,7087544576,"Chicago Hts, IL
-",41.5102569999,-87.6416010004
-140,Community and Economic Development Association of Cook County,,7738780578,"Chicago, IL
-",41.8782499997,-87.6260679999
-141,Community and Economic Development Association of Cook County,,7733387334,"Chicago, IL
-",41.8782499997,-87.6260679999
-142,Community and Economic Development Association of Cook County,,7735457159,"Chicago, IL
-",41.8782499997,-87.6260679999
-143,Community and Economic Development Association of Cook County,,7736851507,"Chicago, IL
-",41.8782499997,-87.6260679999
-144,Cook County Bureau of Health Services,,3124217326,"Chicago, IL
-",41.8782499997,-87.6260679999
-145,Cook County Bureau of Health Services,,3128646420,"Chicago, IL
-",41.8782499997,-87.6260679999
-146,Cook County Bureau of Health Services,,7735210750,"Chicago, IL
-",41.8782499997,-87.6260679999
-147,Cook County Department of Public Health,,7087535900,"Chicago Heights, IL
-",41.5102569999,-87.6416010004
-148,DuPage County Health Department,,,"West Chicago, IL
-",41.8813662001,-88.2189868997
-149,Lake County Health Department and Community Health Center,,8479845250,"North Chicago, IL
-",42.3193330004,-87.8573630002
-150,Mile Square Health Center,,3129962000,"Chicago, IL
-",41.8782499997,-87.6260679999
-151,Near North Health Service Corporation,,3123371415,"Chicago, IL
-",41.8782499997,-87.6260679999
-152,Near North Health Service Corporation,,7732278022,"Chicago, IL
-",41.8782499997,-87.6260679999
-153,Near North Health Service Corporation,,7738624890,"Chicago, IL
-",41.8782499997,-87.6260679999
-154,Near North Health Service Corporation,,7738263450,"Chicago, IL
-",41.8782499997,-87.6260679999
-155,Near North Health Service Corporation,,7732687600,"Chicago, IL
-",41.8782499997,-87.6260679999
-156,"New City Health Center, Inc.",,7733767688,"Chicago, IL
-",41.8782499997,-87.6260679999
-157,"New City Health Center, Inc.",,7737375400,"Chicago, IL
-",41.8782499997,-87.6260679999
-158,Roseland Community Hospital,,7739951737,"CHICAGO, IL
-",41.8782499997,-87.6260679999
-159,Sinai Community Institute,,7732576246,"Chicago, IL
-",41.8782499997,-87.6260679999
-160,Sinai Community Institute,,7737625757,"Chicago, IL
-",41.8782499997,-87.6260679999
-161,Sinai Community Institute,,7736503226,"Chicago, IL
-",41.8782499997,-87.6260679999
-162,Sinai Community Institute,,7737221072,"Chicago, IL
-",41.8782499997,-87.6260679999
-163,"TCA Health Inc., NFP",,7734883048,"Chicago, IL
-",41.8782499997,-87.6260679999
-164,"TCA Health Inc., NFP",,7739956320,"Chicago, IL
-",41.8782499997,-87.6260679999
-165,"TCA Health Inc., NFP",,7733632500,"Chicago, IL
-",41.8782499997,-87.6260679999
-166,ACCESS COMMUNITY HEALTH NETWORK,,7732572280,"Chicago, IL
-",41.8782499997,-87.6260679999
-167,AUNT MARTHAÌ S YOUTH SERVICE CENTER,,7087097372,"Chicago Heights, IL
-",41.5102569999,-87.6416010004
-168,CHICAGO DEPARTMENT OF PUBLIC HEALTH,,3127479878,"Chicago, IL
-",41.8782499997,-87.6260679999
-169,Chicago Dept. of Public Health Englewood Clinic,,3127477831,"Chicago, IL
-",41.8782499997,-87.6260679999
-170,Chicago Dept. of Public Health Lower West Clinic,,3127464717,"Chicago, IL
-",41.8782499997,-87.6260679999
-171,Chicago Dept. of Public Health Roseland Clinic,,3127479500,"Chicago, IL
-",41.8782499997,-87.6260679999
-172,Chicago Dept. of Public Health South Chicago,,3127475285,"Chicago, IL
-",41.8782499997,-87.6260679999
-173,Chicago Dept. of Public Health South Lawndale,,3127470066,"Chicago, IL
-",41.8782499997,-87.6260679999
-174,Chicago Dept. of Public Health Uptown Clinic,,3127471938,"Chicago, IL
-",41.8782499997,-87.6260679999
-175,Chicago Dept. of Public Health West Town Clinic,,3127447448,"Chicago, IL
-",41.8782499997,-87.6260679999
-176,COOK COUNTY/STROGER HOSPITAL/FANTUS,,3128640875,"Chicago, IL
-",41.8782499997,-87.6260679999
-177,ERIE FAMILY HEALTH CENTER,,3126663494,"Chicago, IL
-",41.8782499997,-87.6260679999
-178,Erie Teen Health Center,,3124912400,"Chicago, IL
-",41.8782499997,-87.6260679999
-179,Family Planning Program,,7732967050,"Chicago, IL
-",41.8782499997,-87.6260679999
-180,Fantus Health Center,,3128646016,"Chicago, IL
-",41.8782499997,-87.6260679999
-181,ILLINOIS MASONIC MEDICAL CENTER,,7732967050,"Chicago, IL
-",41.8782499997,-87.6260679999
-182,Infant Welfare Society of Chicago,,7737822800,"Chicago, IL
-",41.8782499997,-87.6260679999
-183,Lake CHD and Community Health Center,,8479845200,"North Chicago, IL
-",42.3193330004,-87.8573630002
-184,MICHAEL REESE HOSPITAL FAMILY PLANNING PROGRAM,,3127912830,"Chicago, IL
-",41.8782499997,-87.6260679999
-185,"Michael Reese Hospital, 6 Kaplan",,3127912830,"Chicago, IL
-",41.8782499997,-87.6260679999
-186,PLANNED PARENTHOOD/CHICAGO AREA,,3125926800,"Chicago, IL
-",41.8782499997,-87.6260679999
-187,PP/Chicago Area Austin Health Center,,7732872020,"Chicago, IL
-",41.8782499997,-87.6260679999
-188,PP/Chicago Area Englewood Health Center,,7734343700,"Chicago, IL
-",41.8782499997,-87.6260679999
-189,PP/Chicago Area Roseland Health Center,,7734681600,"Chicago, IL
-",41.8782499997,-87.6260679999
-190,Rush Adolescent Family Center,,3129422777,"Chicago, IL
-",41.8782499997,-87.6260679999
-191,RUSH UNIVERSITY MEDICAL CENTER,,3129422777,"Chicago, IL
-",41.8782499997,-87.6260679999
-192,University of Illinois at Chicago,,3124133836,"Chicago, IL
-",41.8782499997,-87.6260679999
-193,"University of Illinois at Chicago Center for WomenÌ s Health, M/C 650",,3124137500,"Chicago, IL
-",41.8782499997,-87.6260679999
-194,"University of Illinois at Chicago Mile Square Health Center, M/C 698",,3129962000,"Chicago, IL
-",41.8782499997,-87.6260679999
-195,University of Illinois at Chicago South Shore Mile Square,,7732560526,"Chicago, IL
-",41.8782499997,-87.6260679999
-196,West Chicago Public Health Center,,6306827979,"West Chicago, IL
-",41.8813662001,-88.2189868997
-197,WomenÌ s Health Center,,7087097470,"Chicago Heights, IL
-",41.5102569999,-87.6416010004
-198,Action for Children,,3128231100,"Chicago, IL
-",41.8782499997,-87.6260679999
-199,Action for Children,,3128231100,"Chicago, IL
-",41.8782499997,-87.6260679999
-200,DHS Family Community Resource Center in Cook County - Austin,,7738546300,"Chicago, IL
-",41.8782499997,-87.6260679999
-201,DHS Family Community Resource Center in Cook County - Calumet Park,,7736604700,"Chicago, IL
-",41.8782499997,-87.6260679999
-202,DHS Family Community Resource Center in Cook County - Englewood,,7739186700,"Chicago, IL
-",41.8782499997,-87.6260679999
-203,DHS Family Community Resource Center in Cook County - Garfield,,7732657740,"Chicago, IL
-",41.8782499997,-87.6260679999
-204,DHS Family Community Resource Center in Cook County - Humboldt Park,,7732927200,"Chicago, IL
-",41.8782499997,-87.6260679999
-205,DHS Family Community Resource Center in Cook County - Lower North,,7736387373,"Chicago, IL
-",41.8782499997,-87.6260679999
-206,DHS Family Community Resource Center in Cook County - Medical Field Operations,,3127938000,"Chicago, IL
-",41.8782499997,-87.6260679999
-207,DHS Family Community Resource Center in Cook County - Michigan,,3127937500,"Chicago, IL
-",41.8782499997,-87.6260679999
-208,DHS Family Community Resource Center in Cook County - Northwest,,7732657000,"Chicago, IL
-",41.8782499997,-87.6260679999
-209,DHS Family Community Resource Center in Cook County - Oakland ,,7735794200,"Chicago, IL
-",41.8782499997,-87.6260679999
-210,DHS Family Community Resource Center in Cook County - Park Manor,,7738636100,"Chicago, IL
-",41.8782499997,-87.6260679999
-211,DHS family Community Resource Center in Cook County - Roseland,,7736607000,"Chicago, IL
-",41.8782499997,-87.6260679999
-212,DHS Family Community Resource Center in Cook County - Southeast ,,7736024200,"Chicago, IL
-",41.8782499997,-87.6260679999
-213,DHS Family Community Resource Center in Cook County - Special Units ,,7739074100,"Chicago, IL
-",41.8782499997,-87.6260679999
-214,DHS Family Community Resource Center in Cook County - Uptown ,,7739074100,"Chicago, IL
-",41.8782499997,-87.6260679999
-215,DHS Family Community Resource Center in Cook County - Western ,,7735228370,"Chicago, IL
-",41.8782499997,-87.6260679999
-216,DHS Family Community Resource Center in Cook County - Wicker Park ,,7732922900,"Chicago, IL
-",41.8782499997,-87.6260679999
-217,DHS Family Community Resource Center in Cook County - Woodlawn,,7737535200,"Chicago, IL
-",41.8782499997,-87.6260679999
-218,Food Stamp Employment and Training Office,,7738636300,"Chicago, IL
-",41.8782499997,-87.6260679999
-219,Avalon Park DRS Office,,7737686700,"Chicago, IL
-",41.8782499997,-87.6260679999
-220,Chicago Heights DRS Office,,7087093333,"Chicago Heights, IL
-",41.5102569999,-87.6416010004
-221,Ford City DRS Office,,7738385745,"Chicago, IL
-",41.8782499997,-87.6260679999
-222,Hiawatha DRS Office,,7737944800,"Chicago, IL
-",41.8782499997,-87.6260679999
-223,ICRE Wood DRS Office,,3126333570,"Chicago, IL
-",41.8782499997,-87.6260679999
-224,Illinois Institute of Technology DRS Office,,3123282900,"Chicago, IL
-",41.8782499997,-87.6260679999
-225,Milwaukee Avenue DRS Office,,7732924400,"Chicago, IL
-",41.8782499997,-87.6260679999
-226,North Pulaski DRS Office,,7736383070,"Chicago, IL
-",41.8782499997,-87.6260679999
-227,South Pulaski DRS Office,,7738385660,"Chicago, IL
-",41.8782499997,-87.6260679999
-228,Illinois Center for Rehabilitation & Education - Roosevelt,,3124333100,"Chicago, IL
-",41.8782499997,-87.6260679999
-229,Chicago Read Mental Health Center,,7737944000,"Chicago, IL
-",41.8782499997,-87.6260679999
-230,Access Community Health Network,,7738263826,"Chicago, IL
-",41.8782499997,-87.6260679999
-231,Alivio Medical Center,,7736501229,"Chicago, IL
-",41.8782499997,-87.6260679999
-232,Aunt Martha's Youth Service Center,,7087541044,"Chicago Heights, IL
-",41.5102569999,-87.6416010004
-233,Austin Peoples Action Center,,7734737272,"Chicago, IL
-",41.8782499997,-87.6260679999
-234,"Bethel New Life, Inc.",,7732613533,"Chicago, IL
-",41.8782499997,-87.6260679999
-235,Catholic Charities,,7734747223,"Chicago, IL
-",41.8782499997,-87.6260679999
-236,Chicago Department of Public Health,,3127479698,"Chicago, IL
-",41.8782499997,-87.6260679999
-237,Chicago Family Health Center,,7733566250,"Chicago, IL
-",41.8782499997,-87.6260679999
-238,Chicago Urban League,,7736248815,"Chicago, IL
-",41.8782499997,-87.6260679999
-239,Community Alternatives Unlimited,,7738674072,"Chicago, IL
-",41.8782499997,-87.6260679999
-240,Community and Economic Development Assn.,,3127958878,"Chicago, IL
-",41.8782499997,-87.6260679999
-241,El Hogar del Nino,,3128295419,"Chicago, IL
-",41.8782499997,-87.6260679999
-242,"Erie Family Health Center, Inc.",,3124327329,"Chicago, IL
-",41.8782499997,-87.6260679999
-243,Firman Community Services,,7733733400,"Chicago, IL
-",41.8782499997,-87.6260679999
-244,Henry Booth House,,3129492133,"CHICAGO, IL
-",41.8782499997,-87.6260679999
-245,"Human Resources Development Institute, Inc.",,3124419009,"CHICAGO, IL
-",41.8782499997,-87.6260679999
-246,"Human Resources Development Institute, Inc. - North",,7735290370,"CHICAGO, IL
-",41.8782499997,-87.6260679999
-247,"Human Resources Development Institute, Inc. - South",,7738631452,"CHICAGO, IL
-",41.8782499997,-87.6260679999
-248,Lawndale Christian Health Center,,7738433000,"CHICAGO, IL
-",41.8782499997,-87.6260679999
-249,Mercy Family Health Center,,3125677902,"CHICAGO, IL
-",41.8782499997,-87.6260679999
-250,Near North Health Services,,3123371073,"CHICAGO, IL
-",41.8782499997,-87.6260679999
-251,New City Health Center,,7737375400,"CHICAGO, IL
-",41.8782499997,-87.6260679999
-252,Salvation Army Child Care,,3124210327,"CHICAGO, IL
-",41.8782499997,-87.6260679999
-253,Sinai Community Institute,,7732576508,"CHICAGO, IL
-",41.8782499997,-87.6260679999
-254,The Woodlawn Organization,,7737520911,"CHICAGO, IL
-",41.8782499997,-87.6260679999
-255,West Side Future (Near West Family Center),,3124402452,"CHICAGO, IL
-",41.8782499997,-87.6260679999
-256,Westside Association for Community Action,,7737625757,"CHICAGO, IL
-",41.8782499997,-87.6260679999
-257,Westside Holistic Family Services,,7732658861,"CHICAGO, IL
-",41.8782499997,-87.6260679999
-258,Cook County Building,,312-443-5500,"118 Clark
-Chicago, IL 60601
-",41.8853650158,-87.6165592503
-259,Daley Center,,312-443-5500,"50 Washington
-Chicago, IL 60606
-",41.8826472034,-87.6369929552
-260,County Admin Offices,,312-443-5500,"69 Washington
-Chicago, IL 60602
-",41.8832102127,-87.6253145725
-261,Pension & Annuity Board,,312-603-1200,"33 Dearborn
-Chicago, IL 60602
-",41.8827076416,-87.6293666209
-262,Employee Assistance,,312-603-1290,"221 LaSalle
-Chicago, IL 60601
-",41.8864224419,-87.6323638137
-263,Medical Examiner,,312-666-0500,"2121 Harrison
-Chicago, IL 60612
-",41.8739676421,-87.6794192108
-264,County Warehouse,,773-843-6090,"2323 Rockwell
-Chicago, IL 60608
-",41.8497328377,-87.6904242861
 265,Cook County Works,,,"1030 Dixie Hwy Chicago Heights
 IL 60411
 ",41.5114886082,-87.6434877541
-266,Hawthorne Warehouse,,773-801-2000,"4545 Cermak
-Chicago, IL 60623
-",41.8512693963,-87.7381196286
-267,Cook County Works,,,"2138 61st St
-Chicago, IL 60636
-",41.7830255403,-87.6736249399
-268,Adult Probation,,312-491-6000,"1640 Walnut
-Chicago, IL 60601
-",41.8853650158,-87.6165592503
-269,Adult Probation,,773-265-2400,"4734 Chicago
-Chicago, IL 60644
-",41.8803330239,-87.7574823908
-270,Adult Probation Reporting Cntr,,,"533 103rd Street
-Chicago, IL
-",41.7073387905,-87.610078324
-271,Adult Probation Reporting Cntr,,,"1014 Nobel Street
-Chicago, IL
-",41.8999648153,-87.6625822486
-272,Adult Probation Admin Bldg,,,"1640 Walnut
-Chicago, IL 60644
-",41.8803330239,-87.7574823908
-273,Adult Probation,,773-982-3300,"533 103rd Street
-Chicago, IL 60602
-",41.7073387905,-87.610078324
-274,Child Support ÛÒ Sheriff,,312-603-1250,"32 Randolph
-Chicago, IL 60601
-",41.8845595079,-87.6268448543
-275,Sheriff ÛÒ South Campus ÛÒ 1 ,,773-890-7100,"3026 California
-Chicago, IL 60608
-",41.838445523,-87.6950867849
-276,Sheriff ÛÒ Fugitive Warrants ,,,"3900 California
-Chicago, IL 60632
-",41.8228091599,-87.6946804064
+32,Roseland  STI Specialty Clinic,,(312) 747-2817,"200 115th St
+Chicago, IL 60628
+",41.6854046445,-87.6180457976
+41,Women Infant Children (WIC) location,,312-747-0054,"200 115th St
+Chicago, IL 60628
+",41.6854046445,-87.6180457976
+62,Roseland MHC,,(312) 747-7320,"200 115th Street
+Chicago, IL 60628
+",41.6854046445,-87.6180457976
+23,Roseland Neighborhood Health Clinic,,312-747-9500,"200 E. 115th St.
+Chicago, IL 60628
+",41.6854046445,-87.6180457976
+54,Beverly Morgan Park MHC,,(312) 747-1100,"1987 111th St
+Chicago, IL 60643
+",41.6919148726,-87.6717647444
+286,Courtroom ÛÒ Chgo. Police,,773-982-3080,"727 111th Street
+Chicago, IL 60628
+",41.6927947359,-87.6053643588
 277,Sheriff Vehicle Facility,,773-291-2311,"10351 Woodlawn
 Chicago, IL 60628
 ",41.7060471362,-87.5942591552
-278,SheriffÛªs Boot Camp,,,"2801 Rockwell
+270,Adult Probation Reporting Cntr,,,"533 103rd Street
+Chicago, IL
+",41.7073387905,-87.610078324
+273,Adult Probation,,773-982-3300,"533 103rd Street
+Chicago, IL 60602
+",41.7073387905,-87.610078324
+7,Abbott Park,,312-745-3493,"49 95th Street
+Chicago, IL 60619
+",41.7216588599,-87.6223623885
+40,Women Infant Children (WIC) location,,312-747-7969,"2938 89th St
+Chicago, IL 60617
+",41.7337356022,-87.5525705791
+24,South Chicago Women & Children Health Center,,312-747-5285,"2938 E. 89th St.
+Chicago, IL 60617
+",41.7337356022,-87.5525705791
+15,Chatham,,312-745-0385,"8300 Cottage Grove Avenue
+Chicago, IL 60619
+",41.7433440848,-87.6055388793
+295,Community Prosecutions   ,,,"9059 Cottage Grove
+Chicago, IL 60619
+",41.7439296655,-87.605261429
+12,Auburn Gresham,,312-745-4798,"1040 79th Street
+Chicago, IL 60620
+",41.7505772162,-87.6502906179
+52,Auburn Gresham MHC,,(312) 747-0881,"1140 79th St
+Chicago, IL 60620
+",41.7506016135,-87.6528522112
+5,Southeast,,312-747-0189,"1767 79th Street
+Chicago, IL 60649
+",41.7515129435,-87.5819826459
+305,Commissioner Beavers,,773-731-1515,"2548 79th Street
+Chicago, IL 60649
+",41.7517831718,-87.5618213535
+347,Bond Child Health Ctr,,,"7050 May
+Chicago, IL 60621
+",41.7658695599,-87.6529445768
+337,Englewood Health Ctr,,773-483-5011,"1169 May St
+Chicago, IL 60621
+",41.7763078402,-87.6398468664
+70,Dental Shine,,,"2902 63rd St
+Chicago, IL
+",41.7791122473,-87.6959479988
+338,Woodlawn Health Ctr,,,"6337 Woodlawn
+Chicago, IL 60637
+",41.7792233021,-87.5961189076
+63,Woodlawn MHC,,(312) 747-0059,"6337 Woodlawn Ave
+Chicago, IL 60637
+",41.7792233021,-87.5961189076
+28,Englewood STI Specialty Clinic,,(312) 747-8900,"641 63rd St
+Chicago, IL 60621
+",41.7797803161,-87.6415774096
+39,Women Infant Children (WIC) location,,312-747-4814,"641 63rd St
+Chicago, IL 60621
+",41.7797803161,-87.6415774096
+55,Englewood MHC,,(312) 747-7496,"641 63rd St
+Chicago, IL 60621
+",41.7797803161,-87.6415774096
+21,Englewood Neighborhood Health Clinic,,312-747-7831,"641 W. 63rd St.
+Chicago, IL 60621
+",41.7797803161,-87.6415774096
+9,Englewood,,312-745-3328,"653 657 W 63rd Street
+Chicago, IL 60621
+",41.779925314,-87.6330832428
+2,Southwest,,312-747-0440,"6117 Kedzie Avenue
+Chicago, IL 60629
+",41.7821299198,-87.7031976495
+267,Cook County Works,,,"2138 61st St
+Chicago, IL 60636
+",41.7830255403,-87.6736249399
+45,Women Infant Children (WIC) location,,312-747-5415,"4150 55th St
+Chicago, IL 60632
+",41.7932214347,-87.7271972217
+57,Greater Lawn MHC,,(312) 747-1020,"4150 55th Street
+Chicago, IL 60632
+",41.7932214347,-87.7271972217
+38,Women Infant Children (WIC) location,,773-702-3719,"800 55th St
+Chicago, IL 60615
+",41.7950140135,-87.606230235
+14,Garfield Ridge,,312-745-4250,"B Archer Avenue
+Chicago, IL 60638
+",41.7972264346,-87.7531547102
+290,Courtroom ÛÒ Chgo. Police ,,773-373-8850,"51st Chicago
+IL 60609
+",41.8019158783,-87.6308398226
+344,John Sengstacke Clinic,,312-572-2900,"450 51st Street
+Chicago, IL 60615
+",41.8021726168,-87.6151875723
+331,Provident Hospital,,312-572-2000,"500 51st Street
+Chicago, IL 60615
+",41.8021824119,-87.6141433303
+346,Dusable Health Center,,,"4934 Wabash
+Chicago, IL 60615
+",41.8048447613,-87.6244101468
+345,Hayes Health Center,,,"4859 Wabash
+Chicago, IL 60615
+",41.806399384,-87.6242648248
+343,Beethoven Clinic,,,"25 47th Street
+Chicago, IL 60644
+",41.8091801742,-87.6267030312
+53,Back of the Yards MHC,,(312) 747-3560,"4313 Ashland
+Chicago, IL 60609
+",41.8156584203,-87.6650112318
+309,Commissioner Garcia,,773-376-2700,"4249 Archer Av
+Chicago, IL 60632
+",41.8165523443,-87.7002809731
+71,"Cappello, Joseph V., D.D.S.",,,"4157 Archer Ave
+Chicago, IL 60632
+",41.8180182393,-87.6978887765
+56,Greater Grand/MID-South MHC ,,(312) 747-0036,"4314 Cottage Grove
+Chicago, IL 60653
+",41.8204689151,-87.606772
+276,Sheriff ÛÒ Fugitive Warrants ,,,"3900 California
+Chicago, IL 60632
+",41.8228091599,-87.6946804064
+332,Near South Clinic,,312-,"3525 Michigan
+Chicago, IL 60653
+",41.8306714661,-87.6232212143
+297,States Attorney,,,"3510 Michigan
+Chicago, IL 60653
+",41.8308607259,-87.6233020063
+281,Sheriff South Campus ÛÒ 4  ,,773-890-7100,"2828 31st Street
 Chicago, IL 60608
-",41.8414933833,-87.6901920921
-279,Sheriff- South Campus ÛÒ 2  ,,773-890-7100,"3048 California
-Chicago, IL 60608
-",41.8381554831,-87.6950779287
-280,Sheriff ÛÒ South Campus ÛÒ 3 ,,773-890-7100,"3026 California
-Chicago, IL 60608
-",41.838445523,-87.6950867849
-281,Sheriff ÛÒ South Campus ÛÒ 4  ,,773-890-7100,"2828 31st Street
+",41.8374889929,-87.6950153527
+359,DOC/Division 9,,773-890-7100,"2834 31st Street
 Chicago, IL 60608
 ",41.8374889929,-87.6950153527
 282,Sheriff ÛÒ South Campus ÛÒ 5  ,,773-890-7100,"2848 31st Street
 Chicago, IL 60608
 ",41.8374889929,-87.6950153527
-283,Crim Justice Admin Bldg,,773-890-7100,"2650 California
-Chicago, IL 60608
-",41.8435978227,-87.6952720468
-284,Criminal Court Building,,773-890-7100,"2600 California
-Chicago, IL 60608
-",41.8445510123,-87.6952979252
-285,1st District Appellate Crt,,,"160 Lasalle
-Chicago, IL 60601
-",41.8847936948,-87.6325569603
-286,Courtroom ÛÒ Chgo. Police,,773-982-3080,"727 111th Street
-Chicago, IL 60628
-",41.6927947359,-87.6053643588
-287,Judiciary Arbitration,,312-793-0125,"222 LaSalle
-Chicago, IL 60601
-",41.8863191393,-87.6325808578
-288,Courtroom ÛÒ Chgo Police,,773-265-8938,"3151 Harrison
-Chicago, IL 60612
-",41.8736908115,-87.7051989713
-289,Courtroom ÛÒ Chgo. Police ,,773-404-3320,"2452 Belmont
-Chicago, IL 60618
-",41.9394801617,-87.6895222785
-290,Courtroom ÛÒ Chgo. Police ,,773-373-8850,"51st Chicago
-IL 60609
-",41.8019158783,-87.6308398226
-291,Courtroom Chgo. Police,,773-804-6120,"5555 Grand
-Chicago, IL 60612
-",41.8805139189,-87.6874621206
-292,Child Support Division,,312-603-2000,"28 Clark
-Chicago, IL 60601
-",41.8853650158,-87.6165592503
-293,States Attorney,,,"1229 N Branch
-Chicago, IL 60622
-",41.9033682893,-87.6837055903
-294,Community Prosecutions,,,"5333 Western
-Chicago, IL 60625
-",41.9783138998,-87.6891751596
-295,Community Prosecutions   ,,,"9059 Cottage Grove
-Chicago, IL 60619
-",41.7439296655,-87.605261429
-296,States Attorney,,,"1240 Damen
-Chicago, IL 60608
-",41.8655953273,-87.6763749668
-297,States Attorney,,,"3510 Michigan
-Chicago, IL 60653
-",41.8308607259,-87.6233020063
-298,Domestic Violence,,312-443-5500,"555 Harrison
-Chicago, IL 60607
-",41.8743161958,-87.6413805566
-299,States Attorney,,,"4 Chicago Avenue Oak Park
-IL 60302
-",41.8947553128,-87.775256226
-300,Juvenile Detention,,312-738-8200,"1100 Hamilton
-Chicago, IL 60612
-",41.8674050919,-87.6803543251
-301,Juvenile ÛÒ New Facility,,312-738-8200,"2245 Ogden
-Chicago, IL 60612
-",41.8677338312,-87.6824507274
-302,Juvenile Probation,,closed,"3424 26th St
-Chicago, IL 60623
-",41.8444859828,-87.7111001836
-303,Commissioner Reyes,,773-588-1129,"3061 Milwaukee
-Chicago, IL 60618
-",41.9368332948,-87.7200519526
-304,Commissioner Silvestri,,773-774-8554,"6650 Chicago
-IL 60631
-",42.0016411779,-87.8144265052
-305,Commissioner Beavers,,773-731-1515,"2548 79th Street
-Chicago, IL 60649
-",41.7517831718,-87.5618213535
-306,Commissioner Steele,,773-722-0140,"3936 Roosevelt
-Chicago, IL 60624
-",41.8662133385,-87.724228376
-307,Commissioner Fritchey,,773-871-4000,"2539 Southport
-Chicago, IL 60614
-",41.928088217,-87.6633718327
-308,Commissioner Fritchey,,,"4239 Lincoln
-Chicago, IL 60618
-",41.9587990441,-87.6819331647
-309,Commissioner Garcia,,773-376-2700,"4249 Archer Av
-Chicago, IL 60632
-",41.8165523443,-87.7002809731
-310,Commissioner Collins,,773-626-2184,"5943 Madison
-Chicago, IL 60644
-",41.8800336842,-87.7733319126
-311,Commissioner Gainer,,773-561-1010,"5333 Broadway
-Chicago, IL 60640
-",41.9787193529,-87.6598407977
-312,Forest Preserve District,,,"6100 Central
-Chicago, IL 60646
-",41.9911616278,-87.7660178431
-313,Core Center,,312-572-4500,"2020 Harrison
-Chicago, IL 60612
-",41.8740940189,-87.6770479653
-314,Austin Clinic,,773-826-9600,"4800 Chicago
-Chicago, IL 60651
-",41.8950633141,-87.7458057413
-315,Chicago ÛÒ Reed Mental,,,"4200 Oak Park
-Chicago, IL 60634
-",41.9456047945,-87.7883925005
-316,County Hospital E Bldg.,,312-864-6000,"739 Winchester
-Chicago, IL 60612
-",41.8718837783,-87.6750145521
-317,Cermak Hospital,,773-674-7000,"2850 California
-Chicago, IL 60608
-",41.8405907231,-87.6951323917
-318,County Hospital ÛÒ Main,,312-864-6000,"1825 Harrison
-Chicago, IL 60612
-",41.8740609814,-87.6722749677
-319,Hospital ÛÒ Nursing School ,,312-864-6000,"1900 Polk St
-Chicago, IL 60612
-",41.8715820199,-87.6738509816
 320,County Powerhouse,,773-890-7100,"3045 Sacramento
 Chicago, IL 60623
 ",41.8378926666,-87.699911355
-321,Hektoen Building,,312-864-6000,"627 Wood
-Chicago, IL 60612
-",41.87374772,-87.6715077585
-322,Durand Building,,312-864-6000,"637 Wood
-Chicago, IL 60612
-",41.8736272558,-87.6715035317
-323,Childrens Hospital,,312-864-6000,"700 Wood
-Chicago, IL 60612
-",41.8730957815,-87.6715585338
-324,Hospital ÛÒ A Building,,312-864-6000,"719 Wood
-Chicago, IL 60612
-",41.8725932199,-87.6714622134
-325,Hospital ÛÒ B Building,,312-864-6000,"735 Wolcott
-Chicago, IL 60612
-",41.8712310334,-87.6737647867
-326,Hospital -  Meyer Hall,,312-864-6000,"720 Wolcott
-Chicago, IL 60612
-",41.8713339323,-87.6738423502
-327,Hospital ÛÒ Fantus Clinic,,312-864-6000,"1901 Harrison
-Chicago, IL 60612
-",41.8740456038,-87.6743067241
-328,Hospital ÛÒ Old Fantus,,312-864-6000,"621 Winchester
-Chicago, IL 60612
-",41.8739789699,-87.674942061
-329,Hospital ÛÒ Radiation Ctr.,,312-864-6000,"1902 Harrison
-Chicago, IL 60612
-",41.8741866675,-87.6742605762
-330,Hospital ÛÒ Powerhouse,,312-864-6000,"1850 Polk
-Chicago, IL 60612
-",41.8715955188,-87.672672218
-331,Provident Hospital,,312-572-2000,"500 51st Street
-Chicago, IL 60615
-",41.8021824119,-87.6141433303
-332,Near South Clinic,,312-,"3525 Michigan
-Chicago, IL 60653
-",41.8306714661,-87.6232212143
-333,Stroger Hospital,,312-864-6000,"1969 Ogden
-Chicago, IL 60612
-",41.8734871816,-87.6755751015
-334,Logan Square Clinic,,773-395-7400,"2840 Fullerton
-Chicago, IL 60647
-",41.9248749041,-87.6988090071
-335,County ÛÒ Rental Facility,,Closed,"2240 Ogden
-Chicago, IL 60612
-",41.8680806827,-87.6821296778
-336,Prieto Health Center,,,"2424 Pulaski
-Chicago, IL 60623
-",41.8471444953,-87.7246668415
-337,Englewood Health Ctr,,773-483-5011,"1169 May St
-Chicago, IL 60621
-",41.7763078402,-87.6398468664
-338,Woodlawn Health Ctr,,,"6337 Woodlawn
-Chicago, IL 60637
-",41.7792233021,-87.5961189076
-339,Bureau Of Health,,,"5420 Roosevelt
-Chicago, IL 60644
-",41.8657007326,-87.761102022
-340,John Stroger Parking Grge  ,,312-864-6000,"1800 Polk Street
-Chicago, IL 60612
-",41.8715638729,-87.6733912444
-341,Austin Path Clinic,,,"231 Pine Street
-Chicago, IL 60644
-",41.8847344291,-87.7632649528
-342,Morton East Clinic,,,"2435 Austin Blvd
-Chicago, IL 60644
-",41.8800474297,-87.7746105288
-343,Beethoven Clinic,,,"25 47th Street
-Chicago, IL 60644
-",41.8091801742,-87.6267030312
-344,John Sengstacke Clinic,,312-572-2900,"450 51st Street
-Chicago, IL 60615
-",41.8021726168,-87.6151875723
-345,Hayes Health Center,,,"4859 Wabash
-Chicago, IL 60615
-",41.806399384,-87.6242648248
-346,Dusable Health Center,,,"4934 Wabash
-Chicago, IL 60615
-",41.8048447613,-87.6244101468
-347,Bond Child Health Ctr,,,"7050 May
-Chicago, IL 60621
-",41.7658695599,-87.6529445768
-348,Northside Health Center,,,"850 Irving
-Chicago, IL 60613
-",41.9545810856,-87.6512760501
-349,"John H. Stroger, Jr. Hospital",,312-864-6000,"1901 Harrison
-Chicago, IL 60612
-",41.8740456038,-87.6743067241
-350,Children's Advocacy Center,,,"1240 Damen
+279,Sheriff- South Campus ÛÒ 2  ,,773-890-7100,"3048 California
 Chicago, IL 60608
-",41.8655953273,-87.6763749668
-351,Westside Health Center,,,"4800 Chicago Ave
-Chicago, IL 60651
-",41.8950361778,-87.746164383
-352,DOC/Division 1,,773-890-7100,"2602 California
+",41.8381554831,-87.6950779287
+275,Sheriff ÛÒ South Campus ÛÒ 1 ,,773-890-7100,"3026 California
 Chicago, IL 60608
-",41.8445128847,-87.6952968901
-353,DOC/Division 2,,773-890-7100,"2715 Sacramento
+",41.838445523,-87.6950867849
+280,Sheriff ÛÒ South Campus ÛÒ 3 ,,773-890-7100,"3026 California
 Chicago, IL 60608
-",41.8487025743,-87.6709445747
+",41.838445523,-87.6950867849
+361,DOC/Division 11,,773-890-7100,"3015 California
+Chicago, IL 60608
+",41.8384467699,-87.6950132196
+360,DOC/Division 10,,773-890-7100,"2950 California
+Chicago, IL 60608
+",41.8394452515,-87.695109094
 354,DOC/Division 3,,773-890-7100,"2900 California
 Chicago, IL 60608
 ",41.8400179873,-87.6951207428
-355,DOC/Division 4,,773-890-7100,"2715 Sacramento
+317,Cermak Hospital,,773-674-7000,"2850 California
 Chicago, IL 60608
-",41.8487025743,-87.6709445747
+",41.8405907231,-87.6951323917
+278,SheriffÛªs Boot Camp,,,"2801 Rockwell
+Chicago, IL 60608
+",41.8414933833,-87.6901920921
+46,Women Infant Children (WIC) location,,312-225-1982 ,"2850 Michigan Ave
+Chicago, IL 60616
+",41.8422785012,-87.6240109537
 356,DOC/Division 5,,773-890-7100,"2702 California
 Chicago, IL 60608
 ",41.8425693108,-87.6952436156
+283,Crim Justice Admin Bldg,,773-890-7100,"2650 California
+Chicago, IL 60608
+",41.8435978227,-87.6952720468
+411,Cook County Law Library,,773-869-5038,"2650 California
+Chicago, IL 60608
+",41.8435978227,-87.6952720468
+35,Women Infant Children (WIC) location,,312-747-8126,"3059 26th St
+Chicago, IL 60623
+",41.8436454707,-87.7019192211
+25,South Lawndale Women & Children Health Center,,312-747-0066,"3059 W. 26th St.
+Chicago, IL 60623
+",41.8436454707,-87.7019192211
+302,Juvenile Probation,,closed,"3424 26th St
+Chicago, IL 60623
+",41.8444859828,-87.7111001836
+352,DOC/Division 1,,773-890-7100,"2602 California
+Chicago, IL 60608
+",41.8445128847,-87.6952968901
+284,Criminal Court Building,,773-890-7100,"2600 California
+Chicago, IL 60608
+",41.8445510123,-87.6952979252
+336,Prieto Health Center,,,"2424 Pulaski
+Chicago, IL 60623
+",41.8471444953,-87.7246668415
+48,Women Infant Children (WIC) location,,773-522-0716,"2400 Kedzie Ave
+Chicago, IL 60623
+",41.8479891961,-87.7053906042
+353,DOC/Division 2,,773-890-7100,"2715 Sacramento
+Chicago, IL 60608
+",41.8487025743,-87.6709445747
+355,DOC/Division 4,,773-890-7100,"2715 Sacramento
+Chicago, IL 60608
+",41.8487025743,-87.6709445747
 357,DOC/Division 6,,773-890-7100,"2715 Sacramento
 Chicago, IL 60608
 ",41.8487025743,-87.6709445747
 358,DOC/Division 8 / RTU,,773-890-7100,"2715 Sacramento
 Chicago, IL 60608
 ",41.8487025743,-87.6709445747
-359,DOC/Division 9,,773-890-7100,"2834 31st Street
+44,Women Infant Children (WIC) location,,773-843-4220,"2355 Western Ave
 Chicago, IL 60608
-",41.8374889929,-87.6950153527
-360,DOC/Division 10,,773-890-7100,"2950 California
+",41.8487266402,-87.6851468653
+264,County Warehouse,,773-843-6090,"2323 Rockwell
 Chicago, IL 60608
-",41.8394452515,-87.695109094
-361,DOC/Division 11,,773-890-7100,"3015 California
+",41.8497328377,-87.6904242861
+266,Hawthorne Warehouse,,773-801-2000,"4545 Cermak
+Chicago, IL 60623
+",41.8512693963,-87.7381196286
+36,Women Infant Children (WIC) location,,312-747-1650,"1643 Cermak St
 Chicago, IL 60608
-",41.8384467699,-87.6950132196
-362,Assessor,,312-443-7550,"118 Clark St
+",41.8523074877,-87.6671271968
+20,Pilsen,,312-743-0493,"2021 Morgan Street
+Chicago, IL 60608
+",41.855146,-87.651544
+22,Lower West Neighborhood Health Clinic,,312-746-5157,"1713 S. Ashland Ave.
+Chicago, IL 60608
+",41.858594182,-87.6660674614
+58,Lawndale MHC  ,,(312) 746-5905,"1201 Campbell St
+Chicago, IL 60608
+",41.8653461113,-87.6884923432
+296,States Attorney,,,"1240 Damen
+Chicago, IL 60608
+",41.8655953273,-87.6763749668
+350,Children's Advocacy Center,,,"1240 Damen
+Chicago, IL 60608
+",41.8655953273,-87.6763749668
+339,Bureau Of Health,,,"5420 Roosevelt
+Chicago, IL 60644
+",41.8657007326,-87.761102022
+306,Commissioner Steele,,773-722-0140,"3936 Roosevelt
+Chicago, IL 60624
+",41.8662133385,-87.724228376
+43,Women Infant Children (WIC) location,,312-746-8990,"2310 Roosevelt Rd
+Chicago, IL 60608
+",41.866928918,-87.6840227127
+300,Juvenile Detention,,312-738-8200,"1100 Hamilton
+Chicago, IL 60612
+",41.8674050919,-87.6803543251
+379,Veterans Assistance Commission,,312-433-6010,"1100 Hamilton
+Chicago, IL 60612
+",41.8674050919,-87.6803543251
+301,Juvenile ÛÒ New Facility,,312-738-8200,"2245 Ogden
+Chicago, IL 60612
+",41.8677338312,-87.6824507274
+335,County ÛÒ Rental Facility,,Closed,"2240 Ogden
+Chicago, IL 60612
+",41.8680806827,-87.6821296778
+4,Central West,,312-746-5300,"2102 Ogden Avenue
+Chicago, IL 60612
+",41.8710429941,-87.6785982482
+325,Hospital ÛÒ B Building,,312-864-6000,"735 Wolcott
+Chicago, IL 60612
+",41.8712310334,-87.6737647867
+326,Hospital -  Meyer Hall,,312-864-6000,"720 Wolcott
+Chicago, IL 60612
+",41.8713339323,-87.6738423502
+340,John Stroger Parking Grge  ,,312-864-6000,"1800 Polk Street
+Chicago, IL 60612
+",41.8715638729,-87.6733912444
+319,Hospital ÛÒ Nursing School ,,312-864-6000,"1900 Polk St
+Chicago, IL 60612
+",41.8715820199,-87.6738509816
+413,Health and Hospitals,,312-864-1111,"1900 Polk St
+Chicago, IL 60612
+",41.8715820199,-87.6738509816
+330,Hospital ÛÒ Powerhouse,,312-864-6000,"1850 Polk
+Chicago, IL 60612
+",41.8715955188,-87.672672218
+316,County Hospital E Bldg.,,312-864-6000,"739 Winchester
+Chicago, IL 60612
+",41.8718837783,-87.6750145521
+324,Hospital ÛÒ A Building,,312-864-6000,"719 Wood
+Chicago, IL 60612
+",41.8725932199,-87.6714622134
+323,Childrens Hospital,,312-864-6000,"700 Wood
+Chicago, IL 60612
+",41.8730957815,-87.6715585338
+333,Stroger Hospital,,312-864-6000,"1969 Ogden
+Chicago, IL 60612
+",41.8734871816,-87.6755751015
+322,Durand Building,,312-864-6000,"637 Wood
+Chicago, IL 60612
+",41.8736272558,-87.6715035317
+288,Courtroom ÛÒ Chgo Police,,773-265-8938,"3151 Harrison
+Chicago, IL 60612
+",41.8736908115,-87.7051989713
+321,Hektoen Building,,312-864-6000,"627 Wood
+Chicago, IL 60612
+",41.87374772,-87.6715077585
+16,Austin,,312-743-1538,"5071 Congress Parkway
+Chicago, IL 60644
+",41.8739338463,-87.7520518412
+263,Medical Examiner,,312-666-0500,"2121 Harrison
+Chicago, IL 60612
+",41.8739676421,-87.6794192108
+328,Hospital ÛÒ Old Fantus,,312-864-6000,"621 Winchester
+Chicago, IL 60612
+",41.8739789699,-87.674942061
+378,Medical Examiner,,312-666-0500,"2121 Harrison St
+Chicago, IL 60612
+",41.8739830491,-87.6802620647
+327,Hospital ÛÒ Fantus Clinic,,312-864-6000,"1901 Harrison
+Chicago, IL 60612
+",41.8740456038,-87.6743067241
+349,"John H. Stroger, Jr. Hospital",,312-864-6000,"1901 Harrison
+Chicago, IL 60612
+",41.8740456038,-87.6743067241
+318,County Hospital ÛÒ Main,,312-864-6000,"1825 Harrison
+Chicago, IL 60612
+",41.8740609814,-87.6722749677
+313,Core Center,,312-572-4500,"2020 Harrison
+Chicago, IL 60612
+",41.8740940189,-87.6770479653
+329,Hospital ÛÒ Radiation Ctr.,,312-864-6000,"1902 Harrison
+Chicago, IL 60612
+",41.8741866675,-87.6742605762
+298,Domestic Violence,,312-443-5500,"555 Harrison
+Chicago, IL 60607
+",41.8743161958,-87.6413805566
+412,Cook County Law Library,,312-325-9390,"555 Harrison
+Chicago, IL 60607
+",41.8743161958,-87.6413805566
+51,Women Infant Children (WIC) location,,312-747-9140 ,"333 State St
+Chicago, IL 60604
+",41.8775319248,-87.6272125402
+69,"Sonrisa Dental, P.C.",,,"2001 California
+Chicago, IL
+",41.8782499997,-87.6260679999
+73,"Salamah, Rabeh Mohammad, D.D.S.",,,"3138 Narragansett
+Chicago, IL
+",41.8782499997,-87.6260679999
+68,Dental Experts,,,"4039 North Ave
+Chicago, IL
+",41.8782499997,-87.6260679999
+74,Brite Dental,,,"4849 Belmont
+Chicago, IL
+",41.8782499997,-87.6260679999
+72,"Jaconetti, Daniel, D.D.S.",,,"7601 Montrose
+Chicago, IL
+",41.8782499997,-87.6260679999
+310,Commissioner Collins,,773-626-2184,"5943 Madison
+Chicago, IL 60644
+",41.8800336842,-87.7733319126
+342,Morton East Clinic,,,"2435 Austin Blvd
+Chicago, IL 60644
+",41.8800474297,-87.7746105288
+272,Adult Probation Admin Bldg,,,"1640 Walnut
+Chicago, IL 60644
+",41.8803330239,-87.7574823908
+269,Adult Probation,,773-265-2400,"4734 Chicago
+Chicago, IL 60644
+",41.8803330239,-87.7574823908
+291,Courtroom Chgo. Police,,773-804-6120,"5555 Grand
+Chicago, IL 60612
+",41.8805139189,-87.6874621206
+29,South Austin STI Specialty Clinic,,(312) 746-4871,"4958 Madison
+Chicago, IL 60644
+",41.8805278567,-87.7495947862
+148,DuPage County Health Department,,,"West Chicago, IL
+",41.8813662001,-88.2189868997
+196,West Chicago Public Health Center,,6306827979,"West Chicago, IL
+",41.8813662001,-88.2189868997
+64,"Matsumoto, Michael Y., D.D.S.",,,"30 Michigan Ave
+Chicago, IL
+",41.8824406062,-87.6245123416
+259,Daley Center,,312-443-5500,"50 Washington
+Chicago, IL 60606
+",41.8826472034,-87.6369929552
+261,Pension & Annuity Board,,312-603-1200,"33 Dearborn
 Chicago, IL 60602
-",41.883857605,-87.630916265
-363,Board of Review,,312-443-7550,"118 Clark St
+",41.8827076416,-87.6293666209
+260,County Admin Offices,,312-443-5500,"69 Washington
 Chicago, IL 60602
-",41.883857605,-87.630916265
-364,Office of the Chief Judge,,312-603-6000,"50 Washington
-Chicago, IL 60602
-",41.883255491,-87.6261905975
-365,Clerk of the Circuit Court of Cook County,,312-603-5030,"50 Washington
-Chicago, IL 60602
-",41.883255491,-87.6261905975
+",41.8832102127,-87.6253145725
 366,Cook County Clerk,,312-603-5656,"69 Washington
 Chicago, IL 60602
 ",41.8832102127,-87.6253145725
 367,Inspector General,,312-603-0350,"69 Washington
 Chicago, IL 60602
 ",41.8832102127,-87.6253145725
-368,Recorder of Deeds,,312-603-5050,"118 Clark St
-Chicago, IL 60602
-",41.883857605,-87.630916265
-369,Sheriff,,312-603-6444,"50 Washington
-Chicago, IL 60602
-",41.883255491,-87.6261905975
 370,States Attorney,,312-603-1880,"69 Washington
 Chicago, IL 60602
 ",41.8832102127,-87.6253145725
-371,Treasurer,,312-443-5100,"118 Clark St
-Chicago, IL 60602
-",41.883857605,-87.630916265
-372,Office of the President,,312-603-6400,"118 Clark St
-Chicago, IL 60602
-",41.883857605,-87.630916265
-373,Bureau of Administration,,312-603-3055,"118 Clark
-Chicago, IL 60602
-",41.8837125342,-87.6309522352
 374,Adoption and Child Custody,,312-603-0550,"69 Washington
 Chicago, IL 60602
 ",41.8832102127,-87.6253145725
@@ -946,15 +417,6 @@ Chicago, IL 60602
 376,Highway Department,,312-603-1601,"69 Washington
 Chicago, IL 60602
 ",41.8832102127,-87.6253145725
-377,Cook County Law Library,,312-603-5423,"50 Washington
-Chicago, IL 60602
-",41.883255491,-87.6261905975
-378,Medical Examiner,,312-666-0500,"2121 Harrison St
-Chicago, IL 60612
-",41.8739830491,-87.6802620647
-379,Veterans Assistance Commission,,312-433-6010,"1100 Hamilton
-Chicago, IL 60612
-",41.8674050919,-87.6803543251
 380,Zoning Board of Appeals,,312-603-0540,"69 Washington
 Chicago, IL 60602
 ",41.8832102127,-87.6253145725
@@ -973,6 +435,75 @@ Chicago, IL 60602
 385,Cook County Works,,312-603-0200,"69 Washington
 Chicago, IL 60602
 ",41.8832102127,-87.6253145725
+399,Bureau of Technology,,312-603-1400,"69 Washington
+Chicago, IL 60602
+",41.8832102127,-87.6253145725
+400,Geographic Information Systems,,312-603-1400,"69 Washington
+Chicago, IL 60602
+",41.8832102127,-87.6253145725
+402,IT Policy and Planning,,312-603-1400,"69 Washington
+Chicago, IL 60602
+",41.8832102127,-87.6253145725
+404,Auditor,,312-603-1500,"69 Washington
+Chicago, IL 60602
+",41.8832102127,-87.6253145725
+405,Board of Ethics,,312-603-1100,"69 Washington
+Chicago, IL 60602
+",41.8832102127,-87.6253145725
+406,Commission on Women's Issues,,312-603-1100,"69 Washington
+Chicago, IL 60602
+",41.8832102127,-87.6253145725
+407,Facilities Management,,312-603-0340,"69 Washington
+Chicago, IL 60602
+",41.8832102127,-87.6253145725
+408,Homeland Security,,312-603-8180,"69 Washington
+Chicago, IL 60602
+",41.8832102127,-87.6253145725
+409,Human Rights Commission,,312-603-1100,"69 Washington
+Chicago, IL 60602
+",41.8832102127,-87.6253145725
+410,Judicial Advisory Council,,312-603-1133,"69 Washington
+Chicago, IL 60602
+",41.8832102127,-87.6253145725
+414,Public Defender,,312-603-0600,"69 Washington
+Chicago, IL 60602
+",41.8832102127,-87.6253145725
+415,Public Guardian,,312-603-0800,"69 Washington
+Chicago, IL 60602
+",41.8832102127,-87.6253145725
+364,Office of the Chief Judge,,312-603-6000,"50 Washington
+Chicago, IL 60602
+",41.883255491,-87.6261905975
+365,Clerk of the Circuit Court of Cook County,,312-603-5030,"50 Washington
+Chicago, IL 60602
+",41.883255491,-87.6261905975
+369,Sheriff,,312-603-6444,"50 Washington
+Chicago, IL 60602
+",41.883255491,-87.6261905975
+377,Cook County Law Library,,312-603-5423,"50 Washington
+Chicago, IL 60602
+",41.883255491,-87.6261905975
+373,Bureau of Administration,,312-603-3055,"118 Clark
+Chicago, IL 60602
+",41.8837125342,-87.6309522352
+6,Renaissance Court,,312-744-4550,"78 Washington Street
+Chicago, IL 60602
+",41.8838541586,-87.6249552419
+362,Assessor,,312-443-7550,"118 Clark St
+Chicago, IL 60602
+",41.883857605,-87.630916265
+363,Board of Review,,312-443-7550,"118 Clark St
+Chicago, IL 60602
+",41.883857605,-87.630916265
+368,Recorder of Deeds,,312-603-5050,"118 Clark St
+Chicago, IL 60602
+",41.883857605,-87.630916265
+371,Treasurer,,312-443-5100,"118 Clark St
+Chicago, IL 60602
+",41.883857605,-87.630916265
+372,Office of the President,,312-603-6400,"118 Clark St
+Chicago, IL 60602
+",41.883857605,-87.630916265
 386,Bureau of Finance,,312-603-6846,"118 Clark St
 Chicago, IL 60602
 ",41.883857605,-87.630916265
@@ -1012,54 +543,165 @@ Chicago, IL 60602
 398,Secretary of the Board,,312-603-6127,"118 Clark St
 Chicago, IL 60602
 ",41.883857605,-87.630916265
-399,Bureau of Technology,,312-603-1400,"69 Washington
-Chicago, IL 60602
-",41.8832102127,-87.6253145725
-400,Geographic Information Systems,,312-603-1400,"69 Washington
-Chicago, IL 60602
-",41.8832102127,-87.6253145725
 401,IT Solutions and Services,,312-603-5958,"118 Clark St
 Chicago, IL 60602
 ",41.883857605,-87.630916265
-402,IT Policy and Planning,,312-603-1400,"69 Washington
-Chicago, IL 60602
-",41.8832102127,-87.6253145725
 403,Administrative Hearing Board,,312-603-2120,"118 Clark St
 Chicago, IL 60602
 ",41.883857605,-87.630916265
-404,Auditor,,312-603-1500,"69 Washington
-Chicago, IL 60602
-",41.8832102127,-87.6253145725
-405,Board of Ethics,,312-603-1100,"69 Washington
-Chicago, IL 60602
-",41.8832102127,-87.6253145725
-406,Commission on Women's Issues,,312-603-1100,"69 Washington
-Chicago, IL 60602
-",41.8832102127,-87.6253145725
-407,Facilities Management,,312-603-0340,"69 Washington
-Chicago, IL 60602
-",41.8832102127,-87.6253145725
-408,Homeland Security,,312-603-8180,"69 Washington
-Chicago, IL 60602
-",41.8832102127,-87.6253145725
-409,Human Rights Commission,,312-603-1100,"69 Washington
-Chicago, IL 60602
-",41.8832102127,-87.6253145725
-410,Judicial Advisory Council,,312-603-1133,"69 Washington
-Chicago, IL 60602
-",41.8832102127,-87.6253145725
-411,Cook County Law Library,,773-869-5038,"2650 California
-Chicago, IL 60608
-",41.8435978227,-87.6952720468
-412,Cook County Law Library,,312-325-9390,"555 Harrison
-Chicago, IL 60607
-",41.8743161958,-87.6413805566
-413,Health and Hospitals,,312-864-1111,"1900 Polk St
-Chicago, IL 60612
-",41.8715820199,-87.6738509816
-414,Public Defender,,312-603-0600,"69 Washington
-Chicago, IL 60602
-",41.8832102127,-87.6253145725
-415,Public Guardian,,312-603-0800,"69 Washington
-Chicago, IL 60602
-",41.8832102127,-87.6253145725
+274,Child Support ÛÒ Sheriff,,312-603-1250,"32 Randolph
+Chicago, IL 60601
+",41.8845595079,-87.6268448543
+341,Austin Path Clinic,,,"231 Pine Street
+Chicago, IL 60644
+",41.8847344291,-87.7632649528
+285,1st District Appellate Crt,,,"160 Lasalle
+Chicago, IL 60601
+",41.8847936948,-87.6325569603
+258,Cook County Building,,312-443-5500,"118 Clark
+Chicago, IL 60601
+",41.8853650158,-87.6165592503
+268,Adult Probation,,312-491-6000,"1640 Walnut
+Chicago, IL 60601
+",41.8853650158,-87.6165592503
+292,Child Support Division,,312-603-2000,"28 Clark
+Chicago, IL 60601
+",41.8853650158,-87.6165592503
+287,Judiciary Arbitration,,312-793-0125,"222 LaSalle
+Chicago, IL 60601
+",41.8863191393,-87.6325808578
+262,Employee Assistance,,312-603-1290,"221 LaSalle
+Chicago, IL 60601
+",41.8864224419,-87.6323638137
+299,States Attorney,,,"4 Chicago Avenue Oak Park
+IL 60302
+",41.8947553128,-87.775256226
+49,Women Infant Children (WIC) location,,312-432-7372 ,"1701 Superior St
+Chicago, IL 60610
+",41.894852867,-87.6700472484
+65,"Bittmann, Brant W., D.D.S.",,,"201 Huron St
+Chicago, IL
+",41.8949468991,-87.6226713202
+66,Northwestern Dental Center,,,"201 Huron St
+Chicago, IL
+",41.8949468991,-87.6226713202
+351,Westside Health Center,,,"4800 Chicago Ave
+Chicago, IL 60651
+",41.8950361778,-87.746164383
+314,Austin Clinic,,773-826-9600,"4800 Chicago
+Chicago, IL 60651
+",41.8950633141,-87.7458057413
+10,West Town,,312-743-1016,"1613 Chicago Avenue
+Chicago, IL 60622
+",41.8957521891,-87.6682665908
+271,Adult Probation Reporting Cntr,,,"1014 Nobel Street
+Chicago, IL
+",41.8999648153,-87.6625822486
+37,Women Infant Children (WIC) location,,312-746-4797,"49O9 W. Division St. Chicago
+IL 60651
+",41.9024555846,-87.7414249559
+31,West Town STI Specialty Clinic,,(312) 742-4092,"2418 Division
+Chicago, IL 60622
+",41.9033604534,-87.6877189263
+34,Women Infant Children (WIC) location,,312-744-8118,"2418 Division St
+Chicago, IL 60622
+",41.9033604534,-87.6877189263
+27,West Town Neighborhood Health Center,,312-744-0943,"2418 W. Division St.
+Chicago, IL 60622
+",41.9033604534,-87.6877189263
+293,States Attorney,,,"1229 N Branch
+Chicago, IL 60622
+",41.9033682893,-87.6837055903
+75,Armitage Oral Surgery,,,"2220 Armitage Ave
+Chicago, IL
+",41.9176875425,-87.6830361222
+61,Northwest MHC ,,(312) 744-0993,"2354 Milwaukee
+Chicago, IL 60647
+",41.9239909008,-87.6994730652
+334,Logan Square Clinic,,773-395-7400,"2840 Fullerton
+Chicago, IL 60647
+",41.9248749041,-87.6988090071
+47,Women Infant Children (WIC) location,,773-782-8902,"2840 Fullerton Ave
+Chicago, IL 60647
+",41.9250880737,-87.6991403161
+67,Impressions Dental,,,"1439 Fullerton Ave
+Chicago, IL
+",41.925186912,-87.6647027332
+307,Commissioner Fritchey,,773-871-4000,"2539 Southport
+Chicago, IL 60614
+",41.928088217,-87.6633718327
+11,Kelvyn Park,,312-744-4016,"2715 Cicero Avenue
+Chicago, IL 60639
+",41.9299084397,-87.7460669395
+42,Women Infant Children (WIC) location,,312-744-1027,"2849 Clark St
+Chicago, IL 60657
+",41.9342701516,-87.6456486418
+30,Lakeview STI Specialty Clinic,,(312) 744-5507,"2861 Clark
+Chicago, IL 60657
+",41.9342701516,-87.6456486418
+303,Commissioner Reyes,,773-588-1129,"3061 Milwaukee
+Chicago, IL 60618
+",41.9368332948,-87.7200519526
+3,Northwest,,312-744-6681,"3160 Milwaukee Avenue
+Chicago, IL 60618
+",41.9383689835,-87.7226883248
+289,Courtroom ÛÒ Chgo. Police ,,773-404-3320,"2452 Belmont
+Chicago, IL 60618
+",41.9394801617,-87.6895222785
+76,"Grinter, Jason M., D.D.S.",,,"1550 Cornelia Ave
+Chicago, IL
+",41.9452187788,-87.6677461507
+315,Chicago ÛÒ Reed Mental,,,"4200 Oak Park
+Chicago, IL 60634
+",41.9456047945,-87.7883925005
+348,Northside Health Center,,,"850 Irving
+Chicago, IL 60613
+",41.9545810856,-87.6512760501
+18,North Center,,312-745-4029,"4040 Oakley Avenue
+Chicago, IL 60618
+",41.95484987,-87.6860880461
+19,Portage Park,,312-744-9022,"4100 Long Avenue
+Chicago, IL 60641
+",41.9549757316,-87.7621023199
+308,Commissioner Fritchey,,,"4239 Lincoln
+Chicago, IL 60618
+",41.9587990441,-87.6819331647
+17,Truman College,,312-744-4016,"1145 Wilson Avenue
+Chicago, IL 60640
+",41.965371722,-87.6590156155
+26,Uptown Neighborhood Health Center,,312-744-1938,"845 W. Wilson Ave.
+Chicago, IL 60640
+",41.9654892728,-87.6510703116
+33,Women Infant Children (WIC) location,,312-744-0073,"845 Wilson Ave
+Chicago, IL 60640
+",41.9654892728,-87.6510703116
+1,Northeast,,312-744-0784,"2019 Lawrence Avenue
+Chicago, IL 60625
+",41.9687225469,-87.680192382
+294,Community Prosecutions,,,"5333 Western
+Chicago, IL 60625
+",41.9783138998,-87.6891751596
+311,Commissioner Gainer,,773-561-1010,"5333 Broadway
+Chicago, IL 60640
+",41.9787193529,-87.6598407977
+59,North River MHC,,(312) 744-1906,"5801 Pulaski Road
+Chicago, IL 60646
+",41.9863493809,-87.7284963041
+13,Norwood Park,,312-744-4016,"5801 Natoma Avenue
+Chicago, IL 60631
+",41.9865317763,-87.7941234622
+8,Edgewater,,312-744-4016,"5917 Broadway Street
+Chicago, IL 60660
+",41.9894833691,-87.660143328
+50,Women Infant Children (WIC) location,,773-761-0011 ext. 116,"2424 Peterson Ave
+Chicago, IL 60659
+",41.9905570368,-87.6906768534
+312,Forest Preserve District,,,"6100 Central
+Chicago, IL 60646
+",41.9911616278,-87.7660178431
+304,Commissioner Silvestri,,773-774-8554,"6650 Chicago
+IL 60631
+",42.0016411779,-87.8144265052
+60,Northtown Rogers Park,,(312) 744-7617,"1607 Howard St
+Chicago, IL 60626
+",42.0191121918,-87.6714861637
