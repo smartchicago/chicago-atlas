@@ -7,11 +7,11 @@
 
 .row-fluid
   .span4
-    %a(href="map/births_birth_rate")
+    %a(href="map")
       %img.img-polaroid(src="/assets/home_city.png"alt="Citywide data")
     %p
       View 
-      %a{:href => 'map/births_birth_rate'}citywide data 
+      %a{:href => 'map'}citywide data 
       to get big-picture views of health outcomes in Chicago.
   .span4
     %a(href="places")
@@ -29,7 +29,7 @@
 .row-fluid
   %h3
     To get started, 
-    %a{:href => 'map/births_birth_rate'} browse the map
+    %a{:href => 'map'} browse the map
     or 
     = succeed '.' do
       %a{:href => 'places'} choose a location
