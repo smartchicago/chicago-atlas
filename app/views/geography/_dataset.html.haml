@@ -18,7 +18,22 @@
 
   .chart{:id => chart_id}
 
-  - if dataset.stat_type.include? 'range'
+  - if chart_stats[:error_bars] == 'count'
+    - content_for :javascripts do
+      
+      :javascript
+        $(function () {
+
+          var seriesData = [{
+            color: colorHash[(#{dataset.id} % 7)],
+            type: 'line',
+            data: #{chart_stats[:data]},
+            name: "#{geography.name}"
+          }];
+
+          ChartHelper.create("#{chart_id}", "line", seriesData, Date.UTC(#{chart_stats[:start_year]}, 1, 1), "", "year", "#{dataset.stat_type}");
+        });
+  - elsif dataset.stat_type.include? 'range'
     - content_for :javascripts do
       
       :javascript
@@ -39,7 +54,7 @@
 
           ChartHelper.create("#{chart_id}", "column", seriesData, Date.UTC(#{chart_stats[:start_year]}, 1, 1), "#{chart_stats[:year_range]}", "year", "#{dataset.stat_type.gsub('range, ', '') }");
         });
-  - elsif dataset.stat_type.include? 'count'
+  - elsif dataset.slug.include? 'crime'
     - content_for :javascripts do
       
       :javascript
@@ -50,7 +65,14 @@
             type: 'line',
             data: #{chart_stats[:data]},
             name: "#{geography.name}"
-          }];
+          },{
+            color: "#666",
+            type: 'line',
+            data: #{chicago_avg_stats[:data]},
+            name: "Chicago"
+          }
+          ];
+
 
           ChartHelper.create("#{chart_id}", "line", seriesData, Date.UTC(#{chart_stats[:start_year]}, 1, 1), "", "year", "#{dataset.stat_type}");
         });

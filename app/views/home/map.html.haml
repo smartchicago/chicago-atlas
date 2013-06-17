@@ -126,7 +126,7 @@
         }
 
         function linkToDetail(e) {
-            window.location = '/place/' + e.target.feature.properties.slug + '/#{@dataset_slug}';
+            window.location = '/place/' + e.target.feature.properties.slug + '/#{@current_dataset.slug}';
         }
 
         geojson = L.geoJson(geojsonFeature, {
@@ -153,8 +153,8 @@
             }
         }
 
-        var start_year = #{@dataset_start_year};
-        var end_year = #{@dataset_end_year};
+        var start_year = #{@current_dataset.start_year};
+        var end_year = #{@current_dataset.end_year};
 
         $('#start_year').html(start_year);
         $('#end_year').html(end_year);
@@ -204,7 +204,7 @@
                     from + (to ? '&ndash;' + to : '+'));
             }
 
-            div.innerHTML = "<strong>#{@dataset_name}</strong><br>" + labels.join('<br>');
+            div.innerHTML = "<strong>#{@current_dataset.name}</strong><br>" + labels.join('<br>');
             return div;
         };
 
@@ -215,10 +215,10 @@
             $('#slider').slider('value', $.address.parameter('year'));
         });
 
-
 .row-fluid
   .span4
     - if @landing
+      - title 'Browse by neighborhood'
       %h3 
         Browse by neighborhood
       %p
@@ -226,9 +226,10 @@
         Examples: <a href='/map/births_birth_rate'>birth rate</a>, <a href='/map/crime_aggravated_assault'>aggravated battery</a>, or <a href='/map/infectious_disease_tuberculosis'>tuberculosis</a>.
       
     - else
+      - title @current_dataset.name
       %h3
-        #{@dataset_name}
-      %p #{@dataset_description}
+        #{@current_dataset.name}
+      %p #{@current_dataset.description}
       %h4 
         Year
         %small#year_label

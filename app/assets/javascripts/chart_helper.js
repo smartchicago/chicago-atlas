@@ -75,7 +75,7 @@ ChartHelper.create = function(element, type, seriesData, startDate, yearRange, p
           if (typeof categories !== "undefined")
             s = "<strong>" + this.x + "</strong>";
           $.each(this.points, function(i, point) {
-            if (point.point.low != null && point.point.high != null)
+            if (point.point.low != null && point.point.high != null && point.point.low != 0 && point.point.high != 0)
               s += "<br /><span style=\"color: " + point.series.color + "\">" + point.series.name + ":</span> " + point.point.low + percentSuffix + " - " + point.point.high + percentSuffix;
             else
               s += "<br /><span style=\"color: " + point.series.color + "\">" + point.series.name + ":</span> " + Highcharts.numberFormat(point.y, 0) + percentSuffix;

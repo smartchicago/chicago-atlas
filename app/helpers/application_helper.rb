@@ -3,6 +3,10 @@ module ApplicationHelper
   def current_menu
     @current_menu
   end
+
+  def title(page_title)
+    content_for :title, page_title.to_s
+  end
   
   def current_menu_class(menu_name)
     return "active" if current_menu == menu_name
