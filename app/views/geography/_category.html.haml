@@ -7,8 +7,41 @@
 .row-fluid
   - @datasets = get_datasets(geography.id, category.id)
 
-  - @datasets.each do |dataset|
-    = render :partial => "geography/dataset", :locals => {:dataset => dataset, :geography => geography, :show_header => true }
+  - if category.name.include? 'Deaths'
+    %table.table.table-hover
+      %thead
+        %tr
+          %th Cause of death
+          %th= geography.name
+          %th Chicago
+      %tbody
+        - @datasets.each do |dataset|
+          - death_stat = fetch_chart_data(dataset.id, @geography.id)[:data].first
+          - chicago_death_stat = fetch_chart_data(dataset.id, 100)[:data].first # ID for Chicago
+
+          %tr.death-info{ :rel => "popover", :title => dataset.name, :"data-content" => dataset.description, :"data-trigger" => 'hover', :"data-html" => 'true', :"data-placement" => 'right' }
+            %td
+              %a{:href => "/place/#{@geography.slug}/#{dataset.slug}"}
+                = dataset.name
+            %td
+              - if death_stat > chicago_death_stat
+                %span.badge.badge-important= death_stat
+                per 100,000 residents
+              - else
+                %span.badge.badge-success= death_stat
+                per 100,000 residents
+            %td
+              %span.badge.badge-info= chicago_death_stat
+              per 100,000 residents
+
+    - content_for :javascripts do
+
+      :javascript
+        $('.death-info').popover();
+
+  - else
+    - @datasets.each do |dataset|
+      = render :partial => "geography/dataset", :locals => {:dataset => dataset, :geography => geography, :show_header => true }
 
 .clearfix
 %hr
