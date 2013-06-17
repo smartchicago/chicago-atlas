@@ -24,7 +24,7 @@
               %a{:href => "/place/#{@geography.slug}/#{dataset.slug}"}
                 = dataset.name
             %td
-              - if death_stat > chicago_death_stat
+              - if death_stat >= chicago_death_stat
                 %span.badge.badge-important= death_stat
                 per 100,000 residents
               - else
