@@ -238,4 +238,14 @@ module ApplicationHelper
      ret
   end
 
+  def format_statistic(value, stat_type)
+    if stat_type.include? 'percent'
+      "#{value}%"
+    elsif stat_type.include? 'money'
+      number_to_currency value
+    else
+      value
+    end
+  end
+
 end
