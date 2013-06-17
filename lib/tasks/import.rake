@@ -617,8 +617,8 @@ namespace :db do
             comm_population = Geography.find(stat['community_area']).population(stat['year'])
           end
 
-          crime_count = stat['count_id'] or 0
-          crime_rate = crime_count.to_f / (comm_population / 100000.0)  # rate per 100,000 residents
+          crime_count = stat['count_id'].to_f or 0
+          crime_rate = crime_count / (comm_population / 100000.0)  # rate per 100,000 residents
 
           store = Statistic.new(
             :dataset_id => dataset.id,
@@ -651,6 +651,38 @@ namespace :db do
               store.save!
             end
           end
+        end
+
+        puts "Saving d[:name] crime stats for Chicago"
+
+        puts "Downloading #{handle}_chicago.json"
+        sh "curl -o tmp/#{handle}_chicago.json 'https://data.cityofchicago.org/resource/ijzp-q8t2.json?$select=year,count%28id%29&$where=fbi_code=%27#{d[:fbi_code]}%27&$group=year,fbi_code'"
+        json_text = File.read("tmp/#{handle}_chicago.json")
+        stats = ActiveSupport::JSON.decode( json_text )
+        stats.each do |stat|
+          if (stat['year'].to_i < start_year) or (stat['year'].to_i > last_year)
+            # skip incomplete years
+            next
+          end
+
+          # adjust count by city population
+          if (stat['year'].to_i > 2010)
+            # until the 2020 census, we'll have to go on 2010 population
+            chicago_population = Geography.find(100).population(2010)
+          else
+            chicago_population = Geography.find(100).population(stat['year'])
+          end
+
+          chicago_crime_rate = stat['count_id'].to_f / (chicago_population / 100000.0)  # rate per 100,000 residents
+
+          store = Statistic.new(
+            :dataset_id => dataset.id,
+            :geography_id => 100,
+            :year => stat['year'],
+            :name => d[:parse_token],
+            :value => ('%.2f' % chicago_crime_rate) # rounded to 2 decimal places
+          )
+          store.save!
         end
 
       end
