@@ -31,4 +31,31 @@ class Geography < ActiveRecord::Base
     end
     
   end
+
+  def population_by_sex(gender)
+    stats = Statistic.joins('INNER JOIN datasets ON datasets.id = statistics.dataset_id')
+                     .where("datasets.name = 'Population #{gender} TOTAL'")
+                     .where("geography_id = ? AND year = 2010", id)
+
+    puts stats.inspect
+
+    if stats.length > 0
+      stats.first.value
+    else
+      0
+    end
+  end
+
+  def demographic_by_name(name)
+    handle = name.parameterize.underscore.to_sym
+    demo = Statistic.joins('JOIN datasets ON statistics.dataset_id = datasets.id')
+                    .select('datasets.name as name, statistics.value, datasets.description, datasets.stat_type') 
+                    .where('statistics.name = ? and geography_id = ?', handle, id)
+
+    if demo.length > 0
+      demo.first
+    else
+      nil
+    end
+  end
 end

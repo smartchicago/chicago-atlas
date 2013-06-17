@@ -18,6 +18,14 @@ class GeographyController < ApplicationController
                           .group('categories.id, categories.name, categories.description')
                           .having('count(datasets.id) > 0')
                           .order("categories.name")
+
+    @demographics_list = ['Below Poverty Level', 'Crowded Housing', 'Dependency', 'No High School Diploma', 'Per capita income', 'Unemployment']
+   
+    male_pop = @geography.population_by_sex('MALE')
+    female_pop = @geography.population_by_sex('FEMALE')
+
+    @male_percent = (male_pop.to_f / (male_pop + female_pop) * 100).round(1)
+    @female_percent = (female_pop.to_f / (male_pop + female_pop) * 100).round(1)
   end
 
   def showdataset
