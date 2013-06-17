@@ -1,6 +1,8 @@
 class GeographyController < ApplicationController
   include ApplicationHelper
 
+  caches_action :index, :show, :showdataset
+
   def index
     @community_areas = Geography.where("geo_type = 'Community Area'")
                                 .order("name").all

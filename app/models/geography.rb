@@ -37,8 +37,6 @@ class Geography < ActiveRecord::Base
                      .where("datasets.name = 'Population #{gender} TOTAL'")
                      .where("geography_id = ? AND year = 2010", id)
 
-    puts stats.inspect
-
     if stats.length > 0
       stats.first.value
     else
