@@ -55,7 +55,7 @@ ChartHelper.create = function(element, type, seriesData, startDate, yearRange, p
       area: area_config,
       series: {
         marker: {
-          radius: 0,
+          radius: 3,
           states: {
             hover: {
               enabled: true,
