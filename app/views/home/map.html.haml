@@ -226,7 +226,7 @@
         Examples: <a href='/map/births_birth_rate'>birth rate</a>, <a href='/map/crime_aggravated_assault'>aggravated battery</a>, or <a href='/map/infectious_disease_tuberculosis'>tuberculosis</a>.
       
     - else
-      - title @current_dataset.name
+      - title 'Browse ' + @current_dataset.name
       %h3
         #{@current_dataset.name}
       %p #{@current_dataset.description}
