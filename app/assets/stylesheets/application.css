@@ -113,6 +113,12 @@ ol li {
     padding: 20px 0;
     text-align: center;
 }
+.Browse .footer {
+    margin-top: 0px;
+}
+.Browse .navbar {
+    margin-bottom: 0px;
+}
 .footer p {
     color: #777777;
     margin-bottom: 0;
