@@ -15,6 +15,13 @@
  #mapCanvas img {
    max-width: none;
  }
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Raleway', 'Muli', Verdana, sans-serif !important;
+}
+ 
+body, p {
+  font-family: 'Muli', Verdana, Helvetica, sans-serif;
+}
 
  .filter-box { 
    height: 15px; 

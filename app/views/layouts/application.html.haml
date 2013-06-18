@@ -15,7 +15,8 @@
       = stylesheet_link_tag "//cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css"
 
     = stylesheet_link_tag "application", :media => "all"
-
+    = stylesheet_link_tag "fonts.googleapis.com/css?family=Raleway"
+    = stylesheet_link_tag "fonts.googleapis.com/css?family=Muli"
   %body{:class => content_for?(:title) ? (yield(:title)) : ""}
     .navbar
       .navbar-inner
