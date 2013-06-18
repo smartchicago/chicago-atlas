@@ -4,9 +4,11 @@ class HomeController < ApplicationController
   caches_action :index
 
   def index
+    @current_menu = 'home'
   end
 
   def map
+    @current_menu = 'map'
     @landing = false
     @current_statistics = []
 
@@ -39,6 +41,14 @@ class HomeController < ApplicationController
                             .having('count(datasets.id) > 0')
                             .order("categories.name") }
 
+  end
+
+  def partners
+    @current_menu = 'partners'
+  end
+
+  def about
+    @current_menu = 'about'
   end
 
 end

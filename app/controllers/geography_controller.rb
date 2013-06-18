@@ -4,6 +4,7 @@ class GeographyController < ApplicationController
   caches_action :index, :show, :showdataset
 
   def index
+    @current_menu = 'places'
     @community_areas = Geography.where("geo_type = 'Community Area'")
                                 .order("name").all
     @zip_codes = Geography.where("geo_type = 'Zip'")
@@ -11,6 +12,8 @@ class GeographyController < ApplicationController
   end
 
   def show
+    @current_menu = 'places'
+
     @geography = Geography.where(:slug => params[:slug]).first
     @categories = Category.select('categories.id, categories.name, categories.description')
                           .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
@@ -31,6 +34,8 @@ class GeographyController < ApplicationController
   end
 
   def showdataset
+    @current_menu = 'places'
+    
     @geography = Geography.where(:slug => params[:geo_slug]).first
     @dataset = Dataset.where(:slug => params[:dataset_slug]).first
   end
