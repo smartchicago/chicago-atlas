@@ -16,7 +16,7 @@
 
     = stylesheet_link_tag "application", :media => "all"
 
-  %body
+  %body{:class => content_for?(:title) ? (yield(:title)) : ""}
     .navbar
       .navbar-inner
         .container
