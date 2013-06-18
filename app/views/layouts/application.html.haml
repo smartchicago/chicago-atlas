@@ -47,11 +47,11 @@
       = yield
     %footer.footer
       .container
-        %p
+        %p.pull-left.logomark
           Chicago Health Atlas
-        %p
-          %a{:href => "http://twitter.com/smartchicago", :target => "_blank"} @smartchicago
-          %br 
+        %p.pull-right
+          = succeed ' / ' do
+            %a{:href => "http://twitter.com/smartchicago", :target => "_blank"} @smartchicago
           %a{:href => "https://github.com/smartchicago/chicago-atlas/"} Github
     /
       Javascripts

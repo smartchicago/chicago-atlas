@@ -110,7 +110,7 @@ ol li {
     background-color: #F5F5F5;
     border-top: 1px solid #E5E5E5;
     margin-top: 70px;
-    padding: 20px 0;
+    padding: 10px 0;
     text-align: center;
 }
 .Browse .footer {
@@ -122,6 +122,8 @@ ol li {
 .footer p {
     color: #777777;
     margin-bottom: 0;
+    padding: 9px 0px;
+    display: inline-block;
 }
 .footer-links {
     margin: 10px 0;
@@ -132,4 +134,10 @@ ol li {
 }
 .footer-links li:first-child {
     padding-left: 0;
+}
+
+p.logomark {
+    background: url("/assets/logomark-chicagohealthatlas.png") no-repeat scroll left top / contain transparent;
+    display: inline-block;
+    padding: 9px 0 9px 39px;
 }
