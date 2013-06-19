@@ -41,6 +41,11 @@ class HomeController < ApplicationController
                             .having('count(datasets.id) > 0')
                             .order("categories.name") }
 
+    respond_to do |format|
+      format.html # render our template
+      format.json { render :json => @display_geojson }
+    end
+
   end
 
   def partners

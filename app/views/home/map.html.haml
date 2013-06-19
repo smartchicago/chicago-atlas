@@ -8,7 +8,7 @@
   :javascript
     $(window).resize(function () {
       var h = $(window).height(),
-        offsetTop = 70; // Calculate the top offset
+        offsetTop = 100; // Calculate the top offset
 
       $('#map').css('height', (h - offsetTop));
     }).resize();
@@ -215,7 +215,7 @@
             $('#slider').slider('value', $.address.parameter('year'));
         });
 
-.row
+.row-fluid
   .span4
     - if @landing
       - title 'Browse by neighborhood'

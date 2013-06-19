@@ -5,10 +5,13 @@ class GeographyController < ApplicationController
 
   def index
     @current_menu = 'places'
-    @community_areas = Geography.where("geo_type = 'Community Area'")
-                                .order("name").all
-    @zip_codes = Geography.where("geo_type = 'Zip'")
-                                .order("name").all
+    @community_areas = Geography.where("geo_type = 'Community Area'").order("name").all
+    @zip_codes = Geography.where("geo_type = 'Zip'").order("name").all
+
+    respond_to do |format|
+      format.html # render our template
+      format.json { render :json => {:community_areas => @community_areas, :zip_codes => @zip_codes} }
+    end
   end
 
   def show
@@ -38,6 +41,11 @@ class GeographyController < ApplicationController
     
     @geography = Geography.where(:slug => params[:geo_slug]).first
     @dataset = Dataset.where(:slug => params[:dataset_slug]).first
+
+    respond_to do |format|
+      format.html # render our template
+      format.json { render :json => fetch_chart_data(@dataset.id, @geography.id) }
+    end
   end
 
 end
