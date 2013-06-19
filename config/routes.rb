@@ -4,25 +4,20 @@ ChicagoAtlas::Application.routes.draw do
   # first created -> highest priority.
 
   # primary routes
-  match 'condition/:slug' => 'dataset#show'
-  get "conditions" => 'dataset#index'
-
   match 'place/:slug' => 'geography#show'
   get "places" => 'geography#index'
-
   match 'place/:geo_slug/:dataset_slug' => 'geography#showdataset'
 
-  # static pages
+  # static
   match 'map(/:dataset_slug)' => 'home#map'
   get "about" => 'home#about'
   get "partners" => 'home#partners'
   get "partner_sign_up" => 'home#partner_sign_up'
 
-  # test pages
-  get "leaflet_test" => 'home#leaflet_test'
-  get "interventions_test" => 'home#interventions_test'
+  # json
   match "interventions/:north/:east/:south/:west" => 'dataset#interventions'
 
+  # root
   root :to => 'home#index'
 
 end
