@@ -17,7 +17,8 @@ class GeographyController < ApplicationController
   def show
     @current_menu = 'places'
 
-    @geography = Geography.where(:slug => params[:slug]).first
+    @geography = Geography.where(:slug => params[:slug]).first || not_found
+
     @categories = Category.select('categories.id, categories.name, categories.description')
                           .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
                           .joins('INNER JOIN statistics ON datasets.id = statistics.dataset_id')
@@ -39,8 +40,8 @@ class GeographyController < ApplicationController
   def showdataset
     @current_menu = 'places'
     
-    @geography = Geography.where(:slug => params[:geo_slug]).first
-    @dataset = Dataset.where(:slug => params[:dataset_slug]).first
+    @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
+    @dataset = Dataset.where(:slug => params[:dataset_slug]).first || not_found
 
     respond_to do |format|
       format.html # render our template
