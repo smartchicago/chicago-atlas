@@ -689,5 +689,65 @@ namespace :db do
       puts 'Done!'
     end
 
+    desc "Fetch all Purple Binder locations"
+    task :purple_binder => :environment do
+      require 'open-uri'
+      require 'json'
+      
+      Dataset.where(:provider => "Purple Binder").each do |d|
+        InterventionLocation.delete_all("dataset_id = #{d.id}")
+        d.delete
+      end
+
+      dataset = Dataset.new(
+        :name => 'Purple Binder programs',
+        :slug => 'purple_binder_programs',
+        :description => '', # leaving blank for now
+        :provider => 'Purple Binder',
+        :url => 'http://purplebinder.com/',
+        # :category_id => Category.where(:name => d[:category]).first.id,
+        :data_type => 'intervention'
+      )
+      dataset.save!
+
+      page = 1
+      programs = JSON.parse(open("http://purplebinder.com/api/programs?page=#{page}", "Authorization" => 'Token token="ce6d084f83b0b2510cf555eb82c098ff"').read)['programs']
+
+      while (!programs.nil? and programs != []) do
+        programs.each do |p|
+
+          if p['locations'].length > 0
+            intervention = InterventionLocation.new(
+              :name => p["name"],
+              :hours => p["hours"],
+              :phone => p["phone"],
+              :tags => ActiveSupport::JSON.encode(p["tags"]),
+              :address => p['locations'].first["address"],
+              :city => p['locations'].first["city"],
+              :state => p['locations'].first["state"],
+              :zip => p['locations'].first["zip"],
+              :latitude => p['locations'].first["lat"],
+              :longitude => p['locations'].first["lng"],
+              :dataset_id => dataset.id
+            )
+            intervention.save!
+          else
+            puts 'no location'
+            puts p.inspect
+          end
+
+        end
+
+        page = page + 1
+        puts "reading page #{page}"
+        programs = JSON.parse(open("http://purplebinder.com/api/programs?page=#{page}", "Authorization" => 'Token token="ce6d084f83b0b2510cf555eb82c098ff"').read)['programs']
+      end
+
+      stat_count = InterventionLocation.count(:conditions => "dataset_id = #{dataset.id}")
+      puts "imported #{stat_count} intervention locations"
+
+      puts 'Done!'
+    end
+
   end
 end
