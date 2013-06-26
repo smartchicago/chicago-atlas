@@ -49,4 +49,9 @@ class GeographyController < ApplicationController
     end
   end
 
+  def resources
+    @current_menu = 'places'
+    @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
+  end
+
 end

@@ -115,11 +115,10 @@ module ApplicationHelper
     ActiveSupport::JSON.encode({"type" => "FeatureCollection", "features" => geojson})
   end
 
-  def intervention_locations(bounds=nil)
+  def resource_locations(bounds=nil)
     # send boundary with [ north, east, south, west ]
 
-    interventions = InterventionLocation
-      .select('intervention_locations.name, address, latitude, longitude')
+    resources = InterventionLocation
 
     if bounds
       bounds[0] = bounds[0].gsub(/[,]/, '.').to_f
@@ -127,14 +126,10 @@ module ApplicationHelper
       bounds[2] = bounds[2].gsub(/[,]/, '.').to_f
       bounds[3] = bounds[3].gsub(/[,]/, '.').to_f
 
-      interventions = interventions.where("latitude < #{bounds[0]} AND longitude < #{bounds[1]} AND latitude > #{bounds[2]} AND longitude > #{bounds[3]}")
+      resources = resources.where("latitude < #{bounds[0]} AND longitude < #{bounds[1]} AND latitude > #{bounds[2]} AND longitude > #{bounds[3]}")
     end
 
-    locations = []
-    interventions.each do |p|
-      locations << [p[:name], p[:address], p[:latitude], p[:longitude]]
-    end
-    locations
+    resources.order('name')
   end
 
   def choropleth_function(grades)

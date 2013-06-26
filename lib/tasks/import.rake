@@ -716,11 +716,11 @@ namespace :db do
       while (!programs.nil? and programs != []) do
         programs.each do |p|
 
-          if p['locations'].length > 0
+          if p['locations'].length > 0 and p['locations'].first['lat'] != ''
             intervention = InterventionLocation.new(
               :name => p["name"],
-              :hours => p["hours"],
-              :phone => p["phone"],
+              :hours => (p["hours"].nil? ? "" : p["hours"]),
+              :phone => (p["phone"].nil? ? "" : p["phone"]),
               :tags => ActiveSupport::JSON.encode(p["tags"]),
               :address => p['locations'].first["address"],
               :city => p['locations'].first["city"],
