@@ -1,0 +1,67 @@
+.row-fluid
+  .span12
+
+    %h1
+      #{@geography.name}
+      - if @dataset.nil?
+        %small Resources
+      - else
+        %small #{@dataset.name}
+
+    %a{:href => "/place/#{@geography.slug}"} &laquo; back to #{@geography.name}
+
+.row-fluid
+  .span12
+    - content_for :javascripts do
+      = javascript_include_tag "leaflet"
+      = javascript_include_tag "leaflet_lib"
+
+      :javascript
+        var geojsonFeature = {
+            "type": "Feature",
+            "geometry": #{@geography.geometry}
+        };
+
+        LeafletLib.initialize("map_resources", { geojson: geojsonFeature }, #{@geography.centroid_as_lat_lng}, 13);
+
+        var bounds = [LeafletLib.latmax, LeafletLib.lngmax, LeafletLib.latmin, LeafletLib.lngmin];
+        bounds[0] = (bounds[0] + "").replace(".",",");
+        bounds[1] = (bounds[1] + "").replace(".",",");
+        bounds[2] = (bounds[2] + "").replace(".",",");
+        bounds[3] = (bounds[3] + "").replace(".",",");
+
+        $.getJSON("/resources#{@json_url_fragment}/" + bounds.join("/") + ".json", function(resources){
+          for(var i=0;i<resources.length;i++){
+
+            var r_name = (resources[i]['name'] == null ? '' : resources[i]['name']);
+            var r_address = (resources[i]['address'] == null ? '' : resources[i]['address']);
+            var r_phone = (resources[i]['phone'] == null ? '' : resources[i]['phone']);
+            var r_hours = (resources[i]['hours'] == null ? '' : resources[i]['hours']);
+            var r_tags = (resources[i]['tags'] == [] ? '' : resources[i]['tags']);
+
+            LeafletLib.addMarker(
+              (new L.Marker(
+                new L.LatLng( resources[i]['latitude'], resources[i]['longitude'] )
+              )).bindPopup("<b>" + r_name + "</b><br/>" + r_address + "<br/>" + r_phone)
+            );
+            $("#intervention_list").append("\
+              <tr>\
+                <td>" + r_name + "</td>\
+                <td>" + r_address + "</td>\
+                <td>" + r_phone + "</td>\
+              </tr>");
+          }
+        });
+        LeafletLib.filterMarkers({ geojson: geojsonFeature });
+
+    #map_resources
+
+    %hr
+
+    %table.table.table-hover
+      %thead
+        %tr
+          %td Name
+          %td Address
+          %td Phone
+      %tbody#intervention_list
