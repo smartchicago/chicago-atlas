@@ -52,6 +52,12 @@ class GeographyController < ApplicationController
   def resources
     @current_menu = 'places'
     @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
+
+    # for specific location view
+    unless params[:dataset_slug].nil? 
+      @dataset = Dataset.where(:slug => params[:dataset_slug]).first || not_found
+      @json_url_fragment = "/#{@dataset.id}"
+    end
   end
 
 end

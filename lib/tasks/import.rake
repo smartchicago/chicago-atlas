@@ -699,7 +699,7 @@ namespace :db do
         d.delete
       end
 
-      dataset = Dataset.new(
+      dataset_pb = Dataset.new(
         :name => 'Purple Binder programs',
         :slug => 'purple_binder_programs',
         :description => '', # leaving blank for now
@@ -708,13 +708,35 @@ namespace :db do
         # :category_id => Category.where(:name => d[:category]).first.id,
         :data_type => 'intervention'
       )
-      dataset.save!
+      dataset_pb.save!
+
+      Dataset.where(:provider => "Chicago Community Oral Health Forum").each do |d|
+        InterventionLocation.delete_all("dataset_id = #{d.id}")
+        d.delete
+      end
+
+      dataset_oral_health = Dataset.new(
+        :name => 'Oral Health Clinics',
+        :slug => 'oral_health_clinics',
+        :description => '', # leaving blank for now
+        :provider => 'Chicago Community Oral Health Forum',
+        :url => 'http://www.heartlandalliance.org/oralhealth/',
+        # :category_id => Category.where(:name => d[:category]).first.id,
+        :data_type => 'intervention'
+      )
+      dataset_oral_health.save!
 
       page = 1
-      programs = JSON.parse(open("http://purplebinder.com/api/programs?page=#{page}", "Authorization" => 'Token token="ce6d084f83b0b2510cf555eb82c098ff"').read)['programs']
+      programs = JSON.parse(open("http://purplebinder.com/api/programs?page=#{page}", "Authorization" => "Token token=\"#{ENV['purple_binder_token']}\"").read)['programs']
 
       while (!programs.nil? and programs != []) do
+        puts "reading page #{page}"
         programs.each do |p|
+
+          dataset_id = dataset_pb.id
+          if p['datasets'].include? 'Chicago Metro Oral Health Clinics'
+            dataset_id = dataset_oral_health.id
+          end
 
           if p['locations'].length > 0 and p['locations'].first['lat'] != ''
             intervention = InterventionLocation.new(
@@ -728,7 +750,7 @@ namespace :db do
               :zip => p['locations'].first["zip"],
               :latitude => p['locations'].first["lat"],
               :longitude => p['locations'].first["lng"],
-              :dataset_id => dataset.id
+              :dataset_id => dataset_id
             )
             intervention.save!
           else
@@ -739,12 +761,14 @@ namespace :db do
         end
 
         page = page + 1
-        puts "reading page #{page}"
-        programs = JSON.parse(open("http://purplebinder.com/api/programs?page=#{page}", "Authorization" => 'Token token="ce6d084f83b0b2510cf555eb82c098ff"').read)['programs']
+        programs = JSON.parse(open("http://purplebinder.com/api/programs?page=#{page}", "Authorization" => "Token token=\"#{ENV['purple_binder_token']}\"").read)['programs']
       end
 
-      stat_count = InterventionLocation.count(:conditions => "dataset_id = #{dataset.id}")
-      puts "imported #{stat_count} intervention locations"
+      stat_count = InterventionLocation.count(:conditions => "dataset_id = #{dataset_pb.id}")
+      puts "imported #{stat_count} PB locations"
+
+      stat_count = InterventionLocation.count(:conditions => "dataset_id = #{dataset_oral_health.id}")
+      puts "imported #{stat_count} Oral Health locations"
 
       puts 'Done!'
     end

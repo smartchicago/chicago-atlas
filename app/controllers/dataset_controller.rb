@@ -10,8 +10,7 @@ class DatasetController < ApplicationController
   end
 
   def resources
-    resources_map = resource_locations( [params[:north], params[:east], params[:south], params[:west] ])
-    puts resources_map.inspect
+    resources_map = resource_locations( params[:dataset_id], [params[:north], params[:east], params[:south], params[:west] ])
 
     respond_to do |format|
       format.json { render :json => resources_map }

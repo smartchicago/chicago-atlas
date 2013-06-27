@@ -3,7 +3,10 @@
 
     %h1
       #{@geography.name}
-      %small Resources
+      - if @dataset.nil?
+        %small Resources
+      - else
+        %small #{@dataset.name}
 
     %a{:href => "/place/#{@geography.slug}"} &laquo; back to #{@geography.name}
 
@@ -21,21 +24,13 @@
 
         LeafletLib.initialize("map_resources", { geojson: geojsonFeature }, #{@geography.centroid_as_lat_lng}, 13);
 
-        var clinicIcon = L.icon({
-            iconUrl: '/assets/firstaid.png',
-            shadowUrl: '/assets/square-shadow.png',
-            iconSize:     [32, 37],
-            shadowSize:   [51, 37],
-            shadowAnchor: [16, 16]            
-        });
-
         var bounds = [LeafletLib.latmax, LeafletLib.lngmax, LeafletLib.latmin, LeafletLib.lngmin];
         bounds[0] = (bounds[0] + "").replace(".",",");
         bounds[1] = (bounds[1] + "").replace(".",",");
         bounds[2] = (bounds[2] + "").replace(".",",");
         bounds[3] = (bounds[3] + "").replace(".",",");
 
-        $.getJSON("/resources/" + bounds.join("/") + ".json", function(resources){
+        $.getJSON("/resources#{@json_url_fragment}/" + bounds.join("/") + ".json", function(resources){
           for(var i=0;i<resources.length;i++){
 
             var r_name = (resources[i]['name'] == null ? '' : resources[i]['name']);
@@ -46,9 +41,8 @@
 
             LeafletLib.addMarker(
               (new L.Marker(
-                new L.LatLng( resources[i]['latitude'], resources[i]['longitude'] ),
-                { icon: clinicIcon }
-              )).bindPopup("<b>" + r_name + "</b><br/>" + r_address)
+                new L.LatLng( resources[i]['latitude'], resources[i]['longitude'] )
+              )).bindPopup("<b>" + r_name + "</b><br/>" + r_address + "<br/>" + r_phone)
             );
             $("#intervention_list").append("\
               <tr>\
