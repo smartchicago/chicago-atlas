@@ -29,62 +29,10 @@
 
           LeafletLib.initialize("map_detail", { geojson: geojsonFeature }, #{@geography.centroid_as_lat_lng}, 13);
 
-          var clinicIcon = L.icon({
-              iconUrl: '/assets/firstaid.png',
-              shadowUrl: '/assets/square-shadow.png',
-              iconSize:     [32, 37],
-              shadowSize:   [51, 37],
-              shadowAnchor: [16, 16]            
-          });
-
-          var bounds = [LeafletLib.latmax, LeafletLib.lngmax, LeafletLib.latmin, LeafletLib.lngmin];
-          bounds[0] = (bounds[0] + "").replace(".",",");
-          bounds[1] = (bounds[1] + "").replace(".",",");
-          bounds[2] = (bounds[2] + "").replace(".",",");
-          bounds[3] = (bounds[3] + "").replace(".",",");
-
-          var markers = [];
-          $.getJSON("/interventions/" + bounds.join("/") + ".json", function(interventions){
-            for(var i=0;i<interventions.length;i++){
-              markers[i] = (new L.Marker(
-                new L.LatLng( interventions[i][2], interventions[i][3] ),
-                { icon: clinicIcon }
-              )).bindPopup("<b>" + interventions[i][0] + "</b><br/>" + interventions[i][1])
-            }
-            $('#resource_count').html('(' + markers.length + ')');
-          });
-
-          function toggle_markers(){
-            if ($(this).is(':checked')) {
-              for(var i=0;i<markers.length;i++){
-                LeafletLib.map.removeLayer(markers[i]);
-              }
-              $(this).attr('checked', false);
-            }
-            else {
-              for(var i=0;i<markers.length;i++){
-                LeafletLib.addMarker(markers[i]);
-              }
-              $(this).attr('checked', true);
-            }
-          }
-
-          $(function() {
-            $('#toggle_markers').click(function(){
-              toggle_markers();
-            });
-          });
-
-          $('.demo-info').popover();
-
 
       #map_detail
       %br
-      %label.checkbox.demo-info{ :rel => "popover", :title => 'Local resources', :"data-content" => "Nearby health facilities as taken from MetroChicagoData.org.", :"data-trigger" => 'hover', :"data-html" => 'true', :"data-placement" => 'left' }
-        %input#toggle_markers{:type => 'checkbox'} 
-          %span 
-            Show local resources
-            %span#resource_count
+      %a{:href => "/place/#{@geography.slug}/resources"} View local resources
 
       %h3 Demographics
 

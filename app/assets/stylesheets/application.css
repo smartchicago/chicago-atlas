@@ -54,6 +54,11 @@
   height: 300px;
 }
 
+ #map_resources {
+  width: 100%;
+  height: 500px;
+}
+
 .info {
   padding: 6px 8px;
   font: 14px/16px Arial, Helvetica, sans-serif;
