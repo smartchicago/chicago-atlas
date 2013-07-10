@@ -740,7 +740,8 @@ namespace :db do
 
           if p['locations'].length > 0 and p['locations'].first['lat'] != ''
             intervention = InterventionLocation.new(
-              :name => p["name"],
+              :organization_name => p["organization_name"],
+              :program_name => p["name"],
               :hours => (p["hours"].nil? ? "" : p["hours"]),
               :phone => (p["phone"].nil? ? "" : p["phone"]),
               :tags => ActiveSupport::JSON.encode(p["tags"]),
