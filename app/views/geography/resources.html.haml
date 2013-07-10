@@ -33,7 +33,8 @@
         $.getJSON("/resources#{@json_url_fragment}/" + bounds.join("/") + ".json", function(resources){
           for(var i=0;i<resources.length;i++){
 
-            var r_name = (resources[i]['name'] == null ? '' : resources[i]['name']);
+            var r_organization_name = (resources[i]['organization_name'] == null ? '' : resources[i]['organization_name']);
+            var r_program_name = (resources[i]['program_name'] == null ? '' : resources[i]['program_name']);
             var r_address = (resources[i]['address'] == null ? '' : resources[i]['address']);
             var r_phone = (resources[i]['phone'] == null ? '' : resources[i]['phone']);
             var r_hours = (resources[i]['hours'] == null ? '' : resources[i]['hours']);
@@ -42,11 +43,11 @@
             LeafletLib.addMarker(
               (new L.Marker(
                 new L.LatLng( resources[i]['latitude'], resources[i]['longitude'] )
-              )).bindPopup("<b>" + r_name + "</b><br/>" + r_address + "<br/>" + r_phone)
+              )).bindPopup("<b>" + r_organization_name + "</b><br />" + r_program_name + "<br/>" + r_address + "<br/>" + r_phone)
             );
             $("#intervention_list").append("\
               <tr>\
-                <td>" + r_name + "</td>\
+                <td><b>" + r_organization_name + "</b><br />" + r_program_name + "</td>\
                 <td>" + r_address + "</td>\
                 <td>" + r_phone + "</td>\
               </tr>");

@@ -133,7 +133,7 @@ module ApplicationHelper
       resources = resources.where("latitude < #{bounds[0]} AND longitude < #{bounds[1]} AND latitude > #{bounds[2]} AND longitude > #{bounds[3]}")
     end
 
-    resources.order('name')
+    resources.order('program_name, organization_name')
   end
 
   def choropleth_function(grades)
