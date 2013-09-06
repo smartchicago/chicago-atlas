@@ -11,7 +11,7 @@ var LeafletLib = {
 
     initialize: function(element, features, centroid, zoom) {
 
-        LeafletLib.map = L.map(element).setView(new L.LatLng( centroid[0], centroid[1] ), zoom);
+        LeafletLib.map = L.map(element, {scrollWheelZoom:false}).setView(new L.LatLng( centroid[0], centroid[1] ), zoom);
 
         LeafletLib.tiles = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
             key: '88c48b9eab824447beca8aca7bb6e167',
