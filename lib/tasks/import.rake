@@ -7,12 +7,12 @@ namespace :db do
       Rake::Task["db:import:zip_codes"].invoke
       Rake::Task["db:import:population"].invoke
       Rake::Task["db:import:all_stats"].invoke
+      Rake::Task["db:import:purple_binder"].invoke
     end
 
     desc "Fetch and import all health data"
     task :all_stats => :environment do
       Rake::Task["db:import:chicago_dph"].invoke
-      Rake::Task["db:import:chicago_health_facilities"].invoke
       Rake::Task["db:import:chitrec"].invoke
       Rake::Task["db:import:crime"].invoke
     end
@@ -430,61 +430,6 @@ namespace :db do
 
       end
       puts 'Done!'
-    end
-
-    desc "Fetch Metro Chicago Health Facilities"
-    task :chicago_health_facilities => :environment do
-      require 'csv' 
-
-      Dataset.where(:provider => "Metro Chicago Data").each do |d|
-        InterventionLocation.delete_all("dataset_id = #{d.id}")
-        d.delete
-      end
-
-      datasets = [{:name => 'Metro Chicago Health Facilities Cleaned', :socrata_id => 'kt59-57by', :url => 'https://www.metrochicagodata.org/dataset/Metro-Chicago-Health-Facilities/kt59-57by'}]
-
-      datasets.each do |d|
-        handle = d[:name].parameterize.underscore.to_sym
-
-        # puts "downloading '#{d[:name]}'"
-        # sh "curl -o tmp/#{handle}.csv https://www.metrochicagodata.org/api/views/#{d[:socrata_id]}/rows.csv?accessType=DOWNLOAD"
-        
-        csv_text = File.read("db/import/#{handle}.csv")
-        csv = CSV.parse(csv_text, :headers => true)
-
-        puts csv.first.inspect
-
-        dataset = Dataset.new(
-          :name => d[:name],
-          :slug => handle,
-          :description => '', # leaving blank for now
-          :provider => 'Metro Chicago Data',
-          :url => d[:url],
-          # :category_id => Category.where(:name => d[:category]).first.id,
-          :data_type => 'intervention'
-        )
-        dataset.save!
-
-        csv.each do |row|
-          intervention = InterventionLocation.new(
-            :name => row["Name"],
-            :hours => row["Hours"],
-            :phone => row["Phone"],
-            :address => row["Address"],
-            :latitude => row["Latitude"],
-            :longitude => row["Longitude"],
-            :dataset_id => dataset.id
-          )
-          intervention.save!
-
-          InterventionLocationDataset.delete_all("intervention_location_id = #{intervention.id}")
-
-        end
-
-        stat_count = InterventionLocation.count(:conditions => "dataset_id = #{dataset.id}")
-        puts "imported #{stat_count} intervention locations"
-
-      end
     end
 
     desc "Import population by year by community area and zip code"
