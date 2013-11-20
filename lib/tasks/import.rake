@@ -29,22 +29,21 @@ namespace :db do
         sleep 1
       end
 
-      fJson = File.open("/Users/derekeder/projects/smart-chicago/chicago-atlas/db/import/community_areas.json","w")
-      fJson.write(ActiveSupport::JSON.encode(community_areas_all))
+      fJson = File.open("db/import/community_areas.geojson","w")
+      fJson.write('{"type": "FeatureCollection","features": ' + ActiveSupport::JSON.encode(community_areas_all) + '}')
       fJson.close
 
       puts 'Done!'
     end
     
-    desc "Fetch Chicago Community Areas from the TribApps Boundary Service"
+    desc "Import Chicago Community Areas from local file"
     task :community_areas => :environment do
       require 'open-uri'
       require 'json'
       Geography.delete_all(:geo_type => 'Community Area')
 
-      community_area_endpoints = JSON.parse(open("http://boundaries.tribapps.com/1.0/boundary-set/community-areas/").read)['boundaries']
-      community_area_endpoints.each do |endpoint|
-        area_json = JSON.parse(open("http://boundaries.tribapps.com/#{endpoint}").read)
+      community_areas = JSON.parse(open("db/import/community_areas.geojson").read)['features']
+      community_areas.each do |area_json|
 
         area = Geography.new(
           :geo_type => 'Community Area',
@@ -56,7 +55,6 @@ namespace :db do
         area.id = area_json['external_id']
         puts "importing #{area.name}"
         area.save!
-        sleep 1
       end
 
       puts 'Done!'
