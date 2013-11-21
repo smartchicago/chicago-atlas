@@ -4,6 +4,8 @@ The Chicago Health Atlas is a place where you can view citywide information abou
 
 ## Installation
 
+Install the [Heroku Toolbelt](https://toolbelt.heroku.com/) - required for deployment and importing Purple Binder data
+
 ``` bash
 git clone git@github.com:smartchicago/chicago-atlas.git
 cd chicago-atlas
@@ -11,6 +13,19 @@ gem install bundler
 bundle install
 rake db:setup
 rake db:import:all
+```
+
+To import the [Purple Binder](purplebinder.com) data, you will need an API key from their [developers page](http://app.purplebinder.com/developers). The import task requires `foreman` which is included in the [Heroku Toolbelt](https://toolbelt.heroku.com/).
+
+
+```bash
+cp .env.example .env
+```
+
+Paste your Purple Binder API key in the `.env` file.
+
+```bash
+foreman run rake db:import:purple_binder
 ```
 
 Populate the config.yml file with config settings. Values can be found via `heroku config`

@@ -7,7 +7,6 @@ namespace :db do
       Rake::Task["db:import:zip_codes"].invoke
       Rake::Task["db:import:population"].invoke
       Rake::Task["db:import:all_stats"].invoke
-      Rake::Task["db:import:purple_binder"].invoke
     end
 
     desc "Fetch and import all health data"
@@ -690,7 +689,7 @@ namespace :db do
       dataset_oral_health.save!
 
       page = 1
-      programs = JSON.parse(open("http://purplebinder.com/api/programs?page=#{page}", "Authorization" => "Token token=\"#{ENV['purple_binder_token']}\"").read)['programs']
+      programs = JSON.parse(open("http://app.purplebinder.com/api/programs?page=#{page}", "Authorization" => "Token token=\"#{ENV['purple_binder_token']}\"").read)['programs']
 
       while (!programs.nil? and programs != []) do
         puts "reading page #{page}"
@@ -725,7 +724,7 @@ namespace :db do
         end
 
         page = page + 1
-        programs = JSON.parse(open("http://purplebinder.com/api/programs?page=#{page}", "Authorization" => "Token token=\"#{ENV['purple_binder_token']}\"").read)['programs']
+        programs = JSON.parse(open("http://app.purplebinder.com/api/programs?page=#{page}", "Authorization" => "Token token=\"#{ENV['purple_binder_token']}\"").read)['programs']
       end
 
       stat_count = InterventionLocation.count(:conditions => "dataset_id = #{dataset_pb.id}")
