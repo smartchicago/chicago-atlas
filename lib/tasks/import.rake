@@ -656,10 +656,14 @@ namespace :db do
       require 'open-uri'
       require 'json'
       
-      Dataset.where(:provider => "Purple Binder").each do |d|
+      # clear out existing intervention locations and relational talbes
+      Dataset.where(:provider => ["Purple Binder", "Chicago Community Oral Health Forum"]).each do |d|
         InterventionLocation.delete_all("dataset_id = #{d.id}")
         d.delete
       end
+
+      InterventionLocationServiceCategory.delete_all
+      ServiceCategory.delete_all
 
       dataset_pb = Dataset.new(
         :name => 'Purple Binder programs',
@@ -672,14 +676,9 @@ namespace :db do
       )
       dataset_pb.save!
 
-      Dataset.where(:provider => "Chicago Community Oral Health Forum").each do |d|
-        InterventionLocation.delete_all("dataset_id = #{d.id}")
-        d.delete
-      end
-
       dataset_oral_health = Dataset.new(
         :name => 'Oral Health Clinics',
-        :slug => 'oral_health_clinics',
+        :slug => 'chicago-metro-oral-health-clinics',
         :description => '', # leaving blank for now
         :provider => 'Chicago Community Oral Health Forum',
         :url => 'http://www.heartlandalliance.org/oralhealth/',
@@ -688,19 +687,21 @@ namespace :db do
       )
       dataset_oral_health.save!
 
-      page = 1
-      programs = JSON.parse(open("http://app.purplebinder.com/api/programs?page=#{page}", "Authorization" => "Token token=\"#{ENV['purple_binder_token']}\"").read)['programs']
+      # page = 1
+      # programs = JSON.parse(open("http://app.purplebinder.com/api/programs?page=#{page}", "Authorization" => "Token token=\"#{ENV['purple_binder_token']}\"").read)['programs']
 
-      while (!programs.nil? and programs != []) do
-        puts "reading page #{page}"
+      programs = JSON.parse(open("db/import/pb_programs.json").read)["programs"]
+      # while (!programs.nil? and programs != []) do
+        # puts "reading page #{page}"
         programs.each do |p|
 
           dataset_id = dataset_pb.id
-          if p['datasets'].include? 'Chicago Metro Oral Health Clinics'
+          if p['datasets'].include? 'chicago-metro-oral-health-clinics'
             dataset_id = dataset_oral_health.id
           end
 
           if p['locations'].length > 0 and p['locations'].first['lat'] != ''
+
             intervention = InterventionLocation.new(
               :organization_name => p["organization_name"],
               :program_name => p["name"],
@@ -716,15 +717,23 @@ namespace :db do
               :dataset_id => dataset_id
             )
             intervention.save!
+
+            p["categories"].each do |c|
+              service_category = ServiceCategory.find_or_create_by_name c
+              InterventionLocationServiceCategory.create(
+                :intervention_location_id => intervention.id,
+                :service_categories_id => service_category.id
+              )
+            end
+
           else
             puts 'no location'
             puts p.inspect
           end
+        # end
 
-        end
-
-        page = page + 1
-        programs = JSON.parse(open("http://app.purplebinder.com/api/programs?page=#{page}", "Authorization" => "Token token=\"#{ENV['purple_binder_token']}\"").read)['programs']
+        # page = page + 1
+        # programs = JSON.parse(open("http://app.purplebinder.com/api/programs?page=#{page}", "Authorization" => "Token token=\"#{ENV['purple_binder_token']}\"").read)['programs']
       end
 
       stat_count = InterventionLocation.count(:conditions => "dataset_id = #{dataset_pb.id}")
