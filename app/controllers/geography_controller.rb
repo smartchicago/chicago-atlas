@@ -52,11 +52,26 @@ class GeographyController < ApplicationController
   def resources
     @current_menu = 'places'
     @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
+    @service_categories = ServiceCategory.order("name")
+    @json_url_fragment = ""
 
     # for specific location view
-    unless params[:dataset_slug].nil? 
+    if not params[:dataset_slug].nil? 
       @dataset = Dataset.where(:slug => params[:dataset_slug]).first || not_found
-      @json_url_fragment = "/#{@dataset.id}"
+      @json_url_fragment << "/dataset/#{@dataset.id}"
+    end
+
+    if not params[:service_category].nil? 
+      @service_category = ServiceCategory.where(:name => params[:service_category]).first || not_found
+      @json_url_fragment << "/service_category/#{@service_category.id}"
+    end
+  end
+
+  def resources_json
+    resources_map = resource_locations( params[:dataset_id], params[:service_category_id], [params[:north], params[:east], params[:south], params[:west] ])
+
+    respond_to do |format|
+      format.json { render :json => resources_map }
     end
   end
 

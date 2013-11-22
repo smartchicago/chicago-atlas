@@ -6,7 +6,7 @@ ChicagoAtlas::Application.routes.draw do
   # primary routes
   match 'place/:slug' => 'geography#show'
   get "places" => 'geography#index'
-  match 'place/:geo_slug/resources(/:dataset_slug)' => 'geography#resources'
+  match 'place/:geo_slug/resources(/dataset/:dataset_slug)(/service_category/:service_category)' => 'geography#resources'
   match 'place/:geo_slug/:dataset_slug' => 'geography#showdataset'
 
   # static
@@ -16,7 +16,7 @@ ChicagoAtlas::Application.routes.draw do
   get "partner_sign_up" => 'home#partner_sign_up'
 
   # json
-  match "resources(/:dataset_id)/:north/:east/:south/:west" => 'dataset#resources'
+  match "resources(/dataset/:dataset_id)(/service_category/:service_category_id)/:north/:east/:south/:west" => 'geography#resources_json'
 
   # errors
   unless Rails.application.config.consider_all_requests_local

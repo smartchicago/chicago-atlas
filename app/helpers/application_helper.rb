@@ -115,13 +115,18 @@ module ApplicationHelper
     ActiveSupport::JSON.encode({"type" => "FeatureCollection", "features" => geojson})
   end
 
-  def resource_locations(dataset_id=nil, bounds=nil)
+  def resource_locations(dataset_id=nil, service_category_id=nil, bounds=nil)
     # send boundary with [ north, east, south, west ]
 
     resources = InterventionLocation
 
     if dataset_id
       resources = resources.where('dataset_id = ?', dataset_id)
+    end
+
+    if service_category_id
+      resources = resources.joins('INNER JOIN intervention_location_service_categories ON intervention_locations.id = intervention_location_service_categories.intervention_location_id')
+      resources = resources.where('service_categories_id = ?', service_category_id)
     end
 
     if bounds
@@ -134,23 +139,6 @@ module ApplicationHelper
     end
 
     resources.order('program_name, organization_name')
-  end
-
-  def choropleth_function(grades)
-    grades = Array.new(grades).reverse
-
-    color_hash = ['#08519C', '#3182BD', '#6BAED6', '#BDD7E7']
-
-    color_block = "";
-    grades.each_with_index do |c, i|
-      if c == 0
-        color_block += "d >= #{c} ? '#{color_hash[i]}' : "
-      else 
-        color_block += "d > #{c} ? '#{color_hash[i]}' : "
-      end
-    end
-
-    "return #{color_block} '#EFF3FF';"
   end
 
   def fetch_chart_data(dataset_id, geography_id)

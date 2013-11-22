@@ -1,3 +1,4 @@
+- title 'Resources - ' + @geography.name
 .row-fluid
   .span12
 
@@ -11,7 +12,21 @@
     %a{:href => "/place/#{@geography.slug}"} &laquo; back to #{@geography.name}
 
 .row-fluid
-  .span12
+  .span4
+    %h3 
+      Browse by category
+    %ul.unstyled
+      - @service_categories.each do |cat|
+        %li
+          %a{:href => "/place/#{@geography.slug}/resources/service_category/#{cat.name}"}
+            = cat.name.humanize
+
+    %br
+    %p
+      %a.btn.btn-default{:href => '#'} 
+        Show list
+
+  .span8
     - content_for :javascripts do
       = javascript_include_tag "leaflet"
       = javascript_include_tag "leaflet_lib"
@@ -60,8 +75,6 @@
         LeafletLib.filterMarkers({ geojson: geojsonFeature });
 
     #map_resources
-
-    %hr
 
     %table.table.table-hover
       %thead
