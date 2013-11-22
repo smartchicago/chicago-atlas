@@ -15,16 +15,14 @@
   .span4
     %h3 
       Browse by category
-    %ul.unstyled
-      - @service_categories.each do |cat|
-        %li
-          %a{:href => "/place/#{@geography.slug}/resources/service_category/#{cat.name}"}
-            = cat.name.humanize
+    %ul.nav.nav-tabs.nav-stacked#categories
 
     %br
     %p
-      %a.btn.btn-default{:href => '#'} 
-        Show list
+      - if @view_mode == 'map'
+        %a.btn.btn-default{:href => "#"} Show list
+      - else
+        %a.btn.btn-default{:href => "#"} Show map
 
   .span8
     - content_for :javascripts do
@@ -32,6 +30,13 @@
       = javascript_include_tag "leaflet_lib"
 
       :javascript
+        function humanize(property) {
+          return property.replace(/_/g, ' ').replace(/(\w+)/g, function(match) {
+            return match.charAt(0).toUpperCase() + match.slice(1);
+          });
+        };
+
+
         var geojsonFeature = {
             "type": "Feature",
             "geometry": #{@geography.geometry}
@@ -45,8 +50,19 @@
         bounds[2] = (bounds[2] + "").replace(".",",");
         bounds[3] = (bounds[3] + "").replace(".",",");
 
-        $.getJSON("/resources#{@json_url_fragment}/" + bounds.join("/") + ".json", function(resources){
+        var category_list = [];
+
+        $.getJSON("/resources#{@dataset_url_fragment}/" + bounds.join("/") + ".json", function(resources){
+          
           for(var i=0;i<resources.length;i++){
+            var categories = eval(resources[i]['categories'])
+            for (var j=0;j<categories.length;j++){
+              if (category_list.indexOf(categories[j]) == -1) {
+                category_list.push(categories[j]);
+                $("#categories").append("<li><a href='#'>" + humanize(categories[j]) + "</a></li>");
+              }
+            }
+
             var has_phone = true;
             var phone = resources[i]['phone'];
             if (phone.indexOf("N/A") == -1 || phone == null ){
@@ -73,6 +89,7 @@
           }
         });
         LeafletLib.filterMarkers({ geojson: geojsonFeature });
+
 
     #map_resources
 

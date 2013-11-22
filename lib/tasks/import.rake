@@ -662,9 +662,6 @@ namespace :db do
         d.delete
       end
 
-      InterventionLocationServiceCategory.delete_all
-      ServiceCategory.delete_all
-
       dataset_pb = Dataset.new(
         :name => 'Purple Binder programs',
         :slug => 'purple_binder_programs',
@@ -708,6 +705,7 @@ namespace :db do
               :hours => (p["hours"].nil? ? "" : p["hours"]),
               :phone => (p["phone"].nil? ? "" : p["phone"]),
               :tags => ActiveSupport::JSON.encode(p["tags"]),
+              :categories => ActiveSupport::JSON.encode(p["categories"]),
               :address => p['locations'].first["address"],
               :city => p['locations'].first["city"],
               :state => p['locations'].first["state"],
@@ -717,14 +715,6 @@ namespace :db do
               :dataset_id => dataset_id
             )
             intervention.save!
-
-            p["categories"].each do |c|
-              service_category = ServiceCategory.find_or_create_by_name c
-              InterventionLocationServiceCategory.create(
-                :intervention_location_id => intervention.id,
-                :service_categories_id => service_category.id
-              )
-            end
 
           else
             puts 'no location'

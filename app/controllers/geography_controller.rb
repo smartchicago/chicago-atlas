@@ -52,26 +52,39 @@ class GeographyController < ApplicationController
   def resources
     @current_menu = 'places'
     @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
-    @service_categories = ServiceCategory.order("name")
-    @json_url_fragment = ""
+    @dataset_url_fragment = ""
 
     # for specific location view
     if not params[:dataset_slug].nil? 
       @dataset = Dataset.where(:slug => params[:dataset_slug]).first || not_found
-      @json_url_fragment << "/dataset/#{@dataset.id}"
-    end
-
-    if not params[:service_category].nil? 
-      @service_category = ServiceCategory.where(:name => params[:service_category]).first || not_found
-      @json_url_fragment << "/service_category/#{@service_category.id}"
+      @dataset_url_fragment << "/#{@dataset.id}"
     end
   end
 
   def resources_json
-    resources_map = resource_locations( params[:dataset_id], params[:service_category_id], [params[:north], params[:east], params[:south], params[:west] ])
+    dataset_id = params[:dataset_id]
+    # send boundary with [ north, east, south, west ]
+    bounds = [params[:north], params[:east], params[:south], params[:west] ]
+
+    resources = InterventionLocation
+
+    if dataset_id
+      resources = resources.where('dataset_id = ?', dataset_id)
+    end
+
+    if bounds
+      bounds[0] = bounds[0].gsub(/[,]/, '.').to_f
+      bounds[1] = bounds[1].gsub(/[,]/, '.').to_f
+      bounds[2] = bounds[2].gsub(/[,]/, '.').to_f
+      bounds[3] = bounds[3].gsub(/[,]/, '.').to_f
+
+      resources = resources.where("latitude < #{bounds[0]} AND longitude < #{bounds[1]} AND latitude > #{bounds[2]} AND longitude > #{bounds[3]}")
+    end
+
+    resources.order('program_name, organization_name')
 
     respond_to do |format|
-      format.json { render :json => resources_map }
+      format.json { render :json => resources }
     end
   end
 

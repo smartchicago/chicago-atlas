@@ -115,32 +115,6 @@ module ApplicationHelper
     ActiveSupport::JSON.encode({"type" => "FeatureCollection", "features" => geojson})
   end
 
-  def resource_locations(dataset_id=nil, service_category_id=nil, bounds=nil)
-    # send boundary with [ north, east, south, west ]
-
-    resources = InterventionLocation
-
-    if dataset_id
-      resources = resources.where('dataset_id = ?', dataset_id)
-    end
-
-    if service_category_id
-      resources = resources.joins('INNER JOIN intervention_location_service_categories ON intervention_locations.id = intervention_location_service_categories.intervention_location_id')
-      resources = resources.where('service_categories_id = ?', service_category_id)
-    end
-
-    if bounds
-      bounds[0] = bounds[0].gsub(/[,]/, '.').to_f
-      bounds[1] = bounds[1].gsub(/[,]/, '.').to_f
-      bounds[2] = bounds[2].gsub(/[,]/, '.').to_f
-      bounds[3] = bounds[3].gsub(/[,]/, '.').to_f
-
-      resources = resources.where("latitude < #{bounds[0]} AND longitude < #{bounds[1]} AND latitude > #{bounds[2]} AND longitude > #{bounds[3]}")
-    end
-
-    resources.order('program_name, organization_name')
-  end
-
   def fetch_chart_data(dataset_id, geography_id)
     stats = Statistic.where("dataset_id = #{dataset_id} AND geography_id = #{geography_id}")
                      .order("year")

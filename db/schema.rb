@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131121221755) do
+ActiveRecord::Schema.define(:version => 20131122225938) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -54,13 +54,6 @@ ActiveRecord::Schema.define(:version => 20131121221755) do
 
   add_index "intervention_location_datasets", ["intervention_location_id", "dataset_id"], :name => "index_intervention_location_dataset_idx"
 
-  create_table "intervention_location_service_categories", :force => true do |t|
-    t.integer  "intervention_location_id"
-    t.integer  "service_categories_id"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
-  end
-
   create_table "intervention_locations", :force => true do |t|
     t.string   "program_name"
     t.text     "hours",             :default => ""
@@ -76,12 +69,7 @@ ActiveRecord::Schema.define(:version => 20131121221755) do
     t.datetime "updated_at",                        :null => false
     t.text     "tags",              :default => ""
     t.string   "organization_name", :default => ""
-  end
-
-  create_table "service_categories", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.text     "categories",        :default => ""
   end
 
   create_table "statistics", :force => true do |t|
