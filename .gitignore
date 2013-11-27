@@ -19,4 +19,3 @@
 logfile
 .env
 config/database.yml
-pb_programs.json
