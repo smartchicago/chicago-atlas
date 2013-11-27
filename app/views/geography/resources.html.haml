@@ -16,13 +16,15 @@
     %h3 
       Categories
       .pull-right
-        %a.btn.btn-default{:href => "#"} List
+        %a.btn.btn-default#toggle_view{:href => "#"}
+          List
+          %i.icon-list
     %ul.nav.nav-tabs.nav-stacked#categories
 
   .span8
     #map_resources
 
-    %table.table.table-hover
+    %table.table.table-hover#table_resources
       %thead
         %tr
           %td Name
@@ -35,6 +37,15 @@
   = javascript_include_tag "leaflet_lib"
   = javascript_include_tag "mustache"
   = javascript_include_tag "resources"
+  = javascript_include_tag "jquery.address.min"
 
   :javascript
     ResourcesLib.init(#{@geography.geometry}, #{@geography.centroid_as_lat_lng}, '#{@dataset_url_fragment}');
+
+    $("#toggle_view").click(function(){
+      var new_view_mode = 'map';
+      if ($.address.parameter('view_mode') == 'map')
+        new_view_mode = 'list';
+      ResourcesLib.toggle_view(new_view_mode);
+      return false;
+    });
