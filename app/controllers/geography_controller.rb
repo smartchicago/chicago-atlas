@@ -95,6 +95,9 @@ class GeographyController < ApplicationController
       end
     end
 
+    resources_by_cat.select {|r_c| r_c[:category] == 'all' }.first[:resources] =
+      resources_by_cat.select {|r_c| r_c[:category] == 'all' }.first[:resources].uniq
+
     resources_by_cat = resources_by_cat.sort_by { |r_c| r_c[:category] }
 
     respond_to do |format|

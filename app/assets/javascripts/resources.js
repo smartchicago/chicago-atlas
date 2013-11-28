@@ -40,7 +40,7 @@ var ResourcesLib = {
       if ($.address.parameter('category') != null)
         ResourcesLib.render_category($.address.parameter('category'));
       else
-        ResourcesLib.render_category('all'); // by default, show all
+        ResourcesLib.render_category('health_care'); // by default, show all
 
       // toggle map / list view
       ResourcesLib.toggle_view($.address.parameter('view_mode'));
@@ -61,15 +61,21 @@ var ResourcesLib = {
         resources = ResourcesLib.resources_list[i]['resources'];
 
     for (var i=0;i<resources.length;i++) {
-      // clean up source data
+      // remove N/A data from phone field
       if (resources[i]['phone'].indexOf("N/A") >= 0 ) resources[i]['phone'] = '';
+
+      // truncate hours field
+      var hours_len = resources[i]['hours'].length;
+      if (hours_len > 50) hours_len = 50;
+      resources[i]['hours'] = resources[i]['hours'].slice(0, hours_len);
 
       // populate table and map
       var table_template = "\
         <tr>\
-          <td><strong>{{organization_name}}</strong><br />{{program_name}}</td>\
+          <td><h4>{{organization_name}}</h4>{{program_name}}</td>\
           <td>{{address}}</td>\
           <td>{{phone}}</td>\
+          <td>{{hours}}</td>\
         </tr>\
         ";
       $("#intervention_list").append(Mustache.render(table_template, resources[i]));
@@ -78,7 +84,8 @@ var ResourcesLib = {
         <b>{{organization_name}}</b>\
         <br />{{program_name}}<br/>\
         {{address}}<br/>\
-        {{phone}}\
+        {{phone}}<br />\
+        {{hours}}<br />\
         ";
 
       LeafletLib.addMarker(
