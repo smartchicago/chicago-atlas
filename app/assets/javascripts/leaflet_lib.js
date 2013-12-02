@@ -200,6 +200,13 @@ var LeafletLib = {
         }
     },
 
+    clearMarkers: function(){
+      for(var m=0;m<LeafletLib.markers.length;m++){
+        LeafletLib.map.removeLayer( LeafletLib.markers[m] );
+      }
+      LeafletLib.markers = [ ];
+    },
+
     geolocate: function(alt_callback){
         // Try W3C Geolocation
         var foundLocation;

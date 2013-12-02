@@ -1,3 +1,4 @@
+- title 'Resources - ' + @geography.name
 .row-fluid
   .span12
 
@@ -11,62 +12,34 @@
     %a{:href => "/place/#{@geography.slug}"} &laquo; back to #{@geography.name}
 
 .row-fluid
-  .span12
-    - content_for :javascripts do
-      = javascript_include_tag "leaflet"
-      = javascript_include_tag "leaflet_lib"
+  .span4
+    %h3 
+      Categories
+      .pull-right
+        %a.btn.btn-default#toggle_view{:href => "#"}
+          List
+          %i.icon-list
+    %ul.nav.nav-tabs.nav-stacked#categories
 
-      :javascript
-        var geojsonFeature = {
-            "type": "Feature",
-            "geometry": #{@geography.geometry}
-        };
-
-        LeafletLib.initialize("map_resources", { geojson: geojsonFeature }, #{@geography.centroid_as_lat_lng}, 13);
-
-        var bounds = [LeafletLib.latmax, LeafletLib.lngmax, LeafletLib.latmin, LeafletLib.lngmin];
-        bounds[0] = (bounds[0] + "").replace(".",",");
-        bounds[1] = (bounds[1] + "").replace(".",",");
-        bounds[2] = (bounds[2] + "").replace(".",",");
-        bounds[3] = (bounds[3] + "").replace(".",",");
-
-        $.getJSON("/resources#{@json_url_fragment}/" + bounds.join("/") + ".json", function(resources){
-          for(var i=0;i<resources.length;i++){
-            var has_phone = true;
-            var phone = resources[i]['phone'];
-            if (phone.indexOf("N/A") == -1 || phone == null ){
-              has_phone = false;
-            }
-            var r_organization_name = (resources[i]['organization_name'] == null ? '' : resources[i]['organization_name']);
-            var r_program_name = (resources[i]['program_name'] == null ? '' : resources[i]['program_name']);
-            var r_address = (resources[i]['address'] == null ? '' : resources[i]['address']);
-            var r_phone = (has_phone ? '' : phone);
-            var r_hours = (resources[i]['hours'] == null ? '' : resources[i]['hours']);
-            var r_tags = (resources[i]['tags'] == [] ? '' : resources[i]['tags']);
-
-            LeafletLib.addMarker(
-              (new L.Marker(
-                new L.LatLng( resources[i]['latitude'], resources[i]['longitude'] )
-              )).bindPopup("<b>" + r_organization_name + "</b><br />" + r_program_name + "<br/>" + r_address + "<br/>" + r_phone)
-            );
-            $("#intervention_list").append("\
-              <tr>\
-                <td><b>" + r_organization_name + "</b><br />" + r_program_name + "</td>\
-                <td>" + r_address + "</td>\
-                <td>" + r_phone + "</td>\
-              </tr>");
-          }
-        });
-        LeafletLib.filterMarkers({ geojson: geojsonFeature });
-
+  .span8
     #map_resources
 
-    %hr
+    #list_resources
 
-    %table.table.table-hover
-      %thead
-        %tr
-          %td Name
-          %td Address
-          %td Phone
-      %tbody#intervention_list
+- content_for :javascripts do
+  = javascript_include_tag "leaflet"
+  = javascript_include_tag "leaflet_lib"
+  = javascript_include_tag "mustache"
+  = javascript_include_tag "resources"
+  = javascript_include_tag "jquery.address.min"
+
+  :javascript
+    ResourcesLib.init(#{@geography.geometry}, #{@geography.centroid_as_lat_lng}, '#{@dataset_url_fragment}');
+
+    $("#toggle_view").click(function(){
+      var new_view_mode = 'map';
+      if ($.address.parameter('view_mode') == 'map')
+        new_view_mode = 'list';
+      ResourcesLib.toggle_view(new_view_mode);
+      return false;
+    });

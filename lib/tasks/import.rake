@@ -7,7 +7,6 @@ namespace :db do
       Rake::Task["db:import:zip_codes"].invoke
       Rake::Task["db:import:population"].invoke
       Rake::Task["db:import:all_stats"].invoke
-      Rake::Task["db:import:purple_binder"].invoke
     end
 
     desc "Fetch and import all health data"
@@ -16,16 +15,34 @@ namespace :db do
       Rake::Task["db:import:chitrec"].invoke
       Rake::Task["db:import:crime"].invoke
     end
+
+    desc "Download Chicago Community Areas from the TribApps Boundary Service"
+    task :community_areas_download => :environment do
+      require 'open-uri'
+      require 'json'
+      
+      community_areas_all = []
+      community_area_endpoints = JSON.parse(open("http://boundaries.tribapps.com/1.0/boundary-set/community-areas/").read)['boundaries']
+      community_area_endpoints.each do |endpoint|
+        community_areas_all << JSON.parse(open("http://boundaries.tribapps.com/#{endpoint}").read)
+        sleep 1
+      end
+
+      fJson = File.open("db/import/community_areas.geojson","w")
+      fJson.write('{"type": "FeatureCollection","features": ' + ActiveSupport::JSON.encode(community_areas_all) + '}')
+      fJson.close
+
+      puts 'Done!'
+    end
     
-    desc "Fetch Chicago Community Areas from the TribApps Boundary Service"
+    desc "Import Chicago Community Areas from local file"
     task :community_areas => :environment do
       require 'open-uri'
       require 'json'
       Geography.delete_all(:geo_type => 'Community Area')
 
-      community_area_endpoints = JSON.parse(open("http://api.boundaries.tribapps.com/1.0/boundary-set/community-areas/").read)['boundaries']
-      community_area_endpoints.each do |endpoint|
-        area_json = JSON.parse(open("http://api.boundaries.tribapps.com/#{endpoint}").read)
+      community_areas = JSON.parse(open("db/import/community_areas.geojson").read)['features']
+      community_areas.each do |area_json|
 
         area = Geography.new(
           :geo_type => 'Community Area',
@@ -639,7 +656,8 @@ namespace :db do
       require 'open-uri'
       require 'json'
       
-      Dataset.where(:provider => "Purple Binder").each do |d|
+      # clear out existing intervention locations and relational talbes
+      Dataset.where(:provider => ["Purple Binder", "Chicago Community Oral Health Forum"]).each do |d|
         InterventionLocation.delete_all("dataset_id = #{d.id}")
         d.delete
       end
@@ -655,14 +673,9 @@ namespace :db do
       )
       dataset_pb.save!
 
-      Dataset.where(:provider => "Chicago Community Oral Health Forum").each do |d|
-        InterventionLocation.delete_all("dataset_id = #{d.id}")
-        d.delete
-      end
-
       dataset_oral_health = Dataset.new(
         :name => 'Oral Health Clinics',
-        :slug => 'oral_health_clinics',
+        :slug => 'chicago-metro-oral-health-clinics',
         :description => '', # leaving blank for now
         :provider => 'Chicago Community Oral Health Forum',
         :url => 'http://www.heartlandalliance.org/oralhealth/',
@@ -671,25 +684,28 @@ namespace :db do
       )
       dataset_oral_health.save!
 
-      page = 1
-      programs = JSON.parse(open("http://purplebinder.com/api/programs?page=#{page}", "Authorization" => "Token token=\"#{ENV['purple_binder_token']}\"").read)['programs']
+      # page = 1
+      # programs = JSON.parse(open("http://app.purplebinder.com/api/programs?page=#{page}", "Authorization" => "Token token=\"#{ENV['purple_binder_token']}\"").read)['programs']
 
-      while (!programs.nil? and programs != []) do
-        puts "reading page #{page}"
+      programs = JSON.parse(open("db/import/pb_programs.json").read)["programs"]
+      # while (!programs.nil? and programs != []) do
+        # puts "reading page #{page}"
         programs.each do |p|
 
           dataset_id = dataset_pb.id
-          if p['datasets'].include? 'Chicago Metro Oral Health Clinics'
+          if p['datasets'].include? 'chicago-metro-oral-health-clinics'
             dataset_id = dataset_oral_health.id
           end
 
           if p['locations'].length > 0 and p['locations'].first['lat'] != ''
+
             intervention = InterventionLocation.new(
               :organization_name => p["organization_name"],
               :program_name => p["name"],
               :hours => (p["hours"].nil? ? "" : p["hours"]),
               :phone => (p["phone"].nil? ? "" : p["phone"]),
               :tags => ActiveSupport::JSON.encode(p["tags"]),
+              :categories => ActiveSupport::JSON.encode(p["categories"]),
               :address => p['locations'].first["address"],
               :city => p['locations'].first["city"],
               :state => p['locations'].first["state"],
@@ -699,15 +715,15 @@ namespace :db do
               :dataset_id => dataset_id
             )
             intervention.save!
+
           else
             puts 'no location'
             puts p.inspect
           end
+        # end
 
-        end
-
-        page = page + 1
-        programs = JSON.parse(open("http://purplebinder.com/api/programs?page=#{page}", "Authorization" => "Token token=\"#{ENV['purple_binder_token']}\"").read)['programs']
+        # page = page + 1
+        # programs = JSON.parse(open("http://app.purplebinder.com/api/programs?page=#{page}", "Authorization" => "Token token=\"#{ENV['purple_binder_token']}\"").read)['programs']
       end
 
       stat_count = InterventionLocation.count(:conditions => "dataset_id = #{dataset_pb.id}")

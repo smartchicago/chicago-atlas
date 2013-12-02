@@ -16,7 +16,7 @@ ChicagoAtlas::Application.routes.draw do
   get "partner_sign_up" => 'home#partner_sign_up'
 
   # json
-  match "resources(/:dataset_id)/:north/:east/:south/:west" => 'dataset#resources'
+  match "resources(/:dataset_id)/:north/:east/:south/:west" => 'geography#resources_json'
 
   # errors
   unless Rails.application.config.consider_all_requests_local
