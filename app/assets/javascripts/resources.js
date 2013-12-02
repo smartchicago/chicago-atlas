@@ -96,7 +96,6 @@ var ResourcesLib = {
   },
 
   toggle_view: function(view_mode){
-    console.log(view_mode);
     if (view_mode == 'list') {
       $("#toggle_view").html("Map <i class='icon-map-marker'></i>");
       $.address.parameter('view_mode', 'list');
