@@ -83,6 +83,7 @@ class GeographyController < ApplicationController
 
     resources.order('program_name, organization_name')
 
+    # convert in to a JSON object grouped by category
     resources_by_cat = [{:category => 'all', :resources => []}]
     resources_all = []
     resources.each do |r|
@@ -101,6 +102,10 @@ class GeographyController < ApplicationController
     resources_all = resources_all.uniq
     resources_by_cat.select {|r_c| r_c[:category] == 'all' }.first[:resources] = resources_all
     resources_by_cat = resources_by_cat.sort_by { |r_c| r_c[:category] }
+    
+    resources_by_cat.each do |r_c|
+      r_c[:resources] = r_c[:resources].sort_by { |r| r[:organization_name]}
+    end
 
     respond_to do |format|
       format.json { render :json => resources_by_cat }

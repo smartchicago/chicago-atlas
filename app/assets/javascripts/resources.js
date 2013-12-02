@@ -70,14 +70,6 @@ var ResourcesLib = {
         <hr />\
       ";
 
-    var map_template = "\
-      <b>{{organization_name}}</b>\
-      <br />{{program_name}}<br/>\
-      {{address}}<br/>\
-      {{phone}}<br />\
-      {{hours}}<br />\
-      ";
-
     var resources = [];
     for (var i=0;i<ResourcesLib.resources_list.length;i++)
       if (ResourcesLib.resources_list[i]['category'] == category)
@@ -98,7 +90,7 @@ var ResourcesLib = {
       LeafletLib.addMarker(
         (new L.Marker(
           new L.LatLng( resources[i]['latitude'], resources[i]['longitude'] )
-        )).bindPopup(Mustache.render(map_template, resources[i]))
+        )).bindPopup(Mustache.render(table_template, resources[i]))
       );
     }
   },
