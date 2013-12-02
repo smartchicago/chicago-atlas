@@ -24,14 +24,7 @@
   .span8
     #map_resources
 
-    %table.table.table-hover#table_resources
-      %thead
-        %tr
-          %td Name
-          %td Address
-          %td Phone
-          %td Hours
-      %tbody#intervention_list
+    #list_resources
 
 - content_for :javascripts do
   = javascript_include_tag "leaflet"

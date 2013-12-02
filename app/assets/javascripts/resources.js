@@ -55,6 +55,29 @@ var ResourcesLib = {
     $("[data-category='" + category + "']").parent().attr("class", "active");
     $.address.parameter('category', category);
 
+    var table_template = "\
+      <h4>{{organization_name}}</h4>\
+        {{program_name}}\
+        {{#address}}\
+          <br /><i class='icon-map-marker'></i> {{address}}\
+        {{/address}}\
+        {{#phone}}\
+          <br /><i class='icon-phone'></i> {{phone}}\
+        {{/phone}}\
+        {{#hours}}\
+          <br /><i class='icon-time'></i> {{hours}}\
+        {{/hours}}\
+        <hr />\
+      ";
+
+    var map_template = "\
+      <b>{{organization_name}}</b>\
+      <br />{{program_name}}<br/>\
+      {{address}}<br/>\
+      {{phone}}<br />\
+      {{hours}}<br />\
+      ";
+
     var resources = [];
     for (var i=0;i<ResourcesLib.resources_list.length;i++)
       if (ResourcesLib.resources_list[i]['category'] == category)
@@ -70,23 +93,7 @@ var ResourcesLib = {
       resources[i]['hours'] = resources[i]['hours'].slice(0, hours_len);
 
       // populate table and map
-      var table_template = "\
-        <tr>\
-          <td><h4>{{organization_name}}</h4>{{program_name}}</td>\
-          <td>{{address}}</td>\
-          <td>{{phone}}</td>\
-          <td>{{hours}}</td>\
-        </tr>\
-        ";
-      $("#intervention_list").append(Mustache.render(table_template, resources[i]));
-
-      var map_template = "\
-        <b>{{organization_name}}</b>\
-        <br />{{program_name}}<br/>\
-        {{address}}<br/>\
-        {{phone}}<br />\
-        {{hours}}<br />\
-        ";
+      $("#list_resources").append(Mustache.render(table_template, resources[i]));
 
       LeafletLib.addMarker(
         (new L.Marker(
@@ -102,20 +109,20 @@ var ResourcesLib = {
       $("#toggle_view").html("Map <i class='icon-map-marker'></i>");
       $.address.parameter('view_mode', 'list');
       $("#map_resources").hide();
-      $("#table_resources").show();
+      $("#list_resources").show();
     }
     else {
       $("#toggle_view").html("List <i class='icon-list'></i>");
       $.address.parameter('view_mode', 'map');
       $("#map_resources").show();
-      $("#table_resources").hide();
+      $("#list_resources").hide();
     }
 
   },
 
   reset_view: function() {
     LeafletLib.clearMarkers(); 
-    $("#intervention_list").html("");
+    $("#list_resources").html("");
   },
 
   humanize: function(property) {

@@ -84,20 +84,22 @@ class GeographyController < ApplicationController
     resources.order('program_name, organization_name')
 
     resources_by_cat = [{:category => 'all', :resources => []}]
+    resources_all = []
     resources.each do |r|
       categories = eval(r[:categories])
       categories.each do |c|
         if resources_by_cat.select {|r_c| r_c[:category] == c }.empty?
           resources_by_cat << {:category => c, :resources => []}
         end
-        resources_by_cat.select {|r_c| r_c[:category] == c }.first[:resources] << r
-        resources_by_cat.select {|r_c| r_c[:category] == 'all' }.first[:resources] << r
+        unless r[:address].empty?
+          resources_by_cat.select {|r_c| r_c[:category] == c }.first[:resources] << r
+          resources_all << r
+        end
       end
     end
 
-    resources_by_cat.select {|r_c| r_c[:category] == 'all' }.first[:resources] =
-      resources_by_cat.select {|r_c| r_c[:category] == 'all' }.first[:resources].uniq
-
+    resources_all = resources_all.uniq
+    resources_by_cat.select {|r_c| r_c[:category] == 'all' }.first[:resources] = resources_all
     resources_by_cat = resources_by_cat.sort_by { |r_c| r_c[:category] }
 
     respond_to do |format|
