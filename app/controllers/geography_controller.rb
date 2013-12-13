@@ -35,6 +35,9 @@ class GeographyController < ApplicationController
 
     @male_percent = (male_pop.to_f / (male_pop + female_pop) * 100).round(1)
     @female_percent = (female_pop.to_f / (male_pop + female_pop) * 100).round(1)
+
+    @adjacent_zips = eval(@geography.adjacent_zips)
+    @adjacent_community_areas = eval(@geography.adjacent_community_areas)
   end
 
   def showdataset

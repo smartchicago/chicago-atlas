@@ -16,6 +16,8 @@
       = render :partial => "geography/category", :locals => {:category => category, :geography => @geography }
 
   .span4
+    %p.alert.alert-info
+      %a{:href => "/place/#{@geography.slug}/resources"} View local resources in #{@geography.name} &raquo;
     .well
       - content_for :javascripts do
         = javascript_include_tag "leaflet"
@@ -31,8 +33,21 @@
 
 
       #map_detail
-      %br
-      %a{:href => "/place/#{@geography.slug}/resources"} View local resources
+      %br 
+      - if @geography.geo_type == 'Community Area' and @adjacent_zips.length > 0
+        %p 
+          For chronic disease indicators, browse nearby zip codes:
+          - @adjacent_zips.each do |z|
+            %a{:href => "/place/#{z}"} 
+              #{Geography.find(z).name}
+
+      - if @geography.geo_type == 'Zip' and @adjacent_community_areas.length > 0
+        %p 
+          For other health indicators, browse nearby community areas:
+          - @adjacent_community_areas.each do |a|
+            %a{:href => "/place/#{a}"} 
+              #{Geography.find(a).name}
+
 
       %h3 Demographics
 
