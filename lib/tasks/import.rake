@@ -81,8 +81,8 @@ namespace :db do
             :name => zip_name,
             :slug => zip['properties']['ZIP'],
             :geometry => ActiveSupport::JSON.encode(zip['geometry']),
-            :adjacent_zips => ActiveSupport::JSON.encode(zip['adjacent_zips']),
-            :adjacent_community_areas => ActiveSupport::JSON.encode(zip['adjacent_community_areas']),
+            :adjacent_zips => ActiveSupport::JSON.encode(zip['properties']['adjacent_zips']),
+            :adjacent_community_areas => ActiveSupport::JSON.encode(zip['properties']['adjacent_community_areas']),
           )
           area.id = zip['properties']['ZIP']
           puts "importing #{area.name}"
