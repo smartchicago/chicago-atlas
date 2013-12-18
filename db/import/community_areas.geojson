@@ -6507,7 +6507,7 @@
             "set": "/1.0/boundary-set/community-areas/", 
             "name": "Lincoln Park", 
             "adjacent_zips": [
-                "60642", 
+                "60622", 
                 "60657", 
                 "60614", 
                 "60647", 
@@ -6992,8 +6992,7 @@
             "adjacent_zips": [
                 "60614", 
                 "60639", 
-                "60622", 
-                "60642", 
+                "60622",
                 "60641", 
                 "60618", 
                 "60647"
@@ -7242,15 +7241,9 @@
             "set": "/1.0/boundary-set/community-areas/", 
             "name": "Loop", 
             "adjacent_zips": [
-                "60604", 
-                "60601", 
-                "60602", 
-                "60654", 
-                "60611", 
-                "60603", 
-                "60605", 
-                "60607", 
-                "60606"
+                "12311",
+                "60610",
+                "6761"
             ], 
             "adjacent_community_areas": [
                 "33", 
@@ -7510,7 +7503,7 @@
             "name": "Lower West Side", 
             "adjacent_zips": [
                 "60616", 
-                "60607", 
+                "6761", 
                 "60608"
             ], 
             "adjacent_community_areas": [
@@ -8218,11 +8211,9 @@
             "adjacent_zips": [
                 "60614", 
                 "60610", 
-                "60611", 
-                "60606", 
-                "60642", 
-                "60654", 
-                "60601"
+                "6761", 
+                "60622",
+                "12311"
             ], 
             "adjacent_community_areas": [
                 "24", 
@@ -8591,8 +8582,8 @@
             "name": "Near South Side", 
             "adjacent_zips": [
                 "60616", 
-                "60607", 
-                "60605"
+                "6761", 
+                "12311"
             ], 
             "adjacent_community_areas": [
                 "28", 
@@ -8957,15 +8948,12 @@
             "set": "/1.0/boundary-set/community-areas/", 
             "name": "Near West Side", 
             "adjacent_zips": [
-                "60661", 
-                "60607", 
                 "60608", 
                 "60612", 
-                "60654", 
-                "60642", 
+                "60610", 
                 "60622", 
                 "60616", 
-                "60606"
+                "6761"
             ], 
             "adjacent_community_areas": [
                 "29", 
@@ -14343,17 +14331,13 @@
             "set": "/1.0/boundary-set/community-areas/", 
             "name": "West Town", 
             "adjacent_zips": [
-                "60661", 
                 "60610", 
                 "60651", 
                 "60622", 
-                "60642", 
-                "60647", 
-                "60654", 
+                "60647",
                 "60612", 
-                "60614", 
-                "60607", 
-                "60606"
+                "60614",
+                "6761"
             ], 
             "adjacent_community_areas": [
                 "28", 
