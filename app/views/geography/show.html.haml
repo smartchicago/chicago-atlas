@@ -17,7 +17,9 @@
 
   .span4
     %p.alert.alert-info
-      %a{:href => "/place/#{@geography.slug}/resources"} View local resources in #{@geography.name} &raquo;
+      %a{:href => "/place/#{@geography.slug}/resources"} 
+        %i.icon-map-marker
+        View local resources in #{@geography.name} &raquo;
     .well
       - content_for :javascripts do
         = javascript_include_tag "leaflet"
