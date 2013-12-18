@@ -37,16 +37,12 @@
       - if @geography.geo_type == 'Community Area' and @adjacent_zips.length > 0
         %p 
           For chronic disease indicators, browse nearby zip codes:
-          - @adjacent_zips.each do |z|
-            %a{:href => "/place/#{z}"} 
-              #{Geography.find(z).name}
+          = raw @adjacent_zips.map{|z| "<a href='/place/#{z.slug}'>#{z.name}</a>"}.join(', ')
 
       - if @geography.geo_type == 'Zip' and @adjacent_community_areas.length > 0
         %p 
           For other health indicators, browse nearby community areas:
-          - @adjacent_community_areas.each do |a|
-            %a{:href => "/place/#{a}"} 
-              #{Geography.find(a).name}
+          = raw @adjacent_community_areas.map{|a| "<a href='/place/#{a.slug}'>#{a.name}</a>"}.join(', ')
 
 
       %h3 Demographics
