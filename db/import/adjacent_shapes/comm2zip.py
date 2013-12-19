@@ -37,6 +37,8 @@ def map_zips(zip_zip):
             zip_d[k].append(row[0])
     for feature in zip_areas['features']:
         zipcode = feature['properties']['ZIP']
+        zip_list = zip_zip[zipcode]
+        zip_list.remove(zipcode)
         try:
             feature['properties']['adjacent_zips'] = zip_zip[zipcode]
             feature['properties']['adjacent_community_areas'] = zip_d[zipcode]
