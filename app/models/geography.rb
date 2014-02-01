@@ -1,7 +1,7 @@
 class Geography < ActiveRecord::Base
   has_many :statistics
 
-  attr_accessible :geo_type, :name, :external_id, :slug, :centroid, :geometry
+  attr_accessible :geo_type, :name, :external_id, :slug, :centroid, :geometry, :adjacent_zips, :adjacent_community_areas
 
   def centroid_as_lat_lng
     my_centroid = JSON.parse(centroid)

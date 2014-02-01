@@ -49,7 +49,9 @@ namespace :db do
           :name => area_json['name'],
           :slug => area_json['name'].parameterize.underscore.to_sym,
           :geometry => ActiveSupport::JSON.encode(area_json['simple_shape']),
-          :centroid => ActiveSupport::JSON.encode(area_json['centroid']['coordinates'])
+          :centroid => ActiveSupport::JSON.encode(area_json['centroid']['coordinates']),
+          :adjacent_zips => ActiveSupport::JSON.encode(area_json['adjacent_zips']),
+          :adjacent_community_areas => ActiveSupport::JSON.encode(area_json['adjacent_community_areas']),
         )
         area.id = area_json['external_id']
         puts "importing #{area.name}"
@@ -79,6 +81,8 @@ namespace :db do
             :name => zip_name,
             :slug => zip['properties']['ZIP'],
             :geometry => ActiveSupport::JSON.encode(zip['geometry']),
+            :adjacent_zips => ActiveSupport::JSON.encode(zip['properties']['adjacent_zips']),
+            :adjacent_community_areas => ActiveSupport::JSON.encode(zip['properties']['adjacent_community_areas']),
           )
           area.id = zip['properties']['ZIP']
           puts "importing #{area.name}"

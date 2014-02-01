@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131122225938) do
+ActiveRecord::Schema.define(:version => 20131213221140) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -42,9 +42,11 @@ ActiveRecord::Schema.define(:version => 20131122225938) do
     t.string   "name"
     t.string   "slug"
     t.text     "geometry"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.string   "centroid"
+    t.string   "adjacent_zips",            :default => "[]"
+    t.string   "adjacent_community_areas", :default => "[]"
   end
 
   create_table "intervention_location_datasets", :force => true do |t|

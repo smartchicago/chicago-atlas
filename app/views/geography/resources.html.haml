@@ -15,13 +15,12 @@
   .span4
     %h3 
       Categories
-      .pull-right
-        %a.btn.btn-default#toggle_view{:href => "#"}
-          List
-          %i.icon-list
     %ul.nav.nav-tabs.nav-stacked#categories
 
   .span8
+    %h3
+      %span#category_title
+      resources in #{@geography.name}
     #map_resources
 
     #list_resources
@@ -35,11 +34,3 @@
 
   :javascript
     ResourcesLib.init(#{@geography.geometry}, #{@geography.centroid_as_lat_lng}, '#{@dataset_url_fragment}');
-
-    $("#toggle_view").click(function(){
-      var new_view_mode = 'map';
-      if ($.address.parameter('view_mode') == 'map')
-        new_view_mode = 'list';
-      ResourcesLib.toggle_view(new_view_mode);
-      return false;
-    });

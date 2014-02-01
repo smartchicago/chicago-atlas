@@ -35,6 +35,19 @@ class GeographyController < ApplicationController
 
     @male_percent = (male_pop.to_f / (male_pop + female_pop) * 100).round(1)
     @female_percent = (female_pop.to_f / (male_pop + female_pop) * 100).round(1)
+
+    @adjacent_zips = [] 
+    eval(@geography.adjacent_zips).each do |z|
+      @adjacent_zips << Geography.find(z)
+    end
+    @adjacent_zips = @adjacent_zips.sort_by { |z| z[:name] }
+
+    @adjacent_community_areas = [] 
+    eval(@geography.adjacent_community_areas).each do |a|
+      @adjacent_community_areas << Geography.find(a)
+    end
+    @adjacent_community_areas = @adjacent_community_areas.sort_by { |a| a[:name] }
+    
   end
 
   def showdataset
