@@ -47,9 +47,11 @@ navigate to http://localhost:8080/
 
 ## Team
 
-* [Derek Eder](mailto:derek.eder+git@gmail.com)
-* [Aaron U. Salmon](mailto:aaronusalmon@gmail.com)
-* [Dan O'Neil](mailto:doneil@cct.org)
+* [Dan O'Neil](mailto:doneil@cct.org): runs the project for the [Smart Chicago Collaborative](http://www.smartchicagocollaborative.org/)
+* Chicago Department of Public Health: many stakeholders publishing and interpreting data
+* Purple Binder: provider of all location data for health resources.
+* Derek Eder: lead developer; owner of Data Made, which is a contractor for the Smart Chicago Collaborative
+
 
 ## Errors / Bugs
 
