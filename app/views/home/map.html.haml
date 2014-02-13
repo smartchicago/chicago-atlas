@@ -126,7 +126,7 @@
         }
 
         function linkToDetail(e) {
-            window.location = '/place/' + e.target.feature.properties.slug + '/#{@current_dataset.slug}';
+            window.location = '/place/' + e.target.feature.properties.slug + '##{@current_dataset.slug}';
         }
 
         geojson = L.geoJson(geojsonFeature, {

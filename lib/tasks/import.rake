@@ -521,7 +521,7 @@ namespace :db do
       end
     end
 
-    desc "Import Chicago homicide, assault, and battery from CSV"
+    desc "Import Chicago homicide, assault, and battery from Socrata"
     task :crime => :environment do
 
       Dataset.where(:provider => "Chicago Police Department").each do |d|
@@ -531,11 +531,11 @@ namespace :db do
 
       start_year = 2003 # 2001 and 2002 are years with incomplete data
       datasets = [
-        {:category => 'Crime', :name => 'Homicide', :fbi_code => "01A", :parse_token => 'crime-h', :description => "Number of reported homicides per 100,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => 'rate'},
-        {:category => 'Crime', :name => 'Aggravated Assault', :fbi_code => "04A", :parse_token => 'crime-aa', :description => "Number of reported aggravated assaults per 100,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => 'rate'},
-        {:category => 'Crime', :name => 'Simple Assault', :fbi_code => "08A", :parse_token => 'crime-sa', :description => "Number of reported simple assaults per 100,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => 'rate'},
-        {:category => 'Crime', :name => 'Aggravated Battery', :fbi_code => "04B", :parse_token => 'crime-ab', :description => "Number of reports of aggravated battery per 100,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => 'rate'},
-        {:category => 'Crime', :name => 'Simple Battery', :fbi_code => "08B", :parse_token => 'crime-sb', :description => "Number of reports of simple battery per 100,000 residents from 2003 - 2012", :choropleth_cutoffs => "", :stat_type => 'rate'}
+        {:category => 'Crime', :name => 'Homicide', :fbi_code => "01A", :parse_token => 'crime-h', :description => "Number of reported homicides per 1,000 residents from 2003 - 2013", :choropleth_cutoffs => "", :stat_type => 'rate'},
+        {:category => 'Crime', :name => 'Aggravated Assault', :fbi_code => "04A", :parse_token => 'crime-aa', :description => "Number of reported aggravated assaults per 1,000 residents from 2003 - 2013", :choropleth_cutoffs => "", :stat_type => 'rate'},
+        {:category => 'Crime', :name => 'Simple Assault', :fbi_code => "08A", :parse_token => 'crime-sa', :description => "Number of reported simple assaults per 1,000 residents from 2003 - 2013", :choropleth_cutoffs => "", :stat_type => 'rate'},
+        {:category => 'Crime', :name => 'Aggravated Battery', :fbi_code => "04B", :parse_token => 'crime-ab', :description => "Number of reports of aggravated battery per 1,000 residents from 2003 - 2013", :choropleth_cutoffs => "", :stat_type => 'rate'},
+        {:category => 'Crime', :name => 'Simple Battery', :fbi_code => "08B", :parse_token => 'crime-sb', :description => "Number of reports of simple battery per 1,000 residents from 2003 - 2013", :choropleth_cutoffs => "", :stat_type => 'rate'}
       ]
 
       datasets.each do |d|
@@ -584,7 +584,7 @@ namespace :db do
           end
 
           crime_count = stat['count_id'].to_f or 0
-          crime_rate = crime_count / (comm_population / 100000.0)  # rate per 100,000 residents
+          crime_rate = crime_count / (comm_population / 1000.0)  # rate per 1000 residents
 
           store = Statistic.new(
             :dataset_id => dataset.id,
@@ -639,7 +639,7 @@ namespace :db do
             chicago_population = Geography.find(100).population(stat['year'])
           end
 
-          chicago_crime_rate = stat['count_id'].to_f / (chicago_population / 100000.0)  # rate per 100,000 residents
+          chicago_crime_rate = stat['count_id'].to_f / (chicago_population / 1000.0)  # rate per 100,000 residents
 
           store = Statistic.new(
             :dataset_id => dataset.id,
