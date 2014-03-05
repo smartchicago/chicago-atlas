@@ -691,7 +691,7 @@ namespace :db do
       # page = 1
       # programs = JSON.parse(open("http://app.purplebinder.com/api/programs?page=#{page}", "Authorization" => "Token token=\"#{ENV['purple_binder_token']}\"").read)['programs']
 
-      programs = JSON.parse(open("db/import/pb_programs.json").read)["programs"]
+      programs = JSON.parse(open("db/import/pb_programs.json").read)
       # while (!programs.nil? and programs != []) do
         # puts "reading page #{page}"
         programs.each do |p|
@@ -709,6 +709,8 @@ namespace :db do
               :hours => (p["hours"].nil? ? "" : p["hours"]),
               :phone => (p["phone"].nil? ? "" : p["phone"]),
               :tags => ActiveSupport::JSON.encode(p["tags"]),
+              :purple_binder_url => p["purple_binder_url"],
+              :program_url => p["program_url"],
               :categories => ActiveSupport::JSON.encode(p["categories"]),
               :address => p['locations'].first["address"],
               :city => p['locations'].first["city"],
