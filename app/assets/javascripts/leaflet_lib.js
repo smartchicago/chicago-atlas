@@ -13,7 +13,7 @@ var LeafletLib = {
 
         LeafletLib.map = L.map(element, {scrollWheelZoom:false}).setView(new L.LatLng( centroid[0], centroid[1] ), zoom);
 
-        LeafletLib.tiles = L.tileLayer('https://{s}.tiles.mapbox.com/v3/derekeder.hehblhbj/{z}/{x}/{y}.png', {
+        LeafletLib.tiles = L.tileLayer('https://{s}.tiles.mapbox.com/v3/smartchicagocollaborative.heooddo8/{z}/{x}/{y}.png', {
             attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
         }).addTo(LeafletLib.map);
 
