@@ -13,9 +13,8 @@ var LeafletLib = {
 
         LeafletLib.map = L.map(element, {scrollWheelZoom:false}).setView(new L.LatLng( centroid[0], centroid[1] ), zoom);
 
-        LeafletLib.tiles = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
-            key: '88c48b9eab824447beca8aca7bb6e167',
-            styleId: 22677
+        LeafletLib.tiles = L.tileLayer('https://{s}.tiles.mapbox.com/v3/smartchicagocollaborative.heooddo8/{z}/{x}/{y}.png', {
+            attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
         }).addTo(LeafletLib.map);
 
         LeafletLib.map.attributionControl.setPrefix('');

@@ -54,7 +54,12 @@ var ResourcesLib = {
     $.address.parameter('category', category);
 
     var table_template = "\
-      <h4>{{organization_name}}</h4>\
+        {{#site_url}}\
+          <h4><a href='{{site_url}}'>{{organization_name}}</a></h4>\
+        {{/site_url}}\
+        {{^site_url}}\
+          <h4>{{organization_name}}</h4>\
+        {{/site_url}}\
         {{program_name}}\
         {{#address}}\
           <br /><i class='icon-map-marker'></i> {{address}}\
@@ -76,6 +81,11 @@ var ResourcesLib = {
     for (var i=0;i<resources.length;i++) {
       // remove N/A data from phone field
       if (resources[i]['phone'].indexOf("N/A") >= 0 ) resources[i]['phone'] = '';
+
+      // link to Program page if available
+
+      resources[i]['site_url'] = '';
+      if (resources[i]['program_url'] != '') resources[i]['site_url'] = resources[i]['program_url'];
 
       // truncate hours field
       var hours_len = resources[i]['hours'].length;
