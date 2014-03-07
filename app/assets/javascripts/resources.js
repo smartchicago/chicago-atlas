@@ -55,7 +55,7 @@ var ResourcesLib = {
 
     var table_template = "\
         {{#site_url}}\
-          <h4><a href='{{site_url}}'>{{organization_name}}</a></h4>\
+          <h4><a target='_blank' href='{{site_url}}'>{{organization_name}}</a></h4>\
         {{/site_url}}\
         {{^site_url}}\
           <h4>{{organization_name}}</h4>\
