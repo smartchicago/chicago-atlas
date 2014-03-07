@@ -85,7 +85,7 @@ var ResourcesLib = {
       // link to Program page if available
 
       resources[i]['site_url'] = '';
-      if (resources[i]['program_url'] != '') resources[i]['site_url'] = resources[i]['program_url'];
+      if (resources[i]['program_url'] != '' && resources[i]['program_url'] != 'http://') resources[i]['site_url'] = resources[i]['program_url'];
 
       // truncate hours field
       var hours_len = resources[i]['hours'].length;
