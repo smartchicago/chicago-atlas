@@ -5,12 +5,14 @@
       Places
 
     %p.lead
-      Choose a community area from the list below. You can also browse by 
-      = succeed '.' do
-        %a{:href => "#zipcode"} zip code
+      Chicago Health Atlas contains lots of citywide data from a wide variety of sources. You can browse different types of info by <a href='#community-area'>community area</a> and <a href='#zipcode'>zip code</a>.
+
     %hr
     .row
-    %h3 Community areas
+    %h3#community-area Community area
+    %p
+      View info on births, crime, deaths, environmental health, and infectious disease by choosing one of the 77 official community areas in Chicago. All of this data is supplied by the Chicago Department of Public Health. It is comprehensive data, including all people in the city.
+
     - @community_areas.each do |geography|
       .span4
         %h4
@@ -20,6 +22,9 @@
     .row
     %hr
     %h3#zipcode Zip codes
+    %p
+      View info on nine types of chronic disease by choosing a zip code. All of this data is supplied by a number of health care providers. It includes six hospitals systems, so it is not complete.
+
     - @zip_codes.each do |geography|
       .span4
         %h4
