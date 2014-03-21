@@ -7,8 +7,8 @@ class HomeController < ApplicationController
     @current_menu = 'home'
   end
 
-  def map
-    @current_menu = 'map'
+  def conditions
+    @current_menu = 'conditions'
     @landing = false
     @current_statistics = []
 
@@ -46,6 +46,11 @@ class HomeController < ApplicationController
       format.json { render :json => @display_geojson }
     end
 
+  end
+
+  def resources
+    @current_menu = 'resources'
+    @display_geojson = Rails.cache.fetch('landing_display_geojson') { geography_empty_geojson } 
   end
 
   def partners

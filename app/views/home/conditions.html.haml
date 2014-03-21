@@ -213,18 +213,18 @@
             $('#slider').slider('value', $.address.parameter('year'));
         });
 
-.row-fluid
+.row-fluid#map-page
   .span4
     - if @landing
-      - title 'Browse by neighborhood'
+      - title 'Conditions by neighborhood'
       %h3 
-        Browse by neighborhood
+        Conditions by neighborhood
       %p
         Choose any condition on the left to see data on the map. 
         Examples: <a href='/map/births_birth_rate'>birth rate</a>, <a href='/map/crime_aggravated_assault'>aggravated battery</a>, or <a href='/map/infectious_disease_tuberculosis'>tuberculosis</a>.
       
     - else
-      - title 'Browse ' + @current_dataset.name
+      - title 'Conditions ' + @current_dataset.name
       %h3
         #{@current_dataset.name}
       %p #{@current_dataset.description}

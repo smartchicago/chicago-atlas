@@ -50,7 +50,7 @@ class GeographyController < ApplicationController
     
   end
 
-  def showdataset
+  def show_dataset
     @current_menu = 'places'
     
     @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
@@ -62,7 +62,7 @@ class GeographyController < ApplicationController
     end
   end
 
-  def resources
+  def show_resources
     @current_menu = 'places'
     @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
     @dataset_url_fragment = ""
