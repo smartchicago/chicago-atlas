@@ -46,7 +46,8 @@ var LeafletLib = {
             color: 'white',
             dashArray: '3',
             fillOpacity: 0.7,
-            fillColor: '#FD8D3C'
+            fillColor: '#FD8D3C',
+            clickable: false
         };
     },
 
