@@ -691,6 +691,9 @@ namespace :db do
       # page = 1
       # programs = JSON.parse(open("http://app.purplebinder.com/api/programs?page=#{page}", "Authorization" => "Token token=\"#{ENV['purple_binder_token']}\"").read)['programs']
 
+      # command for downloading PB data
+      # curl http://app.purplebinder.com/api/programs   -H 'Authorization: Token token="{purple_binder_token}"' > pb_programs.json
+
       programs = JSON.parse(open("db/import/pb_programs.json").read)
       # while (!programs.nil? and programs != []) do
         # puts "reading page #{page}"
