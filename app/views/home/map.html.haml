@@ -85,7 +85,7 @@
         }
 
         function linkToDetail(e) {
-            window.location = '/place/' + e.target.feature.properties.slug;
+            window.location = '/place/' + e.target.feature.properties.slug + '#{@detail_url_fragment}';
         }
 
   - else
@@ -238,6 +238,7 @@
 
     %hr
 
+    %h4 Conditions
     #view_accordion.accordion
       - @categories.each do |c|
         .accordion-group
@@ -255,6 +256,13 @@
                     - else
                       %a{:href => "/map/#{d.slug}"} 
                         = d.name
+
+    %h4 Resources
+    #resources_accordion.accordion
+      .accordion-group
+        .accordion-heading
+          %a.accordion-toggle{:href => "/map/affordable_resources"} Affordable resources
+
 
   .span8
     #map

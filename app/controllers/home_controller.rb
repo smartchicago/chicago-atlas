@@ -10,11 +10,17 @@ class HomeController < ApplicationController
   def map
     @current_menu = 'map'
     @landing = false
+    @detail_url_fragment = ''
     @current_statistics = []
 
-    if params[:dataset_slug].nil?
+    if params[:dataset_slug].nil? or params[:dataset_slug] == "affordable_resources"
       @landing = true
       @display_geojson = Rails.cache.fetch('landing_display_geojson') { geography_empty_geojson } 
+    
+      if params[:dataset_slug] == "affordable_resources"
+        @detail_url_fragment = "/resources"
+      end
+
     else
       @current_dataset = Rails.cache.fetch("#{params[:dataset_slug]}_current_dataset") { Dataset.where("slug = '#{params[:dataset_slug]}'").first }
       @current_category = Rails.cache.fetch("#{params[:dataset_slug]}_current_category") { Category.find(@current_dataset.category_id) }
