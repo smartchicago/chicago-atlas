@@ -18,6 +18,11 @@
         %h4
           %a{:href => "/place/#{geography.slug}"}
             = geography.name
+          %small
+            (
+            %a{:href => "/place/#{geography.slug}/resources"}
+              resources
+            )
 
     .row
     %hr
@@ -30,3 +35,8 @@
         %h4
           %a{:href => "/place/#{geography.slug}"}
             = geography.name
+          %small
+            (
+            %a{:href => "/place/#{geography.slug}/resources"}
+              resources
+            )
