@@ -1,0 +1,16 @@
+- title "#{@geography.name} - #{@dataset.name}"
+.row-fluid
+  .span10
+
+    %h1
+      #{@geography.name}
+      %small #{@dataset.name}
+
+    %a{:href => "/place/#{@geography.slug}"} &laquo; back to #{@geography.name}
+
+    %hr
+
+    :javascript
+      var colorHash = ["#A6761D", "#7570B3", "#D95F02", "#66A61E", "#E7298A", "#E6AB02", "#1B9E77"];
+
+    = render :partial => "geography/dataset", :locals => { :dataset => @dataset, :geography => @geography, :show_header => false }

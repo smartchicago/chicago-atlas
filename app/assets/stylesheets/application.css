@@ -118,9 +118,11 @@ ol li {
     padding: 10px 0;
     text-align: center;
 }
-
-#map-page {
-    padding-top: 0px;
+.Browse .footer {
+    margin-top: 0px;
+}
+.Browse .navbar {
+    margin-bottom: 0px;
 }
 .footer p {
     color: #777777;
