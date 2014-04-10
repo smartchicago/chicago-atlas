@@ -89,6 +89,34 @@ module ApplicationHelper
     ActiveSupport::JSON.encode({"type" => "FeatureCollection", "features" => geojson})
   end
 
+  def geography_resources_geojson()
+
+    area_stats = Geography
+      .select("geographies.id, geographies.name, geographies.slug, geographies.geometry, count(geographies.id) as resource_cnt")
+      .joins("JOIN intervention_locations on intervention_locations.community_area_id = geographies.id")
+      .group("geographies.id")
+      .where("geo_type = 'Community Area'")
+
+    geojson = []    
+    area_stats.all.each do |c|
+      geojson << {
+        "type" => "Feature", 
+        "id" => c.id,
+        "properties" => {
+          "name" => c.name,
+          "slug" => "#{c.slug}/resources",
+          "stat_type" => '',
+          "condition_title" => 'Resources',
+          "condition_value" => { Time.now.year => c.resource_cnt },
+          "condition_year_range" => ''
+        },
+        "geometry" => ActiveSupport::JSON.decode(c.geometry)
+      }
+    end
+
+    ActiveSupport::JSON.encode({"type" => "FeatureCollection", "features" => geojson})
+  end
+
   def geography_empty_geojson()
 
     area_stats = Geography

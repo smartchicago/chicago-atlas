@@ -3,7 +3,7 @@ var ResourcesLib = {
 
   resources_list: [],
 
-  init: function(geography_geometry, geography_centroid, url_fragment) {
+  init: function(geography_geometry, geography_centroid, url_fragment, community_area) {
     var geojsonFeature = {
         "type": "Feature",
         "geometry": geography_geometry
@@ -11,13 +11,21 @@ var ResourcesLib = {
 
     LeafletLib.initialize("map_resources", { geojson: geojsonFeature }, geography_centroid, 13);
 
-    var bounds = [LeafletLib.latmax, LeafletLib.lngmax, LeafletLib.latmin, LeafletLib.lngmin];
-    bounds[0] = (bounds[0] + "").replace(".",",");
-    bounds[1] = (bounds[1] + "").replace(".",",");
-    bounds[2] = (bounds[2] + "").replace(".",",");
-    bounds[3] = (bounds[3] + "").replace(".",",");
+    var resources_url = ''
+    if (community_area) {
+      resources_url = "/resources" + url_fragment + "/" + community_area + ".json";
+    }
+    else {
+      var bounds = [LeafletLib.latmax, LeafletLib.lngmax, LeafletLib.latmin, LeafletLib.lngmin];
+      bounds[0] = (bounds[0] + "").replace(".",",");
+      bounds[1] = (bounds[1] + "").replace(".",",");
+      bounds[2] = (bounds[2] + "").replace(".",",");
+      bounds[3] = (bounds[3] + "").replace(".",",");
 
-    $.getJSON("/resources" + url_fragment + "/" + bounds.join("/") + ".json", function(resources){
+      resources_url = "/resources" + url_fragment + "/" + bounds.join("/") + ".json";
+    }
+
+    $.getJSON(resources_url, function(resources){
       
       ResourcesLib.resources_list = resources;
 
@@ -40,7 +48,7 @@ var ResourcesLib = {
       if ($.address.parameter('category') != null)
         ResourcesLib.render_category($.address.parameter('category'));
       else
-        ResourcesLib.render_category('health_care'); // by default, show all
+        ResourcesLib.render_category('all'); // by default, show all
     });
   },
 

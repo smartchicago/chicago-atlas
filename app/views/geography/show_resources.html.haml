@@ -29,8 +29,12 @@
   = javascript_include_tag "leaflet"
   = javascript_include_tag "leaflet_lib"
   = javascript_include_tag "mustache"
-  = javascript_include_tag "resources"
+  = javascript_include_tag "show_resources"
   = javascript_include_tag "jquery.address.min"
 
-  :javascript
-    ResourcesLib.init(#{@geography.geometry}, #{@geography.centroid_as_lat_lng}, '#{@dataset_url_fragment}');
+  - if @geography.geo_type == 'Community Area'
+    :javascript
+      ResourcesLib.init(#{@geography.geometry}, #{@geography.centroid_as_lat_lng}, '#{@dataset_url_fragment}', '#{@geography.slug}');
+  - else
+    :javascript
+      ResourcesLib.init(#{@geography.geometry}, #{@geography.centroid_as_lat_lng}, '#{@dataset_url_fragment}');

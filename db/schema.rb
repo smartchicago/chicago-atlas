@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140305181909) do
+ActiveRecord::Schema.define(:version => 20140409161402) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -28,9 +28,8 @@ ActiveRecord::Schema.define(:version => 20140305181909) do
     t.string   "url"
     t.text     "metadata"
     t.integer  "category_id"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
-    t.text     "choropleth_cutoffs", :default => ""
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "data_type"
     t.string   "stat_type"
   end
@@ -74,6 +73,7 @@ ActiveRecord::Schema.define(:version => 20140305181909) do
     t.text     "categories",        :default => ""
     t.string   "purple_binder_url", :default => ""
     t.string   "program_url",       :default => ""
+    t.integer  "community_area_id"
   end
 
   create_table "statistics", :force => true do |t|
