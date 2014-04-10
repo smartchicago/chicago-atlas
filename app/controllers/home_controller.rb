@@ -18,9 +18,8 @@ class HomeController < ApplicationController
       @display_geojson = Rails.cache.fetch('landing_display_geojson') { geography_empty_geojson } 
     
     elsif params[:dataset_slug] == "affordable_resources"
-      @landing = true
       @detail_url_fragment = "/resources"
-      @display_geojson = Rails.cache.fetch('landing_display_geojson') { geography_empty_geojson }
+      @display_geojson = Rails.cache.fetch('geography_resources_geojson') { geography_resources_geojson }
     else
       @current_dataset = Rails.cache.fetch("#{params[:dataset_slug]}_current_dataset") { Dataset.where("slug = '#{params[:dataset_slug]}'").first }
       @current_category = Rails.cache.fetch("#{params[:dataset_slug]}_current_category") { Category.find(@current_dataset.category_id) }

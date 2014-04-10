@@ -66,7 +66,7 @@ namespace :db do
                 :city => p['locations'].first["city"],
                 :state => p['locations'].first["state"],
                 :zip => p['locations'].first["zip"],
-                :community_area_id => p['community_area_id'],
+                :community_area_id => p['locations'].first['community_area_id'],
                 :latitude => p['locations'].first["lat"],
                 :longitude => p['locations'].first["lng"],
                 :dataset_id => dataset_id

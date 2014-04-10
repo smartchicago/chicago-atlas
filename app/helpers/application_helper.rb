@@ -92,9 +92,9 @@ module ApplicationHelper
   def geography_resources_geojson()
 
     area_stats = Geography
-      .select("geographies.id, geographies.name, geographies.slug, geographies.geometry, count(intervention_locations.id) as resource_cnt")
-      .joins("join intervention_locations on intervention_locations.community_area_id = geographies.id")
-      .group("geographies.id, resource_cnt")
+      .select("geographies.id, geographies.name, geographies.slug, geographies.geometry, count(geographies.id) as resource_cnt")
+      .joins("JOIN intervention_locations on intervention_locations.community_area_id = geographies.id")
+      .group("geographies.id")
       .where("geo_type = 'Community Area'")
 
     geojson = []    
@@ -104,7 +104,7 @@ module ApplicationHelper
         "id" => c.id,
         "properties" => {
           "name" => c.name,
-          "slug" => c.slug,
+          "slug" => "#{c.slug}/resources",
           "stat_type" => '',
           "condition_title" => 'Resources',
           "condition_value" => c.resource_cnt,
