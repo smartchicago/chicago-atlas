@@ -5,7 +5,11 @@ class GeographyController < ApplicationController
 
   def index
     @current_menu = 'places'
-    @community_areas = Geography.where("geo_type = 'Community Area'").order("name").all
+    @community_areas = Geography.select("geographies.name, geographies.slug, count(geographies.id) as resource_cnt")
+                        .joins("JOIN intervention_locations on intervention_locations.community_area_id = geographies.id")
+                        .group("geographies.id")
+                        .where("geo_type = 'Community Area'").order("name").all
+
     @zip_codes = Geography.where("geo_type = 'Zip'").order("name").all
 
     respond_to do |format|
@@ -65,6 +69,7 @@ class GeographyController < ApplicationController
   def show_resources
     @current_menu = 'places'
     @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
+
     @dataset_url_fragment = ""
 
     # for specific location view
@@ -78,6 +83,7 @@ class GeographyController < ApplicationController
     dataset_id = params[:dataset_id]
     # send boundary with [ north, east, south, west ]
     bounds = [params[:north], params[:east], params[:south], params[:west] ]
+    community_area = params[:community_area_slug]
 
     resources = InterventionLocation
 
@@ -85,7 +91,13 @@ class GeographyController < ApplicationController
       resources = resources.where('dataset_id = ?', dataset_id)
     end
 
-    if bounds
+    if community_area
+      resources = resources
+                    .joins("JOIN geographies on intervention_locations.community_area_id = geographies.id")
+                    .where("geographies.slug = ?", community_area)
+    end
+
+    if bounds[0] != nil
       bounds[0] = bounds[0].gsub(/[,]/, '.').to_f
       bounds[1] = bounds[1].gsub(/[,]/, '.').to_f
       bounds[2] = bounds[2].gsub(/[,]/, '.').to_f
@@ -94,7 +106,8 @@ class GeographyController < ApplicationController
       resources = resources.where("latitude < #{bounds[0]} AND longitude < #{bounds[1]} AND latitude > #{bounds[2]} AND longitude > #{bounds[3]}")
     end
 
-    resources.order('program_name, organization_name')
+    resources = resources.order('program_name, organization_name')
+    puts resources.to_sql
 
     # convert in to a JSON object grouped by category
     resources_by_cat = [{:category => 'all', :resources => []}]
