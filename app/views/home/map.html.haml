@@ -93,14 +93,15 @@
         var jenks_cutoffs = jenks(#{@current_statistics}, 4);
         jenks_cutoffs[0] = 0; // ensure the bottom value is 0
         jenks_cutoffs.pop(); // last item is the max value, so dont use it
+        var map_colors = #{@map_colors}
 
         // get color depending on condition_title
         function getColor(d) {
-            return  d >= jenks_cutoffs[3] ? '#08519C' : 
-                    d >= jenks_cutoffs[2] ? '#3182BD' : 
-                    d >= jenks_cutoffs[1] ? '#6BAED6' : 
-                    d >= jenks_cutoffs[0] ? '#BDD7E7' :  
-                                            '#EFF3FF';
+            return  d >= jenks_cutoffs[3] ? map_colors[0] : 
+                    d >= jenks_cutoffs[2] ? map_colors[1] : 
+                    d >= jenks_cutoffs[1] ? map_colors[2] : 
+                    d >= jenks_cutoffs[0] ? map_colors[3] :  
+                                            map_colors[4];
         }
 
         function style(feature) {
@@ -124,7 +125,7 @@
         }
 
         function linkToDetail(e) {
-            window.location = '/place/' + e.target.feature.properties.slug + '##{@current_dataset.slug}';
+            window.location = '/place/' + e.target.feature.properties.slug + '##{@current_dataset_slug}';
         }
 
         geojson = L.geoJson(geojsonFeature, {
@@ -151,8 +152,8 @@
             }
         }
 
-        var start_year = #{@current_dataset.start_year};
-        var end_year = #{@current_dataset.end_year};
+        var start_year = #{@current_dataset_start_year};
+        var end_year = #{@current_dataset_end_year};
 
         $('#start_year').html(start_year);
         $('#end_year').html(end_year);
@@ -202,7 +203,7 @@
                     from + (to ? '&ndash;' + to : '+'));
             }
 
-            div.innerHTML = "<strong>#{@current_dataset.name}</strong><br>" + labels.join('<br>');
+            div.innerHTML = "<strong>#{@current_dataset_name}</strong><br>" + labels.join('<br>');
             return div;
         };
 
@@ -224,10 +225,15 @@
         Examples: <a href='/map/births_birth_rate'>birth rate</a>, <a href='/map/crime_aggravated_assault'>aggravated battery</a>, or <a href='/map/infectious_disease_tuberculosis'>tuberculosis</a>.
       
     - else
-      - title 'Browse ' + @current_dataset.name
+      - title 'Browse ' + @current_dataset_name
       %h3
-        #{@current_dataset.name}
-      %p #{@current_dataset.description}
+        #{@current_dataset_name}
+      %p 
+        #{@current_dataset_description}
+        - if @current_dataset_url != ''
+          (
+          %a{:href => @current_dataset_url} source
+          )
       %h4 
         Year
         %small#year_label
@@ -261,7 +267,7 @@
     #resources_accordion.accordion
       .accordion-group
         .accordion-heading
-          %a.accordion-toggle{:href => "/map/affordable_resources"} Affordable resources
+          %a.accordion-toggle{:href => "/map/affordable_resources", :style => 'color: #54278f;'} Affordable resources
 
 
   .span8

@@ -107,7 +107,7 @@ module ApplicationHelper
           "slug" => "#{c.slug}/resources",
           "stat_type" => '',
           "condition_title" => 'Resources',
-          "condition_value" => c.resource_cnt,
+          "condition_value" => { Time.now.year => c.resource_cnt },
           "condition_year_range" => ''
         },
         "geometry" => ActiveSupport::JSON.decode(c.geometry)
