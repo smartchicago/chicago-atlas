@@ -12,7 +12,6 @@ var ResourcesLib = {
     LeafletLib.initialize("map_resources", { geojson: geojsonFeature }, geography_centroid, 13);
 
     var resources_url = ''
-    console.log(community_area)
     if (community_area) {
       resources_url = "/resources" + url_fragment + "/" + community_area + ".json";
     }
@@ -49,7 +48,7 @@ var ResourcesLib = {
       if ($.address.parameter('category') != null)
         ResourcesLib.render_category($.address.parameter('category'));
       else
-        ResourcesLib.render_category('health_care'); // by default, show all
+        ResourcesLib.render_category('all'); // by default, show all
     });
   },
 

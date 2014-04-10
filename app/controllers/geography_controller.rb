@@ -1,7 +1,7 @@
 class GeographyController < ApplicationController
   include ApplicationHelper
 
-  caches_action :index, :show, :showdataset
+  caches_action :index, :show, :show_dataset, :resources_json
 
   def index
     @current_menu = 'places'
@@ -107,7 +107,6 @@ class GeographyController < ApplicationController
     end
 
     resources = resources.order('program_name, organization_name')
-    puts resources.to_sql
 
     # convert in to a JSON object grouped by category
     resources_by_cat = [{:category => 'all', :resources => []}]
