@@ -12,23 +12,49 @@ cd chicago-atlas
 gem install bundler
 bundle install
 rake db:setup
+```
+
+## Download and import data
+
+The Chicago Health Atlas uses data from the [Chicago Data Portal](http://data.cityofchicago.org), the US Census, CHITREC, the [Chicago Tribune Boundary Service](http://boundaries.tribapps.com/), [Purple Binder](http://purplebinder.com), and several other sources. Chicago and Purple Binder data are downloaded directly from APIs, while others are loaded directly from saved copies in the [import directory](https://github.com/smartchicago/chicago-atlas/tree/master/db/import) of this repository.
+
+
+### All geographies, statistics and resources
+```bash
 rake db:import:all
 ```
 
-To import the [Purple Binder](purplebinder.com) data, you will need an API key from their [developers page](http://app.purplebinder.com/developers). The import task requires `foreman` which is included in the [Heroku Toolbelt](https://toolbelt.heroku.com/).
-
-
+### Just statistics
 ```bash
-cp .env.example .env
+rake db:import:stats
 ```
 
-Paste your Purple Binder API key in the `.env` file.
-
+### Individual datasets
 ```bash
-foreman run rake db:import:purple_binder
+rake db:import:geography:community_areas
+rake db:import:geography:zip_codes
+rake db:import:census:population
+rake db:import:chicago:crime
+rake db:import:chicago:dph
+rake db:import:chitrec:all
+rake db:import:purple_binder:all
 ```
 
-Populate the config.yml file with config settings. Values can be found via `heroku config`
+### Refreshing saved copies
+
+Chicago community areas
+```bash
+rake db:import:geography:community_areas_download
+```
+
+Purple Binder
+To import the [Purple Binder](http://purplebinder.com) data, you will need an API key from their [developers page](http://app.purplebinder.com/developers).
+
+```bash
+curl http://app.purplebinder.com/api/programs   -H 'Authorization: Token token="{purple_binder_token}"' > db/import/pb_programs.json
+```
+
+## Running locally
 
 ``` bash
 bundle exec unicorn
@@ -38,7 +64,7 @@ navigate to http://localhost:8080/
 
 ## Dependencies
 
-* Rails 3.2.13
+* Rails 3.2.17
 * Ruby 1.9.3-p194
 * Haml
 * Heroku
