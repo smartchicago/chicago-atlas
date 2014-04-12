@@ -53,11 +53,6 @@ namespace :db do
 
             if p['locations'].length > 0 and p['locations'].first['lat'] != ''
 
-              # setting category to other when blank
-              if p["categories"] == []
-                p["categories"] = ['other']
-              end
-
               intervention = InterventionLocation.new(
                 :organization_name => p["organization_name"],
                 :program_name => p["name"],

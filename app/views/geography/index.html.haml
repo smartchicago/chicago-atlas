@@ -21,7 +21,7 @@
           %small
             (
             %a{:href => "/place/#{geography.slug}/resources"}
-              #{geography.resource_cnt} resources
+              #{pluralize(geography.resource_cnt, 'resource')} 
             )
 
     .row

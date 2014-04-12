@@ -95,7 +95,7 @@ module ApplicationHelper
       .select("geographies.id, geographies.name, geographies.slug, geographies.geometry, count(geographies.id) as resource_cnt")
       .joins("JOIN intervention_locations on intervention_locations.community_area_id = geographies.id")
       .group("geographies.id")
-      .where("geo_type = 'Community Area'")
+      .where("geo_type = 'Community Area' AND intervention_locations.categories != '[]'")
 
     geojson = []    
     area_stats.all.each do |c|

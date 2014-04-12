@@ -38,7 +38,7 @@ class HomeController < ApplicationController
                       .select("count(geographies.id) as resource_cnt")
                       .joins("JOIN intervention_locations on intervention_locations.community_area_id = geographies.id")
                       .group("geographies.id")
-                      .where("geo_type = 'Community Area'").all
+                      .where("geo_type = 'Community Area' AND intervention_locations.categories != '[]'").all
       
       statistics.each do |s|
         unless s.resource_cnt.nil? or s.resource_cnt == 0
