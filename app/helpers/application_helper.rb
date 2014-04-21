@@ -20,6 +20,20 @@ module ApplicationHelper
       .order("datasets.name")
   end
 
+  def get_dataset(id)
+    Dataset.where(:category_id => id, :is_visible => true)
+           .order("name")
+  end
+
+  def get_categories(type)
+    Category.select('categories.id, categories.name, categories.description')
+              .where("datasets.data_type = ?", type)
+              .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
+              .group('categories.id, categories.name, categories.description')
+              .having('count(datasets.id) > 0')
+              .order("categories.name")
+  end
+
   def geography_geojson(dataset_id)
 
     area_stats = Geography

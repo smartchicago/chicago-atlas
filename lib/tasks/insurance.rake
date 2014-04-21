@@ -41,7 +41,7 @@ namespace :db do
           csv = CSV.parse(csv_text, :headers => true)
 
           select_columns.each do |col|
-            name = "#{d[:name]} #{col}"
+            name = "#{col}".gsub("Total ","").gsub(" Percent","").gsub("Under ", "0 to ")
             handle = name.parameterize.underscore.to_sym
 
             dataset = Dataset.new(
@@ -68,7 +68,7 @@ namespace :db do
                 :year => 2008,
                 :year_range => '2008 - 2012',
                 :name => name, 
-                :value => row[col]
+                :value => row[col].to_f*100
               )
               stat.save!
               
@@ -78,6 +78,8 @@ namespace :db do
             puts "imported #{stat_count} statistics: #{col}"
           end
         end
+        Rake::Task["db:import:set_visibility:all"].invoke
+        
       end
     end
   end
