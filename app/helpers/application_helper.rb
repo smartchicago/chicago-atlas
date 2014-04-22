@@ -222,6 +222,24 @@ module ApplicationHelper
     stats_array
   end
 
+  def fetch_insurance_data(geography_id, dataset_names)
+    stats = Statistic.joins('INNER JOIN datasets ON datasets.id = statistics.dataset_id')
+                     .where(:name => dataset_names)
+                     .where("geography_id = ?", geography_id)
+                     .order("datasets.name")
+
+    if stats.length == 0
+      return []
+    end
+
+    stats_array = []
+    stats.each do |s|
+      stats_array << ((s[:value].nil? or s[:value] == '') ? 0 : s[:value])
+    end
+
+    stats_array
+  end
+
   def to_dom_id(s)
     #strip the string
     ret = s.strip.downcase

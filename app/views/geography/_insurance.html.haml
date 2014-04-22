@@ -1,0 +1,49 @@
+- @category = Category.where("name = 'Health Insurance'").first
+
+.row-fluid
+  .span12
+    %h2#insurance Health Insurance
+
+    %p Percent of population that does not have health insurance from 2008-2012.
+
+    %h3 Percent uninsured by age
+
+    - insurance_by_age = fetch_insurance_data(@geography.id, GlobalConstants::INSURANCE_BY_AGE)
+    - chart_id = "chart_insurance_age"
+
+    .chart{:id => chart_id}
+
+    - content_for :javascripts do
+      
+      :javascript
+        $(function () {
+
+          var seriesData = [{
+            data: #{insurance_by_age},
+            name: "2008-2012"
+          }
+          ];
+
+          ChartHelper.create("#{chart_id}", "column", seriesData, Date.UTC(2008, 1, 1), "", "decade", "count", #{GlobalConstants::INSURANCE_BY_AGE});
+        });
+
+    %h3 Percent uninsured by race
+
+    - insurance_by_race = fetch_insurance_data(@geography.id, GlobalConstants::INSURANCE_BY_RACE)
+    - chart_id = "chart_insurance_race"
+
+    .chart{:id => chart_id}
+
+    - content_for :javascripts do
+      
+      :javascript
+        $(function () {
+
+          var seriesData = [{
+            data: #{insurance_by_race},
+            name: "2008-2012"
+          }
+          ];
+
+          ChartHelper.create("#{chart_id}", "column", seriesData, Date.UTC(2008, 1, 1), "", "decade", "count", #{GlobalConstants::INSURANCE_BY_RACE});
+        });

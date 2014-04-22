@@ -3,6 +3,9 @@ module GlobalConstants
   AGE_GROUPS = ['00-04','05-14','15-24','25-34','35-44','45-54','55-64','65-74','75-84','85+'].freeze
   SEX_GROUPS = ['FEMALE', 'MALE'].freeze
 
+  INSURANCE_BY_AGE = ['0 to 17 Uninsured', '18 to 64 Uninsured', '19 to 25 Uninsured', '65 and over Uninsured', 'All ages Uninsured'].freeze
+  INSURANCE_BY_RACE = ["White NL All ages Uninsured", "Latino All ages Uninsured", "Black All ages Uninsured", "Asian All ages Uninsured"].freeze
+
   BLUES = ['#08519C', '#3182BD', '#6BAED6', '#BDD7E7', '#EFF3FF'].freeze #blues
   PURPLES = ['#54278f', '#756bb1', '#9e9ac8', '#cbc9e2', '#f2f0f7'].freeze #purples
   GREENS = ['#006d2c', '#31a354', '#74c476', '#bae4b3', '#edf8e9'].freeze #greens
