@@ -48,8 +48,8 @@ namespace :db do
               :name => name,
               :slug => handle,
               :description => "Health Insurance: #{col}",
-              :provider => 'US Census',
-              :url => d[:url],
+              :provider => 'American Community Survey, 2008-2012 as processed by Rob Paral and Associates',
+              :url => "https://www.census.gov/acs/www/",
               :category_id => Category.where(:name => d[:category]).first.id,
               :data_type => 'demographic',
               :stat_type => 'range, percent'
@@ -79,7 +79,7 @@ namespace :db do
           end
         end
         Rake::Task["db:import:set_visibility:all"].invoke
-        
+
       end
     end
   end
