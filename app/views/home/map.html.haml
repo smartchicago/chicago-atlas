@@ -228,15 +228,13 @@
       - title 'Browse ' + @current_dataset_name
       %h3
         #{@current_dataset_name}
+        %small#year_label
       %p 
         #{@current_dataset_description}
         - if @current_dataset_url != ''
           (
           %a{:href => @current_dataset_url} source
           )
-      %h4 
-        Year
-        %small#year_label
     
       %div{ :id => "slider" }
       %strong.pull-left#start_year
@@ -246,7 +244,7 @@
 
     %h4 Conditions
     #view_accordion.accordion
-      - @categories.each do |c|
+      - @condition_categories.each do |c|
         .accordion-group
           .accordion-heading
             %a.accordion-toggle{"data-parent" => "#view_accordion", "data-toggle" => "collapse", :href => "#category_#{c.id}", "data-view" => c.name}
@@ -254,7 +252,7 @@
           .accordion-body.collapse{:id => "category_#{c.id}", :class => (not @current_category.nil? and @current_category.id == c.id) ? 'in' : ''}
             .accordion-inner{:id => "category_inner_#{c.id}"}
               %ul
-                - Dataset.where(:category_id => c.id).order("name").each do |d|
+                - get_dataset(c.id).each do |d|
                   %li
                     - if d.slug == params[:dataset_slug]
                       %strong
@@ -263,11 +261,27 @@
                       %a{:href => "/map/#{d.slug}"} 
                         = d.name
 
-    %h4 Resources
-    #resources_accordion.accordion
+    %h4 Statistics
+    #statistics_accordion.accordion
       .accordion-group
         .accordion-heading
-          %a.accordion-toggle{:href => "/map/affordable_resources", :style => 'color: #54278f;'} Affordable resources
+          %a.accordion-toggle{:href => "/map/affordable_resources"} Affordable resources
+      - @demographic_categories.each do |c|
+        .accordion-group
+          .accordion-heading
+            %a.accordion-toggle{"data-parent" => "#statistics_accordion", "data-toggle" => "collapse", :href => "#category_#{c.id}", "data-view" => c.name}
+              = c.name
+          .accordion-body.collapse{:id => "category_#{c.id}", :class => (not @current_category.nil? and @current_category.id == c.id) ? 'in' : ''}
+            .accordion-inner{:id => "category_inner_#{c.id}"}
+              %ul
+                - get_dataset(c.id).each do |d|
+                  %li
+                    - if d.slug == params[:dataset_slug]
+                      %strong
+                        = d.name
+                    - else
+                      %a{:href => "/map/#{d.slug}"} 
+                        = d.name
 
 
   .span8

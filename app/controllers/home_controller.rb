@@ -19,7 +19,7 @@ class HomeController < ApplicationController
     @current_dataset_url = ''
     @current_dataset_start_year = Time.now.year
     @current_dataset_end_year = Time.now.year
-    @map_colors = ['#08519C', '#3182BD', '#6BAED6', '#BDD7E7', '#EFF3FF']
+    @map_colors = GlobalConstants::BLUES
 
     if params[:dataset_slug].nil?
       @landing = true
@@ -32,7 +32,7 @@ class HomeController < ApplicationController
       @current_dataset_name = 'Affordable resources'
       @current_dataset_description = 'Number of affordable resource locations by Chicago community area.'
       @current_dataset_url = 'http://purplebinder.com/'
-      @map_colors = ['#54278f', '#756bb1', '#9e9ac8', '#cbc9e2', '#f2f0f7']
+      @map_colors = GlobalConstants::GREENS
 
       statistics = Geography
                       .select("count(geographies.id) as resource_cnt")
@@ -71,13 +71,8 @@ class HomeController < ApplicationController
       @display_geojson = Rails.cache.fetch("#{params[:dataset_slug]}_display_geojson") { geography_geojson(@current_dataset.id) }
     end
     
-    @categories = Rails.cache.fetch("#{params[:dataset_slug]}_categories") { 
-                    Category.select('categories.id, categories.name, categories.description')
-                            .where("datasets.data_type = 'condition'")
-                            .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
-                            .group('categories.id, categories.name, categories.description')
-                            .having('count(datasets.id) > 0')
-                            .order("categories.name") }
+    @condition_categories = Rails.cache.fetch("condition_categories") { get_categories('condition') }
+    @demographic_categories = Rails.cache.fetch("demographic_categories") { get_categories('demographic') }
 
     respond_to do |format|
       format.html # render our template

@@ -15,6 +15,7 @@ namespace :db do
       Rake::Task["db:import:chicago:dph"].invoke
       Rake::Task["db:import:chicago:crime"].invoke
       Rake::Task["db:import:chitrec:all"].invoke
+      Rake::Task["db:import:insurance:all"].invoke
     end
 
   end

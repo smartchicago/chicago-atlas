@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140409161402) do
+ActiveRecord::Schema.define(:version => 20140421220144) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -28,10 +28,11 @@ ActiveRecord::Schema.define(:version => 20140409161402) do
     t.string   "url"
     t.text     "metadata"
     t.integer  "category_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.string   "data_type"
     t.string   "stat_type"
+    t.boolean  "is_visible",  :default => true
   end
 
   add_index "datasets", ["category_id"], :name => "index_datasets_on_category_id"

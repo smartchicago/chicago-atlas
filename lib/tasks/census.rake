@@ -64,10 +64,10 @@ namespace :db do
 
               stat_count = Statistic.count(:conditions => "dataset_id = #{dataset.id}")
               puts "imported #{stat_count} statistics: #{sex_group}, #{age_group}"
-
             end
           end
         end
+        Rake::Task["db:import:set_visibility:all"].invoke
       end
     end
   end

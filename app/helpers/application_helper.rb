@@ -20,6 +20,20 @@ module ApplicationHelper
       .order("datasets.name")
   end
 
+  def get_dataset(id)
+    Dataset.where(:category_id => id, :is_visible => true)
+           .order("name")
+  end
+
+  def get_categories(type)
+    Category.select('categories.id, categories.name, categories.description')
+              .where("datasets.data_type = ?", type)
+              .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
+              .group('categories.id, categories.name, categories.description')
+              .having('count(datasets.id) > 0')
+              .order("categories.name")
+  end
+
   def geography_geojson(dataset_id)
 
     area_stats = Geography
@@ -195,6 +209,25 @@ module ApplicationHelper
                      .where("geography_id = ?", geography_id)
                      .where("year = ?", year)
                      .order("datasets.name")
+
+    if stats.length == 0
+      return []
+    end
+
+    stats_array = []
+    stats.each do |s|
+      stats_array << ((s[:value].nil? or s[:value] == '') ? 0 : s[:value])
+    end
+
+    stats_array
+  end
+
+  def fetch_insurance_data(geography_id, category_id, grouping)
+    stats = Statistic.joins('INNER JOIN datasets ON datasets.id = statistics.dataset_id')
+                     .where("datasets.name LIKE '#{grouping}%'")
+                     .where("category_id = ?", category_id)
+                     .where("geography_id = ?", geography_id)
+                     .order("datasets.id")
 
     if stats.length == 0
       return []
