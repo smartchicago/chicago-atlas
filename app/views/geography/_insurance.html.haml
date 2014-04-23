@@ -1,4 +1,4 @@
-- @category = Category.where("name = 'Health Insurance'").first
+- @category = Category.find_by_name("Health Insurance")
 
 .row-fluid
   .span12
@@ -6,44 +6,12 @@
 
     %p Percent of population that does not have health insurance from 2008-2012.
 
-    %h3 Percent uninsured by age
+    = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by Age', :chart_group => 'By Age', :chart_id => 'chart_insurance_age', :chart_headers => ['Under 17', '18 to 64', '65 and over'] }
 
-    - insurance_by_age = fetch_insurance_data(@geography.id, GlobalConstants::INSURANCE_BY_AGE)
-    - chart_id = "chart_insurance_age"
+    = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by Race', :chart_group => 'By Race', :chart_id => 'chart_insurance_race', :chart_headers => ['White', 'Latino', 'Black', 'Asian'] }
 
-    .chart{:id => chart_id}
+    = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by Nativity and Citizenship', :chart_group => 'By Nativity', :chart_id => 'chart_insurance_nativity', :chart_headers => ['Native-Born', 'Foreign-Born', 'Foreign-Born Citizen', 'Foreign-Born Noncitizen'] }
 
-    - content_for :javascripts do
-      
-      :javascript
-        $(function () {
+    = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by School Enrollment', :chart_group => 'By School Enrollment', :chart_id => 'insurance_by_school_enrollment', :chart_headers => ['All 19 to 25', 'Enrolled in School 19 to 25', 'Not Enrolled in School 19 to 25'] }
 
-          var seriesData = [{
-            data: #{insurance_by_age},
-            name: "2008-2012"
-          }
-          ];
-
-          ChartHelper.create("#{chart_id}", "column", seriesData, Date.UTC(2008, 1, 1), "", "decade", "count", #{GlobalConstants::INSURANCE_BY_AGE});
-        });
-
-    %h3 Percent uninsured by race
-
-    - insurance_by_race = fetch_insurance_data(@geography.id, GlobalConstants::INSURANCE_BY_RACE)
-    - chart_id = "chart_insurance_race"
-
-    .chart{:id => chart_id}
-
-    - content_for :javascripts do
-      
-      :javascript
-        $(function () {
-
-          var seriesData = [{
-            data: #{insurance_by_race},
-            name: "2008-2012"
-          }
-          ];
-
-          ChartHelper.create("#{chart_id}", "column", seriesData, Date.UTC(2008, 1, 1), "", "decade", "count", #{GlobalConstants::INSURANCE_BY_RACE});
-        });
+    = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by Income', :chart_group => 'By Income', :chart_id => 'insurance_by_income', :chart_headers => ['Under 138% of Poverty Line', '138 to 199% of Poverty Line', '200 to 399% of Poverty Line', '400% and over Poverty Line'] }

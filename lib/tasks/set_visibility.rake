@@ -38,21 +38,7 @@ namespace :db do
           "Population MALE 65-74",
           "Population MALE 75-84",
           "Population MALE 85+",
-          "Population MALE TOTAL",
-          "Asian All ages Uninsured",
-          "Black All ages Uninsured",
-          "Enrolled in school 19 to 25 Uninsured",
-          "Latino All ages Uninsured",
-          "Not enrolled 19 to 25 Uninsured",
-          "138 to 199% All ages Uninsured",
-          "200 to 399% All ages Uninsured",
-          "400% and over All ages Uninsured",
-          "Foreign-Born Citizen Uninsured",
-          "Foreign-Born Noncitizen Uninsured",
-          "Foreign-Born Uninsured",
-          "Native-Born Uninsured",
-          "0 to 138% All ages Uninsured",
-          "White NL All ages Uninsured"
+          "Population MALE TOTAL"
         ]
 
         to_hide.each do |h|

@@ -12,28 +12,30 @@ namespace :db do
         end
 
         datasets = [
-          {:category => 'Health Insurance', :name => 'Health Insurance', :file => 'health_insurance_by_age_by_community_area_2008-2012'},
+          {:category => 'Health Insurance', :name => 'Health Insurance', :file => 'health_insurance_by_community_area_2008-2012'},
         ]
 
-        select_columns = ["Total All ages Uninsured Percent",
-        "Total Under 17 Uninsured Percent",
-        "Total 18 to 64 Uninsured Percent",
-        "Total 65 and over Uninsured Percent",
-        "White NL All ages Uninsured Percent",
-        "Latino All ages Uninsured Percent",
-        "Black All ages Uninsured Percent",
-        "Asian All ages Uninsured Percent",
-        "Total Native-Born Uninsured Percent",
-        "Total Foreign-Born Uninsured Percent",
-        "Total Foreign-Born Citizen Uninsured Percent",
-        "Total Foreign-Born Noncitizen Uninsured Percent",
-        "Total 19 to 25 Uninsured Percent",
-        "Enrolled in school 19 to 25 Uninsured Percent",
-        "Not enrolled 19 to 25 Uninsured Percent",
-        "Total Under 138% All ages Uninsured Percent",
-        "Total 138 to 199% All ages Uninsured Percent",
-        "Total 200 to 399% All ages Uninsured Percent",
-        "Total 400% and over All ages Uninsured Percent"]
+        select_columns = [
+          "All Uninsured",
+          "By Age: 0 to 17 Uninsured",
+          "By Age: 18 to 64 Uninsured",
+          "By Age: 65 and over Uninsured",
+          "By Race: White Uninsured",
+          "By Race: Latino Uninsured",
+          "By Race: Black Uninsured",
+          "By Race: Asian Uninsured",
+          "By Nativity: Native-Born Uninsured",
+          "By Nativity: Foreign-Born Uninsured",
+          "By Nativity: Foreign-Born Citizen Uninsured",
+          "By Nativity: Foreign-Born Noncitizen Uninsured",
+          "By School Enrollment: 19 to 25 Uninsured",
+          "By School Enrollment: Enrolled 19 to 25 Uninsured",
+          "By School Enrollment: Not enrolled 19 to 25 Uninsured",
+          "By Income: Under 138% of Poverty Line Uninsured",
+          "By Income: 138 to 199% of Poverty Line Uninsured",
+          "By Income: 200 to 399% of Poverty Line Uninsured",
+          "By Income: 400% and over Poverty Line Uninsured"
+        ]
 
 
         datasets.each do |d|
@@ -41,7 +43,7 @@ namespace :db do
           csv = CSV.parse(csv_text, :headers => true)
 
           select_columns.each do |col|
-            name = "#{col}".gsub("Total ","").gsub(" Percent","").gsub("Under ", "0 to ")
+            name = "#{col}"
             handle = name.parameterize.underscore.to_sym
 
             dataset = Dataset.new(
@@ -49,7 +51,7 @@ namespace :db do
               :slug => handle,
               :description => "Health Insurance: #{col}",
               :provider => 'American Community Survey, 2008-2012 as processed by Rob Paral and Associates',
-              :url => "https://www.census.gov/acs/www/",
+              :url => "http://www.robparal.com/",
               :category_id => Category.where(:name => d[:category]).first.id,
               :data_type => 'demographic',
               :stat_type => 'range, percent'
@@ -59,7 +61,7 @@ namespace :db do
             csv.each do |row|
               row = row.to_hash.with_indifferent_access
 
-              area = row["CHGOCA"]
+              area = row["Community Area Id"]
               area = get_area_id(area)
 
               stat = Statistic.new(
@@ -78,8 +80,6 @@ namespace :db do
             puts "imported #{stat_count} statistics: #{col}"
           end
         end
-        Rake::Task["db:import:set_visibility:all"].invoke
-
       end
     end
   end

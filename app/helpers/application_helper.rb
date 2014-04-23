@@ -222,11 +222,12 @@ module ApplicationHelper
     stats_array
   end
 
-  def fetch_insurance_data(geography_id, dataset_names)
+  def fetch_insurance_data(geography_id, category_id, grouping)
     stats = Statistic.joins('INNER JOIN datasets ON datasets.id = statistics.dataset_id')
-                     .where(:name => dataset_names)
+                     .where("datasets.name LIKE '#{grouping}%'")
+                     .where("category_id = ?", category_id)
                      .where("geography_id = ?", geography_id)
-                     .order("datasets.name")
+                     .order("datasets.id")
 
     if stats.length == 0
       return []
