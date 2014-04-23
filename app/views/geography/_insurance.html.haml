@@ -1,17 +1,18 @@
 - @category = Category.find_by_name("Health Insurance")
 
-.row-fluid
-  .span12
-    %h2#insurance Health Insurance
+- if @geography.has_category("Health Insurance")
+  .row-fluid
+    .span12
+      %h2#insurance Health Insurance
 
-    %p Percent of population that does not have health insurance from 2008-2012. <br />Source: <a href='https://www.census.gov/acs/www/'>American Community Survey, 2008-2012</a> as processed by <a href='http://www.robparal.com/'>Rob Paral and Associates</a>.
+      %p Percent of population that does not have health insurance from 2008-2012. <br />Source: <a href='https://www.census.gov/acs/www/'>American Community Survey, 2008-2012</a> as processed by <a href='http://www.robparal.com/'>Rob Paral and Associates</a>.
 
-    = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by Age', :chart_group => 'By Age', :chart_id => 'chart_insurance_age', :chart_headers => ['0 to 17', '18 to 64', '65 and over'] }
+      = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by Age', :chart_group => 'By Age', :chart_id => 'chart_insurance_age', :chart_headers => ['0 to 17', '18 to 64', '65 and over'] }
 
-    = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by Race', :chart_group => 'By Race', :chart_id => 'chart_insurance_race', :chart_headers => ['White', 'Latino', 'Black', 'Asian'] }
+      = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by Race', :chart_group => 'By Race', :chart_id => 'chart_insurance_race', :chart_headers => ['White', 'Latino', 'Black', 'Asian'] }
 
-    = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by Nativity and Citizenship', :chart_group => 'By Nativity', :chart_id => 'chart_insurance_nativity', :chart_headers => ['Native-Born', 'Foreign-Born', 'Foreign-Born Citizen', 'Foreign-Born Noncitizen'] }
+      = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by Nativity and Citizenship', :chart_group => 'By Nativity', :chart_id => 'chart_insurance_nativity', :chart_headers => ['Native-Born', 'Foreign-Born', 'Foreign-Born Citizen', 'Foreign-Born Noncitizen'] }
 
-    = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by School Enrollment', :chart_group => 'By School Enrollment', :chart_id => 'insurance_by_school_enrollment', :chart_headers => ['All 19 to 25', 'Enrolled in School 19 to 25', 'Not Enrolled in School 19 to 25'] }
+      = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by School Enrollment', :chart_group => 'By School Enrollment', :chart_id => 'insurance_by_school_enrollment', :chart_headers => ['All 19 to 25', 'Enrolled in School 19 to 25', 'Not Enrolled in School 19 to 25'] }
 
-    = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by Income', :chart_group => 'By Income', :chart_id => 'insurance_by_income', :chart_headers => ['Under 138% of Poverty Line', '138 to 199% of Poverty Line', '200 to 399% of Poverty Line', '400% and over Poverty Line'] }
+      = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by Income', :chart_group => 'By Income', :chart_id => 'insurance_by_income', :chart_headers => ['Under 138% of Poverty Line', '138 to 199% of Poverty Line', '200 to 399% of Poverty Line', '400% and over Poverty Line'] }
