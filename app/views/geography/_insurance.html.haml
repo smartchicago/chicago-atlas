@@ -6,7 +6,7 @@
 
     %p Percent of population that does not have health insurance from 2008-2012. <br />Source: <a href='https://www.census.gov/acs/www/'>American Community Survey, 2008-2012</a> as processed by <a href='http://www.robparal.com/'>Rob Paral and Associates</a>.
 
-    = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by Age', :chart_group => 'By Age', :chart_id => 'chart_insurance_age', :chart_headers => ['Under 17', '18 to 64', '65 and over'] }
+    = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by Age', :chart_group => 'By Age', :chart_id => 'chart_insurance_age', :chart_headers => ['0 to 17', '18 to 64', '65 and over'] }
 
     = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :category => @category, :chart_title => 'Percent Uninsured by Race', :chart_group => 'By Race', :chart_id => 'chart_insurance_race', :chart_headers => ['White', 'Latino', 'Black', 'Asian'] }
 
