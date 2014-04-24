@@ -24,7 +24,7 @@ namespace :db do
           {:category => 'Chronic disease', :name => 'Congestive Heart Failure', :parse_token => 'chd', :description => "Estimated Congestive Heart Failure (CHF) prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :stat_type => 'range, percent'},
         ]
 
-        csv_text = File.read("db/import/chitrec-data.csv")
+        csv_text = File.read("db/import/chitrec_data_2006-2012.csv")
         csv = CSV.parse(csv_text, {:headers => true, :header_converters => :symbol})
 
         datasets.each do |d|
@@ -35,7 +35,7 @@ namespace :db do
             :slug => handle,
             :description => d[:description],
             :provider => 'CHITREC',
-            :url => "https://raw.githubusercontent.com/smartchicago/chicago-atlas/master/db/import/chitrec-data.csv",
+            :url => "https://raw.githubusercontent.com/smartchicago/chicago-atlas/master/db/import/chitrec_data_2006-2012.csv",
             :category_id => Category.where(:name => d[:category]).first.id,
             :data_type => 'condition',
             :description => d[:description],
@@ -53,6 +53,7 @@ namespace :db do
             numerator = row[d[:parse_token]]
             denominator = row['count']
 
+            puts row.inspect
             if (numerator == "NULL")
               val = 0
             else

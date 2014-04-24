@@ -56,4 +56,17 @@ class Geography < ActiveRecord::Base
       nil
     end
   end
+
+  def has_category(category_name)
+    cat = Category.joins('INNER JOIN datasets ON datasets.category_id = categories.id')
+                  .joins('INNER JOIN statistics ON datasets.id = statistics.dataset_id')
+                  .where("statistics.geography_id = ?", id)
+                  .where("categories.name = ?", category_name)
+
+    if cat.count > 0
+      true
+    else
+      false
+    end
+  end
 end

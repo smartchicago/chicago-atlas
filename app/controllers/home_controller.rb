@@ -32,7 +32,6 @@ class HomeController < ApplicationController
       @current_dataset_name = 'Affordable resources'
       @current_dataset_description = 'Number of affordable resource locations by Chicago community area.'
       @current_dataset_url = 'http://purplebinder.com/'
-      @map_colors = GlobalConstants::GREENS
 
       statistics = Geography
                       .select("count(geographies.id) as resource_cnt")
