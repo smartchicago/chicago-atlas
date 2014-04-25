@@ -12,7 +12,8 @@ namespace :db do
         end
 
         datasets = [
-          {:category => 'Providers', :name => 'Dentists', :file => 'practicing_dentists_by_community_area.csv'},
+          {:category => 'Providers', :name => 'Dentists', :description => 'Practicing dentists by Chicago community area in 2010.', :rate => false, :stat_type => 'count', :file => 'practicing_dentists_by_community_area.csv'},
+          {:category => 'Providers', :name => 'Dentists per 1,000 residents', :description => 'Practicing dentists per 1,000 residents by Chicago community area in 2010.', :stat_type => 'rate', :rate => true, :file => 'practicing_dentists_by_community_area.csv'},
         ]
 
         select_columns = [
@@ -24,18 +25,18 @@ namespace :db do
           csv = CSV.parse(csv_text, :headers => true)
 
           select_columns.each do |col|
-            name = "#{col}"
+            name = d[:name]
             handle = "#{d[:category]} #{d[:name]}".parameterize.underscore.to_sym
 
             dataset = Dataset.new(
               :name => name,
               :slug => handle,
-              :description => "Practicing dentists by Chicago community area in 2010.",
+              :description => d[:description],
               :provider => 'Chicago Community Oral Health Forum',
               :url => "http://www.heartlandalliance.org/oralhealth/",
               :category_id => Category.where(:name => d[:category]).first.id,
               :data_type => 'demographic',
-              :stat_type => 'count'
+              :stat_type => d[:stat_type]
             )
             dataset.save!
 
@@ -45,12 +46,14 @@ namespace :db do
               area = row["Community Area Id"]
               area = get_area_id(area)
 
-              # adjust count by community area population
-              # comm_population = Geography.find(row["Community Area Id"]).population(2010)
+              store_value = row[col]
+              if (d[:rate])
+                # adjust count by community area population
+                comm_population = Geography.find(row["Community Area Id"]).population(2010)
 
-              # raw_count = row[col].to_f or 0
-              # rate = '%.2f' % (raw_count / (comm_population / 1000.0))  # rate per 1000 residents
-
+                raw_count = row[col].to_f or 0
+                store_value = '%.2f' % (raw_count / (comm_population / 1000.0))  # rate per 1000 residents
+              end
 
               stat = Statistic.new(
                 :dataset_id => dataset.id,
@@ -58,14 +61,14 @@ namespace :db do
                 :year => 2010,
                 :year_range => '2010',
                 :name => name, 
-                :value => row[col]
+                :value => store_value
               )
               stat.save!
               
             end
 
             stat_count = Statistic.count(:conditions => "dataset_id = #{dataset.id}")
-            puts "imported #{stat_count} statistics: #{col}"
+            puts "imported #{stat_count} statistics: #{d[:name]}"
           end
         end
       end
