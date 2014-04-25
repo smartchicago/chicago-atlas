@@ -1,78 +1,78 @@
-CHGOCA,CAName,tg_doc,ts_doc,to_doc,tg_resdoc,ts_resdoc,to_resdoc,tpa_pc
-1,CA 01 - Rogers Park,16,15,2,4,8,0,5
-2,CA 02 - West Ridge,37,33,3,6,10,0,5
-3,CA 03 - Uptown,93,118,7,36,30,0,9
-4,CA 04 - Lincoln Square,99,123,14,16,22,2,3
-5,CA 05 - North Center,21,14,2,0,0,0,4
-6,CA 06 - Lake View,188,330,39,148,155,16,14
-7,CA 07 - Lincoln Park,123,235,4,62,119,3,4
-8,CA 08 - Near North Side,341,911,105,152,518,31,12
-9,CA 09 - Edison Park,3,3,0,0,0,0,1
-10,CA 10 - Norwood Park,62,159,7,28,12,0,1
-11,CA 11 - Jefferson Park,18,9,0,1,2,0,1
-12,CA 12 - Forest Glen,20,25,6,0,4,0,3
-13,CA 13 - North Park,19,8,0,0,0,0,1
-14,CA 14 - Albany Park,14,3,0,0,0,0,1
-15,CA 15 - Portage Park,43,55,2,1,2,0,3
-16,CA 16 - Irving Park,11,11,1,9,16,2,0
-17,CA 17 - Dunning,24,20,4,3,2,0,0
-18,CA 18 - Montclare,11,17,0,0,1,0,0
-19,CA 19 - Belmont Cragin,25,9,0,0,1,0,0
-20,CA 20 - Hermosa,3,2,1,0,0,0,0
-21,CA 21 - Avondale,8,3,1,0,0,0,0
-22,CA 22 - Logan Square,32,26,4,16,38,2,2
-23,CA 23 - Humboldt Park,20,7,1,2,2,0,0
-24,CA 24 - West Town,127,120,18,58,116,8,12
-25,CA 25 - Austin,42,11,1,1,1,0,3
-26,CA 26 - West Garfield Park,5,0,0,0,0,0,0
-27,CA 27 - East Garfield Park,8,14,3,0,0,0,2
-28,CA 28 - Near West Side,391,"1,123",69,282,681,45,12
-29,CA 29 - North Lawndale,67,79,15,24,13,5,8
-30,CA 30 - South Lawndale,52,46,9,0,2,0,9
-31,CA 31 - Lower West Side,36,42,6,14,38,5,2
-32,CA 32 - Loop,68,185,20,19,37,3,2
-33,CA 33 - Near South Side,85,108,11,86,97,10,3
-34,CA 34 - Armour Square,8,5,1,0,0,0,1
-35,CA 35 - Douglas,25,27,4,20,50,5,2
-36,CA 36 - Oakland,3,0,0,0,1,0,0
-37,CA 37 - Fuller Park,5,3,0,0,0,0,0
-38,CA 38 - Grand Boulevard,29,40,5,7,2,1,3
-39,CA 39 - Kenwood,4,5,1,0,0,0,2
-40,CA 40 - Washington Park,0,1,0,0,0,0,1
-41,CA 41 - Hyde Park,122,452,35,60,217,13,0
-42,CA 42 - Woodlawn,21,37,1,22,65,1,4
-43,CA 43 - Hyde Park,37,29,3,18,3,0,0
-44,CA 44 - Chatham,10,9,2,0,2,1,0
-45,CA 45 - Avalon Park,1,3,1,0,0,0,0
-46,CA 46 - South Chicago,25,13,5,0,0,0,0
-47,CA 47 - Burnside,2,4,1,0,0,0,0
-48,CA 48 - Calumet Heights,28,60,8,0,0,0,0
-49,CA 49 - Roseland,16,12,2,0,0,0,1
-50,CA 50 - Pullman,3,2,1,1,2,0,0
-51,CA 51 - South Deering,4,1,0,0,0,0,0
-52,CA 52 - East Side,4,4,0,0,0,0,0
-53,CA 53 - West Pullman,0,0,0,0,0,0,0
-54,CA 54 - Riverdale,1,0,0,0,0,0,0
-55,CA 55 - Hegewisch,2,0,0,0,0,0,0
-56,CA 56 - Garfield Ridge,22,11,3,0,0,0,4
-57,CA 57 - Archer Heights,2,4,2,0,0,0,0
-58,CA 58 - Brighton Park,10,3,1,0,1,0,0
-59,CA 59 - McKinley Park,6,3,1,0,0,0,0
-60,CA 60 - Bridgeport,6,2,0,0,0,0,1
-61,CA 61 - New City,11,3,1,2,3,0,0
-62,CA 62 - West Elsdon,5,1,0,0,0,0,1
-63,CA 63 - Gage Park,2,0,0,0,0,0,0
-64,CA 64 - Clearing,5,2,0,0,3,0,0
-65,CA 65 - West Lawn,16,7,2,0,0,0,0
-66,CA 66 - Chicago Lawn,13,30,2,0,0,0,0
-67,CA 67 - West Englewood,5,3,0,0,0,0,1
-68,CA 68 - Englewood,24,24,5,0,0,0,0
-69,CA 69 - Greater Grand Crossing,3,1,0,0,0,0,1
-70,CA 70 - Ashburn,6,2,0,0,0,0,1
-71,CA 71 - Auburn Gresham,6,3,1,0,0,0,1
-72,CA 72 - Beverly,31,31,5,1,2,0,4
-73,CA 73 - Washington Heights,4,1,1,0,0,0,1
-74,CA 74 - Mount Greenwood,5,4,0,0,0,0,0
-75,CA 75 - Morgan Park,14,10,3,0,0,0,2
-76,CA 76 - O'Hare,7,10,0,0,1,0,0
-77,CA 77 - Edgewater,20,22,0,6,11,2,0
+Community Area Id,Community Area Name,Primary Care Physicians,Specialist Physicians,OB-GYN Physicians,Primary Care Residents and Fellows,Specialist Residents and Fellows,OB-GYN Residents and Fellows
+1,Rogers Park,16,15,2,4,8,0
+2,West Ridge,37,33,3,6,10,0
+3,Uptown,93,118,7,36,30,0
+4,Lincoln Square,99,123,14,16,22,2
+5,North Center,21,14,2,0,0,0
+6,Lake View,188,330,39,148,155,16
+7,Lincoln Park,123,235,4,62,119,3
+8,Near North Side,341,911,105,152,518,31
+9,Edison Park,3,3,0,0,0,0
+10,Norwood Park,62,159,7,28,12,0
+11,Jefferson Park,18,9,0,1,2,0
+12,Forest Glen,20,25,6,0,4,0
+13,North Park,19,8,0,0,0,0
+14,Albany Park,14,3,0,0,0,0
+15,Portage Park,43,55,2,1,2,0
+16,Irving Park,11,11,1,9,16,2
+17,Dunning,24,20,4,3,2,0
+18,Montclare,11,17,0,0,1,0
+19,Belmont Cragin,25,9,0,0,1,0
+20,Hermosa,3,2,1,0,0,0
+21,Avondale,8,3,1,0,0,0
+22,Logan Square,32,26,4,16,38,2
+23,Humboldt Park,20,7,1,2,2,0
+24,West Town,127,120,18,58,116,8
+25,Austin,42,11,1,1,1,0
+26,West Garfield Park,5,0,0,0,0,0
+27,East Garfield Park,8,14,3,0,0,0
+28,Near West Side,391,1123,69,282,681,45
+29,North Lawndale,67,79,15,24,13,5
+30,South Lawndale,52,46,9,0,2,0
+31,Lower West Side,36,42,6,14,38,5
+32,Loop,68,185,20,19,37,3
+33,Near South Side,85,108,11,86,97,10
+34,Armour Square,8,5,1,0,0,0
+35,Douglas,25,27,4,20,50,5
+36,Oakland,3,0,0,0,1,0
+37,Fuller Park,5,3,0,0,0,0
+38,Grand Boulevard,29,40,5,7,2,1
+39,Kenwood,4,5,1,0,0,0
+40,Washington Park,0,1,0,0,0,0
+41,Hyde Park,122,452,35,60,217,13
+42,Woodlawn,21,37,1,22,65,1
+43,South Shore,37,29,3,18,3,0
+44,Chatham,10,9,2,0,2,1
+45,Avalon Park,1,3,1,0,0,0
+46,South Chicago,25,13,5,0,0,0
+47,Burnside,2,4,1,0,0,0
+48,Calumet Heights,28,60,8,0,0,0
+49,Roseland,16,12,2,0,0,0
+50,Pullman,3,2,1,1,2,0
+51,South Deering,4,1,0,0,0,0
+52,East Side,4,4,0,0,0,0
+53,West Pullman,0,0,0,0,0,0
+54,Riverdale,1,0,0,0,0,0
+55,Hegewisch,2,0,0,0,0,0
+56,Garfield Ridge,22,11,3,0,0,0
+57,Archer Heights,2,4,2,0,0,0
+58,Brighton Park,10,3,1,0,1,0
+59,McKinley Park,6,3,1,0,0,0
+60,Bridgeport,6,2,0,0,0,0
+61,New City,11,3,1,2,3,0
+62,West Elsdon,5,1,0,0,0,0
+63,Gage Park,2,0,0,0,0,0
+64,Clearing,5,2,0,0,3,0
+65,West Lawn,16,7,2,0,0,0
+66,Chicago Lawn,13,30,2,0,0,0
+67,West Englewood,5,3,0,0,0,0
+68,Englewood,24,24,5,0,0,0
+69,Greater Grand Crossing,3,1,0,0,0,0
+70,Ashburn,6,2,0,0,0,0
+71,Auburn Gresham,6,3,1,0,0,0
+72,Beverly,31,31,5,1,2,0
+73,Washington Heights,4,1,1,0,0,0
+74,Mount Greenwood,5,4,0,0,0,0
+75,Morgan Park,14,10,3,0,0,0
+76,O'Hare,7,10,0,0,1,0
+77,Edgewater,20,22,0,6,11,2
