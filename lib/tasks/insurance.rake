@@ -51,7 +51,7 @@ namespace :db do
               :slug => handle,
               :description => "Health Insurance: #{col}",
               :provider => 'American Community Survey, 2008-2012 as processed by Rob Paral and Associates',
-              :url => "http://www.robparal.com/",
+              :url => "https://www.census.gov/acs/www/",
               :category_id => Category.where(:name => d[:category]).first.id,
               :data_type => 'demographic',
               :stat_type => 'range, percent'

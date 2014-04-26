@@ -12,7 +12,7 @@ namespace :db do
         end
 
         datasets = [
-          {:category => 'Healthcare Providers', :rate => false, :stat_type => 'count', :file => 'practicing_doctors_by_ca.csv'},
+          # {:category => 'Healthcare Providers', :rate => false, :stat_type => 'count', :file => 'practicing_doctors_by_ca.csv'},
           {:category => 'Healthcare Providers', :rate => true, :stat_type => 'rate', :file => 'practicing_doctors_by_ca.csv'},
         ]
 
@@ -31,13 +31,13 @@ namespace :db do
 
           select_columns.each do |col|
             name = col
-            description = "#{col} by Chicago community area in 2010."
+            description = "#{col} per 1,000 residents by Chicago community area in 2010."
             
-            if (d[:rate])
-              name = "#{col} per 1,000 residents"
-            end
+            # if (d[:rate])
+            #   name = "#{col} per 1,000 residents"
+            # end
 
-            description = "#{name} by Chicago community area in 2010."
+            description = "#{name} per 1,000 residents by Chicago community area in 2010."
             handle = "#{d[:category]} #{name}".parameterize.underscore.to_sym
 
             dataset = Dataset.new(

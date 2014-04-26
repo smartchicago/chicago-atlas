@@ -12,8 +12,8 @@ namespace :db do
         end
 
         datasets = [
-          {:category => 'Healthcare Providers', :name => 'Dentists', :description => 'Practicing dentists by Chicago community area in 2010.', :rate => false, :stat_type => 'count', :file => 'practicing_dentists_by_community_area.csv'},
-          {:category => 'Healthcare Providers', :name => 'Dentists per 1,000 residents', :description => 'Practicing dentists per 1,000 residents by Chicago community area in 2010.', :stat_type => 'rate', :rate => true, :file => 'practicing_dentists_by_community_area.csv'},
+          # {:category => 'Healthcare Providers', :name => 'Dentists', :description => 'Practicing dentists by Chicago community area in 2010.', :rate => false, :stat_type => 'count', :file => 'practicing_dentists_by_community_area.csv'},
+          {:category => 'Healthcare Providers', :name => 'Dentists', :description => 'Practicing dentists per 1,000 residents by Chicago community area in 2010.', :stat_type => 'rate', :rate => true, :file => 'practicing_dentists_by_community_area.csv'},
         ]
 
         select_columns = [
