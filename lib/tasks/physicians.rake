@@ -1,19 +1,19 @@
 namespace :db do
   namespace :import do    
-    namespace :doctors do 
+    namespace :physicians do 
 
       desc "Import number of doctors by community area"
       task :all => :environment do
         require 'csv' 
 
-        Dataset.where(:category_id => Category.where("name = 'Providers'").first).each do |d|
+        Dataset.where("provider = 'Health Resources and Services Administration'").each do |d|
           Statistic.delete_all("dataset_id = #{d.id}")
           d.delete
         end
 
         datasets = [
-          {:category => 'Providers', :rate => false, :stat_type => 'count', :file => 'practicing_doctors_by_ca.csv'},
-          {:category => 'Providers', :rate => true, :stat_type => 'rate', :file => 'practicing_doctors_by_ca.csv'},
+          {:category => 'Healthcare Providers', :rate => false, :stat_type => 'count', :file => 'practicing_doctors_by_ca.csv'},
+          {:category => 'Healthcare Providers', :rate => true, :stat_type => 'rate', :file => 'practicing_doctors_by_ca.csv'},
         ]
 
         select_columns = [

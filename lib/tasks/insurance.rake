@@ -43,8 +43,8 @@ namespace :db do
           csv = CSV.parse(csv_text, :headers => true)
 
           select_columns.each do |col|
-            name = "#{col}"
-            handle = "#{d[:category]} #{d[:name]}".parameterize.underscore.to_sym
+            name = "#{d[:category]} #{col}"
+            handle = "#{name}".parameterize.underscore.to_sym
 
             dataset = Dataset.new(
               :name => name,
