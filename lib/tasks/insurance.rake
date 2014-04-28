@@ -12,7 +12,7 @@ namespace :db do
         end
 
         datasets = [
-          {:category => 'Health Insurance', :name => 'Health Insurance', :file => 'health_insurance_by_community_area_2008-2012'},
+          {:category => 'Health Insurance', :name => 'Health Insurance', :file => 'health_insurance_by_community_area_2008-2012.csv'},
         ]
 
         select_columns = [
@@ -39,19 +39,19 @@ namespace :db do
 
 
         datasets.each do |d|
-          csv_text = File.read("db/import/#{d[:file]}.csv")
+          csv_text = File.read("db/import/#{d[:file]}")
           csv = CSV.parse(csv_text, :headers => true)
 
           select_columns.each do |col|
-            name = "#{col}"
-            handle = name.parameterize.underscore.to_sym
+            name = "#{d[:category]} #{col}"
+            handle = "#{name}".parameterize.underscore.to_sym
 
             dataset = Dataset.new(
               :name => name,
               :slug => handle,
               :description => "Health Insurance: #{col}",
               :provider => 'American Community Survey, 2008-2012 as processed by Rob Paral and Associates',
-              :url => "http://www.robparal.com/",
+              :url => "https://www.census.gov/acs/www/",
               :category_id => Category.where(:name => d[:category]).first.id,
               :data_type => 'demographic',
               :stat_type => 'range, percent'

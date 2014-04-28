@@ -132,8 +132,10 @@
             style: style,
             onEachFeature: onEachFeature
         }).addTo(map);
+
+        var percentSuffix = '';
+        if (allLayers[0].feature.properties.stat_type.indexOf("percent") !== -1) percentSuffix = '%';
         
-     
         function update_year(year){
             active_year = year;
             $.address.parameter('year', active_year);
@@ -145,8 +147,6 @@
 
             for(layer in allLayers){
                 var props = allLayers[layer].feature.properties;
-                var percentSuffix = '';
-                if (props.stat_type.indexOf("percent") !== -1) percentSuffix = '%';
                 allLayers[layer].bindLabel( '<h4>' + props.name + '</h4>' + props.condition_title + ': ' + props.condition_value[ year ] + percentSuffix);
                 allLayers[layer].setStyle({fillColor: getColor(props.condition_value[year])});
             }
@@ -200,7 +200,7 @@
 
                 labels.push(
                     '<i style="background:' + getColor(from + 0.01) + '"></i> ' +
-                    from + (to ? '&ndash;' + to : '+'));
+                    from + (to ? '&ndash;' + to + percentSuffix : percentSuffix + '+'));
             }
 
             div.innerHTML = "<strong>#{@current_dataset_name}</strong><br>" + labels.join('<br>');

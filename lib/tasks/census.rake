@@ -6,7 +6,7 @@ namespace :db do
       task :population => :environment do
         require 'csv' 
 
-        Dataset.where(:category_id => Category.where("name = 'Demographics'").first).each do |d|
+        Dataset.where("provider = 'US Census'").each do |d|
           Statistic.delete_all("dataset_id = #{d.id}")
           d.delete
         end
