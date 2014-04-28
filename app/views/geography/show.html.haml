@@ -14,6 +14,8 @@
 
     = render :partial => "geography/insurance", :locals => {:geography => @geography }
 
+    = render :partial => "geography/providers", :locals => {:geography => @geography}
+
     - @categories.each do |category|
       = render :partial => "geography/category", :locals => {:category => category, :geography => @geography }
 

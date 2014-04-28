@@ -1,7 +1,7 @@
 %h3 #{chart_title}
 
-- insurance_area = fetch_insurance_data(geography.id, category.id, chart_group)
-- insurance_chicago = fetch_insurance_data(100, category.id, chart_group)
+- insurance_area = fetch_custom_chart_data(geography.id, chart_group, [])
+- insurance_chicago = fetch_custom_chart_data(100, chart_group, [])
 
 .chart{:id => chart_id}
 
