@@ -345,7 +345,7 @@ namespace :db do
             end
           end
 
-          puts "Saving d[:name] crime stats for Chicago"
+          puts "Saving #{d[:name]} crime stats for Chicago"
 
           puts "Downloading #{handle}_chicago.json"
           sh "curl -o tmp/#{handle}_chicago.json 'https://data.cityofchicago.org/resource/ijzp-q8t2.json?$select=year,count%28id%29&$where=fbi_code=%27#{d[:fbi_code]}%27&$group=year,fbi_code'"

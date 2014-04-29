@@ -6,16 +6,6 @@ namespace :db do
       task :all => :environment do
         require 'csv' 
 
-        Dataset.where("provider = 'Health Resources and Services Administration'").each do |d|
-          Statistic.delete_all("dataset_id = #{d.id}")
-          d.delete
-        end
-
-        datasets = [
-          # {:category => 'Healthcare Providers', :rate => false, :stat_type => 'count', :file => 'practicing_doctors_by_ca.csv'},
-          {:category => 'Healthcare Providers', :rate => true, :stat_type => 'rate', :file => 'practicing_doctors_by_ca.csv'},
-        ]
-
         select_columns = [
           "Primary Care Physicians",
           "Specialist Physicians",
@@ -23,6 +13,16 @@ namespace :db do
           "Primary Care Residents and Fellows",
           "Specialist Residents and Fellows",
           "OB-GYN Residents and Fellows"
+        ]
+
+        Dataset.where("name IN (?)", select_columns).each do |d|
+          Statistic.delete_all("dataset_id = #{d.id}")
+          d.delete
+        end
+
+        datasets = [
+          # {:category => 'Healthcare Providers', :rate => false, :stat_type => 'count', :file => 'practicing_doctors_by_ca.csv'},
+          {:category => 'Healthcare Providers', :rate => true, :stat_type => 'rate', :file => 'practicing_doctors_by_ca.csv'},
         ]
 
         datasets.each do |d|
