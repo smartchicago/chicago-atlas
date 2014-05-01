@@ -4874,8 +4874,7 @@
             "name": "Hegewisch", 
             "adjacent_zips": [
                 "60827", 
-                "60617", 
-                "60633", 
+                "60617",
                 "60628"
             ], 
             "adjacent_community_areas": [
@@ -11399,7 +11398,6 @@
             "set": "/1.0/boundary-set/community-areas/", 
             "name": "Riverdale", 
             "adjacent_zips": [
-                "60633", 
                 "60628", 
                 "60827"
             ], 
@@ -12144,7 +12142,7 @@
             "name": "South Deering", 
             "adjacent_zips": [
                 "60617", 
-                "60633", 
+                "60827", 
                 "60619", 
                 "60628"
             ], 
