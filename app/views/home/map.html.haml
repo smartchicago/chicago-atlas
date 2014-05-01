@@ -261,15 +261,19 @@
                       %a{:href => "/map/#{d.slug}"} 
                         = d.name
 
-    %h4 Statistics
     #statistics_accordion.accordion
-      .accordion-group
-        .accordion-heading
-          %a.accordion-toggle{:href => "/map/affordable_resources"} Affordable resources
       - @demographic_categories.each do |c|
+
+        - if (c.name == 'Demographics')
+          - link_color = GlobalConstants::REDS.first
+        - elsif (c.name == 'Health Insurance')
+          - link_color = GlobalConstants::GREENS.first
+        - elsif (c.name == 'Healthcare Providers')
+          - link_color = GlobalConstants::PURPLES.first
+
         .accordion-group
           .accordion-heading
-            %a.accordion-toggle{"data-parent" => "#statistics_accordion", "data-toggle" => "collapse", :href => "#category_#{c.id}", "data-view" => c.name}
+            %a.accordion-toggle{"data-parent" => "#statistics_accordion", "data-toggle" => "collapse", :href => "#category_#{c.id}", "data-view" => c.name, :style => "color: #{link_color}"}
               = c.name
           .accordion-body.collapse{:id => "category_#{c.id}", :class => (not @current_category.nil? and @current_category.id == c.id) ? 'in' : ''}
             .accordion-inner{:id => "category_inner_#{c.id}"}
@@ -280,9 +284,12 @@
                       %strong
                         = d.name
                     - else
-                      %a{:href => "/map/#{d.slug}"} 
+                      %a{:href => "/map/#{d.slug}", :style => "color: #{link_color}"} 
                         = d.name
 
+      .accordion-group
+        .accordion-heading
+          %a.accordion-toggle{:href => "/map/affordable_resources", :style => "color: #{GlobalConstants::ORANGES.first}"} Resources
 
   .span8
     #map

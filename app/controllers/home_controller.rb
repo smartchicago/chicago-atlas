@@ -26,6 +26,7 @@ class HomeController < ApplicationController
       @display_geojson = Rails.cache.fetch('landing_display_geojson') { geography_empty_geojson } 
     
     elsif params[:dataset_slug] == "affordable_resources"
+      @map_colors = GlobalConstants::ORANGES
       @detail_url_fragment = "/resources"
       @display_geojson = Rails.cache.fetch('affordable_resources_geojson') { geography_resources_geojson }
       
@@ -55,6 +56,14 @@ class HomeController < ApplicationController
       @current_dataset_end_year = @current_dataset.end_year
 
       @current_category = Rails.cache.fetch("#{params[:dataset_slug]}_current_category") { Category.find(@current_dataset.category_id) }
+
+      if (@current_category.name == 'Demographics')
+        @map_colors = GlobalConstants::REDS
+      elsif (@current_category.name == 'Health Insurance')
+        @map_colors = GlobalConstants::GREENS
+      elsif (@current_category.name == 'Healthcare Providers')
+        @map_colors = GlobalConstants::PURPLES
+      end
 
       statistics = Rails.cache.fetch("#{params[:dataset_slug]}_statistics") { 
                     Statistic.select('value')

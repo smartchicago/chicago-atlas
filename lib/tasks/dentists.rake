@@ -32,8 +32,8 @@ namespace :db do
               :name => name,
               :slug => handle,
               :description => d[:description],
-              :provider => 'Chicago Community Oral Health Forum',
-              :url => "http://www.heartlandalliance.org/oralhealth/",
+              :provider => 'Health Resources and Services Administration',
+              :url => "http://datawarehouse.hrsa.gov/data/datadownload/pcsa2010Download.aspx",
               :category_id => Category.where(:name => d[:category]).first.id,
               :data_type => 'demographic',
               :stat_type => d[:stat_type]
