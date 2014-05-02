@@ -25,9 +25,18 @@ module ApplicationHelper
            .order("name")
   end
 
-  def get_categories(type)
+  def get_categories_by_type(type)
     Category.select('categories.id, categories.name, categories.description')
               .where("datasets.data_type = ?", type)
+              .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
+              .group('categories.id, categories.name, categories.description')
+              .having('count(datasets.id) > 0')
+              .order("categories.name")
+  end
+
+  def get_categories_like(str)
+    Category.select('categories.id, categories.name, categories.description')
+              .where("datasets.name LIKE '%#{str}%' ")
               .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
               .group('categories.id, categories.name, categories.description')
               .having('count(datasets.id) > 0')

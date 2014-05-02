@@ -255,8 +255,10 @@
 
     %h4 Health Insurance
     #insurance_accordion.accordion
-      = render :partial => "home/map_category", :locals => {:accordion_name => 'insurance_accordion', :category => Category.find_by_name("Health Insurance"), :link_color => GlobalConstants::GREENS.first}
+      - @uninsured_categories.each do |c|
+        = render :partial => "home/map_category", :locals => {:accordion_name => 'insurance_accordion', :category => c, :link_color => GlobalConstants::GREENS.first}
 
+    %h4 Other
     #stats_accordion.accordion
       = render :partial => "home/map_category", :locals => {:accordion_name => 'stats_accordion', :category => Category.find_by_name("Demographics"), :link_color => GlobalConstants::REDS.first}
       = render :partial => "home/map_category", :locals => {:accordion_name => 'stats_accordion', :category => Category.find_by_name("Healthcare Providers"), :link_color => GlobalConstants::PURPLES.first}
