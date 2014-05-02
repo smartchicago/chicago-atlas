@@ -1,0 +1,15 @@
+.accordion-group
+  .accordion-heading
+    %a.accordion-toggle{"data-parent" => accordion_name, "data-toggle" => "collapse", :href => "#category_#{category.id}", "data-view" => category.name, :style => "color: #{link_color}"}
+      = category.name
+  .accordion-body.collapse{:id => "category_#{category.id}", :class => (not @current_category.nil? and @current_category.id == category.id) ? 'in' : ''}
+    .accordion-inner{:id => "category_inner_#{category.id}"}
+      %ul
+        - get_dataset(category.id).each do |d|
+          %li
+            - if d.slug == params[:dataset_slug]
+              %strong
+                = d.name
+            - else
+              %a{:href => "/map/#{d.slug}", :style => "color: #{link_color}"} 
+                = d.name

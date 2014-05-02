@@ -25,9 +25,18 @@ module ApplicationHelper
            .order("name")
   end
 
-  def get_categories(type)
+  def get_categories_by_type(type)
     Category.select('categories.id, categories.name, categories.description')
               .where("datasets.data_type = ?", type)
+              .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
+              .group('categories.id, categories.name, categories.description')
+              .having('count(datasets.id) > 0')
+              .order("categories.name")
+  end
+
+  def get_categories_like(str)
+    Category.select('categories.id, categories.name, categories.description')
+              .where("datasets.name LIKE '%#{str}%' ")
               .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
               .group('categories.id, categories.name, categories.description')
               .having('count(datasets.id) > 0')
@@ -222,14 +231,17 @@ module ApplicationHelper
     stats_array
   end
 
-  def fetch_custom_chart_data(geography_id, likeQuery=nil, listIn=[])
-    stats = Statistic.joins('INNER JOIN datasets ON datasets.id = statistics.dataset_id')
-                     
+  def fetch_custom_chart_data(geography_id, category_id=nil, like_query=nil, list_in=[])
+    stats = Statistic.joins('INNER JOIN datasets ON datasets.id = statistics.dataset_id')                 
 
-    if likeQuery
-      stats = stats.where("datasets.name LIKE '#{likeQuery}%'")
-    elsif listIn.count > 0
-      stats = stats.where("datasets.name IN (?)", listIn)
+    if category_id
+      stats = stats.where("datasets.category_id = ?", category_id)
+    end
+    if like_query
+      stats = stats.where("datasets.name LIKE '#{like_query}%'")
+    end
+    if list_in.count > 0
+      stats = stats.where("datasets.name IN (?)", list_in)
     end
     stats = stats.where("geography_id = ?", geography_id)
                  .order("datasets.id")

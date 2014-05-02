@@ -245,51 +245,23 @@
     %h4 Conditions
     #view_accordion.accordion
       - @condition_categories.each do |c|
-        .accordion-group
-          .accordion-heading
-            %a.accordion-toggle{"data-parent" => "#view_accordion", "data-toggle" => "collapse", :href => "#category_#{c.id}", "data-view" => c.name}
-              = c.name
-          .accordion-body.collapse{:id => "category_#{c.id}", :class => (not @current_category.nil? and @current_category.id == c.id) ? 'in' : ''}
-            .accordion-inner{:id => "category_inner_#{c.id}"}
-              %ul
-                - get_dataset(c.id).each do |d|
-                  %li
-                    - if d.slug == params[:dataset_slug]
-                      %strong
-                        = d.name
-                    - else
-                      %a{:href => "/map/#{d.slug}"} 
-                        = d.name
+        = render :partial => "home/map_category", :locals => {:accordion_name => 'view_accordion', :category => c, :link_color => GlobalConstants::BLUES.first}
 
-    #statistics_accordion.accordion
-      - @demographic_categories.each do |c|
-
-        - if (c.name == 'Demographics')
-          - link_color = GlobalConstants::REDS.first
-        - elsif (c.name == 'Health Insurance')
-          - link_color = GlobalConstants::GREENS.first
-        - elsif (c.name == 'Healthcare Providers')
-          - link_color = GlobalConstants::PURPLES.first
-
-        .accordion-group
-          .accordion-heading
-            %a.accordion-toggle{"data-parent" => "#statistics_accordion", "data-toggle" => "collapse", :href => "#category_#{c.id}", "data-view" => c.name, :style => "color: #{link_color}"}
-              = c.name
-          .accordion-body.collapse{:id => "category_#{c.id}", :class => (not @current_category.nil? and @current_category.id == c.id) ? 'in' : ''}
-            .accordion-inner{:id => "category_inner_#{c.id}"}
-              %ul
-                - get_dataset(c.id).each do |d|
-                  %li
-                    - if d.slug == params[:dataset_slug]
-                      %strong
-                        = d.name
-                    - else
-                      %a{:href => "/map/#{d.slug}", :style => "color: #{link_color}"} 
-                        = d.name
-
+    %h4 Resources
+    #resources_accordion.accordion
       .accordion-group
         .accordion-heading
-          %a.accordion-toggle{:href => "/map/affordable_resources", :style => "color: #{GlobalConstants::ORANGES.first}"} Resources
+          %a.accordion-toggle{:href => "/map/affordable_resources", :style => "color: #{GlobalConstants::ORANGES.second}"} Affordable resources
+
+    %h4 Health Insurance
+    #insurance_accordion.accordion
+      - @uninsured_categories.each do |c|
+        = render :partial => "home/map_category", :locals => {:accordion_name => 'insurance_accordion', :category => c, :link_color => GlobalConstants::GREENS.first}
+
+    %h4 Other
+    #stats_accordion.accordion
+      = render :partial => "home/map_category", :locals => {:accordion_name => 'stats_accordion', :category => Category.find_by_name("Demographics"), :link_color => GlobalConstants::REDS.first}
+      = render :partial => "home/map_category", :locals => {:accordion_name => 'stats_accordion', :category => Category.find_by_name("Healthcare Providers"), :link_color => GlobalConstants::PURPLES.first}
 
   .span8
     #map

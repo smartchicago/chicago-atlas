@@ -59,7 +59,7 @@ class HomeController < ApplicationController
 
       if (@current_category.name == 'Demographics')
         @map_colors = GlobalConstants::REDS
-      elsif (@current_category.name == 'Health Insurance')
+      elsif (@current_category.name.include? 'Uninsured')
         @map_colors = GlobalConstants::GREENS
       elsif (@current_category.name == 'Healthcare Providers')
         @map_colors = GlobalConstants::PURPLES
@@ -79,8 +79,9 @@ class HomeController < ApplicationController
       @display_geojson = Rails.cache.fetch("#{params[:dataset_slug]}_display_geojson") { geography_geojson(@current_dataset.id) }
     end
     
-    @condition_categories = Rails.cache.fetch("condition_categories") { get_categories('condition') }
-    @demographic_categories = Rails.cache.fetch("demographic_categories") { get_categories('demographic') }
+    @condition_categories = Rails.cache.fetch("condition_categories") { get_categories_by_type('condition') }
+    @demographic_categories = Rails.cache.fetch("demographic_categories") { get_categories_by_type('demographic') }
+    @uninsured_categories = Rails.cache.fetch("uninsured_categories") { get_categories_like('Uninsured') }
 
     respond_to do |format|
       format.html # render our template
