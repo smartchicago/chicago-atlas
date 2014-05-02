@@ -12,8 +12,8 @@
     <br />Source: <a href='http://datawarehouse.hrsa.gov/data/datadownload/pcsa2010Download.aspx'>Health Resources and Services Administration</a> as processed by <a href='http://www.robparal.com/'>Rob Paral and Associates</a>.
 
   - chart_id = 'chart_providers'
-  - providers_area = fetch_custom_chart_data(geography.id, nil, chart_headers)
-  - providers_chicago = fetch_custom_chart_data(100, nil, chart_headers)
+  - providers_area = fetch_custom_chart_data(geography.id, nil, nil, chart_headers)
+  - providers_chicago = fetch_custom_chart_data(100, nil, nil, chart_headers)
 
   .chart{:id => chart_id}
 

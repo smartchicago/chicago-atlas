@@ -77,6 +77,10 @@
               %td
                 = format_statistic(demo.value, demo.stat_type)
 
+      - if @geography.is_zip
+        %p
+          These demographics are for <a href='http://en.wikipedia.org/wiki/ZIP_Code_Tabulation_Area'>Zip Code Tabulation Areas</a> (<a href='https://github.com/smartchicago/chicago-atlas/blob/master/db/import/chicago_zctas.geojson'>map</a>) which differ from <a href='http://en.wikipedia.org/wiki/ZIP_code'>US Postal Service zip codes</a> used for mailing (<a href='https://github.com/smartchicago/chicago-atlas/blob/master/db/import/zipcodes.geojson'>map</a>).
+
       %h3 Conditions
       %ul
         - @categories.each do |category|

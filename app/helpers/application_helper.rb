@@ -231,14 +231,17 @@ module ApplicationHelper
     stats_array
   end
 
-  def fetch_custom_chart_data(geography_id, likeQuery=nil, listIn=[])
-    stats = Statistic.joins('INNER JOIN datasets ON datasets.id = statistics.dataset_id')
-                     
+  def fetch_custom_chart_data(geography_id, category_id=nil, like_query=nil, list_in=[])
+    stats = Statistic.joins('INNER JOIN datasets ON datasets.id = statistics.dataset_id')                 
 
-    if likeQuery
-      stats = stats.where("datasets.name LIKE '#{likeQuery}%'")
-    elsif listIn.count > 0
-      stats = stats.where("datasets.name IN (?)", listIn)
+    if category_id
+      stats = stats.where("datasets.category_id = ?", category_id)
+    end
+    if like_query
+      stats = stats.where("datasets.name LIKE '#{like_query}%'")
+    end
+    if list_in.count > 0
+      stats = stats.where("datasets.name IN (?)", list_in)
     end
     stats = stats.where("geography_id = ?", geography_id)
                  .order("datasets.id")

@@ -8,6 +8,14 @@ class Geography < ActiveRecord::Base
     [my_centroid[1],my_centroid[0]]
   end
 
+  def is_zip
+    if id > 1000
+      true
+    else
+      false
+    end
+  end
+  
   def population(year)
     pop = Statistic.joins('INNER JOIN datasets ON datasets.id = statistics.dataset_id')
                      .where("datasets.slug = 'population_all_total'") # brittle way to get this data
