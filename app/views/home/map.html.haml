@@ -8,9 +8,11 @@
   :javascript
     $(window).resize(function () {
       var h = $(window).height(),
-        offsetTop = 100; // Calculate the top offset
+        offsetTop = 160; // Calculate the top offset
 
       $('#map').css('height', (h - offsetTop));
+
+      $('#map_sidebar').css('height', (h - offsetTop - $('#map_sidebar_header').height() - 40 ));
     }).resize();
 
     var map = L.map('map').setView([41.8781136, -87.66677856445312], 11);
@@ -216,52 +218,55 @@
 
 .row-fluid
   .span4
-    - if @landing
-      - title 'Browse by neighborhood'
-      %h3 
-        Browse by neighborhood
-      %p
-        Choose any condition on the left to see data on the map. 
-        Examples: <a href='/map/births_birth_rate'>birth rate</a>, <a href='/map/crime_aggravated_assault'>aggravated battery</a>, or <a href='/map/infectious_disease_tuberculosis'>tuberculosis</a>.
+    #map_sidebar_header
+      - if @landing
+        - title 'Browse by neighborhood'
+        %h3 
+          Browse by neighborhood
+        %p
+          Choose any condition on the left to see data on the map. 
+          Examples: <a href='/map/births_birth_rate'>birth rate</a>, <a href='/map/crime_aggravated_assault'>aggravated battery</a>, or <a href='/map/infectious_disease_tuberculosis'>tuberculosis</a>.
+        
+      - else
+        - title 'Browse ' + @current_dataset_name
+        %h3
+          #{@current_dataset_name}
+          %small#year_label
+        %p 
+          #{@current_dataset_description}
+          - if @current_dataset_url != ''
+            (
+            %a{:href => @current_dataset_url} source
+            )
       
-    - else
-      - title 'Browse ' + @current_dataset_name
-      %h3
-        #{@current_dataset_name}
-        %small#year_label
-      %p 
-        #{@current_dataset_description}
-        - if @current_dataset_url != ''
-          (
-          %a{:href => @current_dataset_url} source
-          )
-    
-      %div{ :id => "slider" }
-      %strong.pull-left#start_year
-      %strong.pull-right#end_year
+        %div{ :id => "slider" }
+        %strong.pull-left#start_year
+        %strong.pull-right#end_year
 
-    %hr
+      %hr
 
-    %h4 Conditions
-    #view_accordion.accordion
-      - @condition_categories.each do |c|
-        = render :partial => "home/map_category", :locals => {:accordion_name => 'view_accordion', :category => c, :link_color => GlobalConstants::BLUES.first}
+    #map_sidebar
 
-    %h4 Resources
-    #resources_accordion.accordion
-      .accordion-group
-        .accordion-heading
-          %a.accordion-toggle{:href => "/map/affordable_resources", :style => "color: #{GlobalConstants::ORANGES.second}"} Affordable resources
+      %h4 Conditions
+      #view_accordion.accordion
+        - @condition_categories.each do |c|
+          = render :partial => "home/map_category", :locals => {:accordion_name => 'view_accordion', :category => c, :link_color => GlobalConstants::BLUES.first}
 
-    %h4 Health Insurance
-    #insurance_accordion.accordion
-      - @uninsured_categories.each do |c|
-        = render :partial => "home/map_category", :locals => {:accordion_name => 'insurance_accordion', :category => c, :link_color => GlobalConstants::GREENS.first}
+      %h4 Resources
+      #resources_accordion.accordion
+        .accordion-group
+          .accordion-heading
+            %a.accordion-toggle{:href => "/map/affordable_resources", :style => "color: #{GlobalConstants::ORANGES.second}"} Affordable resources
 
-    %h4 Other
-    #stats_accordion.accordion
-      = render :partial => "home/map_category", :locals => {:accordion_name => 'stats_accordion', :category => Category.find_by_name("Demographics"), :link_color => GlobalConstants::REDS.first}
-      = render :partial => "home/map_category", :locals => {:accordion_name => 'stats_accordion', :category => Category.find_by_name("Healthcare Providers"), :link_color => GlobalConstants::PURPLES.first}
+      %h4 Health Insurance
+      #insurance_accordion.accordion
+        - @uninsured_categories.each do |c|
+          = render :partial => "home/map_category", :locals => {:accordion_name => 'insurance_accordion', :category => c, :link_color => GlobalConstants::GREENS.first}
+
+      %h4 Other
+      #stats_accordion.accordion
+        = render :partial => "home/map_category", :locals => {:accordion_name => 'stats_accordion', :category => Category.find_by_name("Demographics"), :link_color => GlobalConstants::REDS.first}
+        = render :partial => "home/map_category", :locals => {:accordion_name => 'stats_accordion', :category => Category.find_by_name("Healthcare Providers"), :link_color => GlobalConstants::PURPLES.first}
 
   .span8
     #map
