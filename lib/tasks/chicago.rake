@@ -297,7 +297,7 @@ namespace :db do
               # skip incomplete years
               next
             end
-            if stat['community_area'].nil? or stat['community_area'] == ' ' or stat['community_area'] == ' 0'
+            if stat['community_area'].nil? or stat['community_area'] == ' ' or stat['community_area'] == ' 0'  or stat['community_area'] == '0'
               next
             end
 
