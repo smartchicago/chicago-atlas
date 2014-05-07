@@ -24,7 +24,7 @@ namespace :db do
           {:category => 'Chronic Disease', :name => 'Congestive Heart Failure', :parse_token => 'chd', :description => "Estimated Congestive Heart Failure (CHF) prevalence in Chicago for adults aged 18-89 based on aggregated Electronic Health Record (EHR) data from a selection of healthcare institutions from 2006 through 2010.", :stat_type => 'range, percent'},
         ]
 
-        csv_text = File.read("db/import/chitrec_data_2006-2012.csv")
+        csv_text = File.read("db/import/chitrec_data_2006-2010.csv")
         csv = CSV.parse(csv_text, {:headers => true, :header_converters => :symbol})
 
         datasets.each do |d|
