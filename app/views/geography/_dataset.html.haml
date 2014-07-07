@@ -8,12 +8,18 @@
 .span4
   %p 
     = dataset.description
-    <br>(
-    - unless dataset.url.nil? or dataset.url == ''
-      <a href='#{dataset.url}'>source</a>
-      |
-    %a{ :href => @geography.slug + '/' + dataset.slug + '.json'} raw data
-    )
+    %small
+      %br
+      (
+      - if dataset.url != ''
+        source:
+        %a{:href => dataset.url} 
+          = dataset.provider
+        |
+      %a{ :href => @geography.slug + '/' + dataset.slug + '.json'}
+        %i.icon.icon-download-alt
+        raw data
+      )
 
 .span7
   - chart_stats = fetch_chart_data(dataset.id, @geography.id)

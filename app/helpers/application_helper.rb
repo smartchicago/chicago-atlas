@@ -14,7 +14,7 @@ module ApplicationHelper
 
   def get_datasets(geography_id, category_id)
     Dataset.joins(:statistics)
-      .select("datasets.id, datasets.name, datasets.description, datasets.url, datasets.stat_type, datasets.slug")
+      .select("datasets.id, datasets.name, datasets.description, datasets.provider, datasets.url, datasets.stat_type, datasets.slug")
       .where("statistics.geography_id = #{geography_id} AND datasets.category_id = #{category_id}")
       .group("datasets.id, datasets.name")
       .order("datasets.name")

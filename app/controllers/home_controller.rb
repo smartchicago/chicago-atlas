@@ -17,6 +17,7 @@ class HomeController < ApplicationController
     @current_dataset_description = ''
     @current_dataset_slug = ''
     @current_dataset_url = ''
+    @current_dataset_provider = ''
     @current_dataset_start_year = Time.now.year
     @current_dataset_end_year = Time.now.year
     @map_colors = GlobalConstants::BLUES
@@ -33,6 +34,7 @@ class HomeController < ApplicationController
       @current_dataset_name = 'Affordable resources'
       @current_dataset_description = 'Number of affordable resource locations by Chicago community area.'
       @current_dataset_url = 'http://purplebinder.com/'
+      @current_dataset_provider = 'Purple Binder'
       @current_dataset_slug = 'affordable_resources'
 
       statistics = Geography
@@ -53,6 +55,7 @@ class HomeController < ApplicationController
       @current_dataset_description = @current_dataset.description
       @current_dataset_slug = @current_dataset.slug
       @current_dataset_url = @current_dataset.url
+      @current_dataset_provider = @current_dataset.provider
       @current_dataset_start_year = @current_dataset.start_year
       @current_dataset_end_year = @current_dataset.end_year
 

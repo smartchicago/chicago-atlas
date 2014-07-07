@@ -234,12 +234,18 @@
           %small#year_label
         %p 
           #{@current_dataset_description}
-          - if @current_dataset_url != ''
+          %small
+            %br
             (
-            %a{:href => @current_dataset_url} source
-            |
-          %a{:href => @current_dataset_slug+".json"} raw data
-          )
+            - if @current_dataset_url != ''
+              source:
+              %a{:href => @current_dataset_url} 
+                = @current_dataset_provider
+              |
+            %a{:href => @current_dataset_slug+".json"}
+              %i.icon.icon-download-alt
+              raw data
+            )
       
         %div{ :id => "slider" }
         %strong.pull-left#start_year
