@@ -21,8 +21,7 @@
 
           %tr.death-info{ :rel => "popover", :title => dataset.name, :"data-content" => dataset.description, :"data-trigger" => 'hover', :"data-html" => 'true', :"data-placement" => 'right' }
             %td
-              %a{:href => "/place/#{@geography.slug}/#{dataset.slug}"}
-                = dataset.name
+              = dataset.name
             %td
               - if death_stat >= chicago_death_stat
                 %span.badge.badge-important= death_stat

@@ -62,8 +62,8 @@ class GeographyController < ApplicationController
     @dataset = Dataset.where(:slug => params[:dataset_slug]).first || not_found
 
     respond_to do |format|
-      format.html # render our template
       format.json { render :json => fetch_chart_data(@dataset.id, @geography.id) }
+      format.html { not_found }
     end
   end
 
