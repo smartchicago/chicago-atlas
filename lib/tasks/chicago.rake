@@ -276,7 +276,7 @@ namespace :db do
             :slug => handle,
             :description => d[:description],
             :provider => 'Chicago Police Department',
-            :url => d[:url],
+            :url => 'https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-present/ijzp-q8t2',
             :category_id => Category.where(:name => d[:category]).first.id,
             :data_type => 'condition',
             :description => d[:description],

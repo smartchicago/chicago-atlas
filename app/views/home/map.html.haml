@@ -237,7 +237,9 @@
           - if @current_dataset_url != ''
             (
             %a{:href => @current_dataset_url} source
-            )
+            |
+          %a{:href => @current_dataset_slug+".json"} raw data
+          )
       
         %div{ :id => "slider" }
         %strong.pull-left#start_year
