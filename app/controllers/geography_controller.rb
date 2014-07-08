@@ -84,7 +84,32 @@ class GeographyController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => {:location => @geography.id, :death_cause_data => death_dataset} }
+      format.json { render :json => {:location => @geography.slug, :death_cause_data => death_dataset} }
+      format.html { not_found }
+    end
+  end
+
+  def show_demographic_dataset
+    @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
+
+    pop_2000 = fetch_demographic_age_data(2000, @geography.id)
+    pop_2010 = fetch_demographic_age_data(2010, @geography.id)
+
+    demographic_data_all = []
+
+    pop_2000.each_index do |i|
+      population_data = {
+        :age_group => GlobalConstants::AGE_GROUPS[i],
+        :pop_2000 => pop_2000[i],
+        :pop_2010 => pop_2010[i]
+      }
+      demographic_data_all << population_data
+    end
+
+    respond_to do |format|
+      format.json { render :json => {
+        :location => @geography.slug, 
+        :demographic_data => demographic_data_all} }
       format.html { not_found }
     end
   end
