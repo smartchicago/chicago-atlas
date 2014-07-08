@@ -10,16 +10,8 @@
     = dataset.description
     %small
       %br
-      (
       - if dataset.url != ''
-        source:
-        %a{:href => dataset.url} 
-          = dataset.provider
-        |
-      %a{ :href => @geography.slug + '/' + dataset.slug + '.json'}
-        %i.icon.icon-download-alt
-        raw data
-      )
+        = raw(render_source_links(dataset.provider, dataset.url, @geography.slug + '/' + dataset.slug + '.json'))
 
 .span7
   - chart_stats = fetch_chart_data(dataset.id, @geography.id)

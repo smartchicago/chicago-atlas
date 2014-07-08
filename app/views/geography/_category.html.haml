@@ -7,7 +7,7 @@
   - if category.name.include? 'Deaths'
     %p
       = category.description
-      = raw(render_source_links(@datasets.first.provider, @datasets.first.url, '/place/causesofdeath/'+@geography.slug))
+      = raw(render_source_links(@datasets.first.provider, @datasets.first.url, '/place/causesofdeath/'+@geography.slug+'.json'))
     %table.table.table-hover
       %thead
         %tr
