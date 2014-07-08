@@ -291,4 +291,23 @@ module ApplicationHelper
     end
   end
 
+  def render_source_links(provider_name, provider_url, source_url)
+    "<small>
+      <br>
+      (
+      source: 
+      <a href='#{provider_url}'>
+        #{provider_name}
+      </a>
+      |
+      <a href='#{source_url}'>
+        <i class='icon icon-download-alt'></i>
+        raw data
+      </a>
+      )
+    </small>"
+
+
+  end
+
 end

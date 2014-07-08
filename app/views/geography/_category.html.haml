@@ -1,13 +1,13 @@
 %h2{:id => category.name.parameterize.underscore}
   = category.name
 
-%p
-  = category.description
-
 .row-fluid
   - @datasets = get_datasets(geography.id, category.id)
 
   - if category.name.include? 'Deaths'
+    %p
+      = category.description
+      = raw(render_source_links(@datasets.first.provider, @datasets.first.url, '/place/causesofdeath/'+@geography.slug))
     %table.table.table-hover
       %thead
         %tr
@@ -39,6 +39,8 @@
         $('.death-info').popover();
 
   - else
+    %p
+      = category.description
     - @datasets.each do |dataset|
       = render :partial => "geography/dataset", :locals => {:dataset => dataset, :geography => geography, :show_header => true }
 

@@ -67,6 +67,28 @@ class GeographyController < ApplicationController
     end
   end
 
+  def show_death_dataset
+    @current_menu = 'places' #?
+    
+    @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
+    @datasets = get_datasets(@geography.id, 2)
+
+    death_dataset = []
+
+    @datasets.each do |dataset|
+      death_data = { :death_cause => dataset.name, 
+        :description => dataset.description,
+        :death_stat => fetch_chart_data(dataset.id, @geography.id)[:data].first, 
+        :chicago_death_stat => fetch_chart_data(dataset.id, 100)[:data].first }
+      death_dataset << death_data
+    end
+
+    respond_to do |format|
+      format.json { render :json => {:location => @geography.id, :death_cause_data => death_dataset} }
+      format.html { not_found }
+    end
+  end
+
   def show_resources
     @current_menu = 'places'
     @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
