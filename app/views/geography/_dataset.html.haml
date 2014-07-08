@@ -8,10 +8,9 @@
 .span4
   %p 
     = dataset.description
-    %small
-      %br
-      - if dataset.url != ''
-        = raw(render_source_links(dataset.provider, dataset.url, @geography.slug + '/' + dataset.slug + '.json'))
+    %br
+    - if dataset.url != ''
+      = raw(render_source_links(dataset.provider, dataset.url, @geography.slug + '/' + dataset.slug + '.json'))
 
 .span7
   - chart_stats = fetch_chart_data(dataset.id, @geography.id)
