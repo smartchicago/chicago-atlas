@@ -148,6 +148,37 @@ class GeographyController < ApplicationController
 
   end
 
+  def show_provider_dataset
+    @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
+    @category = Category.where("name = 'Healthcare Providers'").first
+
+    all_data = []
+
+    professions = []
+    Dataset.where(:category_id => @category.id).each { |dataset| professions << dataset.name }
+
+    providers_area = fetch_custom_chart_data(@geography.id, nil, nil, professions)
+    providers_chicago = fetch_custom_chart_data(100, nil, nil, professions)
+
+    professions.each_index do |i|
+      data = {
+        :profession => professions[i],
+        :providers_area => providers_area[i],
+        :providers_chicago => providers_chicago[i]
+      }
+      all_data << data
+    end
+
+    respond_to do |format|
+      format.json { render :json => {
+        :area => @geography.slug,
+        :data => all_data
+        } }
+      format.html { not_found }
+    end
+
+  end
+
   def show_resources
     @current_menu = 'places'
     @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
