@@ -1,6 +1,9 @@
 - if @geography.has_category("Healthcare Providers")
-  - chart_headers = ["Dentists", "Primary Care Physicians", "Specialist Physicians","OB-GYN Physicians","Primary Care Residents and Fellows","Specialist Residents and Fellows","OB-GYN Residents and Fellows"]
+  - @category = Category.where("name = 'Healthcare Providers'").first
 
+  - chart_headers = []
+  - Dataset.where(:category_id => @category.id).each { |dataset| chart_headers << dataset.name }
+  
   / anchor tags for linking to combined chart from map
   - chart_headers.each do |header|
     %span{:id => "Healthcare Providers #{header}".parameterize.underscore}
