@@ -6,7 +6,7 @@
 
     %p
       Total population, broken down by age groups for 2000 and 2010.
-      = raw(render_source_links( 'US Census, as prepared by the Chicago Department of Public Health', 'https://github.com/datamade/chicago-atlas/blob/master/db/import/population_estimates_1999_2011.csv', '/place/demographic/'+@geography.slug+'.json'))
+      = raw(render_source_links( 'US Census, as prepared by the Chicago Department of Public Health', 'https://github.com/datamade/chicago-atlas/blob/master/db/import/population_estimates_1999_2011.csv', '/place/demographic/'+@geography.slug+'.json', 1))
 
     - demographic_age_2000 = fetch_demographic_age_data(2000, @geography.id)
     - demographic_age_2010 = fetch_demographic_age_data(2010, @geography.id)

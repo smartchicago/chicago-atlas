@@ -291,23 +291,25 @@ module ApplicationHelper
     end
   end
 
-  def render_source_links(provider_name, provider_url, source_url)
-    "<small>
+  def render_source_links(provider_name, provider_url, source_url, is_oneline=false)
+    source_string = "<small class='muted'>
       <br>
-      (
-      source: 
+      Source: 
       <a href='#{provider_url}'>
         #{provider_name}
-      </a>
-      |
-      <a href='#{source_url}'>
+      </a>"
+    if is_oneline == nil
+      source_string << "<br>"
+    else
+      source_string << "|"
+    end
+    source_string << "<a href='#{source_url}' class='nowrap'>
         <i class='icon icon-download-alt'></i>
-        raw data
+        Download data
       </a>
-      )
     </small>"
 
-
+    return source_string
   end
 
 end
