@@ -3,7 +3,7 @@
     .span12
       %h2#insurance Health Insurance
 
-      %p Percent of population that does not have health insurance from 2008-2012. <br />Source: <a href='https://www.census.gov/acs/www/'>American Community Survey, 2008-2012</a> as processed by <a href='http://www.robparal.com/'>Rob Paral and Associates</a>.
+      %p Percent of population that does not have health insurance from 2008-2012. <br />
 
       = render :partial => "geography/insurance_chart", :locals => {:geography => @geography, :chart_title => 'All Uninsured', :chart_id => 'chart_insurance_all', :chart_headers => ['All Uninsured'] }
 

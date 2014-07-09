@@ -114,6 +114,40 @@ class GeographyController < ApplicationController
     end
   end
 
+  def show_insurance_dataset
+    @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
+    cat = Category.find_by_name(params[:cat_name])
+
+    insurance_area = fetch_custom_chart_data(@geography.id, cat.id, nil, [])
+    insurance_chicago = fetch_custom_chart_data(100, cat.id, nil, [])
+    group_labels = []
+
+    all_data = []
+
+    Dataset.where(:category_id => cat.id).each do |dataset|
+      group_labels << dataset.name
+    end
+
+    group_labels.each_index do |i|
+      data = {
+        :group => group_labels[i],
+        :uninsured_area => insurance_area[i],
+        :uninsured_chicago => insurance_chicago[i]
+      }
+      all_data << data
+    end
+
+    respond_to do |format|
+      format.json { render :json => {
+        :area => @geography.slug,
+        :uninsured_data_type => cat.name,
+        :data => all_data
+        } }
+      format.html { not_found }
+    end
+
+  end
+
   def show_resources
     @current_menu = 'places'
     @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
