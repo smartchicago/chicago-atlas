@@ -1,7 +1,7 @@
 class GeographyController < ApplicationController
   include ApplicationHelper
 
-  caches_action :index, :show, :show_dataset, :resources_json
+  caches_action :index, :show, :show_dataset, :show_death_dataset, :show_demographic_dataset, :show_insurance_dataset, :show_provider_dataset, :resources_json
 
   def index
     @current_menu = 'places'
