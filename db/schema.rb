@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140421220144) do
+ActiveRecord::Schema.define(:version => 20140718163215) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -75,6 +75,22 @@ ActiveRecord::Schema.define(:version => 20140421220144) do
     t.string   "purple_binder_url", :default => ""
     t.string   "program_url",       :default => ""
     t.integer  "community_area_id"
+  end
+
+  create_table "providers", :force => true do |t|
+    t.integer  "src_id"
+    t.string   "name"
+    t.string   "slug"
+    t.string   "primary_type"
+    t.string   "sub_type"
+    t.string   "addr_street"
+    t.string   "addr_city"
+    t.string   "addr_zip"
+    t.string   "ownership_type"
+    t.string   "contact_email"
+    t.string   "contact_phone"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "statistics", :force => true do |t|
