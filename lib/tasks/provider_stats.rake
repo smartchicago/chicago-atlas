@@ -27,14 +27,14 @@ namespace :db do
         csv.each do |row|
           stats.each do |stat_info|
             provider_statistic = ProviderStats.new(
-              :src_id => row["hospital_id"],
+              :provider_id => row["hospital_id"],
               :stat_type => stat_info[:cat],
               :stat => stat_info[:stat_name],
               :value => row[stat_info[:parse_token]],
-              :date_start => DateTime.new(row["year"], 1, 1),
-              :date_end => DateTime.new(row["year"], 12, 31)
+              :date_start => DateTime.new(row["year"].to_i, 1, 1),
+              :date_end => DateTime.new(row["year"].to_i, 12, 31)
             )
-            puts "importing #{provider_statistic.stat_type} #{provider_statistic.stat} for hospital id hospital #{provider_statistic.src_id}"
+            puts "importing #{provider_statistic.stat_type} #{provider_statistic.stat} for hospital id hospital #{provider_statistic.provider_id}"
             provider_statistic.save!
           end
         end
@@ -67,14 +67,14 @@ namespace :db do
         csv.each do |row|
           stats.each do |stat_info|
             provider_statistic = ProviderStats.new(
-              :src_id => row["hospital_id"],
+              :provider_id => row["hospital_id"],
               :stat_type => stat_info[:cat],
               :stat => stat_info[:stat_name],
               :value => row[stat_info[:parse_token]],
-              :date_start => DateTime.new(row["year"], 1, 1),
-              :date_end => DateTime.new(row["year"], 12, 31)
+              :date_start => DateTime.new(row["year"].to_i, 1, 1),
+              :date_end => DateTime.new(row["year"].to_i, 12, 31)
             )
-            puts "importing #{provider_statistic.stat_type} #{provider_statistic.stat} for hospital id hospital #{provider_statistic.src_id}"
+            puts "importing #{provider_statistic.stat_type} #{provider_statistic.stat} for hospital id hospital #{provider_statistic.provider_id}"
             provider_statistic.save!
           end
         end

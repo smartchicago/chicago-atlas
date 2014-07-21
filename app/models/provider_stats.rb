@@ -1,3 +1,3 @@
 class ProviderStats < ActiveRecord::Base
-  attr_accessible :src_id, :stat_type, :stat, :value, :year, :time_period
+  attr_accessible :provider_id, :stat_type, :stat, :value, :date_start, :date_end
 end
