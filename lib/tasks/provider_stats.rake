@@ -164,7 +164,43 @@ namespace :db do
       end
 
 
+      desc "Import hospital stats - inpatient revenue by payment type"
+      task :inpatient_revenue => :environment do
+        require 'csv'
 
+        ProviderStats.where("stat_type = 'Inpatient Revenue by Payment Type'").each do |d|
+          d.delete
+        end
+
+        csv_text = File.read("db/import/hospital_stats_revenueinpatient.csv")
+        csv = CSV.parse(csv_text, :headers => true)
+
+        stats = [
+          # Medicare, Medicaid, Other Public, Private Insurance, Private Payment, Total
+          {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Medicaid', :parse_token => 'medicaid'},
+          {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Medicare', :parse_token => 'medicare'},
+          {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Other Public Payment', :parse_token => 'other_public_payment'},
+          {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Private Insurance', :parse_token => 'private_insurance'},
+          {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Private Payment', :parse_token => 'private_payment'},
+          {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Total', :parse_token => 'total'}
+        ]
+
+        csv.each do |row|
+          stats.each do |stat_info|
+            provider_statistic = ProviderStats.new(
+              :provider_id => row["hospital_id"],
+              :stat_type => stat_info[:cat],
+              :stat => stat_info[:stat_name],
+              :value => row[stat_info[:parse_token]],
+              :date_start => Date.parse(row["report_start_date"]),
+              :date_end => Date.parse(row["report_end_date"])
+            )
+            puts "importing #{provider_statistic.stat_type} #{provider_statistic.stat} for hospital id hospital #{provider_statistic.provider_id}"
+            provider_statistic.save!
+          end
+        end
+        puts 'Done!'
+      end
 
 
     end
