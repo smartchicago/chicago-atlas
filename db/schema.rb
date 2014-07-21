@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140718163215) do
+ActiveRecord::Schema.define(:version => 20140718203124) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -76,6 +76,19 @@ ActiveRecord::Schema.define(:version => 20140718163215) do
     t.string   "program_url",       :default => ""
     t.integer  "community_area_id"
   end
+
+  create_table "provider_stats", :force => true do |t|
+    t.integer  "src_id"
+    t.string   "stat_type"
+    t.string   "stat"
+    t.float    "value"
+    t.integer  "year"
+    t.string   "time_period"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "provider_stats", ["src_id"], :name => "index_provider_stats_on_src_id"
 
   create_table "providers", :force => true do |t|
     t.integer  "src_id"
