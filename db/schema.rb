@@ -78,17 +78,18 @@ ActiveRecord::Schema.define(:version => 20140718203124) do
   end
 
   create_table "provider_stats", :force => true do |t|
-    t.integer  "src_id"
+    t.integer  "provider_id"
     t.string   "stat_type"
     t.string   "stat"
     t.float    "value"
-    t.integer  "year"
-    t.string   "time_period"
+    t.datetime "date_start"
+    t.datetime "date_end"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
 
-  add_index "provider_stats", ["src_id"], :name => "index_provider_stats_on_src_id"
+  add_index "provider_stats", ["provider_id"], :name => "index_provider_stats_on_provider_id"
+  add_index "provider_stats", ["stat_type"], :name => "index_provider_stats_on_stat_type"
 
   create_table "providers", :force => true do |t|
     t.integer  "src_id"

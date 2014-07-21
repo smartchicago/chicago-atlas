@@ -2,15 +2,16 @@ class CreateProviderStats < ActiveRecord::Migration
   def change
     create_table :provider_stats do |t|
 
-    	t.integer :src_id
+    	t.references :provider
     	t.string :stat_type
     	t.string :stat
     	t.float :value
-    	t.integer :year
-    	t.string :time_period
+    	t.datetime :date_start
+    	t.datetime :date_end
 
     	t.timestamps
     end
-    add_index :provider_stats, :src_id
+    add_index :provider_stats, :provider_id
+    add_index :provider_stats, :stat_type
   end
 end

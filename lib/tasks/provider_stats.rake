@@ -31,7 +31,8 @@ namespace :db do
               :stat_type => stat_info[:cat],
               :stat => stat_info[:stat_name],
               :value => row[stat_info[:parse_token]],
-              :year => row["year"]
+              :date_start => DateTime.new(row["year"], 1, 1),
+              :date_end => DateTime.new(row["year"], 12, 31)
             )
             puts "importing #{provider_statistic.stat_type} #{provider_statistic.stat} for hospital id hospital #{provider_statistic.src_id}"
             provider_statistic.save!
@@ -70,7 +71,8 @@ namespace :db do
               :stat_type => stat_info[:cat],
               :stat => stat_info[:stat_name],
               :value => row[stat_info[:parse_token]],
-              :year => row["year"]
+              :date_start => DateTime.new(row["year"], 1, 1),
+              :date_end => DateTime.new(row["year"], 12, 31)
             )
             puts "importing #{provider_statistic.stat_type} #{provider_statistic.stat} for hospital id hospital #{provider_statistic.src_id}"
             provider_statistic.save!
@@ -78,7 +80,6 @@ namespace :db do
         end
         puts 'Done!'
       end
-
 
 
     end
