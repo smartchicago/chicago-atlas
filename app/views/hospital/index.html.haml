@@ -1,0 +1,7 @@
+%h1 Hospitals in Chicago
+
+%ul
+  - @hospitals.each do |hospital|
+    %li
+      %a{:href => "/hospital/#{hospital.slug}"}
+        = hospital.name
