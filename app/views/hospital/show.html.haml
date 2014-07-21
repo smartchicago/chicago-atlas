@@ -3,9 +3,14 @@
 
 .row-fluid
 	.span8
-		%p 
+		%p hospital description here
+		%p phone number here
+		%a website here
 	.span4
 		.well
 			%p map here
 			%p #{@hospital.addr_street} <br> #{@hospital.addr_city}, IL #{@hospital.addr_zip}
 			%a{:href => "https://maps.google.com/maps?f=d&hl=en&geocode=&daddr=#{@hospital.addr_street}+#{@hospital.addr_city},+IL+#{@hospital.addr_zip}"} <button class="btn">Get Directions</button>
+.row-fluid
+	.span12
+		%p
