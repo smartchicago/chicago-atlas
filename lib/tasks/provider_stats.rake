@@ -152,7 +152,7 @@ namespace :db do
               :provider_id => row["hospital_id"],
               :stat_type => stat_info[:cat],
               :stat => stat_info[:stat_name],
-              :value => row[stat_info[:parse_token]],
+              :value => row[stat_info[:parse_token]].gsub(/[^\d\.]/, '').to_f,
               :date_start => Date.parse(row["report_start_date"]),
               :date_end => Date.parse(row["report_end_date"])
             )
@@ -191,7 +191,7 @@ namespace :db do
               :provider_id => row["hospital_id"],
               :stat_type => stat_info[:cat],
               :stat => stat_info[:stat_name],
-              :value => row[stat_info[:parse_token]],
+              :value => row[stat_info[:parse_token]].gsub(/[^\d\.]/, '').to_f,
               :date_start => Date.parse(row["report_start_date"]),
               :date_end => Date.parse(row["report_end_date"])
             )
