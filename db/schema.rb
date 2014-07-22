@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140718203124) do
+ActiveRecord::Schema.define(:version => 20140722152906) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20140718203124) do
     t.datetime "date_end"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "data_type"
   end
 
   add_index "provider_stats", ["provider_id"], :name => "index_provider_stats_on_provider_id"

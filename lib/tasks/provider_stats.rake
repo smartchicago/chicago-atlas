@@ -32,7 +32,8 @@ namespace :db do
               :stat => stat_info[:stat_name],
               :value => row[stat_info[:parse_token]],
               :date_start => DateTime.new(row["year"].to_i, 1, 1),
-              :date_end => DateTime.new(row["year"].to_i, 12, 31)
+              :date_end => DateTime.new(row["year"].to_i, 12, 31),
+              :data_type => "count"
             )
             puts "importing #{provider_statistic.stat_type} #{provider_statistic.stat} for hospital id #{provider_statistic.provider_id}"
             provider_statistic.save!
@@ -72,7 +73,8 @@ namespace :db do
               :stat => stat_info[:stat_name],
               :value => row[stat_info[:parse_token]],
               :date_start => DateTime.new(row["year"].to_i, 1, 1),
-              :date_end => DateTime.new(row["year"].to_i, 12, 31)
+              :date_end => DateTime.new(row["year"].to_i, 12, 31),
+              :data_type => "count"
             )
             puts "importing #{provider_statistic.stat_type} #{provider_statistic.stat} for hospital id #{provider_statistic.provider_id}"
             provider_statistic.save!
@@ -115,7 +117,8 @@ namespace :db do
               :stat => stat_info[:stat_name],
               :value => row[stat_info[:parse_token]],
               :date_start => DateTime.new(row["year"].to_i, 1, 1),
-              :date_end => DateTime.new(row["year"].to_i, 12, 31)
+              :date_end => DateTime.new(row["year"].to_i, 12, 31),
+              :data_type => "count"
             )
             puts "importing #{provider_statistic.stat_type} #{provider_statistic.stat} for hospital id #{provider_statistic.provider_id}"
             provider_statistic.save!
@@ -154,7 +157,8 @@ namespace :db do
               :stat => stat_info[:stat_name],
               :value => row[stat_info[:parse_token]].gsub(/[^\d\.]/, '').to_f,
               :date_start => Date.parse(row["report_start_date"]),
-              :date_end => Date.parse(row["report_end_date"])
+              :date_end => Date.parse(row["report_end_date"]),
+              :data_type => "money"
             )
             puts "importing #{provider_statistic.stat_type} #{provider_statistic.stat} for hospital id hospital #{provider_statistic.provider_id}"
             provider_statistic.save!
@@ -193,7 +197,8 @@ namespace :db do
               :stat => stat_info[:stat_name],
               :value => row[stat_info[:parse_token]].gsub(/[^\d\.]/, '').to_f,
               :date_start => Date.parse(row["report_start_date"]),
-              :date_end => Date.parse(row["report_end_date"])
+              :date_end => Date.parse(row["report_end_date"]),
+              :data_type => "money"
             )
             puts "importing #{provider_statistic.stat_type} #{provider_statistic.stat} for hospital id hospital #{provider_statistic.provider_id}"
             provider_statistic.save!
