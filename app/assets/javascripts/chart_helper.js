@@ -1,12 +1,18 @@
 var ChartHelper = {};
-ChartHelper.create = function(element, type, seriesData, startDate, yearRange, pointInterval, statType, categories) {
+ChartHelper.create = function(element, type, seriesData, startDate, yearRange, pointInterval, statType, categories, isStacked) {
   var percentSuffix = '';
   if(statType == 'percent')
     percentSuffix = '%';
+  var moneyPrefix = '';
+  if(statType == 'money')
+    moneyPrefix = '$';
 
   var area_config = {};
   if (type == 'area')
     area_config = { stacking: 'normal' };
+  var stacked_bar_config = {};
+  if (isStacked)
+    stacked_bar_config = {stacking: 'normal'};
 
   var xaxis_config = {
                       type: 'datetime',
@@ -53,6 +59,7 @@ ChartHelper.create = function(element, type, seriesData, startDate, yearRange, p
     },
     plotOptions: {
       area: area_config,
+      column: stacked_bar_config,
       series: {
         marker: {
           radius: 3,
@@ -81,7 +88,7 @@ ChartHelper.create = function(element, type, seriesData, startDate, yearRange, p
             if (point.point.low != null && point.point.high != null && point.point.low != 0 && point.point.high != 0)
               s += "<br /><span style=\"color: " + point.series.color + "\">" + point.series.name + ":</span> " + point.point.low + percentSuffix + " - " + point.point.high + percentSuffix;
             else
-              s += "<br /><span style=\"color: " + point.series.color + "\">" + point.series.name + ":</span> " + point.y + percentSuffix;
+              s += "<br /><span style=\"color: " + point.series.color + "\">" + point.series.name + ":</span> " + moneyPrefix + point.y + percentSuffix;
           });
           return s;
         },
