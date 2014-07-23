@@ -13,4 +13,120 @@
 			%a{:href => "https://maps.google.com/maps?f=d&hl=en&geocode=&daddr=#{@hospital.addr_street}+#{@hospital.addr_city},+IL+#{@hospital.addr_zip}"} <button class="btn">Get Directions</button>
 .row-fluid
 	.span12
-		%p
+		%h3 Hospital Admissions Data
+		%h4#admissions-by-type Admissions by Type
+		%p Description
+		- admissions_by_type = fetch_provider_data(@hospital.src_id, "Admissions by Type")
+		- chart_id = "chart_admissions_type"
+		.chart{:id => chart_id}
+		- content_for :javascripts do
+			:javascript
+				$(function () {
+
+					var seriesData = [{
+						data: #{admissions_by_type[:values]},
+						name: "Admissions in 2012"
+					}];
+					ChartHelper.create("#{chart_id}", "column", seriesData, Date.UTC(2000, 1, 1), "", "", "count", #{admissions_by_type[:stats]});
+				});
+		%h4#admission-by-x Admissions by X
+		%p Description
+
+.row-fluid
+	.span12
+		%h3 Hospital Revenue Data
+		- revenue_inpatient = fetch_provider_data(@hospital.src_id, "Inpatient Revenue by Payment Type")
+		- inpatient = Hash[revenue_inpatient[:stats].zip(revenue_inpatient[:values])]
+		- inpatient_total = inpatient["Total"]
+		- inpatient.delete("Total")
+		- revenue_outpatient = fetch_provider_data(@hospital.src_id, "Outpatient Revenue by Payment Type")
+		- outpatient = Hash[revenue_outpatient[:stats].zip(revenue_outpatient[:values])]
+		- outpatient_total = outpatient["Total"]
+		- outpatient.delete("Total")
+		%h5 reporting period: #{revenue_inpatient[:start_date].strftime("%m/%d/%y")} - #{revenue_inpatient[:end_date].strftime("%m/%d/%y")}
+.row-fluid
+	.span4
+		%h4#revenue-total Total Revenue
+		%p Description
+		.chart{:id => "rev_total"}
+		- content_for :javascripts do
+			:javascript
+				$(function () {
+					var seriesData = [
+						{data: [#{inpatient_total}], name: "Inpatient Revenue"},
+						{data: [#{outpatient_total}], name: "Outpatient Revenue"}
+					]
+					ChartHelper.create("rev_total", "column", seriesData, Date.UTC(2000, 1, 1), "", "", "money", ["Total Revenue"]);
+				});
+	.span8
+		%h4#revenue-combined Revenue by Source
+		%p Description
+		.chart{:id => "rev_combined"}
+		- content_for :javascripts do
+			:javascript
+				$(function () {
+
+					var seriesData = [{
+						data: #{inpatient.values},
+						name: "Inpatient Revenue"},
+						{data: #{outpatient.values},
+						name: "Outpatient Revenue"}];
+					ChartHelper.create("rev_combined", "column", seriesData, Date.UTC(2000, 1, 1), "", "", "money", #{revenue_inpatient[:stats]});
+				});
+.row-fluid
+	.span12
+		%h4#revenue-total Total Revenue
+		%p Description
+		.chart{:id => "revenue_total"}
+		- content_for :javascripts do
+			:javascript
+				$(function () {
+					var seriesData = [
+						{data: [#{inpatient_total}], name: "Inpatient Revenue"},
+						{data: [#{outpatient_total}], name: "Outpatient Revenue"}
+					]
+					ChartHelper.create("revenue_total", "column", seriesData, Date.UTC(2000, 1, 1), "", "", "money", ["Total Revenue"]);
+				});
+.row-fluid
+	.span6
+		%h4#revenue-inpatient Inpatient Revenue by Source
+		%p blah blah
+		.chart{:id => "revenue_inpatient"}
+		- content_for :javascripts do
+			:javascript
+				$(function () {
+					var seriesData = [{
+						data: #{inpatient.values},
+						name: "Inpatient Revenue"}];
+					ChartHelper.create("revenue_inpatient", "column", seriesData, Date.UTC(2000, 1, 1), "", "", "money", #{revenue_inpatient[:stats]});
+				});
+	.span6
+		%h4#revenue-outpatient Outpatient Revenue by Source
+		%p Description
+		.chart{:id => "revenue_outpatient"}
+		- content_for :javascripts do
+			:javascript
+				$(function () {
+
+					var seriesData = [{
+						data: #{outpatient.values},
+						name: "Outpatient Revenue"}];
+					ChartHelper.create("revenue_outpatient", "column", seriesData, Date.UTC(2000, 1, 1), "", "", "money", #{revenue_outpatient[:stats]});
+				});
+.row-fluid
+	.span12
+		%h4#revenue-combined Revenue by Source
+		%p Description
+		.chart{:id => "revenue_combined"}
+		- content_for :javascripts do
+			:javascript
+				$(function () {
+
+					var seriesData = [{
+						data: #{inpatient.values},
+						name: "Inpatient Revenue"},
+						{data: #{outpatient.values},
+						name: "Outpatient Revenue"}];
+					ChartHelper.create("revenue_combined", "column", seriesData, Date.UTC(2000, 1, 1), "", "", "money", #{revenue_inpatient[:stats]});
+				});
+
