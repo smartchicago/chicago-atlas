@@ -10,6 +10,8 @@ namespace :db do
         Rake::Task["db:import:provider_stats:medsurg_admissions_by_age"].invoke
         Rake::Task["db:import:provider_stats:outpatient_count"].invoke
         Rake::Task["db:import:provider_stats:outpatient_revenue"].invoke
+        Rake::Task["db:import:provider_stats:admissions_by_race"].invoke
+        Rake::Task["db:import:provider_stats:admissions_by_ethnicity"].invoke
       end
       
       desc "Import hospital stats - inpatient count"
@@ -73,6 +75,82 @@ namespace :db do
           {:stat_name => 'Private Insurance', :parse_token => 'outpatient_count_private_insurance'},
           {:stat_name => 'Private Payment', :parse_token => 'outpatient_count_private_payment'},
           {:stat_name => 'Charity Care', :parse_token => 'outpatient_count_charity_care'}
+        ]
+
+        csv.each do |row|
+          stats.each do |stat_info|
+            provider_statistic = ProviderStats.new(
+              :provider_id => row["hospital_id"],
+              :stat_type => cat_name,
+              :stat => stat_info[:stat_name],
+              :value => row[stat_info[:parse_token]],
+              :date_start => DateTime.new(row["year"].to_i, 1, 1),
+              :date_end => DateTime.new(row["year"].to_i, 12, 31),
+              :data_type => "count"
+            )
+            puts "importing #{provider_statistic.stat_type} #{provider_statistic.stat} for hospital id #{provider_statistic.provider_id}"
+            provider_statistic.save!
+          end
+        end
+        puts 'Done!'
+      end
+
+
+      desc "Import hospital stats - admissions by race"
+      task :admissions_by_race => :environment do
+        require 'csv'
+
+        cat_name = 'Admissions by Race'
+        ProviderStats.where("stat_type = 'Admissions by Race'").each do |d|
+          d.delete
+        end
+
+        csv_text = File.read("db/import/hospital_stats_admissionsbyrace.csv")
+        csv = CSV.parse(csv_text, :headers => true)
+
+        stats = [
+          {:stat_name => 'White', :parse_token => 'white'},
+          {:stat_name => 'Black', :parse_token => 'black'},
+          {:stat_name => 'American Indian', :parse_token => 'american_indian'},
+          {:stat_name => 'Asian', :parse_token => 'asian'},
+          {:stat_name => 'Hawaiian/Pacific Islander', :parse_token => 'hawaii_pac_islander'},
+          {:stat_name => 'Unknown', :parse_token => 'unknown'}
+        ]
+
+        csv.each do |row|
+          stats.each do |stat_info|
+            provider_statistic = ProviderStats.new(
+              :provider_id => row["hospital_id"],
+              :stat_type => cat_name,
+              :stat => stat_info[:stat_name],
+              :value => row[stat_info[:parse_token]],
+              :date_start => DateTime.new(row["year"].to_i, 1, 1),
+              :date_end => DateTime.new(row["year"].to_i, 12, 31),
+              :data_type => "count"
+            )
+            puts "importing #{provider_statistic.stat_type} #{provider_statistic.stat} for hospital id #{provider_statistic.provider_id}"
+            provider_statistic.save!
+          end
+        end
+        puts 'Done!'
+      end
+
+      desc "Import hospital stats - admissions by ethnicity"
+      task :admissions_by_ethnicity => :environment do
+        require 'csv'
+
+        cat_name = 'Admissions by Ethnicity'
+        ProviderStats.where("stat_type = 'Admissions by Ethnicity'").each do |d|
+          d.delete
+        end
+
+        csv_text = File.read("db/import/hospital_stats_admissionsbyethnicity.csv")
+        csv = CSV.parse(csv_text, :headers => true)
+
+        stats = [
+          {:stat_name => 'Hispanic', :parse_token => 'hispanic'},
+          {:stat_name => 'Non-hispanic', :parse_token => 'non_hispanic'},
+          {:stat_name => 'Unknown', :parse_token => 'unknown'}
         ]
 
         csv.each do |row|
