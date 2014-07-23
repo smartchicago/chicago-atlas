@@ -14,8 +14,10 @@
 .row-fluid
 	.span12
 		%h3 Hospital Admissions Data
+		- admissions_by_race = fetch_provider_data(@hospital.src_id, "Admissions by Race")
+		- admissions_by_ethnicity = fetch_provider_data(@hospital.src_id, "Admissions by Ethnicity")
+		- total_admissions = admissions_by_race[:values].sum
 		- admissions_by_type = fetch_provider_data(@hospital.src_id, "Admissions by Type")
-		- total_admissions = admissions_by_type[:values].sum
 		- medsurg_admissions_by_age = fetch_provider_data(@hospital.src_id, "Medical-Surgical Admissions By Age")
 		- total_medsurg_admissions = medsurg_admissions_by_age[:values].sum
 .row-fluid
@@ -23,12 +25,41 @@
 		%h4 Total Admissions
 		%p.input-large #{total_admissions.to_i}
 	.span4
-		%h4 Medical Surgical Admissions
+		%h4 Medical-Surgical Admissions
 		%p #{total_medsurg_admissions.to_i}
 .row-fluid
+	.span8
+		%h4 Admissions by Race
+		- chart_id = "chart_admissions_race"
+		.chart{:id => chart_id}
+		- content_for :javascripts do
+			:javascript
+				$(function () {
+
+					var seriesData = [{
+						data: #{admissions_by_race[:values]},
+						name: "Admissions in 2012"
+					}];
+					ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{admissions_by_race[:stats]});
+				});
+	.span4
+		%h4 Admissions by Ethnicity
+		- chart_id = "chart_admissions_ethnicity"
+		.chart{:id => chart_id}
+		- content_for :javascripts do
+			:javascript
+				$(function () {
+
+					var seriesData = [{
+						data: #{admissions_by_ethnicity[:values]},
+						name: "Admissions in 2012"
+					}];
+					ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{admissions_by_ethnicity[:stats]});
+				});
+.row-fluid
 	.span12
-		%h4#admissions-by-type Admissions by Type
-		%p Description ***#{admissions_by_type[:stats]}
+		%h4#admissions-by-type Selected Admissions by Type
+		%p
 		- chart_id = "chart_admissions_type"
 		.chart{:id => chart_id}
 		- content_for :javascripts do
@@ -42,7 +73,7 @@
 					ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{admissions_by_type[:stats]});
 				});
 		%h4#medsurg-admissions-by-age Medical-Surgical Admissions by Age
-		%p Description *** #{medsurg_admissions_by_age[:stats]}
+		%p
 		- chart_id = "chart_admissions_age"
 		.chart{:id => chart_id}
 		- content_for :javascripts do
