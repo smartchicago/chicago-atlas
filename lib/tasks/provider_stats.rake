@@ -1,6 +1,16 @@
 namespace :db do
   namespace :import do
     namespace :provider_stats do
+
+      desc "Import all provider stats"
+      task :all => :environment do
+        Rake::Task["db:import:provider_stats:admissions_by_type"].invoke
+        Rake::Task["db:import:provider_stats:inpatient_count"].invoke
+        Rake::Task["db:import:provider_stats:inpatient_revenue"].invoke
+        Rake::Task["db:import:provider_stats:medsurg_admissions_by_age"].invoke
+        Rake::Task["db:import:provider_stats:outpatient_count"].invoke
+        Rake::Task["db:import:provider_stats:outpatient_revenue"].invoke
+      end
       
       desc "Import hospital stats - inpatient count"
       task :inpatient_count => :environment do
