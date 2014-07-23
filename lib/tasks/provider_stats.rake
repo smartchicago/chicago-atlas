@@ -6,6 +6,7 @@ namespace :db do
       task :inpatient_count => :environment do
         require 'csv'
 
+        cat_name = 'Admissions by Payment Type - Inpatient'
         ProviderStats.where("stat_type = 'Admissions by Payment Type - Inpatient'").each do |d|
           d.delete
         end
@@ -15,19 +16,19 @@ namespace :db do
 
         stats = [
           # Medicare, Medicaid, Other Public, Private Insurance, Private Payment, Charity Care
-          {:cat => 'Admissions by Payment Type - Inpatient', :stat_name => 'Medicare', :parse_token => 'inpatient_count_medicare'},
-          {:cat => 'Admissions by Payment Type - Inpatient', :stat_name => 'Medicaid', :parse_token => 'inpatient_count_medicaid'},
-          {:cat => 'Admissions by Payment Type - Inpatient', :stat_name => 'Other Public', :parse_token => 'inpatient_count_other_public'},
-          {:cat => 'Admissions by Payment Type - Inpatient', :stat_name => 'Private Insurance', :parse_token => 'inpatient_count_private_insurance'},
-          {:cat => 'Admissions by Payment Type - Inpatient', :stat_name => 'Private Payment', :parse_token => 'inpatient_count_private_payment'},
-          {:cat => 'Admissions by Payment Type - Inpatient', :stat_name => 'Charity Care', :parse_token => 'inpatient_count_charity_care'}
+          {:stat_name => 'Medicare', :parse_token => 'inpatient_count_medicare'},
+          {:stat_name => 'Medicaid', :parse_token => 'inpatient_count_medicaid'},
+          {:stat_name => 'Other Public', :parse_token => 'inpatient_count_other_public'},
+          {:stat_name => 'Private Insurance', :parse_token => 'inpatient_count_private_insurance'},
+          {:stat_name => 'Private Payment', :parse_token => 'inpatient_count_private_payment'},
+          {:stat_name => 'Charity Care', :parse_token => 'inpatient_count_charity_care'}
         ]
 
         csv.each do |row|
           stats.each do |stat_info|
             provider_statistic = ProviderStats.new(
               :provider_id => row["hospital_id"],
-              :stat_type => stat_info[:cat],
+              :stat_type => cat_name,
               :stat => stat_info[:stat_name],
               :value => row[stat_info[:parse_token]],
               :date_start => DateTime.new(row["year"].to_i, 1, 1),
@@ -46,6 +47,7 @@ namespace :db do
       task :outpatient_count => :environment do
         require 'csv'
 
+        cat_name = 'Admissions by Payment Type - Outpatient'
         ProviderStats.where("stat_type = 'Admissions by Payment Type - Outpatient'").each do |d|
           d.delete
         end
@@ -55,19 +57,19 @@ namespace :db do
 
         stats = [
           # Medicare, Medicaid, Other Public, Private Insurance, Private Payment, Charity Care
-          {:cat => 'Admissions by Payment Type - Outpatient', :stat_name => 'Medicare', :parse_token => 'outpatient_count_medicare'},
-          {:cat => 'Admissions by Payment Type - Outpatient', :stat_name => 'Medicaid', :parse_token => 'outpatient_count_medicaid'},
-          {:cat => 'Admissions by Payment Type - Outpatient', :stat_name => 'Other Public', :parse_token => 'outpatient_count_other_public'},
-          {:cat => 'Admissions by Payment Type - Outpatient', :stat_name => 'Private Insurance', :parse_token => 'outpatient_count_private_insurance'},
-          {:cat => 'Admissions by Payment Type - Outpatient', :stat_name => 'Private Payment', :parse_token => 'outpatient_count_private_payment'},
-          {:cat => 'Admissions by Payment Type - Outpatient', :stat_name => 'Charity Care', :parse_token => 'outpatient_count_charity_care'}
+          {:stat_name => 'Medicare', :parse_token => 'outpatient_count_medicare'},
+          {:stat_name => 'Medicaid', :parse_token => 'outpatient_count_medicaid'},
+          {:stat_name => 'Other Public', :parse_token => 'outpatient_count_other_public'},
+          {:stat_name => 'Private Insurance', :parse_token => 'outpatient_count_private_insurance'},
+          {:stat_name => 'Private Payment', :parse_token => 'outpatient_count_private_payment'},
+          {:stat_name => 'Charity Care', :parse_token => 'outpatient_count_charity_care'}
         ]
 
         csv.each do |row|
           stats.each do |stat_info|
             provider_statistic = ProviderStats.new(
               :provider_id => row["hospital_id"],
-              :stat_type => stat_info[:cat],
+              :stat_type => cat_name,
               :stat => stat_info[:stat_name],
               :value => row[stat_info[:parse_token]],
               :date_start => DateTime.new(row["year"].to_i, 1, 1),
@@ -86,6 +88,7 @@ namespace :db do
       task :admissions_by_type => :environment do
         require 'csv'
 
+        cat_name = 'Admissions by Type'
         ProviderStats.where("stat_type = 'Admissions by Type'").each do |d|
           d.delete
         end
@@ -95,23 +98,23 @@ namespace :db do
 
         stats = [
           # obstetrics, gynecology, ICU (direct), ICU (transfer), pediatric, long term care, rehabilitation, acute mental illess, long term acute care
-          {:cat => 'Admissions by Type', :stat_name => 'Obstetrics', :parse_token => 'obstetrics'},
-          {:cat => 'Admissions by Type', :stat_name => 'Gynecology', :parse_token => 'gynecology'},
-          {:cat => 'Admissions by Type', :stat_name => 'ICU (direct admissions)', :parse_token => 'icu_direct'},
-          {:cat => 'Admissions by Type', :stat_name => 'ICU (transfers in)', :parse_token => 'icu_transfer'},
-          {:cat => 'Admissions by Type', :stat_name => 'Pediatric', :parse_token => 'pediatric'},
-          {:cat => 'Admissions by Type', :stat_name => 'Long Term Care', :parse_token => 'long_term_care'},
-          {:cat => 'Admissions by Type', :stat_name => 'Rehabilitation', :parse_token => 'rehabilitation'},
-          {:cat => 'Admissions by Type', :stat_name => 'Acute Mental Illness', :parse_token => 'acute_mental_illness'},
-          {:cat => 'Admissions by Type', :stat_name => 'Neonatal ICU', :parse_token => 'neonatal_icu'},
-          {:cat => 'Admissions by Type', :stat_name => 'Long Term Acute Care', :parse_token => 'long_term_acute_care'}
+          {:stat_name => 'Obstetrics', :parse_token => 'obstetrics'},
+          {:stat_name => 'Gynecology', :parse_token => 'gynecology'},
+          {:stat_name => 'ICU (direct admissions)', :parse_token => 'icu_direct'},
+          {:stat_name => 'ICU (transfers in)', :parse_token => 'icu_transfer'},
+          {:stat_name => 'Pediatric', :parse_token => 'pediatric'},
+          {:stat_name => 'Long Term Care', :parse_token => 'long_term_care'},
+          {:stat_name => 'Rehabilitation', :parse_token => 'rehabilitation'},
+          {:stat_name => 'Acute Mental Illness', :parse_token => 'acute_mental_illness'},
+          {:stat_name => 'Neonatal ICU', :parse_token => 'neonatal_icu'},
+          {:stat_name => 'Long Term Acute Care', :parse_token => 'long_term_acute_care'}
         ]
 
         csv.each do |row|
           stats.each do |stat_info|
             provider_statistic = ProviderStats.new(
               :provider_id => row["hospital_id"],
-              :stat_type => stat_info[:cat],
+              :stat_type => cat_name,
               :stat => stat_info[:stat_name],
               :value => row[stat_info[:parse_token]],
               :date_start => DateTime.new(row["year"].to_i, 1, 1),
@@ -130,6 +133,7 @@ namespace :db do
       task :outpatient_revenue => :environment do
         require 'csv'
 
+        cat_name = 'Outpatient Revenue by Payment Type'
         ProviderStats.where("stat_type = 'Outpatient Revenue by Payment Type'").each do |d|
           d.delete
         end
@@ -139,18 +143,18 @@ namespace :db do
 
         stats = [
           # Medicare, Medicaid, Other Public, Private Insurance, Private Payment
-          {:cat => 'Outpatient Revenue by Payment Type', :stat_name => 'Medicaid', :parse_token => 'medicaid'},
-          {:cat => 'Outpatient Revenue by Payment Type', :stat_name => 'Medicare', :parse_token => 'medicare'},
-          {:cat => 'Outpatient Revenue by Payment Type', :stat_name => 'Other Public Payment', :parse_token => 'other_public_payment'},
-          {:cat => 'Outpatient Revenue by Payment Type', :stat_name => 'Private Insurance', :parse_token => 'private_insurance'},
-          {:cat => 'Outpatient Revenue by Payment Type', :stat_name => 'Private Payment', :parse_token => 'private_payment'}
+          {:stat_name => 'Medicaid', :parse_token => 'medicaid'},
+          {:stat_name => 'Medicare', :parse_token => 'medicare'},
+          {:stat_name => 'Other Public Payment', :parse_token => 'other_public_payment'},
+          {:stat_name => 'Private Insurance', :parse_token => 'private_insurance'},
+          {:stat_name => 'Private Payment', :parse_token => 'private_payment'}
         ]
 
         csv.each do |row|
           stats.each do |stat_info|
             provider_statistic = ProviderStats.new(
               :provider_id => row["hospital_id"],
-              :stat_type => stat_info[:cat],
+              :stat_type => cat_name,
               :stat => stat_info[:stat_name],
               :value => row[stat_info[:parse_token]].gsub(/[^\d\.]/, '').to_f,
               :date_start => Date.parse(row["report_start_date"]),
@@ -169,6 +173,7 @@ namespace :db do
       task :inpatient_revenue => :environment do
         require 'csv'
 
+        cat_name = 'Inpatient Revenue by Payment Type'
         ProviderStats.where("stat_type = 'Inpatient Revenue by Payment Type'").each do |d|
           d.delete
         end
@@ -178,18 +183,18 @@ namespace :db do
 
         stats = [
           # Medicare, Medicaid, Other Public, Private Insurance, Private Payment
-          {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Medicaid', :parse_token => 'medicaid'},
-          {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Medicare', :parse_token => 'medicare'},
-          {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Other Public Payment', :parse_token => 'other_public_payment'},
-          {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Private Insurance', :parse_token => 'private_insurance'},
-          {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Private Payment', :parse_token => 'private_payment'}
+          {:stat_name => 'Medicaid', :parse_token => 'medicaid'},
+          {:stat_name => 'Medicare', :parse_token => 'medicare'},
+          {:stat_name => 'Other Public Payment', :parse_token => 'other_public_payment'},
+          {:stat_name => 'Private Insurance', :parse_token => 'private_insurance'},
+          {:stat_name => 'Private Payment', :parse_token => 'private_payment'}
         ]
 
         csv.each do |row|
           stats.each do |stat_info|
             provider_statistic = ProviderStats.new(
               :provider_id => row["hospital_id"],
-              :stat_type => stat_info[:cat],
+              :stat_type => cat_name,
               :stat => stat_info[:stat_name],
               :value => row[stat_info[:parse_token]].gsub(/[^\d\.]/, '').to_f,
               :date_start => Date.parse(row["report_start_date"]),
@@ -208,13 +213,13 @@ namespace :db do
       task :medsurg_admissions_by_age => :environment do
         require 'csv'
 
+        cat_name = 'Medical-Surgical Admissions By Age'
         ProviderStats.where("stat_type = 'Medical-Surgical Admissions By Age'").each do |d|
           d.delete
         end
 
         csv_text = File.read("db/import/hospital_stats_admissionsbyage.csv")
         csv = CSV.parse(csv_text, :headers => true)
-        cat_name = 'Medical-Surgical Admissions By Age'
 
         stats = [
           # 0-14, 15-44, 45-64, 65-74, 75+
@@ -242,8 +247,6 @@ namespace :db do
         end
         puts 'Done!'
       end
-
-
 
 
     end
