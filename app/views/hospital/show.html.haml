@@ -23,10 +23,10 @@
 .row-fluid
 	.span4
 		%h4 Total Admissions
-		%p.input-large #{total_admissions.to_i}
+		%p.big-text #{total_admissions.to_i}
 	.span4
 		%h4 Medical-Surgical Admissions
-		%p #{total_medsurg_admissions.to_i}
+		%p.big-text #{total_medsurg_admissions.to_i} (#{(total_medsurg_admissions/total_admissions*100).to_i}%)
 .row-fluid
 	.span8
 		%h4 Admissions by Race
