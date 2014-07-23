@@ -36,13 +36,9 @@
 	.span12
 		%h3 Hospital Revenue Data
 		- revenue_inpatient = fetch_provider_data(@hospital.src_id, "Inpatient Revenue by Payment Type")
-		- inpatient = Hash[revenue_inpatient[:stats].zip(revenue_inpatient[:values])]
-		- inpatient_total = inpatient["Total"]
-		- inpatient.delete("Total")
+		- inpatient_total = revenue_inpatient[:values].sum
 		- revenue_outpatient = fetch_provider_data(@hospital.src_id, "Outpatient Revenue by Payment Type")
-		- outpatient = Hash[revenue_outpatient[:stats].zip(revenue_outpatient[:values])]
-		- outpatient_total = outpatient["Total"]
-		- outpatient.delete("Total")
+		- outpatient_total = revenue_outpatient[:values].sum
 		%h5 reporting period: #{revenue_inpatient[:start_date].strftime("%m/%d/%y")} - #{revenue_inpatient[:end_date].strftime("%m/%d/%y")}
 .row-fluid
 	.span4
@@ -67,9 +63,9 @@
 				$(function () {
 
 					var seriesData = [{
-						data: #{inpatient.values},
+						data: #{revenue_inpatient[:values]},
 						name: "Inpatient Revenue"},
-						{data: #{outpatient.values},
+						{data: #{revenue_outpatient[:values]},
 						name: "Outpatient Revenue"}];
 					ChartHelper.create("rev_combined", "column", seriesData, Date.UTC(2000, 1, 1), "", "", "money", #{revenue_inpatient[:stats]});
 				});
@@ -96,7 +92,7 @@
 			:javascript
 				$(function () {
 					var seriesData = [{
-						data: #{inpatient.values},
+						data: #{revenue_inpatient[:values]},
 						name: "Inpatient Revenue"}];
 					ChartHelper.create("revenue_inpatient", "column", seriesData, Date.UTC(2000, 1, 1), "", "", "money", #{revenue_inpatient[:stats]});
 				});
@@ -109,7 +105,7 @@
 				$(function () {
 
 					var seriesData = [{
-						data: #{outpatient.values},
+						data: #{revenue_outpatient[:values]},
 						name: "Outpatient Revenue"}];
 					ChartHelper.create("revenue_outpatient", "column", seriesData, Date.UTC(2000, 1, 1), "", "", "money", #{revenue_outpatient[:stats]});
 				});
@@ -123,9 +119,9 @@
 				$(function () {
 
 					var seriesData = [{
-						data: #{inpatient.values},
+						data: #{revenue_inpatient[:values]},
 						name: "Inpatient Revenue"},
-						{data: #{outpatient.values},
+						{data: #{revenue_outpatient[:values]},
 						name: "Outpatient Revenue"}];
 					ChartHelper.create("revenue_combined", "column", seriesData, Date.UTC(2000, 1, 1), "", "", "money", #{revenue_inpatient[:stats]});
 				});
