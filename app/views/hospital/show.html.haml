@@ -28,7 +28,7 @@
 .row-fluid
 	.span12
 		%h4#admissions-by-type Admissions by Type
-		%p Description
+		%p Description ***#{admissions_by_type[:stats]}
 		- chart_id = "chart_admissions_type"
 		.chart{:id => chart_id}
 		- content_for :javascripts do
@@ -39,10 +39,10 @@
 						data: #{admissions_by_type[:values]},
 						name: "Admissions in 2012"
 					}];
-					ChartHelper.create("#{chart_id}", "column", seriesData, Date.UTC(2000, 1, 1), "", "", "count", #{admissions_by_type[:stats]});
+					ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{admissions_by_type[:stats]});
 				});
-		%h4#admission-by-x Medical-Surgical Admissions by Age
-		%p Description
+		%h4#medsurg-admissions-by-age Medical-Surgical Admissions by Age
+		%p Description *** #{medsurg_admissions_by_age[:stats]}
 		- chart_id = "chart_admissions_age"
 		.chart{:id => chart_id}
 		- content_for :javascripts do
@@ -51,21 +51,19 @@
 
 					var seriesData = [{
 						data: #{medsurg_admissions_by_age[:values]},
-						name: "Admissions in 2012"
+						name: "Medical-Surgical Admissions"
 					}];
-					ChartHelper.create("#{chart_id}", "column", seriesData, Date.UTC(2000, 1, 1), "", "", "count", #{medsurg_admissions_by_age[:stats]});
+					ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{medsurg_admissions_by_age[:stats]});
 				});
-		%h4#admission-by-x Admissions by X
-		%p Description
 
 .row-fluid
 	.span12
-		%h3 Hospital Revenue Data
 		- revenue_inpatient = fetch_provider_data(@hospital.src_id, "Inpatient Revenue by Payment Type")
 		- inpatient_total = revenue_inpatient[:values].sum
 		- revenue_outpatient = fetch_provider_data(@hospital.src_id, "Outpatient Revenue by Payment Type")
 		- outpatient_total = revenue_outpatient[:values].sum
-		%h5 reporting period: #{revenue_inpatient[:start_date].strftime("%m/%d/%y")} - #{revenue_inpatient[:end_date].strftime("%m/%d/%y")}
+		%h3 Hospital Revenue Data
+		%p Inpatent and outpatient revenues over the reporting period from #{revenue_inpatient[:start_date].strftime("%m/%d/%y")} to #{revenue_inpatient[:end_date].strftime("%m/%d/%y")}.
 .row-fluid
 	.span4
 		%h4#revenue-total Total Revenue
@@ -78,7 +76,7 @@
 						{data: [#{outpatient_total}], name: "Outpatient Revenue"},
 						{data: [#{inpatient_total}], name: "Inpatient Revenue"}
 					]
-					ChartHelper.create("rev_total", "column", seriesData, Date.UTC(2000, 1, 1), "", "", "money", ["Total Revenue"], true);
+					ChartHelper.create("rev_total", "column", seriesData, "", "", "", "money", ["Total Revenue"], true);
 				});
 	.span8
 		%h4#revenue-combined Revenue by Source
@@ -93,5 +91,5 @@
 						name: "Outpatient Revenue"},
 						{data: #{revenue_inpatient[:values]},
 						name: "Inpatient Revenue"}];
-					ChartHelper.create("rev_combined", "column", seriesData, Date.UTC(2000, 1, 1), "", "", "money", #{revenue_inpatient[:stats]}, true);
+					ChartHelper.create("rev_combined", "column", seriesData, "", "", "", "money", #{revenue_inpatient[:stats]}, true);
 				});
