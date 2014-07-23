@@ -14,14 +14,13 @@ namespace :db do
         csv = CSV.parse(csv_text, :headers => true)
 
         stats = [
-          # Medicare, Medicaid, Other Public, Private Insurance, Private Payment, Charity Care, Total
+          # Medicare, Medicaid, Other Public, Private Insurance, Private Payment, Charity Care
           {:cat => 'Admissions by Payment Type - Inpatient', :stat_name => 'Medicare', :parse_token => 'inpatient_count_medicare'},
           {:cat => 'Admissions by Payment Type - Inpatient', :stat_name => 'Medicaid', :parse_token => 'inpatient_count_medicaid'},
           {:cat => 'Admissions by Payment Type - Inpatient', :stat_name => 'Other Public', :parse_token => 'inpatient_count_other_public'},
           {:cat => 'Admissions by Payment Type - Inpatient', :stat_name => 'Private Insurance', :parse_token => 'inpatient_count_private_insurance'},
           {:cat => 'Admissions by Payment Type - Inpatient', :stat_name => 'Private Payment', :parse_token => 'inpatient_count_private_payment'},
-          {:cat => 'Admissions by Payment Type - Inpatient', :stat_name => 'Charity Care', :parse_token => 'inpatient_count_charity_care'},
-          {:cat => 'Admissions by Payment Type - Inpatient', :stat_name => 'Total', :parse_token => 'inpatient_count_total'}
+          {:cat => 'Admissions by Payment Type - Inpatient', :stat_name => 'Charity Care', :parse_token => 'inpatient_count_charity_care'}
         ]
 
         csv.each do |row|
@@ -55,14 +54,13 @@ namespace :db do
         csv = CSV.parse(csv_text, :headers => true)
 
         stats = [
-          # Medicare, Medicaid, Other Public, Private Insurance, Private Payment, Charity Care, Total
+          # Medicare, Medicaid, Other Public, Private Insurance, Private Payment, Charity Care
           {:cat => 'Admissions by Payment Type - Outpatient', :stat_name => 'Medicare', :parse_token => 'outpatient_count_medicare'},
           {:cat => 'Admissions by Payment Type - Outpatient', :stat_name => 'Medicaid', :parse_token => 'outpatient_count_medicaid'},
           {:cat => 'Admissions by Payment Type - Outpatient', :stat_name => 'Other Public', :parse_token => 'outpatient_count_other_public'},
           {:cat => 'Admissions by Payment Type - Outpatient', :stat_name => 'Private Insurance', :parse_token => 'outpatient_count_private_insurance'},
           {:cat => 'Admissions by Payment Type - Outpatient', :stat_name => 'Private Payment', :parse_token => 'outpatient_count_private_payment'},
-          {:cat => 'Admissions by Payment Type - Outpatient', :stat_name => 'Charity Care', :parse_token => 'outpatient_count_charity_care'},
-          {:cat => 'Admissions by Payment Type - Outpatient', :stat_name => 'Total', :parse_token => 'outpatient_count_total'}
+          {:cat => 'Admissions by Payment Type - Outpatient', :stat_name => 'Charity Care', :parse_token => 'outpatient_count_charity_care'}
         ]
 
         csv.each do |row|
@@ -140,13 +138,12 @@ namespace :db do
         csv = CSV.parse(csv_text, :headers => true)
 
         stats = [
-          # Medicare, Medicaid, Other Public, Private Insurance, Private Payment, Total
+          # Medicare, Medicaid, Other Public, Private Insurance, Private Payment
           {:cat => 'Outpatient Revenue by Payment Type', :stat_name => 'Medicaid', :parse_token => 'medicaid'},
           {:cat => 'Outpatient Revenue by Payment Type', :stat_name => 'Medicare', :parse_token => 'medicare'},
           {:cat => 'Outpatient Revenue by Payment Type', :stat_name => 'Other Public Payment', :parse_token => 'other_public_payment'},
           {:cat => 'Outpatient Revenue by Payment Type', :stat_name => 'Private Insurance', :parse_token => 'private_insurance'},
-          {:cat => 'Outpatient Revenue by Payment Type', :stat_name => 'Private Payment', :parse_token => 'private_payment'},
-          {:cat => 'Outpatient Revenue by Payment Type', :stat_name => 'Total', :parse_token => 'total'}
+          {:cat => 'Outpatient Revenue by Payment Type', :stat_name => 'Private Payment', :parse_token => 'private_payment'}
         ]
 
         csv.each do |row|
@@ -180,13 +177,12 @@ namespace :db do
         csv = CSV.parse(csv_text, :headers => true)
 
         stats = [
-          # Medicare, Medicaid, Other Public, Private Insurance, Private Payment, Total
+          # Medicare, Medicaid, Other Public, Private Insurance, Private Payment
           {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Medicaid', :parse_token => 'medicaid'},
           {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Medicare', :parse_token => 'medicare'},
           {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Other Public Payment', :parse_token => 'other_public_payment'},
           {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Private Insurance', :parse_token => 'private_insurance'},
-          {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Private Payment', :parse_token => 'private_payment'},
-          {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Total', :parse_token => 'total'}
+          {:cat => 'Inpatient Revenue by Payment Type', :stat_name => 'Private Payment', :parse_token => 'private_payment'}
         ]
 
         csv.each do |row|
@@ -206,6 +202,48 @@ namespace :db do
         end
         puts 'Done!'
       end
+
+
+      desc "Import hospital stats - medical-surgical admissions by age"
+      task :medsurg_admissions_by_age => :environment do
+        require 'csv'
+
+        ProviderStats.where("stat_type = 'Medical-Surgical Admissions By Age'").each do |d|
+          d.delete
+        end
+
+        csv_text = File.read("db/import/hospital_stats_admissionsbyage.csv")
+        csv = CSV.parse(csv_text, :headers => true)
+        cat_name = 'Medical-Surgical Admissions By Age'
+
+        stats = [
+          # 0-14, 15-44, 45-64, 65-74, 75+
+          {:stat_name => '0-14', :parse_token => '0_to_14'},
+          {:stat_name => '15-44', :parse_token => '15_to_44'},
+          {:stat_name => '45-64', :parse_token => '45_to_64'},
+          {:stat_name => '65-74', :parse_token => '65_to_74'},
+          {:stat_name => '75+', :parse_token => '75_and_up'}
+        ]
+
+        csv.each do |row|
+          stats.each do |stat_info|
+            provider_statistic = ProviderStats.new(
+              :provider_id => row["hospital_id"],
+              :stat_type => cat_name,
+              :stat => stat_info[:stat_name],
+              :value => row[stat_info[:parse_token]],
+              :date_start => DateTime.new(row["year"].to_i, 1, 1),
+              :date_end => DateTime.new(row["year"].to_i, 12, 31),
+              :data_type => "count"
+            )
+            puts "importing #{provider_statistic.stat_type} #{provider_statistic.stat} for hospital id hospital #{provider_statistic.provider_id}"
+            provider_statistic.save!
+          end
+        end
+        puts 'Done!'
+      end
+
+
 
 
     end
