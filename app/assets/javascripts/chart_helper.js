@@ -88,7 +88,7 @@ ChartHelper.create = function(element, type, seriesData, startDate, yearRange, p
             if (point.point.low != null && point.point.high != null && point.point.low != 0 && point.point.high != 0)
               s += "<br /><span style=\"color: " + point.series.color + "\">" + point.series.name + ":</span> " + point.point.low + percentSuffix + " - " + point.point.high + percentSuffix;
             else
-              s += "<br /><span style=\"color: " + point.series.color + "\">" + point.series.name + ":</span> " + moneyPrefix + point.y + percentSuffix;
+              s += "<br /><span style=\"color: " + point.series.color + "\">" + point.series.name + ":</span> " + moneyPrefix + ChartHelper.addCommas(point.y) + percentSuffix;
           });
           return s;
         },
@@ -185,4 +185,8 @@ ChartHelper.formatNumber = function(value) {
     return value / 1000 + "K";
   else
     return value;
+}
+
+ChartHelper.addCommas = function(value) {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

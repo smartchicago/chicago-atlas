@@ -24,10 +24,10 @@
 .row-fluid
 	.span4
 		%h4 Total Admissions
-		%p.big-text #{total_admissions.to_i}
+		%p.big-text #{total_admissions.to_i.to_s.gsub(/\B(?=(\d{3})+(?!\d))/, ",")}
 	.span8
 		%h4 % Medical-Surgical Admissions
-		%p.big-text #{(total_medsurg_admissions/total_admissions*100).to_i}% <small>(#{total_medsurg_admissions.to_i})</small>
+		%p.big-text #{(total_medsurg_admissions/total_admissions*100).to_i}% <small>(#{total_medsurg_admissions.to_i.to_s.gsub(/\B(?=(\d{3})+(?!\d))/, ",")})</small>
 .row-fluid
 	.span8
 		%h4 All Admissions - by Race
