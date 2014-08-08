@@ -7,6 +7,9 @@
 %p
   = cat.description
 
+  = raw(render_source_links('American Community Survey 2008-2012, processed by Rob Paral and Associates', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/health_insurance_by_community_area_2008-2012.csv', '/place/insurance/' + cat.name + '/' + geography.slug + '.json', 1))
+
+
 - insurance_area = fetch_custom_chart_data(geography.id, cat.id, nil, [])
 - insurance_chicago = fetch_custom_chart_data(100, cat.id, nil, [])
 

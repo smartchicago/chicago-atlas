@@ -1,7 +1,7 @@
 class GeographyController < ApplicationController
   include ApplicationHelper
 
-  caches_action :index, :show, :show_dataset, :resources_json
+  caches_action :index, :show, :show_dataset, :show_death_dataset, :show_demographic_dataset, :show_insurance_dataset, :show_provider_dataset, :resources_json
 
   def index
     @current_menu = 'places'
@@ -62,9 +62,121 @@ class GeographyController < ApplicationController
     @dataset = Dataset.where(:slug => params[:dataset_slug]).first || not_found
 
     respond_to do |format|
-      format.html # render our template
       format.json { render :json => fetch_chart_data(@dataset.id, @geography.id) }
+      format.html { not_found }
     end
+  end
+
+  def show_death_dataset
+    @current_menu = 'places' #?
+    
+    @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
+    @datasets = get_datasets(@geography.id, 2)
+
+    death_dataset = []
+
+    @datasets.each do |dataset|
+      death_data = { :death_cause => dataset.name, 
+        :description => dataset.description,
+        :death_stat => fetch_chart_data(dataset.id, @geography.id)[:data].first, 
+        :chicago_death_stat => fetch_chart_data(dataset.id, 100)[:data].first }
+      death_dataset << death_data
+    end
+
+    respond_to do |format|
+      format.json { render :json => {:location => @geography.slug, :death_cause_data => death_dataset} }
+      format.html { not_found }
+    end
+  end
+
+  def show_demographic_dataset
+    @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
+
+    pop_2000 = fetch_demographic_age_data(2000, @geography.id)
+    pop_2010 = fetch_demographic_age_data(2010, @geography.id)
+
+    demographic_data_all = []
+
+    pop_2000.each_index do |i|
+      population_data = {
+        :age_group => GlobalConstants::AGE_GROUPS[i],
+        :pop_2000 => pop_2000[i],
+        :pop_2010 => pop_2010[i]
+      }
+      demographic_data_all << population_data
+    end
+
+    respond_to do |format|
+      format.json { render :json => {
+        :location => @geography.slug, 
+        :demographic_data => demographic_data_all} }
+      format.html { not_found }
+    end
+  end
+
+  def show_insurance_dataset
+    @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
+    cat = Category.find_by_name(params[:cat_name])
+
+    insurance_area = fetch_custom_chart_data(@geography.id, cat.id, nil, [])
+    insurance_chicago = fetch_custom_chart_data(100, cat.id, nil, [])
+    group_labels = []
+
+    all_data = []
+
+    Dataset.where(:category_id => cat.id).each do |dataset|
+      group_labels << dataset.name
+    end
+
+    group_labels.each_index do |i|
+      data = {
+        :group => group_labels[i],
+        :uninsured_area => insurance_area[i],
+        :uninsured_chicago => insurance_chicago[i]
+      }
+      all_data << data
+    end
+
+    respond_to do |format|
+      format.json { render :json => {
+        :area => @geography.slug,
+        :uninsured_data_type => cat.name,
+        :data => all_data
+        } }
+      format.html { not_found }
+    end
+
+  end
+
+  def show_provider_dataset
+    @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
+    @category = Category.where("name = 'Healthcare Providers'").first
+
+    all_data = []
+
+    professions = []
+    Dataset.where(:category_id => @category.id).each { |dataset| professions << dataset.name }
+
+    providers_area = fetch_custom_chart_data(@geography.id, nil, nil, professions)
+    providers_chicago = fetch_custom_chart_data(100, nil, nil, professions)
+
+    professions.each_index do |i|
+      data = {
+        :profession => professions[i],
+        :providers_area => providers_area[i],
+        :providers_chicago => providers_chicago[i]
+      }
+      all_data << data
+    end
+
+    respond_to do |format|
+      format.json { render :json => {
+        :area => @geography.slug,
+        :data => all_data
+        } }
+      format.html { not_found }
+    end
+
   end
 
   def show_resources

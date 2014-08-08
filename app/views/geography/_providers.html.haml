@@ -1,5 +1,8 @@
 - if @geography.has_category("Healthcare Providers")
-  - chart_headers = ["Dentists", "Primary Care Physicians", "Specialist Physicians","OB-GYN Physicians","Primary Care Residents and Fellows","Specialist Residents and Fellows","OB-GYN Residents and Fellows"]
+  - @category = Category.where("name = 'Healthcare Providers'").first
+
+  - chart_headers = []
+  - Dataset.where(:category_id => @category.id).each { |dataset| chart_headers << dataset.name }
 
   / anchor tags for linking to combined chart from map
   - chart_headers.each do |header|
@@ -9,7 +12,7 @@
 
   %p 
     Number of healthcare providers by profession per 1,000 residents.
-    <br />Source: <a href='http://datawarehouse.hrsa.gov/data/datadownload/pcsa2010Download.aspx'>Health Resources and Services Administration</a> as processed by <a href='http://www.robparal.com/'>Rob Paral and Associates</a>.
+    = raw(render_source_links( 'Health Resources and Services Administration, processed by Rob Paral and Associates', 'http://datawarehouse.hrsa.gov/data/datadownload/pcsa2010Download.aspx', '/place/providers/'+@geography.slug+'.json', 1))
 
   - chart_id = 'chart_providers'
   - providers_area = fetch_custom_chart_data(geography.id, nil, nil, chart_headers)

@@ -3,13 +3,13 @@
   %h3{:id => dataset.slug}
     = dataset.name
     %small
-      %a{ :href => "/place/#{@geography.slug}/#{dataset.slug}" } details &raquo;
 
 .span4
   %p 
     = dataset.description
-    - unless dataset.url.nil? or dataset.url == ''
-      (<a href='#{dataset.url}'>source</a>)
+    %br
+    - if dataset.url != ''
+      = raw(render_source_links(dataset.provider, dataset.url, @geography.slug + '/' + dataset.slug + '.json', nil))
 
 .span7
   - chart_stats = fetch_chart_data(dataset.id, @geography.id)

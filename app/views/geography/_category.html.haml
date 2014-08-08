@@ -1,13 +1,13 @@
 %h2{:id => category.name.parameterize.underscore}
   = category.name
 
-%p
-  = category.description
-
 .row-fluid
   - @datasets = get_datasets(geography.id, category.id)
 
   - if category.name.include? 'Deaths'
+    %p
+      = category.description
+      = raw(render_source_links(@datasets.first.provider, @datasets.first.url, '/place/causesofdeath/'+@geography.slug+'.json', nil))
     %table.table.table-hover
       %thead
         %tr
@@ -21,8 +21,7 @@
 
           %tr.death-info{ :rel => "popover", :title => dataset.name, :"data-content" => dataset.description, :"data-trigger" => 'hover', :"data-html" => 'true', :"data-placement" => 'right' }
             %td
-              %a{:href => "/place/#{@geography.slug}/#{dataset.slug}"}
-                = dataset.name
+              = dataset.name
             %td
               - if death_stat >= chicago_death_stat
                 %span.badge.badge-important= death_stat
@@ -40,6 +39,8 @@
         $('.death-info').popover();
 
   - else
+    %p
+      = category.description
     - @datasets.each do |dataset|
       = render :partial => "geography/dataset", :locals => {:dataset => dataset, :geography => geography, :show_header => true }
 

@@ -234,10 +234,9 @@
           %small#year_label
         %p 
           #{@current_dataset_description}
+          %br
           - if @current_dataset_url != ''
-            (
-            %a{:href => @current_dataset_url} source
-            )
+            = raw(render_source_links(@current_dataset_provider, @current_dataset_url, @current_dataset_slug+".json", nil))
       
         %div{ :id => "slider" }
         %strong.pull-left#start_year

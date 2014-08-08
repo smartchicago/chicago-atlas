@@ -6,6 +6,10 @@ ChicagoAtlas::Application.routes.draw do
   # primary routes
   match 'place/:slug' => 'geography#show'
   get "places" => 'geography#index'
+  match 'place/causesofdeath/:geo_slug' => 'geography#show_death_dataset'
+  match 'place/demographic/:geo_slug' => 'geography#show_demographic_dataset'
+  match 'place/insurance/:cat_name/:geo_slug' => 'geography#show_insurance_dataset'
+  match 'place/providers/:geo_slug' => 'geography#show_provider_dataset'
   match 'place/:geo_slug/resources(/:dataset_slug)' => 'geography#show_resources'
   match 'place/:geo_slug/:dataset_slug' => 'geography#show_dataset'
 

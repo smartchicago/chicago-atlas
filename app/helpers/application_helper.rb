@@ -14,7 +14,7 @@ module ApplicationHelper
 
   def get_datasets(geography_id, category_id)
     Dataset.joins(:statistics)
-      .select("datasets.id, datasets.name, datasets.description, datasets.url, datasets.stat_type, datasets.slug")
+      .select("datasets.id, datasets.name, datasets.description, datasets.provider, datasets.url, datasets.stat_type, datasets.slug")
       .where("statistics.geography_id = #{geography_id} AND datasets.category_id = #{category_id}")
       .group("datasets.id, datasets.name")
       .order("datasets.name")
@@ -289,6 +289,27 @@ module ApplicationHelper
     else
       value
     end
+  end
+
+  def render_source_links(provider_name, provider_url, source_url, is_oneline=false)
+    source_string = "<small class='muted'>
+      <br>
+      Source: 
+      <a href='#{provider_url}'>
+        #{provider_name}
+      </a>"
+    if is_oneline == nil
+      source_string << "<br>"
+    else
+      source_string << "|"
+    end
+    source_string << "<a href='#{source_url}' class='nowrap'>
+        <i class='icon icon-download-alt'></i>
+        Download data
+      </a>
+    </small>"
+
+    return source_string
   end
 
 end
