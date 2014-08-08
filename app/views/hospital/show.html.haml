@@ -6,6 +6,23 @@
 		%p hospital description here
 		%p phone number here
 		%a website here
+		- admissions_by_race = fetch_provider_data(@hospital.src_id, "Admissions by Race")
+		- admissions_by_ethnicity = fetch_provider_data(@hospital.src_id, "Admissions by Ethnicity")
+		- admissions_by_type = fetch_provider_data(@hospital.src_id, "Admissions by Type")
+		- medsurg_admissions_by_age = fetch_provider_data(@hospital.src_id, "Medical-Surgical Admissions By Age")
+		- total_admissions = admissions_by_race[:values].sum
+		- revenue_inpatient = fetch_provider_data(@hospital.src_id, "Inpatient Revenue by Payment Type")
+		- inpatient_total = revenue_inpatient[:values].sum
+		- revenue_outpatient = fetch_provider_data(@hospital.src_id, "Outpatient Revenue by Payment Type")
+		- outpatient_total = revenue_outpatient[:values].sum
+		- total_revenue = inpatient_total + outpatient_total
+		.row-fluid
+			.span4
+				%h4 Total Admissions
+				%p.big-text #{total_admissions.to_i.to_s.gsub(/\B(?=(\d{3})+(?!\d))/, ",")}
+			.span4
+				%h4 Total Revenue
+				%p.big-text $#{total_revenue.to_i.to_s.gsub(/\B(?=(\d{3})+(?!\d))/, ",")}
 	.span4
 		.well
 			%p map here
@@ -14,20 +31,23 @@
 .row-fluid
 	.span12
 		%h3 Hospital Admissions
-		- admissions_by_race = fetch_provider_data(@hospital.src_id, "Admissions by Race")
-		- admissions_by_ethnicity = fetch_provider_data(@hospital.src_id, "Admissions by Ethnicity")
-		- total_admissions = admissions_by_race[:values].sum
-		- admissions_by_type = fetch_provider_data(@hospital.src_id, "Admissions by Type")
-		- medsurg_admissions_by_age = fetch_provider_data(@hospital.src_id, "Medical-Surgical Admissions By Age")
-		- total_medsurg_admissions = medsurg_admissions_by_age[:values].sum
 		%p Inpatient hospital admissions data in 2012.
 .row-fluid
-	.span4
-		%h4 Total Admissions
-		%p.big-text #{total_admissions.to_i.to_s.gsub(/\B(?=(\d{3})+(?!\d))/, ",")}
-	.span8
-		%h4 % Medical-Surgical Admissions
-		%p.big-text #{(total_medsurg_admissions/total_admissions*100).to_i}% <small>(#{total_medsurg_admissions.to_i.to_s.gsub(/\B(?=(\d{3})+(?!\d))/, ",")})</small>
+	.span12
+		%h4#admissions-by-type Admissions by Service Category
+		%p
+		- chart_id = "chart_admissions_type"
+		.chart{:id => chart_id}
+		- content_for :javascripts do
+			:javascript
+				$(function () {
+
+					var seriesData = [{
+						data: #{admissions_by_type[:values]},
+						name: "Admissions"
+					}];
+					ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{admissions_by_type[:stats]});
+				});
 .row-fluid
 	.span8
 		%h4 Admissions by Race
@@ -59,20 +79,6 @@
 				});
 .row-fluid
 	.span12
-		%h4#admissions-by-type Admissions by Service Category
-		%p
-		- chart_id = "chart_admissions_type"
-		.chart{:id => chart_id}
-		- content_for :javascripts do
-			:javascript
-				$(function () {
-
-					var seriesData = [{
-						data: #{admissions_by_type[:values]},
-						name: "Admissions"
-					}];
-					ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{admissions_by_type[:stats]});
-				});
 		%h4#medsurg-admissions-by-age Medical-Surgical Admissions - by Age
 		%p
 		- chart_id = "chart_admissions_age"
@@ -90,10 +96,6 @@
 
 .row-fluid
 	.span12
-		- revenue_inpatient = fetch_provider_data(@hospital.src_id, "Inpatient Revenue by Payment Type")
-		- inpatient_total = revenue_inpatient[:values].sum
-		- revenue_outpatient = fetch_provider_data(@hospital.src_id, "Outpatient Revenue by Payment Type")
-		- outpatient_total = revenue_outpatient[:values].sum
 		%h3 Hospital Revenue
 		%p Inpatient and outpatient revenue data over the reporting period from #{revenue_inpatient[:start_date].strftime("%m/%d/%y")} to #{revenue_inpatient[:end_date].strftime("%m/%d/%y")}.
 .row-fluid
