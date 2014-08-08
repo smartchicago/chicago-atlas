@@ -17,11 +17,11 @@
 		- outpatient_total = revenue_outpatient[:values].sum
 		- total_revenue = inpatient_total + outpatient_total
 		.row-fluid
-			.span4
-				%h4 Total Admissions
+			.span6
+				%h4 Total Admissions in 2012
 				%p.big-text #{total_admissions.to_i.to_s.gsub(/\B(?=(\d{3})+(?!\d))/, ",")}
-			.span4
-				%h4 Total Revenue
+			.span6
+				%h4 Total Revenue in 2012
 				%p.big-text $#{total_revenue.to_i.to_s.gsub(/\B(?=(\d{3})+(?!\d))/, ",")}
 	.span4
 		.well
@@ -96,11 +96,11 @@
 
 .row-fluid
 	.span12
-		%h3 Hospital Revenue
+		%h3 Hospital Finances
 		%p Inpatient and outpatient revenue data over the reporting period from #{revenue_inpatient[:start_date].strftime("%m/%d/%y")} to #{revenue_inpatient[:end_date].strftime("%m/%d/%y")}.
 .row-fluid
 	.span4
-		%h4#revenue-total Total Revenue
+		%h4#revenue-total Finance Summary
 		%p Description
 		.chart{:id => "rev_total"}
 		- content_for :javascripts do
