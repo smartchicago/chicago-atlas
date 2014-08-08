@@ -20,7 +20,7 @@
 		- admissions_by_type = fetch_provider_data(@hospital.src_id, "Admissions by Type")
 		- medsurg_admissions_by_age = fetch_provider_data(@hospital.src_id, "Medical-Surgical Admissions By Age")
 		- total_medsurg_admissions = medsurg_admissions_by_age[:values].sum
-		%p Admissions data in 2012. Hospital admissions are broken down by those in medical-surgical units and those outside medical-surgical units.
+		%p Inpatient hospital admissions data in 2012.
 .row-fluid
 	.span4
 		%h4 Total Admissions
@@ -30,7 +30,7 @@
 		%p.big-text #{(total_medsurg_admissions/total_admissions*100).to_i}% <small>(#{total_medsurg_admissions.to_i.to_s.gsub(/\B(?=(\d{3})+(?!\d))/, ",")})</small>
 .row-fluid
 	.span8
-		%h4 All Admissions - by Race
+		%h4 Admissions by Race
 		- chart_id = "chart_admissions_race"
 		.chart{:id => chart_id}
 		- content_for :javascripts do
@@ -44,7 +44,7 @@
 					ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{admissions_by_race[:stats]});
 				});
 	.span4
-		%h4 All Admissions - by Ethnicity
+		%h4 Admissions by Ethnicity
 		- chart_id = "chart_admissions_ethnicity"
 		.chart{:id => chart_id}
 		- content_for :javascripts do
@@ -59,7 +59,7 @@
 				});
 .row-fluid
 	.span12
-		%h4#admissions-by-type Non-Medical-Surgical Admissions - by Type
+		%h4#admissions-by-type Admissions by Service Category
 		%p
 		- chart_id = "chart_admissions_type"
 		.chart{:id => chart_id}

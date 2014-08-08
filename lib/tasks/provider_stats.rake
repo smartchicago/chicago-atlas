@@ -186,6 +186,7 @@ namespace :db do
 
         stats = [
           # obstetrics, gynecology, ICU (direct), ICU (transfer), pediatric, long term care, rehabilitation, acute mental illess, long term acute care
+          {:stat_name => 'Medical/Surgical', :parse_token => 'medical_surgical'},
           {:stat_name => 'Obstetrics', :parse_token => 'obstetrics'},
           {:stat_name => 'Gynecology', :parse_token => 'gynecology'},
           {:stat_name => 'ICU (direct admissions)', :parse_token => 'icu_direct'},
