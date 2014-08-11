@@ -12,6 +12,7 @@ namespace :db do
         Rake::Task["db:import:provider_stats:outpatient_revenue"].invoke
         Rake::Task["db:import:provider_stats:admissions_by_race"].invoke
         Rake::Task["db:import:provider_stats:admissions_by_ethnicity"].invoke
+        Rake::Task["db:import:provider_stats:cost_charity_care"].invoke
       end
       
       desc "Import hospital stats - inpatient count"
@@ -291,6 +292,43 @@ namespace :db do
               :data_type => "money"
             )
             puts "importing #{provider_statistic.stat_type} #{provider_statistic.stat} for hospital id hospital #{provider_statistic.provider_id}"
+            provider_statistic.save!
+          end
+        end
+        puts 'Done!'
+      end
+
+
+      desc "Import hospital stats - Actual cost of charity care"
+      task :cost_charity_care => :environment do
+        require 'csv'
+
+        cat_name = 'Actual Cost Charity Care'
+        ProviderStats.where("stat_type = 'Actual Cost Charity Care'").each do |d|
+          d.delete
+        end
+
+        csv_text = File.read("db/import/hospital_stats_cost_charity_care.csv")
+        csv = CSV.parse(csv_text, :headers => true)
+
+        stats = [
+          # Medicare, Medicaid, Other Public, Private Insurance, Private Payment
+          {:stat_name => 'Charity Care - Inpatient', :parse_token => 'actual_cost_inpatient_charity_care'},
+          {:stat_name => 'Charity Care - Outpatient', :parse_token => 'actual_cost_outpatient_charity_care'}
+        ]
+
+        csv.each do |row|
+          stats.each do |stat_info|
+            provider_statistic = ProviderStats.new(
+              :provider_id => row["hospital_id"],
+              :stat_type => cat_name,
+              :stat => stat_info[:stat_name],
+              :value => row[stat_info[:parse_token]].gsub(/[^\d\.]/, '').to_f,
+              :date_start => Date.parse(row["report_start_date"]),
+              :date_end => Date.parse(row["report_end_date"]),
+              :data_type => "money"
+            )
+            puts "importing #{provider_statistic.stat_type} #{provider_statistic.stat} for hospital id #{provider_statistic.provider_id}"
             provider_statistic.save!
           end
         end
