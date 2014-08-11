@@ -20,7 +20,7 @@ var LeafletLib = {
 
         if(typeof features.markers != "undefined"){
           for(var m=0;m<features.markers.length;m++){
-            var pt = new L.LatLng( features.markers[m][0], features.markers[m][1] );
+            var pt = features.markers[m].getLatLng();
             new L.Marker( pt ).addTo( LeafletLib.map );
             LeafletLib.addBoundedPoint( pt );
           }
