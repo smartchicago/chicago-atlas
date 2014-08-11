@@ -77,22 +77,23 @@
 					}];
 					ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{admissions_by_ethnicity[:stats]});
 				});
-.row-fluid
-	.span12
-		%h4#medsurg-admissions-by-age Medical-Surgical Admissions - by Age
-		%p
-		- chart_id = "chart_admissions_age"
-		.chart{:id => chart_id}
-		- content_for :javascripts do
-			:javascript
-				$(function () {
+- if medsurg_admissions_by_age[:values].sum > 0
+	.row-fluid
+		.span12
+			%h4#medsurg-admissions-by-age Medical-Surgical Admissions - by Age
+			%p
+			- chart_id = "chart_admissions_age"
+			.chart{:id => chart_id}
+			- content_for :javascripts do
+				:javascript
+					$(function () {
 
-					var seriesData = [{
-						data: #{medsurg_admissions_by_age[:values]},
-						name: "Admissions"
-					}];
-					ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{medsurg_admissions_by_age[:stats]});
-				});
+						var seriesData = [{
+							data: #{medsurg_admissions_by_age[:values]},
+							name: "Admissions"
+						}];
+						ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{medsurg_admissions_by_age[:stats]});
+					});
 
 .row-fluid
 	.span12
