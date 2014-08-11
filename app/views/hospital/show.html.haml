@@ -102,15 +102,18 @@
 	.span4
 		%h4#revenue-total Finance Summary
 		%p Description
+		- charity_care = fetch_provider_data(@hospital.src_id, "Actual Cost Charity Care")
+		- inpatient_cc = charity_care[:values][charity_care[:stats].index('Charity Care - Inpatient')]
+		- outpatient_cc = charity_care[:values][charity_care[:stats].index('Charity Care - Outpatient')]
 		.chart{:id => "rev_total"}
 		- content_for :javascripts do
 			:javascript
 				$(function () {
 					var seriesData = [
-						{data: [#{outpatient_total}], name: "Outpatient Revenue"},
-						{data: [#{inpatient_total}], name: "Inpatient Revenue"}
+						{data: [#{outpatient_total}, #{outpatient_cc}], name: "Outpatient"},
+						{data: [#{inpatient_total}, #{inpatient_cc}], name: "Inpatient"}
 					]
-					ChartHelper.create("rev_total", "column", seriesData, "", "", "", "money", ["Total Revenue"], true);
+					ChartHelper.create("rev_total", "column", seriesData, "", "", "", "money", ["Total Revenue", "Total Cost of Charity Care"], true);
 				});
 	.span8
 		%h4#revenue-combined Revenue by Source
