@@ -332,4 +332,24 @@ module ApplicationHelper
     {:stats => stat_array, :values => value_array, :start_date => start_date, :end_date => end_date }
   end
 
+  def fetch_sorted_provider_data(provider_id, category)
+    stats = ProviderStats.where("provider_id = #{provider_id} AND stat_type = '#{category}'").order("value desc")
+
+    if stats.length == 0
+      return {:data => [], :start_date => '', :end_date => ''}
+    end
+
+    stat_array = []
+    value_array = []
+    stats.each do |s|
+      stat_array << ((s[:stat].nil? or s[:stat] == '') ? 0 : s[:stat])
+      value_array << ((s[:value].nil? or s[:value] == '') ? 0 : s[:value])
+    end
+
+    start_date = stats[0][:date_start]
+    end_date = stats[0][:date_end]
+
+    {:stats => stat_array, :values => value_array, :start_date => start_date, :end_date => end_date }
+  end
+
 end

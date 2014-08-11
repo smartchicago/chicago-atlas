@@ -8,7 +8,7 @@
 		%a website here
 		- admissions_by_race = fetch_provider_data(@hospital.src_id, "Admissions by Race")
 		- admissions_by_ethnicity = fetch_provider_data(@hospital.src_id, "Admissions by Ethnicity")
-		- admissions_by_type = fetch_provider_data(@hospital.src_id, "Admissions by Type")
+		- admissions_by_type = fetch_sorted_provider_data(@hospital.src_id, "Admissions by Type")
 		- medsurg_admissions_by_age = fetch_provider_data(@hospital.src_id, "Medical-Surgical Admissions By Age")
 		- total_admissions = admissions_by_race[:values].sum
 		- revenue_inpatient = fetch_provider_data(@hospital.src_id, "Inpatient Revenue by Payment Type")
@@ -30,7 +30,7 @@
 			%a{:href => "https://maps.google.com/maps?f=d&hl=en&geocode=&daddr=#{@hospital.addr_street}+#{@hospital.addr_city},+IL+#{@hospital.addr_zip}"} <button class="btn">Get Directions</button>
 .row-fluid
 	.span12
-		%h3 Hospital Admissions
+		%h3 Inpatient Hospital Admissions
 		%p Inpatient hospital admissions data in 2012.
 .row-fluid
 	.span12
