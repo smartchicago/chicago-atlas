@@ -21,7 +21,7 @@ var LeafletLib = {
         if(typeof features.markers != "undefined"){
           for(var m=0;m<features.markers.length;m++){
             var pt = features.markers[m].getLatLng();
-            new L.Marker( pt ).addTo( LeafletLib.map );
+            features.markers[m].addTo( LeafletLib.map );
             LeafletLib.addBoundedPoint( pt );
           }
         }

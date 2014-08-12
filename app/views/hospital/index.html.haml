@@ -4,8 +4,40 @@
 
 <br><br>
 
-%ul
-  - @hospitals.each do |hospital|
-    %li
-      %a{:href => "/hospital/#{hospital.slug}"}
-        = hospital.name
+.row-fluid
+    .span6
+        %h3 General Hospitals
+        - @hospitals.where("sub_type = 'General Hospital'").each do |hospital|
+            %a{:href => "/hospital/#{hospital.slug}"} #{hospital.name} <br>
+        %h3 Children's Hospitals
+        - @hospitals.where("sub_type like 'Children%'").each do |hospital|
+            %a{:href => "/hospital/#{hospital.slug}"} #{hospital.name} <br>
+        %h3 Rehabilitation Hospitals
+        - @hospitals.where("sub_type like 'Rehabilitation%'").each do |hospital|
+            %a{:href => "/hospital/#{hospital.slug}"} #{hospital.name} <br>
+        %h3 Psychiatric Hospitals
+        - @hospitals.where("sub_type like 'Psychiatric%'").each do |hospital|
+            %a{:href => "/hospital/#{hospital.slug}"} #{hospital.name} <br>
+        %h3 Uncategorized
+        - @hospitals.where("sub_type is NULL").each do |hospital|
+            %a{:href => "/hospital/#{hospital.slug}"} #{hospital.name} <br>
+    .span6
+        .well
+            - locationlist = []
+            - contentlist = []
+            - @hospitals.each do |hospital|
+                - locationlist << hospital.lat_long.split(",").map{|x| x.to_f}
+                - contentlist << "<b>"+hospital.name+"</b><br><a href='/hospital/"+hospital.slug+"'>View more >></a>"
+            - content_for :javascripts do
+                = javascript_include_tag "leaflet"
+                = javascript_include_tag "leaflet_lib"
+                :javascript
+                    var pins = [];
+                    for (var i in #{locationlist}){
+                        marker = L.marker(#{locationlist}[i])
+                        marker.bindPopup(#{contentlist}[i])
+                        pins.push(marker)
+                    }
+                    LeafletLib.initialize("map_large", { markers: pins }, [41.8819, -87.6278], 13);
+            #map_large
+                %p [map goes here]
