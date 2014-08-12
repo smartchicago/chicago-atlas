@@ -27,7 +27,7 @@
             - contentlist = []
             - @hospitals.each do |hospital|
                 - locationlist << hospital.lat_long.split(",").map{|x| x.to_f}
-                - contentlist << "<b>"+hospital.name+"</b><br><a href='/hospital/"+hospital.slug+"'>View more >></a>"
+                - contentlist << "<b><a href='/hospital/"+hospital.slug+"'>"+hospital.name+"</a></b>"
             - content_for :javascripts do
                 = javascript_include_tag "leaflet"
                 = javascript_include_tag "leaflet_lib"
