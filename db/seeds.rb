@@ -10,6 +10,7 @@ categories = Category.create([
   { name: 'Crime', description: "Reported crime from the Chicago Police Department by community area for years 2003-2013." },
   { name: 'Demographics', description: "Information from the US Census on population and demographics by community area and zip code." },
   { name: 'Healthcare Providers', description: "Healthcare providers by community area. Data covers various time periods." }
+  { name: 'Hospital Admissions', description: "Inpatient & outpatient hospital admissions by patient zip code."}
 ])
 
 chicago = Geography.new(
