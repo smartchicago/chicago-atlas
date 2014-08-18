@@ -9,8 +9,9 @@ categories = Category.create([
   { name: 'Chronic Disease', description: "Information from the City of Chicago and the Chicago Health Information Technology Regional Extension Center (CHITREC) relating to chronic diseases by zip code. Data covers various time periods." },
   { name: 'Crime', description: "Reported crime from the Chicago Police Department by community area for years 2003-2013." },
   { name: 'Demographics', description: "Information from the US Census on population and demographics by community area and zip code." },
-  { name: 'Healthcare Providers', description: "Healthcare providers by community area. Data covers various time periods." }
-  { name: 'Hospital Admissions', description: "Inpatient & outpatient hospital admissions by patient zip code."}
+  { name: 'Healthcare Providers', description: "Healthcare providers by community area. Data covers various time periods." },
+  { name: 'Hospital Admissions Inpatient', description: "Inpatient hospital admissions by patient zip code."},
+  { name: 'Hospital Admissions Outpatient', description: "Outpatient hospital admissions by patient zip code."}
 ])
 
 chicago = Geography.new(
@@ -21,3 +22,4 @@ chicago = Geography.new(
 )
 chicago.id = 100
 chicago.save!
+  
