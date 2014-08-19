@@ -428,7 +428,7 @@ namespace :db do
             :provider => 'Illinois Department of Public Health',
             :url => '',
             :category_id => Category.where(:name => cat).first.id,
-            :data_type => 'condition',
+            :data_type => 'admissions',
             :description => d[:description],
             :stat_type => d[:stat_type]
           )
@@ -514,7 +514,7 @@ namespace :db do
             :provider => 'Illinois Department of Public Health',
             :url => '',
             :category_id => Category.where(:name => cat).first.id,
-            :data_type => 'condition',
+            :data_type => 'admissions',
             :description => d[:description],
             :stat_type => d[:stat_type]
           )
