@@ -1,0 +1,60 @@
+- @inpatient = Category.where("name = 'Hospital Admissions Inpatient'").first
+- @outpatient = Category.where("name = 'Hospital Admissions Outpatient'").first
+- @in_datasets = get_datasets(geography.id, @inpatient.id)
+- @out_datasets = get_datasets(geography.id, @outpatient.id)
+
+.row-fluid
+  .span12
+    %h2#hospital-admissions Hospital Admissions
+
+    %p
+      Description goes here. per 1,000 residents
+      [add source links here]
+    %table.table
+      %thead
+        %tr
+          %th{:colspan=>"2"} Admission Type
+          %th
+            Inpatient Admissions
+            %small per 1,000 residents
+          %th
+            Outpatient Admissions
+            %small per 1,000 residents
+      %tbody
+        -@in_datasets.each do |in_dataset|
+          - out_dataset = nil
+          -@out_datasets.each do |dataset|
+            - if in_dataset.name == dataset.name
+              - out_dataset = dataset
+          - in_admission_stat = fetch_chart_data(in_dataset.id, @geography.id)[:data].first
+          - in_chi_admission_stat = fetch_chart_data(in_dataset.id, 100)[:data].first
+          - out_admission_stat = fetch_chart_data(out_dataset.id, @geography.id)[:data].first
+          - out_chi_admission_stat = fetch_chart_data(out_dataset.id, 100)[:data].first
+
+          %tr
+            %td.admission-category{:rowspan=>"2"}
+              %p
+                #{in_dataset.name} <i class="icon-info-sign admission-info" rel="popover" title="#{in_dataset.name}" data-content="#{in_dataset.description}" data-trigger="hover" data-html="true" data-placement="right"></i>
+            %td #{@geography.name}
+            - if in_admission_stat >= in_chi_admission_stat
+              %td.worse-than-chi
+                %span{:float=>'right'}#{in_admission_stat.round(1)}
+            - else
+              %td.better-than-chi
+                #{in_admission_stat.round(1)}
+            - if out_admission_stat >= out_chi_admission_stat
+              %td.worse-than-chi
+                #{out_admission_stat.round(1)}
+            - else
+              %td.better-than-chi
+                #{out_admission_stat.round(1)}
+          %tr
+            %td Chicago
+            %td.chi-stat
+              #{in_chi_admission_stat.round(1)}
+            %td.chi-stat
+              #{out_chi_admission_stat.round(1)}
+    - content_for :javascripts do
+
+      :javascript
+        $('.admission-info').popover();
