@@ -8,16 +8,20 @@
     %h2#hospital-admissions Hospital Admissions
 
     %p
-      Description goes here. per 1,000 residents
-      [add source links here]
+      Inpatient and outpatient admission rates (admissions per 1,000 residents) for various categories of disease in 2012.
+    %p
+      Admissions rates are compared against overall admission rates in Chicago (red indicates higher rates than Chicago & green indicates lower rates than Chicago).
+    %p
+      [explanation of inpatient vs outpatient]
     %table.table
       %thead
         %tr
-          %th{:colspan=>"2"} Admission Type
-          %th
+          %th{:width=>"40%"} Admission Type
+          %th{:width=>"20%"}
+          %th{:width=>"20%"}
             Inpatient Admissions
             %small per 1,000 residents
-          %th
+          %th{:width=>"20%"}
             Outpatient Admissions
             %small per 1,000 residents
       %tbody
