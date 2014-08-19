@@ -151,3 +151,18 @@ p.logomark {
     display: inline-block;
     padding: 9px 0 9px 39px;
 }
+
+.better-than-chi {
+  background-color: #C8F7C5;
+  text-align: right;
+}
+
+.worse-than-chi {
+  background-color: #eb685a;
+  text-align: right;
+}
+
+.chi-stat {
+  background-color: #f6f6f6;
+  text-align: right;
+}
