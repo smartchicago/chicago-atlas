@@ -85,7 +85,8 @@ class HomeController < ApplicationController
     
     @condition_categories = Rails.cache.fetch("condition_categories") { get_categories_by_type('condition') }
     @demographic_categories = Rails.cache.fetch("demographic_categories") { get_categories_by_type('demographic') }
-    @uninsured_categories = Rails.cache.fetch("uninsured_categories") { get_categories_like('Uninsured') }
+    @uninsured_categories = Rails.cache.fetch("uninsured_categories") { get_categories_like('Uninsured', nil) }
+    @hosp_admissions_categories = Rails.cache.fetch("hosp_admission_categories") {get_categories_like(nil,'Hospital Admissions')}
 
     respond_to do |format|
       format.html # render our template
