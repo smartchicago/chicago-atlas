@@ -45,19 +45,19 @@
                 %span{:float=>'right'}#{in_admission_stat.round(1)}
             - else
               %td.better-than-chi
-                #{in_admission_stat.round(1)}
+                #{in_admission_stat}
             - if out_admission_stat >= out_chi_admission_stat
               %td.worse-than-chi
-                #{out_admission_stat.round(1)}
+                #{out_admission_stat}
             - else
               %td.better-than-chi
-                #{out_admission_stat.round(1)}
+                #{out_admission_stat}
           %tr
             %td Chicago
             %td.chi-stat
-              #{in_chi_admission_stat.round(1)}
+              #{in_chi_admission_stat}
             %td.chi-stat
-              #{out_chi_admission_stat.round(1)}
+              #{out_chi_admission_stat}
     - content_for :javascripts do
 
       :javascript

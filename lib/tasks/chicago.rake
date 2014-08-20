@@ -450,7 +450,7 @@ namespace :db do
                 if count == nil
                   rate = nil
                 else
-                  rate = count/pop * n
+                  rate = (count/pop * n).round(1)
                 end
                 statistic = Statistic.new(
                   :dataset_id => Dataset.where("slug = '#{handle}'").first.id,
@@ -536,7 +536,7 @@ namespace :db do
                 if count == nil
                   rate = nil
                 else
-                  rate = count/pop * n
+                  rate = (count/pop * n).round(1)
                 end
                 statistic = Statistic.new(
                   :dataset_id => Dataset.where("slug = '#{handle}'").first.id,
