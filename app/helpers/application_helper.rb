@@ -34,13 +34,19 @@ module ApplicationHelper
               .order("categories.name")
   end
 
-  def get_categories_like(str)
-    Category.select('categories.id, categories.name, categories.description')
-              .where("datasets.name LIKE '%#{str}%' ")
-              .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
+  def get_categories_like(dataset_name, category_name)
+    query = Category.select('categories.id, categories.name, categories.description')
+    if dataset_name
+      query = query.where("datasets.name LIKE '%#{dataset_name}%' ")
+    elsif category_name
+      query = query.where("categories.name LIKE '%#{category_name}%' ")
+    end
+    
+    query = query.joins('INNER JOIN datasets ON datasets.category_id = categories.id')
               .group('categories.id, categories.name, categories.description')
               .having('count(datasets.id) > 0')
               .order("categories.name")
+
   end
 
   def geography_geojson(dataset_id)
@@ -298,14 +304,15 @@ module ApplicationHelper
       <a href='#{provider_url}'>
         #{provider_name}
       </a>"
-    if is_oneline == nil
-      source_string << "<br>"
-    else
+    if is_oneline
       source_string << "|"
+      
+    else
+      source_string << "<br>"
     end
     source_string << "<a href='#{source_url}' class='nowrap'>
         <i class='icon icon-download-alt'></i>
-        Download data
+        Data
       </a>
     </small>"
 

@@ -14,6 +14,7 @@
     /[if lte IE 8]
       = stylesheet_link_tag "//cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css"
 
+    = stylesheet_link_tag "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"
     = stylesheet_link_tag "application", :media => "all"
     = stylesheet_link_tag "//fonts.googleapis.com/css?family=Raleway:400,800"
     = stylesheet_link_tag "//fonts.googleapis.com/css?family=Muli"
@@ -33,8 +34,6 @@
                 %a{:href => "/"} Home
               %li{:class => current_menu_class("map")}
                 %a{:href => "/map"} Map
-              / %li{:class => current_menu_class("condition")}
-              /   %a{:href => "/conditions"} Conditions
               %li{:class => current_menu_class("places")}
                 %a{:href => "/places"} Places
               %li{:class => current_menu_class("partners")}
@@ -42,7 +41,7 @@
               %li{:class => current_menu_class("about")}
                 %a{:href => "/about"} About
   
-    .container
+    #container-primary.container
           
       = yield
     %footer.footer
