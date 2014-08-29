@@ -8,26 +8,26 @@
     .span6
         %h3 General Hospitals
         - @hospitals.where("sub_type = 'General Hospital'").each do |hospital|
-            %a{:href => "/hospital/#{hospital.slug}"} #{hospital.name} <br>
+            %a{:href => "/hospitals/#{hospital.slug}"} #{hospital.name} <br>
         %h3 Children's Hospitals
         - @hospitals.where("sub_type like 'Children%'").each do |hospital|
-            %a{:href => "/hospital/#{hospital.slug}"} #{hospital.name} <br>
+            %a{:href => "/hospitals/#{hospital.slug}"} #{hospital.name} <br>
         %h3 Rehabilitation Hospitals
         - @hospitals.where("sub_type like 'Rehabilitation%'").each do |hospital|
-            %a{:href => "/hospital/#{hospital.slug}"} #{hospital.name} <br>
+            %a{:href => "/hospitals/#{hospital.slug}"} #{hospital.name} <br>
         %h3 Psychiatric Hospitals
         - @hospitals.where("sub_type like 'Psychiatric%'").each do |hospital|
-            %a{:href => "/hospital/#{hospital.slug}"} #{hospital.name} <br>
+            %a{:href => "/hospitals/#{hospital.slug}"} #{hospital.name} <br>
         %h3 Uncategorized
         - @hospitals.where("sub_type is NULL").each do |hospital|
-            %a{:href => "/hospital/#{hospital.slug}"} #{hospital.name} <br>
+            %a{:href => "/hospitals/#{hospital.slug}"} #{hospital.name} <br>
     .span6
         .well
             - locationlist = []
             - contentlist = []
             - @hospitals.each do |hospital|
                 - locationlist << hospital.lat_long.split(",").map{|x| x.to_f}
-                - contentlist << "<b><a href='/hospital/"+hospital.slug+"'>"+hospital.name+"</a></b>"
+                - contentlist << "<b><a href='/hospitals/"+hospital.slug+"'>"+hospital.name+"</a></b>"
             - content_for :javascripts do
                 = javascript_include_tag "leaflet"
                 = javascript_include_tag "leaflet_lib"

@@ -18,6 +18,14 @@ namespace :db do
       Rake::Task["db:import:insurance:all"].invoke
       Rake::Task["db:import:dentists:all"].invoke
       Rake::Task["db:import:physicians:all"].invoke
+      Rake::Task["db:import:inpatient_outpatient:inpatient"].invoke
+      Rake::Task["db:import:inpatient_outpatient:outpatient"].invoke
+    end
+
+    desc "Import all provider data"
+    task :providers => :environment do
+      Rake::Task["db:import:providers:hospitals"].invoke
+      Rake::Task["db:import:provider_stats:all"].invoke
     end
 
   end

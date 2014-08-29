@@ -297,7 +297,7 @@ module ApplicationHelper
     end
   end
 
-  def render_source_links(provider_name, provider_url, source_url, is_oneline=false)
+  def render_source_links(provider_name, provider_url, source_url, is_oneline=true)
     source_string = "<small class='muted'>
       <br>
       Source: 
