@@ -5,10 +5,12 @@
     - d = cat_datasets.first
     .accordion-heading
       %a.accordion-toggle{:href => "/map/#{d.slug}", :style => "color: #{link_color}"} 
+        %i.fa.fa-plus-circle
         = d.name
   - else
     .accordion-heading
       %a.accordion-toggle{"data-parent" => accordion_name, "data-toggle" => "collapse", :href => "#category_#{category.id}", "data-view" => category.name, :style => "color: #{link_color}"}
+        %i.fa.fa-plus-circle
         = category.name
     .accordion-body.collapse{:id => "category_#{category.id}", :class => (not @current_category.nil? and @current_category.id == category.id) ? 'in' : ''}
       .accordion-inner{:id => "category_inner_#{category.id}"}

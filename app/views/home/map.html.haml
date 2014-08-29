@@ -8,12 +8,15 @@
   :javascript
     $(window).resize(function () {
       var h = $(window).height(),
-        offsetTop = 160; // Calculate the top offset
+        offsetTop = 100; // Calculate the top offset
 
       $('#map').css('height', (h - offsetTop));
 
-      $('#map_sidebar').css('height', (h - offsetTop - $('#map_sidebar_header').height() - 40 ));
+      $('#map_sidebar').css('height', (h - offsetTop - $('#map_sidebar_header').height() - 20 ));
     }).resize();
+
+    $('#container-primary').attr("class", "container-fluid");
+    $('.footer').hide();
 
     var map = L.map('map').setView([41.8781136, -87.66677856445312], 11);
 
@@ -217,7 +220,7 @@
         });
 
 .row-fluid
-  .span4
+  .span5
     #map_sidebar_header
       - if @landing
         - title 'Browse by neighborhood'
@@ -241,8 +244,6 @@
         %div{ :id => "slider" }
         %strong.pull-left#start_year
         %strong.pull-right#end_year
-
-      %hr
 
     #map_sidebar
 
@@ -272,5 +273,5 @@
         = render :partial => "home/map_category", :locals => {:accordion_name => 'stats_accordion', :category => Category.find_by_name("Demographics"), :link_color => GlobalConstants::REDS.first}
         = render :partial => "home/map_category", :locals => {:accordion_name => 'stats_accordion', :category => Category.find_by_name("Healthcare Providers"), :link_color => GlobalConstants::PURPLES.first}
 
-  .span8
+  .span7
     #map
