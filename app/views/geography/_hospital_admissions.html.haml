@@ -16,14 +16,10 @@
     %table.table
       %thead
         %tr
-          %th{:width=>"40%"} Admission Type
-          %th{:width=>"20%"}
-          %th{:width=>"20%"}
-            Inpatient Admissions
-            %small per 1,000 residents
-          %th{:width=>"20%"}
-            Outpatient Admissions
-            %small per 1,000 residents
+          %th Admission Type
+          %th
+          %th{:width=>"35%"} #{@geography.name}
+          %th{:width=>"35%"} Chicago
       %tbody
         -@in_datasets.each do |in_dataset|
           - out_dataset = nil
@@ -35,29 +31,41 @@
           - out_admission_stat = fetch_chart_data(out_dataset.id, @geography.id)[:data].first
           - out_chi_admission_stat = fetch_chart_data(out_dataset.id, 100)[:data].first
 
-          %tr
-            %td.admission-category{:rowspan=>"2"}
+          %tr.admission-info{ :rel => "popover", :title => in_dataset.name, :"data-content" => "Inpatient #{in_dataset.name} Admissions per 1,000 residents.", :"data-trigger" => 'hover', :"data-html" => 'true', :"data-placement" => 'right' }
+            %td.admission-category
               %p
-                #{in_dataset.name} <i class="icon-info-sign admission-info" rel="popover" title="#{in_dataset.name}" data-content="#{in_dataset.description}" data-trigger="hover" data-html="true" data-placement="right"></i>
-            %td #{@geography.name}
-            - if in_admission_stat >= in_chi_admission_stat
-              %td.worse-than-chi
-                %span{:float=>'right'}#{in_admission_stat.round(1)}
-            - else
-              %td.better-than-chi
-                #{in_admission_stat}
-            - if out_admission_stat >= out_chi_admission_stat
-              %td.worse-than-chi
-                #{out_admission_stat}
-            - else
-              %td.better-than-chi
-                #{out_admission_stat}
-          %tr
-            %td Chicago
-            %td.chi-stat
-              #{in_chi_admission_stat}
-            %td.chi-stat
-              #{out_chi_admission_stat}
+                #{in_dataset.name}
+            %td Inpatient
+            %td
+              - if in_admission_stat >= in_chi_admission_stat
+                %span.badge.badge-important
+                  #{in_admission_stat} 
+                per 1,000 residents
+              - else
+                %span.badge.badge-success
+                  #{in_admission_stat} 
+                per 1,000 residents
+            %td
+              %span.badge.badge-info 
+                #{in_chi_admission_stat} 
+              per 1,000 residents
+          %tr.admission-info{ :rel => "popover", :title => out_dataset.name, :"data-content" => "Outpatient #{out_dataset.name} Admissions per 1,000 residents.", :"data-trigger" => 'hover', :"data-html" => 'true', :"data-placement" => 'right' }
+            %td{:style => "border: none;"}
+            %td Outpatient
+            %td
+              - if out_admission_stat >= out_chi_admission_stat
+                %span.badge.badge-important
+                  #{out_admission_stat} 
+                per 1,000 residents
+              - else
+                %span.badge.badge-success
+                  #{out_admission_stat} 
+                per 1,000 residents
+            %td
+              %span.badge.badge-info
+                #{out_chi_admission_stat} 
+              per 1,000 residents
+            
     - content_for :javascripts do
 
       :javascript
