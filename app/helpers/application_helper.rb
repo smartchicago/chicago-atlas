@@ -304,14 +304,15 @@ module ApplicationHelper
       <a href='#{provider_url}'>
         #{provider_name}
       </a>"
-    if is_oneline == nil
-      source_string << "<br>"
-    else
+    if is_oneline
       source_string << "|"
+      
+    else
+      source_string << "<br>"
     end
     source_string << "<a href='#{source_url}' class='nowrap'>
         <i class='icon icon-download-alt'></i>
-        Download data
+        Data
       </a>
     </small>"
 

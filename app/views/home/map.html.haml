@@ -15,10 +15,21 @@
       $('#map_sidebar').css('height', (h - offsetTop - $('#map_sidebar_header').height() - 20 ));
     }).resize();
 
+    // hiding and modifying elements to give the map more room
     $('#container-primary').attr("class", "container-fluid");
     $('.footer').hide();
 
-    var map = L.map('map').setView([41.8781136, -87.66677856445312], 11);
+
+    $('.accordion-group').on('show.bs.collapse', function () {
+      $(this).find('i').attr('class', 'fa fa-minus-circle')
+    })
+
+    $('.accordion-group').on('hide.bs.collapse', function () {
+      $(this).find('i').attr('class', 'fa fa-plus-circle')
+    })
+
+    // initialize the map
+    var map = L.map('map').setView([41.86, -87.70], 11);
 
     var mapbox = L.tileLayer('https://{s}.tiles.mapbox.com/v3/smartchicagocollaborative.heooddo8/{z}/{x}/{y}.png', {
         attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
@@ -59,6 +70,7 @@
 
   - if @landing
     :javascript
+        // plain map with no data or colors
         geojson = L.geoJson(geojsonFeature, {
             style: style,
             onEachFeature: onEachFeature
@@ -95,6 +107,7 @@
 
   - else
     :javascript
+        // map with data
         var jenks_cutoffs = jenks(#{@current_statistics}, 4);
         jenks_cutoffs[0] = 0; // ensure the bottom value is 0
         jenks_cutoffs.pop(); // last item is the max value, so dont use it
@@ -237,14 +250,14 @@
           %small#year_label
         %p 
           #{@current_dataset_description}
-          %br
           - if @current_dataset_url != ''
-            = raw(render_source_links(@current_dataset_provider, @current_dataset_url, @current_dataset_slug+".json", nil))
+            = raw(render_source_links(@current_dataset_provider, @current_dataset_url, @current_dataset_slug+".json", true))
       
         %div{ :id => "slider" }
         %strong.pull-left#start_year
         %strong.pull-right#end_year
 
+    %hr
     #map_sidebar
 
       %h4 Conditions
@@ -263,10 +276,10 @@
         - @uninsured_categories.each do |c|
           = render :partial => "home/map_category", :locals => {:accordion_name => 'insurance_accordion', :category => c, :link_color => GlobalConstants::GREENS.first}
 
-      %h4 Hospital Admissions Rates
+      %h4 Hospital Admissions
       #hosp_admission_accordion.accordion
         - @hosp_admissions_categories.each do |c|
-          = render :partial => "home/map_category", :locals => {:accordion_name => 'hosp_admission_accordion', :category => c, :link_color => GlobalConstants::GREENS.first}
+          = render :partial => "home/map_category", :locals => {:accordion_name => 'hosp_admission_accordion', :category => c, :link_color => GlobalConstants::BLUES.first}
 
       %h4 Other
       #stats_accordion.accordion
