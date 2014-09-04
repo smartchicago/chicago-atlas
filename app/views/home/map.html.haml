@@ -233,15 +233,18 @@
         });
 
 .row-fluid
+  .span12
+    %h1 Map Chicago Statistics
+.row-fluid
   .span5
     #map_sidebar_header
       - if @landing
-        - title 'Browse by neighborhood'
-        %h3 
-          Browse by neighborhood
-        %p
-          Choose any condition on the left to see data on the map. 
-          Examples: <a href='/map/births_birth_rate'>birth rate</a>, <a href='/map/crime_aggravated_assault'>aggravated battery</a>, or <a href='/map/infectious_disease_tuberculosis'>tuberculosis</a>.
+        %div.well.well-sm
+          - title 'Browse by neighborhood'
+          %p
+            Select any dataset below to visualize it on the map.<br><br>
+            %small
+              Examples: <a href='/map/births_birth_rate'>birth rate</a>, <a href='/map/crime_aggravated_assault'>aggravated battery</a>, or <a href='/map/infectious_disease_tuberculosis'>tuberculosis</a>.
         
       - else
         - title 'Browse ' + @current_dataset_name
