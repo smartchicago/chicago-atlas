@@ -166,3 +166,12 @@ p.logomark {
   background-color: #f6f6f6;
   text-align: right;
 }
+
+.accordion-toggle:hover {
+  text-decoration: none;
+}
+
+.map-stat-select .btn-mini {
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
