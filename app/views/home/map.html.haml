@@ -12,7 +12,6 @@
 
       $('#map').css('height', (h - offsetTop));
 
-      $('#map_sidebar').css('height', (h - offsetTop - $('#map_sidebar_header').height() - 20 ));
     }).resize();
 
     // hiding and modifying elements to give the map more room
@@ -233,16 +232,14 @@
         });
 
 .row-fluid
-  .span12
-    %h1 Map Chicago Statistics
-.row-fluid
-  .span5
+  .span7
+    %br
     #map_sidebar_header
       - if @landing
         %div.well.well-sm
           - title 'Browse by neighborhood'
           %p
-            Select any dataset below to visualize it on the map.<br><br>
+            Select a dataset to visualize it on the map.<br>
             %small
               Examples: <a href='/map/births_birth_rate'>birth rate</a>, <a href='/map/crime_aggravated_assault'>aggravated battery</a>, or <a href='/map/infectious_disease_tuberculosis'>tuberculosis</a>.
         
@@ -259,9 +256,14 @@
               = raw(render_source_links(@current_dataset_provider, @current_dataset_url, @current_dataset_slug+".json", true))
         
           %div{ :id => "slider" }
+            %br
+            %br
           %strong.pull-left#start_year
           %strong.pull-right#end_year
-          %br
+    %br
+    #map
+  .span5
+    %h3 Chicago Statistics
 
     %hr
     #map_sidebar
@@ -292,5 +294,3 @@
         = render :partial => "home/map_category", :locals => {:accordion_name => 'stats_accordion', :category => Category.find_by_name("Demographics"), :link_color => GlobalConstants::REDS.first}
         = render :partial => "home/map_category", :locals => {:accordion_name => 'stats_accordion', :category => Category.find_by_name("Healthcare Providers"), :link_color => GlobalConstants::PURPLES.first}
 
-  .span7
-    #map

@@ -16,12 +16,15 @@
         = category.name
     .accordion-body.collapse{:id => "category_#{category.id}", :class => (not @current_category.nil? and @current_category.id == category.id) ? 'in' : ''}
       .accordion-inner{:id => "category_inner_#{category.id}"}
-        %ul
+        %div.btn-group-vertical
           - cat_datasets.each do |d|
-            %li
-              - if d.slug == params[:dataset_slug]
-                %strong
-                  = d.name
-              - else
-                %a{:href => "/map/#{d.slug}", :style => "color: #{link_color}"} 
-                  = d.name
+            - if d.slug == params[:dataset_slug]
+              %a.btn.btn-primary
+                %i.fa.fa-check
+                = d.name
+            - else
+              %a.btn.btn-default{:href => "/map/#{d.slug}"} 
+                = d.name
+
+
+
