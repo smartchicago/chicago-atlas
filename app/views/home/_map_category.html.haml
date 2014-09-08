@@ -10,20 +10,20 @@
     .accordion-heading
       %a.accordion-toggle{"data-parent" => accordion_name, "data-toggle" => "collapse", :href => "#category_#{category.id}", "data-view" => category.name, :style => "color: #{link_color}"}
         - if (not @current_category.nil? and @current_category.id == category.id)
-          %i.fa.fa-minus-circle
+          %i.fa.fa-minus-circle.plus-minus
         - else
-          %i.fa.fa-plus-circle
+          %i.fa.fa-plus-circle.plus-minus
         = category.name
     .accordion-body.collapse{:id => "category_#{category.id}", :class => (not @current_category.nil? and @current_category.id == category.id) ? 'in' : ''}
       .accordion-inner{:id => "category_inner_#{category.id}"}
-        %div.btn-group-vertical
+        %div.map-stat-select
           - cat_datasets.each do |d|
             - if d.slug == params[:dataset_slug]
-              %a.btn.btn-primary
+              %a.btn.btn-primary.btn-mini
                 %i.fa.fa-check
                 = d.name
             - else
-              %a.btn.btn-default{:href => "/map/#{d.slug}"} 
+              %a.btn.btn-default.btn-mini{:href => "/map/#{d.slug}"} 
                 = d.name
 
 
