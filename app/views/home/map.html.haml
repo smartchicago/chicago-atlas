@@ -20,11 +20,11 @@
 
 
     $('.accordion-group').on('show.bs.collapse', function () {
-      $(this).find('i').attr('class', 'fa fa-minus-circle')
+      $(this).find('.plus-minus').attr('class', 'fa fa-minus-circle')
     })
 
     $('.accordion-group').on('hide.bs.collapse', function () {
-      $(this).find('i').attr('class', 'fa fa-plus-circle')
+      $(this).find('.plus-minus').attr('class', 'fa fa-plus-circle')
     })
 
     // initialize the map
@@ -238,34 +238,31 @@
       - if @landing
         %div.well.well-sm
           - title 'Browse by neighborhood'
-          %p
+          %h4
             Select a dataset to visualize it on the map.<br>
-            %small
-              Examples: <a href='/map/births_birth_rate'>birth rate</a>, <a href='/map/crime_aggravated_assault'>aggravated battery</a>, or <a href='/map/infectious_disease_tuberculosis'>tuberculosis</a>.
+          %small
+            Examples: <a href='/map/births_birth_rate'>birth rate</a>, <a href='/map/crime_aggravated_assault'>aggravated battery</a>, or <a href='/map/infectious_disease_tuberculosis'>tuberculosis</a>.
         
       - else
         %div.well.well-sm
           - title 'Browse ' + @current_dataset_name
-          %p Currently Showing:
           %h4
             #{@current_dataset_name}
             %small#year_label
+          %div{ :id => "slider" }
+          %strong.pull-left#start_year
+          %strong.pull-right#end_year
+          %br
           %p 
             %small #{@current_dataset_description}
             - if @current_dataset_url != ''
               = raw(render_source_links(@current_dataset_provider, @current_dataset_url, @current_dataset_slug+".json", true))
         
-          %div{ :id => "slider" }
-            %br
-            %br
-          %strong.pull-left#start_year
-          %strong.pull-right#end_year
     %br
     #map
   .span5
-    %h3 Chicago Statistics
+    %h2 Chicago Statistics
 
-    %hr
     #map_sidebar
 
       %h4 Conditions
