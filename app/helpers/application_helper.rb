@@ -264,6 +264,22 @@ module ApplicationHelper
     stats_array
   end
 
+  def fetch_dataset_chart_headers(cat_id=nil)
+    datasets = Dataset.where("category_id = '#{cat_id}'")                 
+
+    if datasets.length == 0
+      return []
+    end
+
+    datasets = datasets.order("id")
+    dataset_name_array = []
+    datasets.each do |d|
+      dataset_name_array << (d[:name])
+    end
+
+    dataset_name_array
+  end
+
   def to_dom_id(s)
     #strip the string
     ret = s.strip.downcase
