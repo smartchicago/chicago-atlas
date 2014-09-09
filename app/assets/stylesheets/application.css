@@ -175,3 +175,7 @@ p.logomark {
   margin-top: 1px;
   margin-bottom: 1px;
 }
+
+#outpatient-injury-chart {
+  height: 500px;
+}
