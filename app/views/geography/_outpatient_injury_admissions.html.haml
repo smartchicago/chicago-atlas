@@ -10,4 +10,31 @@
         Outpatient injury admission rates (admissions per 1,000 residents) by injury type. These outpatient injury admissions are a subset of the admissions in the Injury & Poisoning category above.
       %p
         Admissions rates are compared against overall admission rates in Chicago
+
+      - injury_area = fetch_custom_chart_data(geography.id, @injuries.id, nil, [])
+      - injury_chi = fetch_custom_chart_data(100, @injuries.id, nil, [])
+      - chart_headers = []
+      - chart_id = "outpatient-injury-chart"
+      .chart{:id => chart_id}
+
+      - content_for :javascripts do
+        
+        :javascript
+          $(function () {
+
+            var seriesData = [{
+              data: #{injury_area},
+              name: "#{geography.name}",
+              color: "#66A61E"
+            },
+            {
+              data: #{injury_chi},
+              name: "Chicago",
+              color: "#666"
+            }
+            ];
+
+            ChartHelper.create("#{chart_id}", "column", seriesData, Date.UTC(2008, 1, 1), "", "decade", "percent", #{chart_headers});
+          });
+
       %br
