@@ -13,7 +13,6 @@ namespace :db do
           end
 
           datasets = [
-            {:name => 'Total', :parse_token => 'Total', :description => 'All injuries among outpatient admissions'},
             {:name => 'Motor Vehicle', :parse_token => 'Motor Vehicle Traffic Accidents', :description => 'Motor vehicle traffic accidents'},
             {:name => 'Other Transportation', :parse_token => 'Other Transporation Accidents', :description => 'Other transportation accidents'},
             {:name => 'Poisoning', :parse_token => 'Accidental Poisoning by Drugs, Medicinal Substances, and Biologicals', :description => 'Accidental poisoning by drugs, medicinal substances, and biologicals'},
@@ -44,7 +43,7 @@ namespace :db do
               :url => '',
               :category_id => Category.where(:name => cat).first.id,
               :data_type => 'injuries',
-              :stat_type => 'count'
+              :stat_type => 'rate'
             )
             dataset.save!
             puts "Inpatient Dataset: #{handle}"
