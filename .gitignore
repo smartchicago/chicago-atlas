@@ -15,6 +15,7 @@
 /tmp/*.csv
 /tmp/*.json
 /tmp/cache
+/tmp/pids
 .DS_Store
 logfile
 .env
