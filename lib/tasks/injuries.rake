@@ -5,12 +5,6 @@ namespace :db do
         task :injuries_outpatient => :environment do
           require 'csv'
 
-          category = Category.new(
-            :description => ''
-            :name => 'Injuries Among Outpatient Admissions'
-            )
-          category.save!
-
           cat = 'Injuries Among Outpatient Admissions'
           cat_id = Category.where(:name => cat).first.id
           Dataset.where(:category_id => cat_id).each do |d|
@@ -62,17 +56,26 @@ namespace :db do
               else
                 count = nil
               end
+              n = 1000
               year = row["Year"]
               if Geography.where("id = #{zip_id.to_i}").present?
-                statistic = Statistic.new(
-                  :dataset_id => Dataset.where("slug = '#{handle}'").first.id,
-                  :geography_id => zip_id,
-                  :year => year,
-                  :name => handle, 
-                  :value => count
-                )
-                statistic.save!
-                puts "importing geography #{zip_id}"
+                if Statistic.where("name = 'population' and year = #{year} and geography_id = #{zip_id}").present?
+                  pop = Geography.find(zip_id).population(year)
+                  if count == nil
+                    rate = nil
+                  else
+                    rate = (count/pop * n).round(1)
+                  end
+                  statistic = Statistic.new(
+                    :dataset_id => Dataset.where("slug = '#{handle}'").first.id,
+                    :geography_id => zip_id,
+                    :year => year,
+                    :name => handle, 
+                    :value => rate
+                  )
+                  statistic.save!
+                  puts "importing geography #{zip_id}"
+                end
               end
             end
           end
