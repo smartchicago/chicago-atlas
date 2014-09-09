@@ -245,7 +245,7 @@ namespace :db do
           area = '60622'
         elsif area == '60610 & 60654'
           area = '60610'
-        elsif area == 'CHICAGO' or area == 'CH' or area == '0' or area == '88'
+        elsif area == 'CHICAGO' or area == 'Chicago' or area == 'chicago' or area == 'CH' or area == '0' or area == '88'
           area = '100' # Chicago is manually imported, see seeds.rb
         end
         area
