@@ -5,10 +5,10 @@ class GeographyController < ApplicationController
 
   def index
     @current_menu = 'places'
-    @community_areas = Geography.select("geographies.name, geographies.slug, count(geographies.id) as resource_cnt")
-                        .joins("JOIN intervention_locations on intervention_locations.community_area_id = geographies.id")
+    @community_areas = Geography.select("geographies.name, geographies.slug, count(intervention_locations.community_area_id) as resource_cnt")
+                        .joins("LEFT JOIN intervention_locations on intervention_locations.community_area_id = geographies.id")
                         .group("geographies.id")
-                        .where("geo_type = 'Community Area' AND intervention_locations.categories != '[]'")
+                        .where("geo_type = 'Community Area'")
                         .order("name").all
 
     @zip_codes = Geography.where("geo_type = 'Zip'").order("name").all
