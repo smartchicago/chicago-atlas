@@ -8,6 +8,7 @@ namespace :db do
       Rake::Task["db:import:census:population"].invoke
       Rake::Task["db:import:stats"].invoke
       Rake::Task["db:import:purple_binder:all"].invoke
+      Rake::Task["db:import:providers"].invoke
     end
 
     desc "Fetch and import all health data"
@@ -20,6 +21,7 @@ namespace :db do
       Rake::Task["db:import:physicians:all"].invoke
       Rake::Task["db:import:inpatient_outpatient:inpatient"].invoke
       Rake::Task["db:import:inpatient_outpatient:outpatient"].invoke
+      Rake::Task["db:import:injuries:injuries_outpatient"].invoke
     end
 
     desc "Import all provider data"
