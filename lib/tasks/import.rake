@@ -3,6 +3,7 @@ namespace :db do
 
     desc "Fetch and import all geography, demographic and health data"
     task :all => :environment do
+      Rake::Task["db:import:categories:all"].invoke
       Rake::Task["db:import:geography:community_areas"].invoke
       Rake::Task["db:import:geography:zip_codes"].invoke
       Rake::Task["db:import:census:population"].invoke
