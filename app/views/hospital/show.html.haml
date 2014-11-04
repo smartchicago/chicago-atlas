@@ -4,10 +4,10 @@
 		%h1 #{@hospital.name}
 		%h3 #{@hospital.sub_type}
 
-		%p hospital description here
-		%p phone number here
-		%p <a>website here</a>
-		%p <a>link to annual report here</a>
+		%p #{@hospital.description}
+		%p #{@hospital.phone}
+		%p <a href="#{@hospital.url}" target="blank">website</a>
+		%p <a href="#{@hospital.report_url}" target="blank">#{@hospital.report_name}</a>
 		- admissions_by_race = fetch_provider_data(@hospital.src_id, "Admissions by Race")
 		- admissions_by_ethnicity = fetch_provider_data(@hospital.src_id, "Admissions by Ethnicity")
 		- admissions_by_type = fetch_sorted_provider_data(@hospital.src_id, "Admissions by Type")
