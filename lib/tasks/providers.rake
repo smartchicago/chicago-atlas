@@ -26,7 +26,12 @@ namespace :db do
             :ownership_type => row["ownership_type"],
             :contact_email => row["contact_email"],
             :contact_phone => row["contact_phone"],
-            :lat_long => row["lat_long"]
+            :lat_long => row["lat_long"],
+            :description => row["description"],
+            :phone => row["hospital_phone"],
+            :url => row["hospital_url"],
+            :report_url => row["report_url"],
+            :report_name => row["report_name"]
           )
           puts "importing #{hospital.name}"
           hospital.save!
