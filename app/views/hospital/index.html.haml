@@ -7,19 +7,19 @@
 .row-fluid
     .span6
         %h3 General Hospitals
-        - @hospitals.where("sub_type = 'General Hospital'").each do |hospital|
+        - @hospitals.where("sub_type = 'General Hospital'").order("name").each do |hospital|
             %a{:href => "/hospitals/#{hospital.slug}"} #{hospital.name} <br>
         %h3 Children's Hospitals
-        - @hospitals.where("sub_type like 'Children%'").each do |hospital|
+        - @hospitals.where("sub_type like 'Children%'").order("name").each do |hospital|
             %a{:href => "/hospitals/#{hospital.slug}"} #{hospital.name} <br>
         %h3 Rehabilitation Hospitals
-        - @hospitals.where("sub_type like 'Rehabilitation%'").each do |hospital|
+        - @hospitals.where("sub_type like 'Rehabilitation%'").order("name").each do |hospital|
             %a{:href => "/hospitals/#{hospital.slug}"} #{hospital.name} <br>
         %h3 Psychiatric Hospitals
-        - @hospitals.where("sub_type like 'Psychiatric%'").each do |hospital|
+        - @hospitals.where("sub_type like 'Psychiatric%'").order("name").each do |hospital|
             %a{:href => "/hospitals/#{hospital.slug}"} #{hospital.name} <br>
         %h3 Uncategorized
-        - @hospitals.where("sub_type is NULL").each do |hospital|
+        - @hospitals.where("sub_type is NULL").order("name").each do |hospital|
             %a{:href => "/hospitals/#{hospital.slug}"} #{hospital.name} <br>
     .span6
         .well
