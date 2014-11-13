@@ -7,9 +7,9 @@ var LeafletLib = {
     lngmax: -180,
     markers: [ ],
 
-    initialize: function(element, features, centroid, zoom) {
+    initialize: function(element, features, centroid, padding) {
 
-        LeafletLib.map = L.map(element, {scrollWheelZoom:false}).setView(new L.LatLng( centroid[0], centroid[1] ), zoom);
+        LeafletLib.map = L.map(element, {scrollWheelZoom:false}).setView(new L.LatLng( centroid[0], centroid[1] ), 13);
 
         LeafletLib.tiles = L.tileLayer('https://{s}.tiles.mapbox.com/v3/smartchicagocollaborative.heooddo8/{z}/{x}/{y}.png', {
             attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
@@ -33,7 +33,7 @@ var LeafletLib = {
           LeafletLib.addBoundedBox( LeafletLib.geojson.getBounds() );
         }
 
-        LeafletLib.fitFeatures();
+        LeafletLib.fitFeatures(padding);
 
     },
 
@@ -62,13 +62,13 @@ var LeafletLib = {
       LeafletLib.markers = [ ];
     },
 
-    fitFeatures: function(){
+    fitFeatures: function(padding){
         if(LeafletLib.latmax > LeafletLib.latmin){
           var bounds = new L.LatLngBounds(
                       new L.LatLng( LeafletLib.latmin, LeafletLib.lngmin ),
                       new L.LatLng( LeafletLib.latmax, LeafletLib.lngmax ));
 
-          LeafletLib.map.fitBounds( bounds.pad(0.2) );
+          LeafletLib.map.fitBounds( bounds.pad(padding) );
         }
     },
 

@@ -9,7 +9,7 @@ var ResourcesLib = {
         "geometry": geography_geometry
     };
 
-    LeafletLib.initialize("map_resources", { geojson: geojsonFeature }, geography_centroid, 13);
+    LeafletLib.initialize("map_resources", { geojson: geojsonFeature }, geography_centroid, 0.2);
 
     var resources_url = ''
     if (community_area) {

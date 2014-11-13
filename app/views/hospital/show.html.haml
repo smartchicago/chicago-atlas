@@ -35,7 +35,7 @@
 				= javascript_include_tag "leaflet_lib"
 				:javascript
 					var marker = L.marker([#{@hospital.lat_long}])
-					LeafletLib.initialize("map_detail", { markers: [marker] }, [#{@hospital.lat_long}], 13);
+					LeafletLib.initialize("map_detail", { markers: [marker] }, [#{@hospital.lat_long}], 0.2);
 
 			#map_detail
 			%br
