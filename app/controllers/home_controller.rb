@@ -38,13 +38,13 @@ class HomeController < ApplicationController
       @current_dataset_slug = 'affordable_resources'
 
       statistics = Geography
-                      .select("count(geographies.id) as resource_cnt")
-                      .joins("JOIN intervention_locations on intervention_locations.community_area_id = geographies.id")
+                      .select("count(intervention_locations.community_area_id) as resource_cnt")
+                      .joins("LEFT JOIN intervention_locations on intervention_locations.community_area_id = geographies.id")
                       .group("geographies.id")
-                      .where("geo_type = 'Community Area' AND intervention_locations.categories != '[]'").all
+                      .where("geo_type = 'Community Area'").all
       
       statistics.each do |s|
-        unless s.resource_cnt.nil? or s.resource_cnt == 0
+        unless s.resource_cnt.nil?
           @current_statistics << s.resource_cnt.to_i
         end
       end
