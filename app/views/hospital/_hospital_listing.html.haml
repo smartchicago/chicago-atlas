@@ -1,0 +1,7 @@
+- @hospitals.where(hosp_query).order("name").each do |hospital|
+    %h4
+        %a{:href => "/hospitals/#{hospital.slug}"} #{hospital.name} <br>
+    - if hospital.addr_street
+        <i class="fa fa-map-marker"></i>&nbsp #{hospital.addr_street}<br>
+    - if hospital.phone
+        <i class="fa fa-phone"></i>&nbsp #{hospital.phone}
