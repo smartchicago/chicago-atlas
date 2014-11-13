@@ -5,6 +5,7 @@ namespace :db do
     task :all => :environment do
       Rake::Task["db:import:categories:all"].invoke
       Rake::Task["db:import:geography:community_areas"].invoke
+      Rake::Task["db:import:geography:chicago_geo"].invoke
       Rake::Task["db:import:geography:zip_codes"].invoke
       Rake::Task["db:import:census:population"].invoke
       Rake::Task["db:import:stats"].invoke
