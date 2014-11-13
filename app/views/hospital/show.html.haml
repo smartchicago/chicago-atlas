@@ -5,9 +5,12 @@
 		%h3 #{@hospital.sub_type}
 
 		%p #{@hospital.description}
-		%p #{@hospital.phone}
-		%p <a href="#{@hospital.url}" target="blank">website</a>
-		%p <a href="#{@hospital.report_url}" target="blank">#{@hospital.report_name}</a>
+		- if @hospital.phone
+			%p <i class="fa fa-phone"></i>&nbsp #{@hospital.phone}
+		- if @hospital.url
+			%p <i class="fa fa-external-link"></i>&nbsp <a href="#{@hospital.url}" target="blank"> website</a>
+		- if @hospital.report_name && @hospital.report_url
+			%p <i class="fa fa-clipboard"></i>&nbsp <a href="#{@hospital.report_url}" target="blank">#{@hospital.report_name}</a>
 		- admissions_by_race = fetch_provider_data(@hospital.src_id, "Admissions by Race")
 		- admissions_by_ethnicity = fetch_provider_data(@hospital.src_id, "Admissions by Ethnicity")
 		- admissions_by_type = fetch_sorted_provider_data(@hospital.src_id, "Admissions by Type")
@@ -35,6 +38,7 @@
 					LeafletLib.initialize("map_detail", { markers: [marker] }, [#{@hospital.lat_long}], 13);
 
 			#map_detail
+			%br
 			%p #{@hospital.addr_street} <br> #{@hospital.addr_city}, IL #{@hospital.addr_zip}
 			%a{:href => "https://maps.google.com/maps?f=d&hl=en&geocode=&daddr=#{@hospital.addr_street}+#{@hospital.addr_city},+IL+#{@hospital.addr_zip}"} <button class="btn">Get Directions</button>
 .row-fluid
