@@ -4,7 +4,7 @@
 		%h1 #{@hospital.name}
 		%h3 #{@hospital.sub_type}
 
-		%p #{@hospital.description}
+		%p #{@hospital.description} <br><br>
 		- if @hospital.phone
 			%p <i class="fa fa-phone"></i>&nbsp #{@hospital.phone}
 		- if @hospital.url
