@@ -115,7 +115,7 @@
 .row-fluid
 	.span4
 		%h4#revenue-total Finance Summary
-		%p Description
+		%p 
 		- charity_care = fetch_provider_data(@hospital.src_id, "Actual Cost Charity Care")
 		- inpatient_cc = charity_care[:values][charity_care[:stats].index('Charity Care - Inpatient')]
 		- outpatient_cc = charity_care[:values][charity_care[:stats].index('Charity Care - Outpatient')]
@@ -131,7 +131,7 @@
 				});
 	.span8
 		%h4#revenue-combined Revenue by Source
-		%p Description
+		%p 
 		.chart{:id => "rev_combined"}
 		- content_for :javascripts do
 			:javascript
