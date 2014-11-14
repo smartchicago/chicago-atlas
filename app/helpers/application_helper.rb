@@ -335,6 +335,14 @@ module ApplicationHelper
     return source_string
   end
 
+  def render_hosp_source_link(source_data_text, source_data_url)
+    source_string = "<small class='muted'>
+      <a href='#{source_data_url}'><i class='icon icon-download-alt'></i> Download #{source_data_text} (csv)</a>
+      </small><br>"
+    return source_string
+  end
+
+
   def fetch_provider_data(provider_id, category)
     stats = ProviderStats.where("provider_id = #{provider_id} AND stat_type = '#{category}'")
 

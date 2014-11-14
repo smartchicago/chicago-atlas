@@ -48,7 +48,7 @@
 .row-fluid
 	.span12
 		%h4#admissions-by-type Admissions by Service Category
-		%p
+		= raw(render_hosp_source_link( 'admissions data by type', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_admissionsbytype.csv'))
 		- chart_id = "chart_admissions_type"
 		.chart{:id => chart_id}
 		- content_for :javascripts do
@@ -64,6 +64,7 @@
 .row-fluid
 	.span8
 		%h4 Admissions by Race
+		= raw(render_hosp_source_link( 'admissions data by race', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_admissionsbyrace.csv'))
 		- chart_id = "chart_admissions_race"
 		.chart{:id => chart_id}
 		- content_for :javascripts do
@@ -78,6 +79,7 @@
 				});
 	.span4
 		%h4 Admissions by Ethnicity
+		= raw(render_hosp_source_link( 'admissions data by ethnicity', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_admissionsbyethnicity.csv'))
 		- chart_id = "chart_admissions_ethnicity"
 		.chart{:id => chart_id}
 		- content_for :javascripts do
@@ -94,7 +96,7 @@
 	.row-fluid
 		.span12
 			%h4#medsurg-admissions-by-age Medical-Surgical Admissions - by Age
-			%p
+			= raw(render_hosp_source_link( 'admissions data by age', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_admissionsbyage.csv'))
 			- chart_id = "chart_admissions_age"
 			.chart{:id => chart_id}
 			- content_for :javascripts do
@@ -112,6 +114,9 @@
 	.span12
 		%h3 Hospital Finances
 		%p Inpatient and outpatient revenue data over the reporting period from #{revenue_inpatient[:start_date].strftime("%m/%d/%y")} to #{revenue_inpatient[:end_date].strftime("%m/%d/%y")}.
+		= raw(render_hosp_source_link( 'hospital inpatient revenue data', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_revenueinpatient.csv'))
+		= raw(render_hosp_source_link( 'hospital outpatient revenue data', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_revenueoutpatient.csv'))
+		= raw(render_hosp_source_link( 'hospital charity care data', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_cost_charity_care.csv'))
 .row-fluid
 	.span4
 		%h4#revenue-total Finance Summary
