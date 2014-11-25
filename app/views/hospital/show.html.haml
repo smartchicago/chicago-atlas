@@ -50,6 +50,7 @@
 .row-fluid
 	.span12
 		%h4#admissions-by-type Admissions by Service Category
+		%p These categories are used by the <a href="http://www.hfsrb.illinois.gov/">Illinois Health Facilities and Services Review Board</a> to conform to data collection requirements of the <a href="http://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=407&ChapterID=5">Illinois Health Facilities Planning Act</a>
 		= raw(render_hosp_source_link( 'admissions data by type', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_admissionsbytype.csv'))
 		<br>
 		- chart_id = "chart_admissions_type"
@@ -101,6 +102,7 @@
 	.row-fluid
 		.span12
 			%h4#medsurg-admissions-by-age Medical-Surgical Admissions - by Age
+			%p Medical-Surgical admissions are defined by the <a href="http://www.hfsrb.illinois.gov/">Illinois Health Facilities and Services Review Board</a>, and correspond the medical/surgical service category above.
 			= raw(render_hosp_source_link( 'admissions data by age', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_admissionsbyage.csv'))
 			<br>
 			- chart_id = "chart_admissions_age"
@@ -119,7 +121,7 @@
 .row-fluid
 	.span12
 		%h3 Hospital Finances
-		%p Inpatient and outpatient revenue data over the reporting period from #{revenue_inpatient[:start_date].strftime("%m/%d/%y")} to #{revenue_inpatient[:end_date].strftime("%m/%d/%y")}.
+		%p Inpatient and outpatient revenue data over the reporting period from #{revenue_inpatient[:start_date].strftime("%m/%d/%y")} to #{revenue_inpatient[:end_date].strftime("%m/%d/%y")}. These categories are used by the <a href="http://www.hfsrb.illinois.gov/">Illinois Health Facilities and Services Review Board</a> to conform to data collection requirements of the <a href="http://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=407&ChapterID=5">Illinois Health Facilities Planning Act</a>.
 		= raw(render_hosp_source_link( 'hospital inpatient revenue data', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_revenueinpatient.csv'))
 		= raw(render_hosp_source_link( 'hospital outpatient revenue data', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_revenueoutpatient.csv'))
 		= raw(render_hosp_source_link( 'hospital charity care data', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_cost_charity_care.csv'))
