@@ -329,7 +329,7 @@ module ApplicationHelper
     source_string << "<a href='#{source_url}' class='nowrap'>
         <i class='icon icon-download-alt'></i>
         Data
-      </a>
+      </a> | <a href='/about#about-the-data'><i class='fa fa-info-circle'></i></a>
     </small>"
 
     return source_string
