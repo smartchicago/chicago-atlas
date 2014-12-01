@@ -268,27 +268,26 @@
     %br
     #map_sidebar_header
       - if @landing
-        %div.well.well-sm
-          - title 'Browse by neighborhood'
-          %h4
-            Select a dataset to visualize it on the map.<br>
-          %small
-            Examples: <a href='/map/births_birth_rate'>birth rate</a>, <a href='/map/crime_aggravated_assault'>aggravated battery</a>, or <a href='/map/infectious_disease_tuberculosis'>tuberculosis</a>.
+        - title 'Browse by neighborhood'
+        %h4
+          Select a dataset to visualize it on the map.<br>
+        %small
+          Examples: <a href='/map/births_birth_rate'>birth rate</a>, <a href='/map/crime_aggravated_assault'>aggravated battery</a>, or <a href='/map/infectious_disease_tuberculosis'>tuberculosis</a>.
         
       - else
-        %div.well.well-sm
-          - title 'Browse ' + @current_dataset_name
-          %h4
-            #{@current_dataset_name}
-            %small#year_label
+        - title 'Browse ' + @current_dataset_name
+        %h4
+          #{@current_dataset_name}
+          %small#year_label
+        .span10{ :style => "margin-left: 0"}
           %div{ :id => "slider" }
           %strong.pull-left#start_year
           %strong.pull-right#end_year
-          %br
-          %p 
-            %small #{@current_dataset_description}
-            - if @current_dataset_url != ''
-              = raw(render_source_links(@current_dataset_provider, @current_dataset_url, @current_dataset_slug+".json", true))
+        .clearfix
+        %p 
+          %small #{@current_dataset_description}
+          - if @current_dataset_url != ''
+            = raw(render_source_links(@current_dataset_provider, @current_dataset_url, @current_dataset_slug+".json", true))
         
     %br
     #map

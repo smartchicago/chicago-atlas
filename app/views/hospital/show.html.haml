@@ -12,7 +12,7 @@
 		- if @hospital.report_name && @hospital.report_url
 			%p <i class="fa fa-clipboard"></i>&nbsp <a href="#{@hospital.report_url}" target="blank">#{@hospital.report_name}</a>
 		<hr>
-		%p The data for the following charts and analyses came from the <a href="http://www.hfsrb.illinois.gov/HospProf_ABR.htm">Illinois Health Facilities and Services Review Board </a>. An excel file of all data for all hospitals can be found <a href= "https://github.com/datamade/chicago-atlas/raw/e6169124587041c36d034ec2dc75932fe5108437/db/import/hospital_source_data.xlsx">here</a>.
+		%p The data for the following charts and analyses came from the <a href="http://www.hfsrb.illinois.gov/HospProf_ABR.htm">Illinois Health Facilities and Services Review Board </a>. An excel file of all data for all hospitals can be found <a href= "https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_source_data.xlsx">here</a>.
 		- admissions_by_race = fetch_provider_data(@hospital.src_id, "Admissions by Race")
 		- admissions_by_ethnicity = fetch_provider_data(@hospital.src_id, "Admissions by Ethnicity")
 		- admissions_by_type = fetch_sorted_provider_data(@hospital.src_id, "Admissions by Type")
@@ -51,7 +51,7 @@
 	.span12
 		%h4#admissions-by-type Admissions by Service Category
 		%p These categories are used by the <a href="http://www.hfsrb.illinois.gov/">Illinois Health Facilities and Services Review Board</a> to conform to data collection requirements of the <a href="http://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=407&ChapterID=5">Illinois Health Facilities Planning Act</a>
-		= raw(render_hosp_source_link( 'admissions data by type', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_admissionsbytype.csv'))
+		= raw(render_hosp_source_link( 'admissions data by type', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_admissionsbytype.csv'))
 		<br>
 		- chart_id = "chart_admissions_type"
 		.chart{:id => chart_id}
@@ -68,7 +68,7 @@
 .row-fluid
 	.span8
 		%h4 Admissions by Race
-		= raw(render_hosp_source_link( 'admissions data by race', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_admissionsbyrace.csv'))
+		= raw(render_hosp_source_link( 'admissions data by race', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_admissionsbyrace.csv'))
 		<br>
 		- chart_id = "chart_admissions_race"
 		.chart{:id => chart_id}
@@ -84,7 +84,7 @@
 				});
 	.span4
 		%h4 Admissions by Ethnicity
-		= raw(render_hosp_source_link( 'admissions data by ethnicity', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_admissionsbyethnicity.csv'))
+		= raw(render_hosp_source_link( 'admissions data by ethnicity', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_admissionsbyethnicity.csv'))
 		<br>
 		- chart_id = "chart_admissions_ethnicity"
 		.chart{:id => chart_id}
@@ -103,7 +103,7 @@
 		.span12
 			%h4#medsurg-admissions-by-age Medical-Surgical Admissions - by Age
 			%p Medical-Surgical admissions are defined by the <a href="http://www.hfsrb.illinois.gov/">Illinois Health Facilities and Services Review Board</a>, and correspond the medical/surgical service category above.
-			= raw(render_hosp_source_link( 'admissions data by age', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_admissionsbyage.csv'))
+			= raw(render_hosp_source_link( 'admissions data by age', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_admissionsbyage.csv'))
 			<br>
 			- chart_id = "chart_admissions_age"
 			.chart{:id => chart_id}
@@ -122,9 +122,9 @@
 	.span12
 		%h3 Hospital Finances
 		%p Inpatient and outpatient revenue data over the reporting period from #{revenue_inpatient[:start_date].strftime("%m/%d/%y")} to #{revenue_inpatient[:end_date].strftime("%m/%d/%y")}. These categories are used by the <a href="http://www.hfsrb.illinois.gov/">Illinois Health Facilities and Services Review Board</a> to conform to data collection requirements of the <a href="http://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=407&ChapterID=5">Illinois Health Facilities Planning Act</a>.
-		= raw(render_hosp_source_link( 'hospital inpatient revenue data', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_revenueinpatient.csv'))
-		= raw(render_hosp_source_link( 'hospital outpatient revenue data', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_revenueoutpatient.csv'))
-		= raw(render_hosp_source_link( 'hospital charity care data', 'https://github.com/datamade/chicago-atlas/blob/hospital-pages/db/import/hospital_stats_cost_charity_care.csv'))
+		= raw(render_hosp_source_link( 'hospital inpatient revenue data', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_revenueinpatient.csv'))
+		= raw(render_hosp_source_link( 'hospital outpatient revenue data', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_revenueoutpatient.csv'))
+		= raw(render_hosp_source_link( 'hospital charity care data', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_cost_charity_care.csv'))
 .row-fluid
 	.span4
 		%h4#revenue-total Finance Summary
