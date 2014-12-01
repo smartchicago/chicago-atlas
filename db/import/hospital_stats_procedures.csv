@@ -1,0 +1,38 @@
+hospital_id,hospital_name,gastro_intestinal_rooms,gastro_intestinal_inpatient_procedures,gastro_intestinal_outpatient_procedures,laser_eye_rooms,laser_eye_inpatient_procedures,laser_eye_outpatient_procedures,pain_management_rooms,pain_management_inpatient_procedures,pain_management_outpatient_procedures,cytoscopy_rooms,cytoscopy_inpatient_procedures,cytoscopy_outpatient_procedures,csection_rooms
+5165,Advocate Illinois Masonic Medical Center,4,593,3753,2,0,280,1,0,4659,1,99,330,0
+4176,Advocate Trinity Hospital,3,1189,2312,0,0,0,2,0,669,1,91,14,0
+5843,Ann & Robert H. Lurie Children's Hospital of Chicago,2,328,428,0,0,0,0,0,0,0,0,0,0
+5207,Aurora Chicago Lakeshore Hospital,0,0,0,0,0,0,0,0,0,0,0,0,0
+992,Holy Cross Hospital,2,1189,770,1,0,119,1,0,189,1,113,81,0
+1115,Jackson Park Hosp. Foundation,2,231,171,0,0,0,1,0,252,1,20,40,0
+5272,John H. Stroger Hospital of Cook County,3,1892,5678,2,10,1270,2,195,4110,1,0,780,0
+4564,Kindred Chicago Central Hospital,0,0,0,0,0,0,0,0,0,0,0,0,0
+4937,Kindred Hospital  Chicago North,0,0,0,0,0,0,0,0,0,0,0,0,0
+3012,LaRabida Children's Hospital,0,0,0,0,0,0,0,0,0,0,0,0,0
+1289,Loretto Hospital,1,53,94,0,0,0,0,0,0,1,17,80,0
+5249,Louis A. Weiss Memorial Hospital,3,500,1451,1,0,2,0,0,0,0,0,0,0
+1578,Mercy Hospital & Medical Center,4,1159,3432,0,0,0,1,3,679,0,0,0,0
+125,Methodist Hospital of Chicago,0,0,0,0,0,0,0,0,0,0,0,0,0
+1644,Mount Sinai Hospital Medical Center,2,381,1970,0,0,0,1,0,140,0,0,0,0
+3251,Northwestern Memorial Hospital,15,3220,27411,1,0,17,0,0,0,0,0,0,0
+1727,Norwegian American Hospital,2,290,453,0,0,0,0,0,0,0,0,0,0
+1719,Presence Our Lady of the Resurrection Medical Center,2,786,1642,0,0,0,1,0,734,1,180,252,0
+1974,Presence Resurrection Medical Center,5,1272,3515,0,0,0,4,72,6817,0,0,0,0
+5181,Presence Saint Joseph Hospital Chicago,4,726,3579,1,1,108,1,134,328,0,0,0,0
+2584,Presence Saint Mary Of Nazareth Hospital,3,1379,5361,0,0,0,0,0,0,3,1379,5361,0
+5314,Presence St. Elizabeth's Hospital,0,0,0,0,0,0,0,0,0,0,0,0,0
+4549,Provident Hospital of Cook County,0,0,0,0,0,0,0,0,0,0,0,0,0
+1958,Rehabilitation Institute of Chicago,0,0,0,0,0,0,0,0,0,0,0,0,0
+5678,RML Specialty Hospital Chicago,0,0,0,0,0,0,0,0,0,0,0,0,0
+2063,Roseland Community Hospital,0,0,0,0,0,0,0,0,0,0,0,0,0
+1917,Rush University Medical Center,7,1138,5211,3,0,857,0,0,0,0,0,0,0
+2147,Schwab Rehabilitation Center,0,0,0,0,0,0,0,0,0,0,0,0,0
+3152,Shriners Hospitals for Children - Chicago,0,0,0,0,0,0,0,0,0,0,0,0,0
+3459,"South Shore Hospital, Corp.",0,0,0,0,0,0,0,0,0,0,0,0,0
+5637,St. Anthony Hospital,1,421,1044,0,0,0,0,0,0,0,0,0,0
+2303,St. Bernard Hospital,0,0,0,0,0,0,0,0,0,0,0,0,0
+2717,Swedish Covenant Hospital,3,1380,3953,1,0,222,0,0,0,1,178,287,0
+5371,Thorek Memorial Hospital,2,197,713,0,0,0,5,2,276,1,37,25,0
+5454,UHS Hartgrove Hospital,0,0,0,0,0,0,0,0,0,0,0,0,0
+3897,University Of Chicago Medical Center,8,2510,10040,1,0,430,1,70,2556,0,0,0,0
+5280,University of Illinois Medical Center @ Chicago,6,1103,3532,1,2,678,1,0,1081,0,0,0,0

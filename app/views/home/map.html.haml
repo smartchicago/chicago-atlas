@@ -8,14 +8,27 @@
   :javascript
     $(window).resize(function () {
       var h = $(window).height(),
-        offsetTop = 160; // Calculate the top offset
+        offsetTop = 100; // Calculate the top offset
 
       $('#map').css('height', (h - offsetTop));
 
-      $('#map_sidebar').css('height', (h - offsetTop - $('#map_sidebar_header').height() - 40 ));
     }).resize();
 
-    var map = L.map('map').setView([41.8781136, -87.66677856445312], 11);
+    // hiding and modifying elements to give the map more room
+    $('#container-primary').attr("class", "container-fluid");
+    $('.footer').hide();
+
+
+    $('.accordion-group').on('show.bs.collapse', function () {
+      $(this).find('.plus-minus').attr('class', 'fa fa-minus-circle plus-minus')
+    })
+
+    $('.accordion-group').on('hide.bs.collapse', function () {
+      $(this).find('.plus-minus').attr('class', 'fa fa-plus-circle plus-minus')
+    })
+
+    // initialize the map
+    var map = L.map('map', {scrollWheelZoom:false}).setView([41.86, -87.70], 11);
 
     var mapbox = L.tileLayer('https://{s}.tiles.mapbox.com/v3/smartchicagocollaborative.heooddo8/{z}/{x}/{y}.png', {
         attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
@@ -56,6 +69,7 @@
 
   - if @landing
     :javascript
+        // plain map with no data or colors
         geojson = L.geoJson(geojsonFeature, {
             style: style,
             onEachFeature: onEachFeature
@@ -92,6 +106,7 @@
 
   - else
     :javascript
+        // map with data
         var jenks_cutoffs = jenks(#{@current_statistics}, 4);
         jenks_cutoffs[0] = 0; // ensure the bottom value is 0
         jenks_cutoffs.pop(); // last item is the max value, so dont use it
@@ -217,32 +232,8 @@
         });
 
 .row-fluid
-  .span4
-    #map_sidebar_header
-      - if @landing
-        - title 'Browse by neighborhood'
-        %h3 
-          Browse by neighborhood
-        %p
-          Choose any condition on the left to see data on the map. 
-          Examples: <a href='/map/births_birth_rate'>birth rate</a>, <a href='/map/crime_aggravated_assault'>aggravated battery</a>, or <a href='/map/infectious_disease_tuberculosis'>tuberculosis</a>.
-        
-      - else
-        - title 'Browse ' + @current_dataset_name
-        %h3
-          #{@current_dataset_name}
-          %small#year_label
-        %p 
-          #{@current_dataset_description}
-          %br
-          - if @current_dataset_url != ''
-            = raw(render_source_links(@current_dataset_provider, @current_dataset_url, @current_dataset_slug+".json", nil))
-      
-        %div{ :id => "slider" }
-        %strong.pull-left#start_year
-        %strong.pull-right#end_year
-
-      %hr
+  .span5
+    %h2 Chicago Statistics
 
     #map_sidebar
 
@@ -262,10 +253,43 @@
         - @uninsured_categories.each do |c|
           = render :partial => "home/map_category", :locals => {:accordion_name => 'insurance_accordion', :category => c, :link_color => GlobalConstants::GREENS.first}
 
+      %h4 Hospital Admissions
+      #hosp_admission_accordion.accordion
+        - @hosp_admissions_categories.each do |c|
+          = render :partial => "home/map_category", :locals => {:accordion_name => 'hosp_admission_accordion', :category => c, :link_color => GlobalConstants::BLUES.first}
+
       %h4 Other
       #stats_accordion.accordion
         = render :partial => "home/map_category", :locals => {:accordion_name => 'stats_accordion', :category => Category.find_by_name("Demographics"), :link_color => GlobalConstants::REDS.first}
         = render :partial => "home/map_category", :locals => {:accordion_name => 'stats_accordion', :category => Category.find_by_name("Healthcare Providers"), :link_color => GlobalConstants::PURPLES.first}
 
-  .span8
+
+  .span7
+    %br
+    #map_sidebar_header
+      - if @landing
+        %div.well.well-sm
+          - title 'Browse by neighborhood'
+          %h4
+            Select a dataset to visualize it on the map.<br>
+          %small
+            Examples: <a href='/map/births_birth_rate'>birth rate</a>, <a href='/map/crime_aggravated_assault'>aggravated battery</a>, or <a href='/map/infectious_disease_tuberculosis'>tuberculosis</a>.
+        
+      - else
+        %div.well.well-sm
+          - title 'Browse ' + @current_dataset_name
+          %h4
+            #{@current_dataset_name}
+            %small#year_label
+          %div{ :id => "slider" }
+          %strong.pull-left#start_year
+          %strong.pull-right#end_year
+          %br
+          %p 
+            %small #{@current_dataset_description}
+            - if @current_dataset_url != ''
+              = raw(render_source_links(@current_dataset_provider, @current_dataset_url, @current_dataset_slug+".json", true))
+        
+    %br
     #map
+  

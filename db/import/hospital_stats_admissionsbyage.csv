@@ -1,0 +1,38 @@
+hospital_id,hospital_name,year,total_medical_surgical_admissions,0_to_14,15_to_44,45_to_64,65_to_74,75_and_up
+5165,Advocate Illinois Masonic Medical Center,2012,9183,68,2392,3219,1568,1936
+4176,Advocate Trinity Hospital,2012,10390,0,1801,3740,1916,2933
+5843,Ann & Robert H. Lurie Children's Hospital of Chicago,2012,0,0,0,0,0,0
+5207,Aurora Chicago Lakeshore Hospital,2012,0,0,0,0,0,0
+992,Holy Cross Hospital,2012,7023,0,1460,2982,1027,1554
+1115,Jackson Park Hosp. Foundation,2012,4229,0,982,2007,512,728
+5272,John H. Stroger Hospital of Cook County,2012,17490,0,5859,9060,1557,1014
+4564,Kindred Chicago Central Hospital,2012,0,0,0,0,0,0
+4937,Kindred Hospital  Chicago North,2012,0,0,0,0,0,0
+3012,LaRabida Children's Hospital,2012,0,0,0,0,0,0
+1289,Loretto Hospital,2012,2632,0,545,1514,281,292
+5249,Louis A. Weiss Memorial Hospital,2012,4831,0,631,1764,943,1493
+1578,Mercy Hospital & Medical Center,2012,9379,0,1462,3275,1953,2689
+125,Methodist Hospital of Chicago,2012,1430,11,129,600,302,388
+1644,Mount Sinai Hospital Medical Center,2012,9558,0,2938,4399,1115,1106
+3251,Northwestern Memorial Hospital,2012,27948,0,6973,10803,5396,4776
+1727,Norwegian American Hospital,2012,3801,1,1008,1891,443,458
+1719,Presence Our Lady of the Resurrection Medical Center,2012,6528,19,1037,2051,1088,2333
+1974,Presence Resurrection Medical Center,2012,8638,0,642,1835,1562,4599
+5181,Presence Saint Joseph Hospital Chicago,2012,6975,0,1705,2259,1013,1998
+2584,Presence Saint Mary Of Nazareth Hospital,2012,8732,0,1857,3173,1727,1975
+5314,Presence St. Elizabeth's Hospital,2012,1884,0,592,1214,75,3
+4549,Provident Hospital of Cook County,2012,1633,0,315,1113,132,73
+1958,Rehabilitation Institute of Chicago,2012,0,0,0,0,0,0
+5678,RML Specialty Hospital Chicago,2012,0,0,0,0,0,0
+2063,Roseland Community Hospital,2012,3689,123,815,1999,353,399
+1917,Rush University Medical Center,2012,18717,3,4705,7943,3393,2673
+2147,Schwab Rehabilitation Center,2012,0,0,0,0,0,0
+3152,Shriners Hospitals for Children - Chicago,2012,215,0,215,0,0,0
+3459,"South Shore Hospital, Corp.",2012,3617,0,549,1729,559,780
+5637,St. Anthony Hospital,2012,2518,0,785,814,418,501
+2303,St. Bernard Hospital,2012,5152,2,1227,2700,554,669
+2717,Swedish Covenant Hospital,2012,9707,0,1606,2594,1782,3725
+5371,Thorek Memorial Hospital,2012,2787,1,471,1254,496,565
+5454,UHS Hartgrove Hospital,2012,0,0,0,0,0,0
+3897,University Of Chicago Medical Center,2012,14618,4,3871,6156,2764,1823
+5280,University of Illinois Medical Center @ Chicago,2012,9288,0,3035,4060,1250,943

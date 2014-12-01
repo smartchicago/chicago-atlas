@@ -1,0 +1,42 @@
+%h1 Hospitals in Chicago
+
+= raw(render_source_links( 'Illinois Health Facilities and Services Review Board', 'http://www.hfsrb.illinois.gov/HospProf_ABR.htm', 'https://github.com/datamade/chicago-atlas/raw/e6169124587041c36d034ec2dc75932fe5108437/db/import/hospital_source_data.xlsx', true))
+
+<br><br>
+
+.row-fluid
+    .span6
+        %h3 General Hospitals
+        = render :partial => "hospital/hospital_listing", :locals => { :hosp_query => "sub_type like 'General Hospital'" }
+        %h3 Children's Hospitals
+        = render :partial => "hospital/hospital_listing", :locals => { :hosp_query => "sub_type like 'Children%'" }
+        %h3 Rehabilitation Hospitals
+        = render :partial => "hospital/hospital_listing", :locals => { :hosp_query => "sub_type like 'Rehabilitation%'" }
+        %h3 Psychiatric Hospitals
+        = render :partial => "hospital/hospital_listing", :locals => { :hosp_query => "sub_type like 'Psychiatric%'" }
+        %h3 Uncategorized
+        = render :partial => "hospital/hospital_listing", :locals => { :hosp_query => "sub_type is NULL" }
+    .span6
+        .well
+            - locationlist = []
+            - contentlist = []
+            - @hospitals.each do |hospital|
+                - locationlist << hospital.lat_long.split(",").map{|x| x.to_f}
+                - contentlist << "<b><a href='/hospitals/"+hospital.slug+"'>"+hospital.name+"</a></b>"
+            - chicago = Geography.where("id = 100").first()
+            - content_for :javascripts do
+                = javascript_include_tag "leaflet"
+                = javascript_include_tag "leaflet_lib"
+                :javascript
+                    var geojsonFeature = {
+                        'type': 'Feature',
+                        'geometry': #{chicago.geometry}
+                    };
+                    var pins = [];
+                    for (var i in #{locationlist}){
+                        marker = L.marker(#{locationlist}[i])
+                        marker.bindPopup(#{contentlist}[i])
+                        pins.push(marker)
+                    }
+                    LeafletLib.initialize("map_large", { markers:pins, geojson: geojsonFeature }, [41.8819, -87.6278], 0);
+            #map_large

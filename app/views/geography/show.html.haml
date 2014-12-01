@@ -16,6 +16,8 @@
 
     = render :partial => "geography/providers", :locals => {:geography => @geography}
 
+    = render :partial => "geography/hospital_admissions", :locals => {:geography => @geography}
+
     - @categories.each do |category|
       = render :partial => "geography/category", :locals => {:category => category, :geography => @geography }
 
@@ -35,7 +37,7 @@
               "geometry": #{@geography.geometry}
           };
 
-          LeafletLib.initialize("map_detail", { geojson: geojsonFeature }, #{@geography.centroid_as_lat_lng}, 13);
+          LeafletLib.initialize("map_detail", { geojson: geojsonFeature }, #{@geography.centroid_as_lat_lng}, 0.2);
 
 
       #map_detail

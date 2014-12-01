@@ -1,0 +1,76 @@
+- @inpatient = Category.where("name = 'Hospital Admissions Inpatient'").first
+- @outpatient = Category.where("name = 'Hospital Admissions Outpatient'").first
+- @in_datasets = get_datasets(geography.id, @inpatient.id).all
+- @out_datasets = get_datasets(geography.id, @outpatient.id).all
+
+- if @in_datasets.size > 0 and @out_datasets.size > 0
+  .row-fluid
+    .span12
+      %h2#hospital-admissions Hospital Admissions
+
+      %p
+        Inpatient and outpatient admission rates (admissions per 1,000 residents) by various admission types in 2012.
+      %p
+        Admissions rates are compared against overall admission rates in Chicago (red indicates higher rates than Chicago & green indicates lower rates than Chicago).
+      %p
+        [explanation of inpatient vs outpatient]
+      %h3 All Admission Rates - By Admission Type
+      %table.table
+        %thead
+          %tr
+            %th Admission Type
+            %th
+            %th{:width=>"35%"} #{@geography.name}
+            %th{:width=>"35%"} Chicago
+        %tbody
+          -@in_datasets.each do |in_dataset|
+            - out_dataset = nil
+            -@out_datasets.each do |dataset|
+              - if in_dataset.name == dataset.name
+                - out_dataset = dataset
+            - in_admission_stat = fetch_chart_data(in_dataset.id, @geography.id)[:data].first
+            - in_chi_admission_stat = fetch_chart_data(in_dataset.id, 100)[:data].first
+            - out_admission_stat = fetch_chart_data(out_dataset.id, @geography.id)[:data].first
+            - out_chi_admission_stat = fetch_chart_data(out_dataset.id, 100)[:data].first
+
+            %tr.admission-info{ :rel => "popover", :title => in_dataset.name, :"data-content" => "Inpatient #{in_dataset.name} Admissions per 1,000 residents.", :"data-trigger" => 'hover', :"data-html" => 'true', :"data-placement" => 'right' }
+              %td.admission-category
+                %p
+                  #{in_dataset.name}
+              %td Inpatient
+              %td
+                - if in_admission_stat >= in_chi_admission_stat
+                  %span.badge.badge-important
+                    #{in_admission_stat} 
+                  per 1,000 residents
+                - else
+                  %span.badge.badge-success
+                    #{in_admission_stat} 
+                  per 1,000 residents
+              %td
+                %span.badge.badge-info 
+                  #{in_chi_admission_stat} 
+                per 1,000 residents
+            %tr.admission-info{ :rel => "popover", :title => out_dataset.name, :"data-content" => "Outpatient #{out_dataset.name} Admissions per 1,000 residents.", :"data-trigger" => 'hover', :"data-html" => 'true', :"data-placement" => 'right' }
+              %td{:style => "border: none;"}
+              %td Outpatient
+              %td
+                - if out_admission_stat >= out_chi_admission_stat
+                  %span.badge.badge-important
+                    #{out_admission_stat} 
+                  per 1,000 residents
+                - else
+                  %span.badge.badge-success
+                    #{out_admission_stat} 
+                  per 1,000 residents
+              %td
+                %span.badge.badge-info
+                  #{out_chi_admission_stat} 
+                per 1,000 residents
+              
+      - content_for :javascripts do
+
+        :javascript
+          $('.admission-info').popover();
+          
+  = render :partial => "geography/outpatient_injury_admissions", :locals => {:geography => @geography}

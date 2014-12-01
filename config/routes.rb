@@ -12,6 +12,8 @@ ChicagoAtlas::Application.routes.draw do
   match 'place/providers/:geo_slug' => 'geography#show_provider_dataset'
   match 'place/:geo_slug/resources(/:dataset_slug)' => 'geography#show_resources'
   match 'place/:geo_slug/:dataset_slug' => 'geography#show_dataset'
+  get "hospitals" => 'hospital#index'
+  match 'hospitals/:slug' => 'hospital#show'
 
   # static
   match 'map(/:dataset_slug)' => 'home#map'

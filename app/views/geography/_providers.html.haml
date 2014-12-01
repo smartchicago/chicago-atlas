@@ -12,7 +12,7 @@
 
   %p 
     Number of healthcare providers by profession per 1,000 residents.
-    = raw(render_source_links( 'Health Resources and Services Administration, processed by Rob Paral and Associates', 'http://datawarehouse.hrsa.gov/data/datadownload/pcsa2010Download.aspx', '/place/providers/'+@geography.slug+'.json', 1))
+    = raw(render_source_links( 'Health Resources and Services Administration, processed by Rob Paral and Associates', 'http://datawarehouse.hrsa.gov/data/datadownload/pcsa2010Download.aspx', '/place/providers/'+@geography.slug+'.json', true))
 
   - chart_id = 'chart_providers'
   - providers_area = fetch_custom_chart_data(geography.id, nil, nil, chart_headers)

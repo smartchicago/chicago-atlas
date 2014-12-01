@@ -34,13 +34,19 @@ module ApplicationHelper
               .order("categories.name")
   end
 
-  def get_categories_like(str)
-    Category.select('categories.id, categories.name, categories.description')
-              .where("datasets.name LIKE '%#{str}%' ")
-              .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
+  def get_categories_like(dataset_name, category_name)
+    query = Category.select('categories.id, categories.name, categories.description')
+    if dataset_name
+      query = query.where("datasets.name LIKE '%#{dataset_name}%' ")
+    elsif category_name
+      query = query.where("categories.name LIKE '%#{category_name}%' ")
+    end
+    
+    query = query.joins('INNER JOIN datasets ON datasets.category_id = categories.id')
               .group('categories.id, categories.name, categories.description')
               .having('count(datasets.id) > 0')
               .order("categories.name")
+
   end
 
   def geography_geojson(dataset_id)
@@ -115,10 +121,10 @@ module ApplicationHelper
   def geography_resources_geojson()
 
     area_stats = Geography
-      .select("geographies.id, geographies.name, geographies.slug, geographies.geometry, count(geographies.id) as resource_cnt")
-      .joins("JOIN intervention_locations on intervention_locations.community_area_id = geographies.id")
+      .select("geographies.id, geographies.name, geographies.slug, geographies.geometry, count(intervention_locations.community_area_id) as resource_cnt")
+      .joins("LEFT JOIN intervention_locations on intervention_locations.community_area_id = geographies.id")
       .group("geographies.id")
-      .where("geo_type = 'Community Area' AND intervention_locations.categories != '[]'")
+      .where("geo_type = 'Community Area' ")
 
     geojson = []    
     area_stats.all.each do |c|
@@ -258,6 +264,22 @@ module ApplicationHelper
     stats_array
   end
 
+  def fetch_dataset_chart_headers(cat_id=nil)
+    datasets = Dataset.where("category_id = '#{cat_id}'")                 
+
+    if datasets.length == 0
+      return []
+    end
+
+    datasets = datasets.order("id")
+    dataset_name_array = []
+    datasets.each do |d|
+      dataset_name_array << (d[:name])
+    end
+
+    dataset_name_array
+  end
+
   def to_dom_id(s)
     #strip the string
     ret = s.strip.downcase
@@ -291,25 +313,74 @@ module ApplicationHelper
     end
   end
 
-  def render_source_links(provider_name, provider_url, source_url, is_oneline=false)
+  def render_source_links(provider_name, provider_url, source_url, is_oneline=true)
     source_string = "<small class='muted'>
       <br>
       Source: 
       <a href='#{provider_url}'>
         #{provider_name}
       </a>"
-    if is_oneline == nil
-      source_string << "<br>"
-    else
+    if is_oneline
       source_string << "|"
+      
+    else
+      source_string << "<br>"
     end
     source_string << "<a href='#{source_url}' class='nowrap'>
         <i class='icon icon-download-alt'></i>
-        Download data
+        Data
       </a>
     </small>"
 
     return source_string
+  end
+
+  def render_hosp_source_link(source_data_text, source_data_url)
+    source_string = "<small class='muted'>
+      <a href='#{source_data_url}'><i class='icon icon-download-alt'></i> Download #{source_data_text} (csv)</a>
+      </small><br>"
+    return source_string
+  end
+
+
+  def fetch_provider_data(provider_id, category)
+    stats = ProviderStats.where("provider_id = #{provider_id} AND stat_type = '#{category}'")
+
+    if stats.length == 0
+      return {:data => [], :start_date => '', :end_date => ''}
+    end
+
+    stat_array = []
+    value_array = []
+    stats.each do |s|
+      stat_array << ((s[:stat].nil? or s[:stat] == '') ? 0 : s[:stat])
+      value_array << ((s[:value].nil? or s[:value] == '') ? 0 : s[:value])
+    end
+
+    start_date = stats[0][:date_start]
+    end_date = stats[0][:date_end]
+
+    {:stats => stat_array, :values => value_array, :start_date => start_date, :end_date => end_date }
+  end
+
+  def fetch_sorted_provider_data(provider_id, category)
+    stats = ProviderStats.where("provider_id = #{provider_id} AND stat_type = '#{category}'").order("value desc")
+
+    if stats.length == 0
+      return {:data => [], :start_date => '', :end_date => ''}
+    end
+
+    stat_array = []
+    value_array = []
+    stats.each do |s|
+      stat_array << ((s[:stat].nil? or s[:stat] == '') ? 0 : s[:stat])
+      value_array << ((s[:value].nil? or s[:value] == '') ? 0 : s[:value])
+    end
+
+    start_date = stats[0][:date_start]
+    end_date = stats[0][:date_end]
+
+    {:stats => stat_array, :values => value_array, :start_date => start_date, :end_date => end_date }
   end
 
 end

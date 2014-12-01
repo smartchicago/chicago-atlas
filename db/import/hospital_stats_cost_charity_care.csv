@@ -1,0 +1,38 @@
+hospital_id,hospital_name,report_start_date,report_end_date,actual_cost_inpatient_charity_care,actual_cost_outpatient_charity_care
+5165,Advocate Illinois Masonic Medical Center,1-Jan-12,31-Dec-12,"$9,528,000.00 ","$4,281,000.00 "
+4176,Advocate Trinity Hospital,1-Jan-12,31-Dec-12,"$5,319,000.00 ","$2,992,000.00 "
+5843,Ann & Robert H. Lurie Children's Hospital of Chicago,1-Sep-11,31-Aug-12,"$381,778.00 ","$645,143.00 "
+5207,Aurora Chicago Lakeshore Hospital,1-Jan-12,31-Dec-12,"$870,540.04 ",$0.00 
+992,Holy Cross Hospital,1-Jul-11,30-Jun-12,"$3,292,961.00 ","$3,664,948.00 "
+1115,Jackson Park Hosp. Foundation,1-Apr-11,31-Mar-12,"$5,316,744.00 ","$2,705,630.00 "
+5272,John H. Stroger Hospital of Cook County,1-Dec-10,30-Nov-11,"$45,932,902.00 ","$180,173,091.00 "
+4564,Kindred Chicago Central Hospital,1-Jan-12,31-Dec-12,$0.00 ,$0.00 
+4937,Kindred Hospital  Chicago North,1-Jan-12,31-Dec-12,"$30,000.00 ",$0.00 
+3012,LaRabida Children's Hospital,1-Jul-11,30-Jun-12,"$3,615.00 ","$9,371.00 "
+1289,Loretto Hospital,1-Jul-11,30-Jun-12,"$3,149,895.00 ","$1,482,304.00 "
+5249,Louis A. Weiss Memorial Hospital,1-Jul-11,30-Jun-12,"$1,134,415.00 ","$315,965.00 "
+1578,Mercy Hospital & Medical Center,1-Jul-11,30-Jun-12,"$2,216,414.00 ","$1,400,722.00 "
+125,Methodist Hospital of Chicago,1-Oct-11,30-Sep-12,"$275,526.00 ","$312,868.00 "
+1644,Mount Sinai Hospital Medical Center,1-Jul-11,30-Jun-12,"$14,651,217.00 ","$12,589,705.00 "
+3251,Northwestern Memorial Hospital,1-Sep-11,31-Aug-12,"$23,520,532.00 ","$25,128,468.00 "
+1727,Norwegian American Hospital,1-Oct-11,30-Sep-12,"$1,691,481.00 ","$3,073,917.00 "
+1719,Presence Our Lady of the Resurrection Medical Center,1-Jan-12,31-Dec-12,"$4,165,843.38 ","$1,826,577.62 "
+1974,Presence Resurrection Medical Center,1-Jan-12,31-Dec-12,"$2,753,812.72 ","$1,118,747.28 "
+5181,Presence Saint Joseph Hospital Chicago,1-Jan-12,31-Dec-12,"$1,186,248.74 ","$823,379.26 "
+2584,Presence Saint Mary Of Nazareth Hospital,1-Jan-12,31-Dec-12,"$4,423,706.09 ","$2,964,994.61 "
+5314,Presence St. Elizabeth's Hospital,1-Jan-12,31-Dec-12,$0.00 ,$0.00 
+4549,Provident Hospital of Cook County,1-Dec-11,30-Nov-12,"$4,645,781.00 ","$15,821,179.00 "
+1958,Rehabilitation Institute of Chicago,1-Sep-11,31-Aug-12,"$319,228.00 ","$592,433.00 "
+5678,RML Specialty Hospital Chicago,1-Jun-11,31-May-12,$0.00 ,"$17,381.00 "
+2063,Roseland Community Hospital,1-Apr-11,31-Mar-12,"$1,037,426.00 ","$534,432.00 "
+1917,Rush University Medical Center,1-Jul-11,30-Jun-12,"$15,038,064.00 ","$9,370,415.00 "
+2147,Schwab Rehabilitation Center,1-Jul-11,30-Jun-12,"$673,356.00 ","$434,037.00 "
+3152,Shriners Hospitals for Children - Chicago,1-Jan-12,31-Dec-12,"$630,464.00 ","$133,258.00 "
+3459,"South Shore Hospital, Corp.",1-Jan-12,31-Dec-12,"$1,808,183.00 ","$1,239,213.00 "
+5637,St. Anthony Hospital,1-Jul-11,30-Jun-12,"$1,952,712.00 ","$5,577,288.00 "
+2303,St. Bernard Hospital,1-Jan-12,31-Dec-12,"$2,176,173.00 ","$4,123,605.00 "
+2717,Swedish Covenant Hospital,1-Oct-11,30-Sep-12,"$3,690,551.00 ","$2,433,449.00 "
+5371,Thorek Memorial Hospital,1-Jul-12,30-Jun-13,"$604,897.00 ","$651,276.00 "
+5454,UHS Hartgrove Hospital,1-Jan-12,31-Dec-12,"$136,897.00 ",$0.00 
+3897,University Of Chicago Medical Center,1-Jul-11,30-Jun-12,"$7,524,000.00 ","$9,096,000.00 "
+5280,University of Illinois Medical Center @ Chicago,1-Jul-11,30-Jun-12,"$6,675,593.00 ","$7,361,557.00 "

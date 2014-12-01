@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140421220144) do
+ActiveRecord::Schema.define(:version => 20141104231636) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -75,6 +75,43 @@ ActiveRecord::Schema.define(:version => 20140421220144) do
     t.string   "purple_binder_url", :default => ""
     t.string   "program_url",       :default => ""
     t.integer  "community_area_id"
+  end
+
+  create_table "provider_stats", :force => true do |t|
+    t.integer  "provider_id"
+    t.string   "stat_type"
+    t.string   "stat"
+    t.float    "value"
+    t.datetime "date_start"
+    t.datetime "date_end"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "data_type"
+  end
+
+  add_index "provider_stats", ["provider_id"], :name => "index_provider_stats_on_provider_id"
+  add_index "provider_stats", ["stat_type"], :name => "index_provider_stats_on_stat_type"
+
+  create_table "providers", :force => true do |t|
+    t.integer  "src_id"
+    t.string   "name"
+    t.string   "slug"
+    t.string   "primary_type"
+    t.string   "sub_type"
+    t.string   "addr_street"
+    t.string   "addr_city"
+    t.string   "addr_zip"
+    t.string   "ownership_type"
+    t.string   "contact_email"
+    t.string   "contact_phone"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.string   "lat_long"
+    t.text     "description"
+    t.string   "phone"
+    t.string   "url"
+    t.string   "report_url"
+    t.string   "report_name"
   end
 
   create_table "statistics", :force => true do |t|

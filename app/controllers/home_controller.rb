@@ -38,13 +38,13 @@ class HomeController < ApplicationController
       @current_dataset_slug = 'affordable_resources'
 
       statistics = Geography
-                      .select("count(geographies.id) as resource_cnt")
-                      .joins("JOIN intervention_locations on intervention_locations.community_area_id = geographies.id")
+                      .select("count(intervention_locations.community_area_id) as resource_cnt")
+                      .joins("LEFT JOIN intervention_locations on intervention_locations.community_area_id = geographies.id")
                       .group("geographies.id")
-                      .where("geo_type = 'Community Area' AND intervention_locations.categories != '[]'").all
+                      .where("geo_type = 'Community Area'").all
       
       statistics.each do |s|
-        unless s.resource_cnt.nil? or s.resource_cnt == 0
+        unless s.resource_cnt.nil?
           @current_statistics << s.resource_cnt.to_i
         end
       end
@@ -85,7 +85,8 @@ class HomeController < ApplicationController
     
     @condition_categories = Rails.cache.fetch("condition_categories") { get_categories_by_type('condition') }
     @demographic_categories = Rails.cache.fetch("demographic_categories") { get_categories_by_type('demographic') }
-    @uninsured_categories = Rails.cache.fetch("uninsured_categories") { get_categories_like('Uninsured') }
+    @uninsured_categories = Rails.cache.fetch("uninsured_categories") { get_categories_like('Uninsured', nil) }
+    @hosp_admissions_categories = Rails.cache.fetch("hosp_admission_categories") {get_categories_like(nil,'Hospital Admissions')}
 
     respond_to do |format|
       format.html # render our template

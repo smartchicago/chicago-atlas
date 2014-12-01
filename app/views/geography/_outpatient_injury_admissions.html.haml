@@ -1,0 +1,40 @@
+- @injuries = Category.where("name = 'Injuries Among Outpatient Admissions'").first
+- @datasets = get_datasets(geography.id, @injuries.id).all
+
+- if @datasets.size > 0
+  .row-fluid
+    .span12
+      %h3#outpatient-injury Injuries Among Outpatient Admissions
+
+      %p
+        Outpatient injury admission rates (admissions per 1,000 residents) by injury type. These outpatient injury admissions are a subset of the admissions in the Injury & Poisoning category above.
+      %p
+        Admissions rates are compared against overall admission rates in Chicago.
+
+      - injury_area = fetch_custom_chart_data(geography.id, @injuries.id, nil, [])
+      - injury_chi = fetch_custom_chart_data(100, @injuries.id, nil, [])
+      - chart_headers = fetch_dataset_chart_headers(@injuries.id)
+      - chart_id = "outpatient-injury-chart"
+      .chart{:id => chart_id}
+
+      - content_for :javascripts do
+        
+        :javascript
+          $(function () {
+
+            var seriesData = [{
+              data: #{injury_area},
+              name: "#{geography.name}",
+              color: "#66A61E"
+            },
+            {
+              data: #{injury_chi},
+              name: "Chicago",
+              color: "#666"
+            }
+            ];
+
+            ChartHelper.create("#{chart_id}", "bar", seriesData, Date.UTC(2012, 1, 1), "Admissions per 1,000 residents", "", "rate", #{chart_headers});
+          });
+
+      %br

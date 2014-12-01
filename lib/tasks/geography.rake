@@ -47,6 +47,20 @@ namespace :db do
         puts 'Done!'
       end
 
+      desc "Add Chicago geojson from local file"
+      task :chicago_geo => :environment do
+        require 'open-uri'
+        require 'json'
+
+        geojson = JSON.parse(open("db/import/chicago.geojson").read)
+
+        chicago = Geography.where(id: 100).first()
+        chicago.update_attribute :geometry, ActiveSupport::JSON.encode(geojson)
+        chicago.save!
+
+        puts 'Done!'
+      end
+
       desc "Import zip code geographies from local file"
       task :zip_codes => :environment do
         require 'json'
