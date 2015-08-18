@@ -52,15 +52,17 @@ class HomeController < ApplicationController
     else
       @current_dataset = Rails.cache.fetch("#{params[:dataset_slug]}_current_dataset") { Dataset.where("slug = '#{params[:dataset_slug]}'").first }
       
-      puts @current_dataset.name
+      puts "1"
       @current_dataset_name = @current_dataset.name
       @current_dataset_description = @current_dataset.description
+      puts "2"
       @current_dataset_slug = @current_dataset.slug
       @current_dataset_url = @current_dataset.url
+      puts "3"
       @current_dataset_provider = @current_dataset.provider
       @current_dataset_start_year = @current_dataset.start_year
       @current_dataset_end_year = @current_dataset.end_year
-
+      puts "4"
       puts @current_dataset_slug
       @current_category = Rails.cache.fetch("#{params[:dataset_slug]}_current_category") { Category.find(@current_dataset.category_id) }
 
