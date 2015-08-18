@@ -51,6 +51,7 @@ class HomeController < ApplicationController
 
     else
       @current_dataset = Rails.cache.fetch("#{params[:dataset_slug]}_current_dataset") { Dataset.where("slug = '#{params[:dataset_slug]}'").first }
+      
       puts @current_dataset.name
       @current_dataset_name = @current_dataset.name
       @current_dataset_description = @current_dataset.description
@@ -60,6 +61,7 @@ class HomeController < ApplicationController
       @current_dataset_start_year = @current_dataset.start_year
       @current_dataset_end_year = @current_dataset.end_year
 
+      puts @current_dataset_slug
       @current_category = Rails.cache.fetch("#{params[:dataset_slug]}_current_category") { Category.find(@current_dataset.category_id) }
 
       if (@current_category.name == 'Demographics')
@@ -69,6 +71,8 @@ class HomeController < ApplicationController
       elsif (@current_category.name == 'Healthcare Providers')
         @map_colors = GlobalConstants::PURPLES
       end
+
+      puts @map_colors
 
       statistics = Rails.cache.fetch("#{params[:dataset_slug]}_statistics") { 
                     Statistic.select('value')
@@ -80,8 +84,12 @@ class HomeController < ApplicationController
           @current_statistics << s.value
         end
       end
+
+      puts @current_statistics.length
       
       @display_geojson = Rails.cache.fetch("#{params[:dataset_slug]}_display_geojson") { geography_geojson(@current_dataset.id) }
+      puts params[:dataset_slug]
+    
     end
     
     @condition_categories = Rails.cache.fetch("condition_categories") { get_categories_by_type('condition') }
