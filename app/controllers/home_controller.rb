@@ -60,9 +60,11 @@ class HomeController < ApplicationController
       @current_dataset_url = @current_dataset.url
       puts "3"
       @current_dataset_provider = @current_dataset.provider
-      @current_dataset_start_year = @current_dataset.start_year
-      @current_dataset_end_year = @current_dataset.end_year
       puts "4"
+      @current_dataset_start_year = @current_dataset.start_year
+      puts "5"
+      @current_dataset_end_year = @current_dataset.end_year
+      puts "6"
       puts @current_dataset_slug
       @current_category = Rails.cache.fetch("#{params[:dataset_slug]}_current_category") { Category.find(@current_dataset.category_id) }
 
