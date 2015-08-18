@@ -51,6 +51,7 @@ class HomeController < ApplicationController
 
     else
       @current_dataset = Rails.cache.fetch("#{params[:dataset_slug]}_current_dataset") { Dataset.where("slug = '#{params[:dataset_slug]}'").first }
+      puts @current_dataset.name
       @current_dataset_name = @current_dataset.name
       @current_dataset_description = @current_dataset.description
       @current_dataset_slug = @current_dataset.slug
