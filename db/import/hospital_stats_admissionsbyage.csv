@@ -1,4 +1,5 @@
 hospital_id,hospital_name,year,total_medical_surgical_admissions,0_to_14,15_to_44,45_to_64,65_to_74,75_and_up
+0315,Advocate Christ Medical Center,2012,24047,0,3359,8087,5020,7581
 5165,Advocate Illinois Masonic Medical Center,2012,9183,68,2392,3219,1568,1936
 4176,Advocate Trinity Hospital,2012,10390,0,1801,3740,1916,2933
 5843,Ann & Robert H. Lurie Children's Hospital of Chicago,2012,0,0,0,0,0,0
@@ -9,6 +10,7 @@ hospital_id,hospital_name,year,total_medical_surgical_admissions,0_to_14,15_to_4
 4564,Kindred Chicago Central Hospital,2012,0,0,0,0,0,0
 4937,Kindred Hospital  Chicago North,2012,0,0,0,0,0,0
 3012,LaRabida Children's Hospital,2012,0,0,0,0,0,0
+1271,Little Company of Mary Hospital and Health Care Centers,2012,8736,0,1018,2805,1607,3306
 1289,Loretto Hospital,2012,2632,0,545,1514,281,292
 5249,Louis A. Weiss Memorial Hospital,2012,4831,0,631,1764,943,1493
 1578,Mercy Hospital & Medical Center,2012,9379,0,1462,3275,1953,2689
@@ -18,6 +20,7 @@ hospital_id,hospital_name,year,total_medical_surgical_admissions,0_to_14,15_to_4
 1727,Norwegian American Hospital,2012,3801,1,1008,1891,443,458
 1719,Presence Our Lady of the Resurrection Medical Center,2012,6528,19,1037,2051,1088,2333
 1974,Presence Resurrection Medical Center,2012,8638,0,642,1835,1562,4599
+2402,Presence Saint Francis Hospital,2012,5648,0,881,1751,1038,1978
 5181,Presence Saint Joseph Hospital Chicago,2012,6975,0,1705,2259,1013,1998
 2584,Presence Saint Mary Of Nazareth Hospital,2012,8732,0,1857,3173,1727,1975
 5314,Presence St. Elizabeth's Hospital,2012,1884,0,592,1214,75,3
