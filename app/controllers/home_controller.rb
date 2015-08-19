@@ -24,12 +24,12 @@ class HomeController < ApplicationController
 
     if params[:dataset_slug].nil?
       @landing = true
-      @display_geojson = Rails.cache.fetch('landing_display_geojson') { geography_empty_geojson } 
+      @display_geojson = geography_empty_geojson
     
     elsif params[:dataset_slug] == "affordable_resources"
       @map_colors = GlobalConstants::ORANGES
       @detail_url_fragment = "/resources"
-      @display_geojson = Rails.cache.fetch('affordable_resources_geojson') { geography_resources_geojson }
+      @display_geojson = geography_resources_geojson
       
       @current_dataset_name = 'Affordable resources'
       @current_dataset_description = 'Number of affordable resource locations by Chicago community area.'
@@ -52,20 +52,13 @@ class HomeController < ApplicationController
     else
       @current_dataset = Dataset.where("slug = '#{params[:dataset_slug]}'").first
       
-      puts "1"
       @current_dataset_name = @current_dataset.name
       @current_dataset_description = @current_dataset.description
-      puts "2"
       @current_dataset_slug = @current_dataset.slug
       @current_dataset_url = @current_dataset.url
-      puts "3"
       @current_dataset_provider = @current_dataset.provider
-      puts "4"
       @current_dataset_start_year = @current_dataset.start_year
-      puts "5"
       @current_dataset_end_year = @current_dataset.end_year
-      puts "6"
-      puts @current_dataset_slug
       @current_category = Category.find(@current_dataset.category_id)
 
       if (@current_category.name == 'Demographics')
@@ -76,7 +69,6 @@ class HomeController < ApplicationController
         @map_colors = GlobalConstants::PURPLES
       end
 
-      puts @map_colors
 
       statistics = Statistic.select('value')
                             .joins('INNER JOIN geographies on geographies.id = statistics.geography_id')
@@ -87,18 +79,15 @@ class HomeController < ApplicationController
           @current_statistics << s.value
         end
       end
-
-      puts @current_statistics.length
       
       @display_geojson = geography_geojson(@current_dataset.id)
-      puts params[:dataset_slug]
     
     end
     
-    @condition_categories = Rails.cache.fetch("condition_categories") { get_categories_by_type('condition') }
-    @demographic_categories = Rails.cache.fetch("demographic_categories") { get_categories_by_type('demographic') }
-    @uninsured_categories = Rails.cache.fetch("uninsured_categories") { get_categories_like('Uninsured', nil) }
-    @hosp_admissions_categories = Rails.cache.fetch("hosp_admission_categories") {get_categories_like(nil,'Hospital Admissions')}
+    @condition_categories = get_categories_by_type('condition')
+    @demographic_categories = get_categories_by_type('demographic')
+    @uninsured_categories = get_categories_like('Uninsured', nil)
+    @hosp_admissions_categories = get_categories_like(nil,'Hospital Admissions')
 
     respond_to do |format|
       format.html # render our template
