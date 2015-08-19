@@ -1,4 +1,5 @@
 hospital_id,hospital_name,year,hispanic,non_hispanic,unknown
+0315,Advocate Christ Medical Center,2012,3300,30182,8029
 5165,Advocate Illinois Masonic Medical Center,2012,4926,10091,909
 4176,Advocate Trinity Hospital,2012,1296,10629,107
 5843,Ann & Robert H. Lurie Children's Hospital of Chicago,2012,3666,7378,0
@@ -9,6 +10,7 @@ hospital_id,hospital_name,year,hispanic,non_hispanic,unknown
 4564,Kindred Chicago Central Hospital,2012,163,432,47
 4937,Kindred Hospital  Chicago North,2012,162,2019,58
 3012,LaRabida Children's Hospital,2012,57,650,12
+1271,Little Company of Mary Hospital and Health Care Centers,2012,620,11919,217
 1289,Loretto Hospital,2012,440,4302,2
 5249,Louis A. Weiss Memorial Hospital,2012,613,5588,159
 1578,Mercy Hospital & Medical Center,2012,282,11717,2973
@@ -18,6 +20,7 @@ hospital_id,hospital_name,year,hispanic,non_hispanic,unknown
 1727,Norwegian American Hospital,2012,2916,4484,158
 1719,Presence Our Lady of the Resurrection Medical Center,2012,2316,6694,0
 1974,Presence Resurrection Medical Center,2012,128,11338,1437
+2402,Presence Saint Francis Hospital,2012,160,6922,1082
 5181,Presence Saint Joseph Hospital Chicago,2012,163,9969,1901
 2584,Presence Saint Mary Of Nazareth Hospital,2012,1275,15957,107
 5314,Presence St. Elizabeth's Hospital,2012,146,3103,178
