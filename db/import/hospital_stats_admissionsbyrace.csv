@@ -1,4 +1,5 @@
 hospital_id,hospital_name,year,white,black,american_indian,asian,hawaii_pac_islander,unknown
+0315,Advocate Christ Medical Center,2012,22165,14213,129,326,16,4662
 5165,Advocate Illinois Masonic Medical Center,2012,10759,3355,65,507,21,1219
 4176,Advocate Trinity Hospital,2012,890,10142,75,14,2,909
 5843,Ann & Robert H. Lurie Children's Hospital of Chicago,2012,4466,1988,11,459,10,4110
@@ -9,6 +10,7 @@ hospital_id,hospital_name,year,white,black,american_indian,asian,hawaii_pac_isla
 4564,Kindred Chicago Central Hospital,2012,336,251,0,8,0,47
 4937,Kindred Hospital  Chicago North,2012,418,1564,5,28,0,224
 3012,LaRabida Children's Hospital,2012,20,610,0,1,0,88
+1271,Little Company of Mary Hospital and Health Care Centers,5280,7227,3,26,3,217
 1289,Loretto Hospital,2012,660,4059,0,9,0,16
 5249,Louis A. Weiss Memorial Hospital,2012,3308,1901,12,355,12,772
 1578,Mercy Hospital & Medical Center,2012,1971,9036,9,701,0,3255
@@ -18,6 +20,7 @@ hospital_id,hospital_name,year,white,black,american_indian,asian,hawaii_pac_isla
 1727,Norwegian American Hospital,2012,886,3519,4,53,0,3096
 1719,Presence Our Lady of the Resurrection Medical Center,2012,4688,1017,16,159,9,3121
 1974,Presence Resurrection Medical Center,2012,11005,207,5,244,5,1437
+2402,Presence Saint Francis Hospital,2012,3804,2011,17,423,8,1901
 5181,Presence Saint Joseph Hospital Chicago,2012,7315,2286,16,483,32,1901
 2584,Presence Saint Mary Of Nazareth Hospital,2012,4488,5103,12,202,28,7506
 5314,Presence St. Elizabeth's Hospital,2012,643,1676,0,18,7,1083
