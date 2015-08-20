@@ -1,4 +1,5 @@
 hospital_id,hospital_name,year,medical_surgical,icu_direct,icu_transfer,neonatal_icu,pediatric,obstetrics,gynecology,rehabilitation,acute_mental_illness,long_term_care,long_term_acute_care
+0315,Advocate Christ Medical Center,2012,24047,5494,1364,1046,3640,4238,845,887,1314,0,0
 5165,Advocate Illinois Masonic Medical Center,2012,9183,1586,784,407,285,2732,0,373,1360,0,0
 4176,Advocate Trinity Hospital,2012,10390,441,462,0,0,1201,0,0,0,0,0
 5843,Ann & Robert H. Lurie Children's Hospital of Chicago,2012,0,2326,425,512,7686,0,0,0,520,0,0
@@ -9,6 +10,7 @@ hospital_id,hospital_name,year,medical_surgical,icu_direct,icu_transfer,neonatal
 4564,Kindred Chicago Central Hospital,2012,0,0,0,0,0,0,0,0,0,0,642
 4937,Kindred Hospital  Chicago North,2012,0,0,0,0,0,0,0,0,1219,0,1020
 3012,LaRabida Children's Hospital,2012,0,0,0,0,719,0,0,0,0,0,0
+1271,Little Company of Mary Hospital and Health Care Centers,2012,8736,1513,549,0,256,1192,261,0,798,0,0
 1289,Loretto Hospital,2012,2632,222,67,0,0,0,0,0,1890,0,0
 5249,Louis A. Weiss Memorial Hospital,2012,4831,831,315,0,0,0,0,386,312,0,0
 1578,Mercy Hospital & Medical Center,2012,9379,1174,0,0,266,2679,0,392,1082,0,0
@@ -18,6 +20,7 @@ hospital_id,hospital_name,year,medical_surgical,icu_direct,icu_transfer,neonatal
 1727,Norwegian American Hospital,2012,3801,381,306,0,102,1529,108,0,1637,0,0
 1719,Presence Our Lady of the Resurrection Medical Center,2012,6528,1254,421,0,0,0,0,0,0,1228,0
 1974,Presence Resurrection Medical Center,2012,8638,1867,850,0,136,917,176,1169,0,0,0
+2402,Presence Saint Francis Hospital,2012,5648,1472,598,0,175,760,109,0,0,0,0
 5181,Presence Saint Joseph Hospital Chicago,2012,6975,805,358,155,190,1600,7,309,1349,643,0
 2584,Presence Saint Mary Of Nazareth Hospital,2012,8732,1076,500,0,439,1599,219,289,4985,0,0
 5314,Presence St. Elizabeth's Hospital,2012,1884,0,0,0,0,0,0,0,1142,401,0

@@ -1,4 +1,5 @@
 hospital_id,hospital_name,report_start_date,report_end_date,medicaid,medicare,other_public_payment,private_insurance,private_payment,total
+0315,Advocate Christ Medical Center,01-Jan-12,31-Dec-12,"$4,569,672.00 ","$37,408,947.00 ","$0.00 ","$178,137,966.00 ","$8,533,759.00 ","$228,650,344.00 "
 5165,Advocate Illinois Masonic Medical Center,1-Jan-12,31-Dec-12,"$2,048,765.00 ","$16,940,888.00 ",$0.00 ,"$79,435,635.00 ","$788,986.00 ","$99,214,274.00 "
 4176,Advocate Trinity Hospital,1-Jan-12,31-Dec-12,"$3,083,687.00 ","$6,372,483.00 ",$0.00 ,"$35,544,365.00 ","$1,789,111.00 ","$46,789,646.00 "
 5843,Ann & Robert H. Lurie Children's Hospital of Chicago,1-Sep-11,31-Aug-12,"$40,501,293.00 ","$2,450,730.00 ","$5,228,269.00 ","$153,811,728.00 ","$3,447,318.00 ","$205,439,338.00 "
@@ -9,6 +10,7 @@ hospital_id,hospital_name,report_start_date,report_end_date,medicaid,medicare,ot
 4564,Kindred Chicago Central Hospital,1-Jan-12,31-Dec-12,$0.00 ,$0.00 ,$0.00 ,$0.00 ,$0.00 ,$0.00 
 4937,Kindred Hospital  Chicago North,1-Jan-12,31-Dec-12,$0.00 ,$0.00 ,$0.00 ,$0.00 ,$0.00 ,$0.00 
 3012,LaRabida Children's Hospital,1-Jul-11,30-Jun-12,"$8,695,689.00 ",$0.00 ,$0.00 ,"$598,962.00 ","$132,451.00 ","$9,427,102.00 "
+1271,Little Company of Mary Hospital and Health Care Centers,01-Jul-11,30-Jun-12,"$3,999,275.00 ","$21,012,555.00 ","$0.00 ","$38,408,253.00 ","$2,424,202.00 ","$65,844,285.00 "
 1289,Loretto Hospital,1-Jul-11,30-Jun-12,"$2,873,302.00 ","$3,847,822.00 ","$2,662,950.00 ","$1,574,101.00 ","$705,866.00 ","$11,664,041.00 "
 5249,Louis A. Weiss Memorial Hospital,1-Jul-11,30-Jun-12,"$6,801,486.00 ","$10,512,526.00 ",$0.00 ,"$24,543,522.00 ","$3,993,066.00 ","$45,850,600.00 "
 1578,Mercy Hospital & Medical Center,1-Jul-11,30-Jun-12,"$11,165,271.00 ","$16,963,069.00 ","$192,769.00 ","$37,086,279.00 ","$627,695.00 ","$66,035,083.00 "
@@ -18,6 +20,7 @@ hospital_id,hospital_name,report_start_date,report_end_date,medicaid,medicare,ot
 1727,Norwegian American Hospital,1-Oct-11,30-Sep-12,"$6,928,541.00 ","$7,365,969.00 ",$0.00 ,"$10,357,473.00 ","$3,103,150.00 ","$27,755,133.00 "
 1719,Presence Our Lady of the Resurrection Medical Center,1-Jan-12,31-Dec-12,"$6,366,949.00 ","$10,725,513.00 ",$0.00 ,"$16,119,237.00 ","$2,769,097.00 ","$35,980,796.00 "
 1974,Presence Resurrection Medical Center,1-Jan-12,31-Dec-12,"$6,940,595.00 ","$36,664,320.00 ",$0.00 ,"$41,912,893.00 ","$5,502,671.00 ","$91,020,479.00 "
+2402,Presence Saint Francis Hospital,01-Jul-11,30-Jun-12,"$4,972,692.00 ","$12,350,803.00 ","$0.00 ","$18,256,946.00 ","($1,648,641.00) ","$33,931,800.00 "
 5181,Presence Saint Joseph Hospital Chicago,1-Jan-12,31-Dec-12,"$8,231,926.00 ","$13,813,353.00 ",$0.00 ,"$40,841,362.00 ","$1,212,298.00 ","$64,098,939.00 "
 2584,Presence Saint Mary Of Nazareth Hospital,1-Jan-12,31-Dec-12,"$31,112,818.00 ","$21,063,345.00 ",$0.00 ,"$25,412,101.00 ","$2,485,723.00 ","$80,073,537.00 "
 5314,Presence St. Elizabeth's Hospital,1-Jan-12,31-Dec-12,$0.00 ,$0.00 ,$0.00 ,$0.00 ,$1.00 ,$1.00 
