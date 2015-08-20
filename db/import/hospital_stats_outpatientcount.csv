@@ -1,4 +1,5 @@
 hospital_id,hospital_name,year,outpatient_count_medicare,outpatient_count_medicaid,outpatient_count_other_public,outpatient_count_private_insurance,outpatient_count_private_payment,outpatient_count_charity_care,outpatient_count_total
+0315,Advocate Christ Medical Center,2012,69518,75653,0,164605,5778,11478,327032
 5165,Advocate Illinois Masonic Medical Center,2012,39461,28583,0,110888,1154,6460,186546
 4176,Advocate Trinity Hospital,2012,13234,21729,0,33416,1391,7011,76781
 5843,Ann & Robert H. Lurie Children's Hospital of Chicago,2012,1749,223967,1188,286286,13372,3193,529755
@@ -9,6 +10,7 @@ hospital_id,hospital_name,year,outpatient_count_medicare,outpatient_count_medica
 4564,Kindred Chicago Central Hospital,2012,0,0,0,0,0,0,0
 4937,Kindred Hospital  Chicago North,2012,0,0,0,0,0,0,0
 3012,LaRabida Children's Hospital,2012,10,18840,0,3026,96,20,21992
+1271,Little Company of Mary Hospital and Health Care Centers,2012,69518,75653,0,164605,5778,11478,327032
 1289,Loretto Hospital,2012,9027,14706,233,3762,6472,4036,38236
 5249,Louis A. Weiss Memorial Hospital,2012,34963,19072,0,23437,8257,773,86502
 1578,Mercy Hospital & Medical Center,2012,79981,113452,1186,177670,2989,2458,377736
@@ -18,6 +20,7 @@ hospital_id,hospital_name,year,outpatient_count_medicare,outpatient_count_medica
 1727,Norwegian American Hospital,2012,5796,29199,0,16595,4950,4873,61413
 1719,Presence Our Lady of the Resurrection Medical Center,2012,39251,37039,120,31681,9662,1465,119218
 1974,Presence Resurrection Medical Center,2012,66066,30624,119,78637,4939,1017,181402
+2402,Presence Saint Francis Hospital,2012,69518,75653,0,164605,5778,11478,327032
 5181,Presence Saint Joseph Hospital Chicago,2012,54621,31079,0,103189,6801,1235,196925
 2584,Presence Saint Mary Of Nazareth Hospital,2012,36162,70754,207,50803,8416,2912,169254
 5314,Presence St. Elizabeth's Hospital,2012,6927,10330,24,6153,764,282,24480
