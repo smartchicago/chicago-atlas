@@ -8,60 +8,55 @@
   :javascript
     $(window).resize(function () {
       var h = $(window).height(),
-        offsetTop = 100; // Calculate the top offset
-
+      offsetTop = 100; // Calculate the top offset
       $('#map').css('height', (h - offsetTop));
-
     }).resize();
-
     // hiding and modifying elements to give the map more room
     $('#container-primary').attr("class", "container-fluid");
     $('.footer').hide();
-
-
+    
     $('.accordion-group').on('show.bs.collapse', function () {
       $(this).find('.plus-minus').attr('class', 'fa fa-minus-circle plus-minus')
     })
-
+    
     $('.accordion-group').on('hide.bs.collapse', function () {
       $(this).find('.plus-minus').attr('class', 'fa fa-plus-circle plus-minus')
     })
-
+    
     // initialize the map
     var map = L.map('map', {scrollWheelZoom:false}).setView([41.86, -87.70], 11);
-
-    var mapbox = L.tileLayer('https://{s}.tiles.mapbox.com/v3/smartchicagocollaborative.heooddo8/{z}/{x}/{y}.png', {
-        attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
-    }).addTo(map);
+    
+    var mapbox = L.tileLayer('https://{s}.tiles.mapbox.com/v3/smartchicagocollaborative.heooddo8/{z}/{x}/{y}.png', {attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'}).addTo(map);
     map.attributionControl.setPrefix('');
-
+    
     var geojsonFeature = #{@display_geojson};
     var geojson;
     var allLayers = [];
-
+    
     // control that shows info on hover
     var info = L.control();
-
+    
     info.onAdd = function (map) {
         this._div = L.DomUtil.create('div', 'info');
         this.update();
         return this._div;
     };
-
+    
     function resetHighlight(e) {
         geojson.resetStyle(e.target);
     }
-
+    
     function highlightFeature(e) {
+        console.log(1);
         var layer = e.target;
-
+        
         layer.setStyle({
             weight: 5,
             color: '#666',
             dashArray: '',
             fillOpacity: 0.7
         });
-
+        
         if (!L.Browser.ie && !L.Browser.opera) {
             layer.bringToFront();
         }
@@ -74,12 +69,12 @@
             style: style,
             onEachFeature: onEachFeature
         }).addTo(map);
-
+                
         for(layer in allLayers){
             var props = allLayers[layer].feature.properties;
             allLayers[layer].bindLabel( '<h4>' + props.name + '</h4>');
         }
-
+        
         function style(feature) {
             return {
                 fillColor: '#6BAED6',
@@ -90,7 +85,7 @@
                 fillOpacity: 0.7
             };
         }
-
+        
         function onEachFeature(feature, layer) {
             layer.on({
                 mouseover: highlightFeature,
@@ -99,7 +94,7 @@
             });
             allLayers.push(layer);
         }
-
+        
         function linkToDetail(e) {
             window.location = '/place/' + e.target.feature.properties.slug + '#{@detail_url_fragment}';
         }
@@ -111,7 +106,7 @@
         jenks_cutoffs[0] = 0; // ensure the bottom value is 0
         jenks_cutoffs.pop(); // last item is the max value, so dont use it
         var map_colors = #{@map_colors}
-
+        
         // get color depending on condition_title
         function getColor(d) {
             return  d >= jenks_cutoffs[3] ? map_colors[0] : 
@@ -120,7 +115,7 @@
                     d >= jenks_cutoffs[0] ? map_colors[3] :  
                                             map_colors[4];
         }
-
+        
         function style(feature) {
             return {
                 fillColor: getColor(feature.properties.condition_value[active_year]),
@@ -131,7 +126,7 @@
                 fillOpacity: 0.7
             };
         }
-
+        
         function onEachFeature(feature, layer) {
             layer.on({
                 mouseover: highlightFeature,
@@ -140,16 +135,16 @@
             });
             allLayers.push(layer);
         }
-
+        
         function linkToDetail(e) {
             window.location = '/place/' + e.target.feature.properties.slug + '##{@current_dataset_slug}';
         }
-
+        
         geojson = L.geoJson(geojsonFeature, {
             style: style,
             onEachFeature: onEachFeature
         }).addTo(map);
-
+        
         var percentSuffix = '';
         if (allLayers[0].feature.properties.stat_type.indexOf("percent") !== -1) percentSuffix = '%';
         
@@ -161,33 +156,33 @@
                 $("#year_label").text(year_range);
             else
         	    $("#year_label").text(year);
-
+            
             for(layer in allLayers){
                 var props = allLayers[layer].feature.properties;
                 allLayers[layer].bindLabel( '<h4>' + props.name + '</h4>' + props.condition_title + ': ' + props.condition_value[ year ] + percentSuffix);
                 allLayers[layer].setStyle({fillColor: getColor(props.condition_value[year])});
             }
         }
-
+        
         var start_year = #{@current_dataset_start_year};
         var end_year = #{@current_dataset_end_year};
-
+        
         $('#start_year').html(start_year);
         $('#end_year').html(end_year);
-
+        
         if(start_year == end_year){
           // only one year in system - remove slider
           $("#slider, #start_year, #end_year").css({
             display: "none"
           });
         }
-
+        
         var active_year = end_year;
         if ($.address.parameter('year') != null)
             active_year = $.address.parameter('year');
-
+        
         update_year(active_year);
-
+        
         $("#slider").slider({
           min: start_year,
           max: end_year,
@@ -201,31 +196,31 @@
           },
           range: "min"
         });
-
+        
         var legend = L.control({position: 'topright'});
-
+        
         legend.onAdd = function (map) {
-
+          
             var div = L.DomUtil.create('div', 'info legend'),
                 grades = jenks_cutoffs,
                 labels = [],
                 from, to;
-
+                
             for (var i = 0; i < grades.length; i++) {
                 from = grades[i];
                 to = grades[i + 1];
-
+                
                 labels.push(
                     '<i style="background:' + getColor(from + 0.01) + '"></i> ' +
                     from + (to ? '&ndash;' + to + percentSuffix : percentSuffix + '+'));
             }
-
+            
             div.innerHTML = "<strong>#{@current_dataset_name}</strong><br>" + labels.join('<br>');
             return div;
         };
-
+        
         legend.addTo(map);
-
+        
         $.address.externalChange(function(event) {
             update_year($.address.parameter('year'));
             $('#slider').slider('value', $.address.parameter('year'));

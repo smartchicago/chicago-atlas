@@ -1,165 +1,272 @@
 
 .row-fluid
-	.span8
-		%h1 #{@hospital.name}
-		%h3 #{@hospital.sub_type}
+    .span8
+        %h1 #{@hospital.name}
+        %h3 #{@hospital.sub_type}
 
-		%p #{@hospital.description} <br><br>
-		- if @hospital.phone
-			%p <i class="fa fa-phone"></i>&nbsp #{@hospital.phone}
-		- if @hospital.url
-			%p <i class="fa fa-external-link"></i>&nbsp <a href="#{@hospital.url}" target="blank"> website</a>
-		- if @hospital.report_name && @hospital.report_url
-			%p <i class="fa fa-clipboard"></i>&nbsp <a href="#{@hospital.report_url}" target="blank">#{@hospital.report_name}</a>
-		<hr>
-		%p The data for the following charts and analyses came from the <a href="http://www.hfsrb.illinois.gov/HospProf_ABR.htm">Illinois Health Facilities and Services Review Board </a>. An excel file of all data for all hospitals can be found <a href= "https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_source_data.xlsx">here</a>.
-		- admissions_by_race = fetch_provider_data(@hospital.src_id, "Admissions by Race")
-		- admissions_by_ethnicity = fetch_provider_data(@hospital.src_id, "Admissions by Ethnicity")
-		- admissions_by_type = fetch_sorted_provider_data(@hospital.src_id, "Admissions by Type")
-		- medsurg_admissions_by_age = fetch_provider_data(@hospital.src_id, "Medical-Surgical Admissions By Age")
-		- total_admissions = admissions_by_race[:values].sum
-		- revenue_inpatient = fetch_provider_data(@hospital.src_id, "Inpatient Revenue by Payment Type")
-		- inpatient_total = revenue_inpatient[:values].sum
-		- revenue_outpatient = fetch_provider_data(@hospital.src_id, "Outpatient Revenue by Payment Type")
-		- outpatient_total = revenue_outpatient[:values].sum
-		- total_revenue = inpatient_total + outpatient_total
-		.row-fluid
-			.span6
-				%h4 Total Admissions in 2012
-				%p.big-text #{total_admissions.to_i.to_s.gsub(/\B(?=(\d{3})+(?!\d))/, ",")}
-			.span6
-				%h4 Total Revenue in 2012
-				%p.big-text $#{total_revenue.to_i.to_s.gsub(/\B(?=(\d{3})+(?!\d))/, ",")}
-	.span4
-		.well
-			- content_for :javascripts do
-				= javascript_include_tag "leaflet"
-				= javascript_include_tag "leaflet_lib"
-				:javascript
-					var marker = L.marker([#{@hospital.lat_long}]);
-					var none = "none"
-					hash = {
-						markers: [marker],
-						geojson: #{@hospital.geometry}
-					};
-					
-					LeafletLib.initialize("map_detail", hash, [#{@hospital.lat_long}], 0.2);
+        %p #{@hospital.description} <br><br>
+        - if @hospital.phone
+            %p <i class="fa fa-phone"></i>&nbsp #{@hospital.phone}
+        - if @hospital.url
+            %p <i class="fa fa-external-link"></i>&nbsp <a href="#{@hospital.url}" target="blank"> website</a>
+        - if @hospital.report_name && @hospital.report_url
+            %p <i class="fa fa-clipboard"></i>&nbsp <a href="#{@hospital.report_url}" target="blank">#{@hospital.report_name}</a>
+        <hr>
+        %p The data for the following charts and analyses came from the <a href="http://www.hfsrb.illinois.gov/HospProf_ABR.htm">Illinois Health Facilities and Services Review Board </a>. An excel file of all data for all hospitals can be found <a href= "https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_source_data.xlsx">here</a>.
+        - admissions_by_race = fetch_provider_data(@hospital.src_id, "Admissions by Race")
+        - admissions_by_ethnicity = fetch_provider_data(@hospital.src_id, "Admissions by Ethnicity")
+        - admissions_by_type = fetch_sorted_provider_data(@hospital.src_id, "Admissions by Type")
+        - medsurg_admissions_by_age = fetch_provider_data(@hospital.src_id, "Medical-Surgical Admissions By Age")
+        - total_admissions = admissions_by_race[:values].sum
+        - revenue_inpatient = fetch_provider_data(@hospital.src_id, "Inpatient Revenue by Payment Type")
+        - inpatient_total = revenue_inpatient[:values].sum
+        - revenue_outpatient = fetch_provider_data(@hospital.src_id, "Outpatient Revenue by Payment Type")
+        - outpatient_total = revenue_outpatient[:values].sum
+        - total_revenue = inpatient_total + outpatient_total
+        .row-fluid
+            .span6
+                %h4 Total Admissions in 2012
+                %p.big-text #{total_admissions.to_i.to_s.gsub(/\B(?=(\d{3})+(?!\d))/, ",")}
+            .span6
+                %h4 Total Revenue in 2012
+                %p.big-text $#{total_revenue.to_i.to_s.gsub(/\B(?=(\d{3})+(?!\d))/, ",")}
+    .span4
+        .well
+            - content_for :javascripts do
+                = javascript_include_tag "leaflet"
+                = javascript_include_tag "leaflet_lib"
+                = javascript_include_tag "leaflet.label"
+                = javascript_include_tag "jquery"
 
-			#map_detail
-			%br
-			%p #{@hospital.addr_street} <br> #{@hospital.addr_city}, IL #{@hospital.addr_zip}
-			%a{:href => "https://maps.google.com/maps?f=d&hl=en&geocode=&daddr=#{@hospital.addr_street}+#{@hospital.addr_city},+IL+#{@hospital.addr_zip}"} <button class="btn">Get Directions</button>
+                - if @hospital.geometry != "none"
+                    :javascript
+                        // Base variables
+                        //
+                        var latmin = 90;
+                        var latmax = -90;
+                        var lngmin = 180;
+                        var lngmax = -180;
+                        var padding = 0.1;
+                        var allLayers = [];
+                        
+                        featureCollection = {
+                                type: "FeatureCollection",
+                                features: #{@hospital.geometry}
+                            };
+                            
+                        var centroid = [#{@hospital.lat_long}];
+                        var marker = L.marker(centroid);
+                        
+                        var map = L.map('map_detail', {scrollWheelZoom:false}).setView(new L.LatLng(centroid[0], centroid[1]), 13);
+                        L.tileLayer('https://{s}.tiles.mapbox.com/v3/smartchicagocollaborative.heooddo8/{z}/{x}/{y}.png', {attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'}).addTo(map);
+                        map.attributionControl.setPrefix('');
+                        L.Icon.Default.imagePath = "/assets/images/";
+                        
+                        
+                        var pt = marker.getLatLng();
+                        marker.addTo(map);
+                        addBoundedPoint(pt);
+                        
+                        var geojson;
+                        geojson = L.geoJson(featureCollection, {
+                            style: style,
+                            onEachFeature: onEachFeature
+                        }).addTo(map);
+                        addBoundedBox(geojson.getBounds());
+                        fitFeatures(padding);
+                        
+                        for(layer in allLayers){
+                            var props = allLayers[layer].feature.properties;
+                            allLayers[layer].bindLabel( '<h4>' + props.id + '</h4>');
+                        }
+                        
+                        //
+                        function style (feature) {
+                            return {
+                                weight: 2,
+                                opacity: 1,
+                                color: 'white',
+                                dashArray: '3',
+                                fillOpacity: 0.7,
+                                fillColor: '#FD8D3C'
+                            };
+                        }
+                        
+                        function onEachFeature (feature, layer) {
+                            layer.on({
+                               mouseover: highlightFeature,
+                               mouseout: resetHighlight 
+                            });
+                            allLayers.push(layer);
+                        }
+                        
+                        function highlightFeature(e) {
+                            var layer = e.target;
+                            
+                            layer.setStyle({
+                                weight: 5,
+                                color: '#666',
+                                dashArray: '',
+                                fillOpacity: 0.7
+                            });
+                            
+                            if (!L.Browser.ie && !L.Browser.opera) {
+                                layer.bringToFront();
+                            }
+                        }
+                        
+                        function resetHighlight(e) {
+                            geojson.resetStyle(e.target);
+                        }
+                        
+                        function addBoundedPoint(latlng) {
+                            latmin = Math.min( latmin, latlng.lat );
+                            latmax = Math.max( latmax, latlng.lat );
+                            lngmin = Math.min( lngmin, latlng.lng );
+                            lngmax = Math.max( lngmax, latlng.lng );
+                        }
+                        
+                        function addBoundedBox(bounds) {
+                            latmin = Math.min( latmin, bounds.getSouthWest().lat );
+                            latmax = Math.max( latmax, bounds.getNorthEast().lat );
+                            lngmin = Math.min( lngmin, bounds.getSouthWest().lng );
+                            lngmax = Math.max( lngmax, bounds.getNorthEast().lng );
+                        }
+                        
+                        function fitFeatures(padding) {
+                            if (latmax > latmin) {
+                                var bounds = new L.LatLngBounds(
+                                    new L.LatLng(latmin, lngmin),
+                                    new L.LatLng(latmax, lngmax));
+                            }
+                            map.fitBounds( bounds.pad(padding) );
+                        }
+
+                - else
+                    :javascript
+                    
+                        var marker = L.marker([#{@hospital.lat_long}]);
+                        hash = {
+                            markers: [marker],
+                        };
+                    
+                        LeafletLib.initialize("map_detail", hash, [#{@hospital.lat_long}], 0.2);
+
+            #map_detail
+            %br
+            %p #{@hospital.addr_street} <br> #{@hospital.addr_city}, IL #{@hospital.addr_zip}
+            %a{:href => "https://maps.google.com/maps?f=d&hl=en&geocode=&daddr=#{@hospital.addr_street}+#{@hospital.addr_city},+IL+#{@hospital.addr_zip}"} <button class="btn">Get Directions</button>
 .row-fluid
-	.span12
-		%h3 Inpatient Hospital Admissions
-		%p Inpatient hospital admissions data in 2012.
+    .span12
+        %h3 Inpatient Hospital Admissions
+        %p Inpatient hospital admissions data in 2012.
 .row-fluid
-	.span12
-		%h4#admissions-by-type Admissions by Service Category
-		%p These categories are used by the <a href="http://www.hfsrb.illinois.gov/">Illinois Health Facilities and Services Review Board</a> to conform to data collection requirements of the <a href="http://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=407&ChapterID=5">Illinois Health Facilities Planning Act</a>
-		= raw(render_hosp_source_link( 'admissions data by type', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_admissionsbytype.csv'))
-		<br>
-		- chart_id = "chart_admissions_type"
-		.chart{:id => chart_id}
-		- content_for :javascripts do
-			:javascript
-				$(function () {
+    .span12
+        %h4#admissions-by-type Admissions by Service Category
+        %p These categories are used by the <a href="http://www.hfsrb.illinois.gov/">Illinois Health Facilities and Services Review Board</a> to conform to data collection requirements of the <a href="http://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=407&ChapterID=5">Illinois Health Facilities Planning Act</a>
+        = raw(render_hosp_source_link( 'admissions data by type', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_admissionsbytype.csv'))
+        <br>
+        - chart_id = "chart_admissions_type"
+        .chart{:id => chart_id}
+        - content_for :javascripts do
+            :javascript
+                $(function () {
 
-					var seriesData = [{
-						data: #{admissions_by_type[:values]},
-						name: "Admissions"
-					}];
-					ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{admissions_by_type[:stats]});
-				});
+                    var seriesData = [{
+                        data: #{admissions_by_type[:values]},
+                        name: "Admissions"
+                    }];
+                    ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{admissions_by_type[:stats]});
+                });
 .row-fluid
-	.span8
-		%h4 Admissions by Race
-		= raw(render_hosp_source_link( 'admissions data by race', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_admissionsbyrace.csv'))
-		<br>
-		- chart_id = "chart_admissions_race"
-		.chart{:id => chart_id}
-		- content_for :javascripts do
-			:javascript
-				$(function () {
+    .span8
+        %h4 Admissions by Race
+        = raw(render_hosp_source_link( 'admissions data by race', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_admissionsbyrace.csv'))
+        <br>
+        - chart_id = "chart_admissions_race"
+        .chart{:id => chart_id}
+        - content_for :javascripts do
+            :javascript
+                $(function () {
 
-					var seriesData = [{
-						data: #{admissions_by_race[:values]},
-						name: "Admissions"
-					}];
-					ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{admissions_by_race[:stats]});
-				});
-	.span4
-		%h4 Admissions by Ethnicity
-		= raw(render_hosp_source_link( 'admissions data by ethnicity', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_admissionsbyethnicity.csv'))
-		<br>
-		- chart_id = "chart_admissions_ethnicity"
-		.chart{:id => chart_id}
-		- content_for :javascripts do
-			:javascript
-				$(function () {
+                    var seriesData = [{
+                        data: #{admissions_by_race[:values]},
+                        name: "Admissions"
+                    }];
+                    ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{admissions_by_race[:stats]});
+                });
+    .span4
+        %h4 Admissions by Ethnicity
+        = raw(render_hosp_source_link( 'admissions data by ethnicity', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_admissionsbyethnicity.csv'))
+        <br>
+        - chart_id = "chart_admissions_ethnicity"
+        .chart{:id => chart_id}
+        - content_for :javascripts do
+            :javascript
+                $(function () {
 
-					var seriesData = [{
-						data: #{admissions_by_ethnicity[:values]},
-						name: "Admissions"
-					}];
-					ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{admissions_by_ethnicity[:stats]});
-				});
+                    var seriesData = [{
+                        data: #{admissions_by_ethnicity[:values]},
+                        name: "Admissions"
+                    }];
+                    ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{admissions_by_ethnicity[:stats]});
+                });
 - if medsurg_admissions_by_age[:values].sum > 0
-	.row-fluid
-		.span12
-			%h4#medsurg-admissions-by-age Medical-Surgical Admissions - by Age
-			%p Medical-Surgical admissions are defined by the <a href="http://www.hfsrb.illinois.gov/">Illinois Health Facilities and Services Review Board</a>, and correspond the medical/surgical service category above.
-			= raw(render_hosp_source_link( 'admissions data by age', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_admissionsbyage.csv'))
-			<br>
-			- chart_id = "chart_admissions_age"
-			.chart{:id => chart_id}
-			- content_for :javascripts do
-				:javascript
-					$(function () {
+    .row-fluid
+        .span12
+            %h4#medsurg-admissions-by-age Medical-Surgical Admissions - by Age
+            %p Medical-Surgical admissions are defined by the <a href="http://www.hfsrb.illinois.gov/">Illinois Health Facilities and Services Review Board</a>, and correspond the medical/surgical service category above.
+            = raw(render_hosp_source_link( 'admissions data by age', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_admissionsbyage.csv'))
+            <br>
+            - chart_id = "chart_admissions_age"
+            .chart{:id => chart_id}
+            - content_for :javascripts do
+                :javascript
+                    $(function () {
 
-						var seriesData = [{
-							data: #{medsurg_admissions_by_age[:values]},
-							name: "Admissions"
-						}];
-						ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{medsurg_admissions_by_age[:stats]});
-					});
+                        var seriesData = [{
+                            data: #{medsurg_admissions_by_age[:values]},
+                            name: "Admissions"
+                        }];
+                        ChartHelper.create("#{chart_id}", "column", seriesData, "", "", "", "count", #{medsurg_admissions_by_age[:stats]});
+                    });
 
 .row-fluid
-	.span12
-		%h3 Hospital Finances
-		%p Inpatient and outpatient revenue data over the reporting period from #{revenue_inpatient[:start_date].strftime("%m/%d/%y")} to #{revenue_inpatient[:end_date].strftime("%m/%d/%y")}. These categories are used by the <a href="http://www.hfsrb.illinois.gov/">Illinois Health Facilities and Services Review Board</a> to conform to data collection requirements of the <a href="http://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=407&ChapterID=5">Illinois Health Facilities Planning Act</a>.
-		= raw(render_hosp_source_link( 'hospital inpatient revenue data', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_revenueinpatient.csv'))
-		= raw(render_hosp_source_link( 'hospital outpatient revenue data', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_revenueoutpatient.csv'))
-		= raw(render_hosp_source_link( 'hospital charity care data', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_cost_charity_care.csv'))
+    .span12
+        %h3 Hospital Finances
+        %p Inpatient and outpatient revenue data over the reporting period from #{revenue_inpatient[:start_date].strftime("%m/%d/%y")} to #{revenue_inpatient[:end_date].strftime("%m/%d/%y")}. These categories are used by the <a href="http://www.hfsrb.illinois.gov/">Illinois Health Facilities and Services Review Board</a> to conform to data collection requirements of the <a href="http://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=407&ChapterID=5">Illinois Health Facilities Planning Act</a>.
+        = raw(render_hosp_source_link( 'hospital inpatient revenue data', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_revenueinpatient.csv'))
+        = raw(render_hosp_source_link( 'hospital outpatient revenue data', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_revenueoutpatient.csv'))
+        = raw(render_hosp_source_link( 'hospital charity care data', 'https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_stats_cost_charity_care.csv'))
 .row-fluid
-	.span4
-		%h4#revenue-total Finance Summary
-		%p 
-		- charity_care = fetch_provider_data(@hospital.src_id, "Actual Cost Charity Care")
-		- inpatient_cc = charity_care[:values][charity_care[:stats].index('Charity Care - Inpatient')]
-		- outpatient_cc = charity_care[:values][charity_care[:stats].index('Charity Care - Outpatient')]
-		.chart{:id => "rev_total"}
-		- content_for :javascripts do
-			:javascript
-				$(function () {
-					var seriesData = [
-						{data: [#{outpatient_total}, #{outpatient_cc}], name: "Outpatient"},
-						{data: [#{inpatient_total}, #{inpatient_cc}], name: "Inpatient"}
-					]
-					ChartHelper.create("rev_total", "column", seriesData, "", "", "", "money", ["Total Revenue", "Total Cost of Charity Care"], true);
-				});
-	.span8
-		%h4#revenue-combined Revenue by Source
-		%p 
-		.chart{:id => "rev_combined"}
-		- content_for :javascripts do
-			:javascript
-				$(function () {
+    .span4
+        %h4#revenue-total Finance Summary
+        %p 
+        - charity_care = fetch_provider_data(@hospital.src_id, "Actual Cost Charity Care")
+        - inpatient_cc = charity_care[:values][charity_care[:stats].index('Charity Care - Inpatient')]
+        - outpatient_cc = charity_care[:values][charity_care[:stats].index('Charity Care - Outpatient')]
+        .chart{:id => "rev_total"}
+        - content_for :javascripts do
+            :javascript
+                $(function () {
+                    var seriesData = [
+                        {data: [#{outpatient_total}, #{outpatient_cc}], name: "Outpatient"},
+                        {data: [#{inpatient_total}, #{inpatient_cc}], name: "Inpatient"}
+                    ]
+                    ChartHelper.create("rev_total", "column", seriesData, "", "", "", "money", ["Total Revenue", "Total Cost of Charity Care"], true);
+                });
+    .span8
+        %h4#revenue-combined Revenue by Source
+        %p 
+        .chart{:id => "rev_combined"}
+        - content_for :javascripts do
+            :javascript
+                $(function () {
 
-					var seriesData = [
-						{data: #{revenue_outpatient[:values]},
-						name: "Outpatient Revenue"},
-						{data: #{revenue_inpatient[:values]},
-						name: "Inpatient Revenue"}];
-					ChartHelper.create("rev_combined", "column", seriesData, "", "", "", "money", #{revenue_inpatient[:stats]}, true);
-				});
+                    var seriesData = [
+                        {data: #{revenue_outpatient[:values]},
+                        name: "Outpatient Revenue"},
+                        {data: #{revenue_inpatient[:values]},
+                        name: "Inpatient Revenue"}];
+                    ChartHelper.create("rev_combined", "column", seriesData, "", "", "", "money", #{revenue_inpatient[:stats]}, true);
+                });
