@@ -25,7 +25,7 @@ var LeafletLib = {
             LeafletLib.addBoundedPoint( pt );
           }
         }
-        if(typeof features.geojson != "undefined" || features.geojson != "none"){
+        if(typeof features.geojson != "undefined"){
           LeafletLib.geojson = L.geoJson(features.geojson, {
               style: LeafletLib.style
           }).addTo(LeafletLib.map);
