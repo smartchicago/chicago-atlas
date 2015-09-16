@@ -50,6 +50,20 @@ namespace :db do
           hospital.save!
         end
 
+        j = []
+        File.open("db/import/hospital_service_areas.json", "r") do |f|
+          j = JSON.load(f)
+        end
+
+        j.each do |h|
+          hospital = Provider.where(:primary_type => 'Hospital', :src_id => h['id']).first
+          hospital.areas = h['areas']
+          hospital.area_type = h['type']
+          hospital.area_alt = h['alt']
+          hospital.save!
+          puts "Added service area details for #{hospital.name}."
+        end
+
         puts 'Done!'
       end
     end
