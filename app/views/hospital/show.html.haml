@@ -60,7 +60,6 @@
                         var map = L.map('map_detail', {scrollWheelZoom:false}).setView(new L.LatLng(centroid[0], centroid[1]), 13);
                         L.tileLayer('https://{s}.tiles.mapbox.com/v3/smartchicagocollaborative.heooddo8/{z}/{x}/{y}.png', {attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'}).addTo(map);
                         map.attributionControl.setPrefix('');
-                        L.Icon.Default.imagePath = "/assets/images/";
                         
                         
                         var pt = marker.getLatLng();
