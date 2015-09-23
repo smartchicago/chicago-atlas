@@ -33,7 +33,8 @@ namespace :db do
             :url => row["hospital_url"],
             :report_url => row["report_url"],
             :report_name => row["report_name"],
-            :geometry => "none"
+            :geometry => "none",
+            :chna_url => row["chna_url"]
           )
           puts "importing #{hospital.name}"
           hospital.save!
