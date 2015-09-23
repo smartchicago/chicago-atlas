@@ -4,11 +4,11 @@
         .fb-root
         %h1 #{@hospital.name} 
 
-        //.social
-        //    .fb
-        //        .fb-follow(data-href="https://www.facebook.com/zuck" data-layout="button_count" data-show-faces="false")
-        //    .twitter
-        //        %a.twitter-follow-button(href="https://twitter.com/AdvocateCMC" data-show-count="false") Follow @AdvocateCMC
+        .social
+            .fb
+                .fb-follow(data-href="https://www.facebook.com/zuck" data-layout="button_count" data-show-faces="false")
+            .twitter
+                %a.twitter-follow-button(href="https://twitter.com/AdvocateCMC" data-show-count="false") Follow @AdvocateCMC
 
 
         %h3 #{@hospital.sub_type}
@@ -208,9 +208,9 @@
                     <br>
                     .fb-follow(data-href="https://www.facebook.com/zuck" data-layout="button_count" data-show-faces="false")
                     <br>
-                //.twitter
-                //    <br>
-                //    %a.twitter-follow-button(href="https://twitter.com/AdvocateCMC" data-show-count="false") Follow @AdvocateCMC
+                .twitter
+                    <br>
+                    %a.twitter-follow-button(href="https://twitter.com/AdvocateCMC" data-show-count="false") Follow @AdvocateCMC
         
         .timeline
             %a(class="twitter-timeline" href="https://twitter.com/AdvocateCMC" height="300" data-widget-id="644904732360704000") Tweets by @AdvocateCMC
