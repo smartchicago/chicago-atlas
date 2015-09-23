@@ -20,6 +20,7 @@ class Provider < ActiveRecord::Base
                   :geometry,
                   :areas,
                   :area_type,
-                  :area_alt
+                  :area_alt,
+                  :chna_url
 
 end
