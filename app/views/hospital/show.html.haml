@@ -11,6 +11,8 @@
             %p <i class="fa fa-external-link"></i>&nbsp <a href="#{@hospital.url}" target="blank"> website</a>
         - if @hospital.report_name && @hospital.report_url
             %p <i class="fa fa-clipboard"></i>&nbsp <a href="#{@hospital.report_url}" target="blank">#{@hospital.report_name}</a>
+        - if @hospital.chna_url
+            %p <i class="fa fa-clipboard"></i>&nbsp <a href="#{@hospital.chna_url}" target="blank">Community Health Needs Assessment</a>
         <hr>
         %p The data for the following charts and analyses came from the <a href="http://www.hfsrb.illinois.gov/HospProf_ABR.htm">Illinois Health Facilities and Services Review Board </a>. An excel file of all data for all hospitals can be found <a href= "https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_source_data.xlsx">here</a>.
         - admissions_by_race = fetch_provider_data(@hospital.src_id, "Admissions by Race")
