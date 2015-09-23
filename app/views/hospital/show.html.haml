@@ -20,6 +20,8 @@
             %p <i class="fa fa-external-link"></i>&nbsp <a href="#{@hospital.url}" target="blank"> website</a>
         - if @hospital.report_name && @hospital.report_url
             %p <i class="fa fa-clipboard"></i>&nbsp <a href="#{@hospital.report_url}" target="blank">#{@hospital.report_name}</a>
+        - if @hospital.chna_url
+            %p <i class="fa fa-clipboard"></i>&nbsp <a href="#{@hospital.chna_url}" target="blank">Community Health Needs Assessment</a>
         - if true
             .social
                 %img.fb-icon(src="/assets/facebook-with-circle.svg" width="40px")

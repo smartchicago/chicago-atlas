@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150914214153) do
+ActiveRecord::Schema.define(:version => 20150922214351) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20150914214153) do
     t.text     "areas"
     t.string   "area_type"
     t.text     "area_alt"
+    t.string   "chna_url"
   end
 
   create_table "statistics", :force => true do |t|
