@@ -34,7 +34,9 @@ namespace :db do
             :report_url => row["report_url"],
             :report_name => row["report_name"],
             :geometry => "none",
-            :chna_url => row["chna_url"]
+            :chna_url => row["chna_url"],
+            :twitter => row["twitter"],
+            :facebook => row["facebook"]
           )
           puts "importing #{hospital.name}"
           hospital.save!

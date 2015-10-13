@@ -21,6 +21,8 @@ class Provider < ActiveRecord::Base
                   :areas,
                   :area_type,
                   :area_alt,
-                  :chna_url
+                  :chna_url,
+                  :twitter,
+                  :facebook
 
 end
