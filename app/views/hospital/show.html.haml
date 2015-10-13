@@ -5,10 +5,12 @@
         %h1 #{@hospital.name} 
 
         .social
+        - if @hospital.facebook    
             .fb
-                .fb-follow(data-href="https://www.facebook.com/zuck" data-layout="button_count" data-show-faces="false")
+                .fb-like(data-href="#{@hospital.facebook}" data-layout="button" data-show-faces="false")
+        - if @hospital.twitter
             .twitter
-                %a.twitter-follow-button(href="https://twitter.com/AdvocateCMC" data-show-count="false") Follow @AdvocateCMC
+                %a.twitter-follow-button(href="https://twitter.com/#{@hospital.twitter}" data-show-count="false") Follow @#{@hospital.twitter}
 
 
         %h3 #{@hospital.sub_type}
@@ -22,10 +24,7 @@
             %p <i class="fa fa-clipboard"></i>&nbsp <a href="#{@hospital.report_url}" target="blank">#{@hospital.report_name}</a>
         - if @hospital.chna_url
             %p <i class="fa fa-clipboard"></i>&nbsp <a href="#{@hospital.chna_url}" target="blank">Community Health Needs Assessment</a>
-        - if true
-            .social
-                %img.fb-icon(src="/assets/facebook-with-circle.svg" width="40px")
-                %img.tw-icon(src="/assets/twitter-with-circle.svg" width="40px")
+            
         <hr>
         %p The data for the following charts and analyses came from the <a href="http://www.hfsrb.illinois.gov/HospProf_ABR.htm">Illinois Health Facilities and Services Review Board</a>. An excel file of all data for all hospitals can be found <a href= "https://github.com/smartchicago/chicago-atlas/blob/master/db/import/hospital_source_data.xlsx">here</a>.
         - admissions_by_race = fetch_provider_data(@hospital.src_id, "Admissions by Race")
@@ -205,20 +204,6 @@
             %p #{@hospital.addr_street} <br> #{@hospital.addr_city}, IL #{@hospital.addr_zip}
             %a{:href => "https://maps.google.com/maps?f=d&hl=en&geocode=&daddr=#{@hospital.addr_street}+#{@hospital.addr_city},+IL+#{@hospital.addr_zip}"} <button class="btn">Get Directions</button> <br>
             
-            .social
-                .fb
-                    <br>
-                    .fb-follow(data-href="https://www.facebook.com/zuck" data-layout="button_count" data-show-faces="false")
-                    <br>
-                .twitter
-                    <br>
-                    %a.twitter-follow-button(href="https://twitter.com/AdvocateCMC" data-show-count="false") Follow @AdvocateCMC
-        
-        .timeline
-            %a(class="twitter-timeline" href="https://twitter.com/AdvocateCMC" height="300" data-widget-id="644904732360704000") Tweets by @AdvocateCMC
-            :javascript
-                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
             
 .row-fluid
     .span12
