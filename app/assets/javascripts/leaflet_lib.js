@@ -16,7 +16,6 @@ var LeafletLib = {
         }).addTo(LeafletLib.map);
 
         LeafletLib.map.attributionControl.setPrefix('');
-        L.Icon.Default.imagePath = "/assets/images/";
 
         if(typeof features.markers != "undefined"){
           for(var m=0;m<features.markers.length;m++){

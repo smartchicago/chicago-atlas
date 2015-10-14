@@ -5,6 +5,7 @@ namespace :db do
       desc "Import hospital info from local file"
       task :hospitals => :environment do
         require 'csv'
+        require 'json'
 
         Provider.where("primary_type = 'Hospital'").each do |d|
           d.delete
@@ -31,10 +32,39 @@ namespace :db do
             :phone => row["hospital_phone"],
             :url => row["hospital_url"],
             :report_url => row["report_url"],
-            :report_name => row["report_name"]
+            :report_name => row["report_name"],
+            :geometry => "none",
+            :chna_url => row["chna_url"],
+            :twitter => row["twitter"],
+            :facebook => row["facebook"]
           )
           puts "importing #{hospital.name}"
           hospital.save!
+        end
+
+        Dir.glob("db/import/service_areas/*.geojson") do |geojson|
+          id = geojson.dup
+          id.slice! "db/import/service_areas/"
+          id.slice! ".geojson"
+
+          hospital = Provider.where(:primary_type => 'Hospital', :src_id => id.to_i).first
+          areas = JSON.parse(open(geojson).read)['features']
+          hospital.geometry = ActiveSupport::JSON.encode(areas)
+          hospital.save!
+        end
+
+        j = []
+        File.open("db/import/hospital_service_areas.json", "r") do |f|
+          j = JSON.load(f)
+        end
+
+        j.each do |h|
+          hospital = Provider.where(:primary_type => 'Hospital', :src_id => h['id']).first
+          hospital.areas = h['areas']
+          hospital.area_type = h['type']
+          hospital.area_alt = h['alt']
+          hospital.save!
+          puts "Added service area details for #{hospital.name}."
         end
 
         puts 'Done!'
