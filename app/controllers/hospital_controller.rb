@@ -1,4 +1,6 @@
 class HospitalController < ApplicationController
+  include ApplicationHelper
+
   def index
   	@hospitals = Provider.where("primary_type = 'Hospital'")
   end
@@ -14,25 +16,26 @@ class HospitalController < ApplicationController
       else
       
         case @hospital.area_type
-          when "Zip"
-            summary_word = "zip codes"
-          when "Community Areas"
-            summary_word = "community areas"
+        when "Zip"
+          summary_word = "zip codes"
+        when "Community Areas"
+          summary_word = "community areas"
         end
 
-
+        # This is dumb, bad code that was writting because of other dumb bad code and 
+        # time constraints. - AJB 13 OCT 2015
         a = @hospital.areas
         case
         when a.length == 1
-          @area_summary = "#{@hospital.name} serves the #{summary_word.singularize} #{a[0]}."
+          @area_summary = "#{@hospital.name} serves the #{summary_word.singularize} <a href='/place/#{get_zip_slug(a[0])}'>#{a[0]}</a>."
         when a.length == 2
-          @area_summary = "#{@hospital.name} serves the #{summary_word} #{a[0]} and #{a[1]}"
+          @area_summary = "#{@hospital.name} serves the #{summary_word} <a href='/place/#{get_zip_slug(a[0])}'>#{a[0]}</a> and <a href='/place/#{get_zip_slug(a[1])}'>#{a[1]}</a>."
         when a.length > 2
           areas = ""
           a[0..(a.length-2)].each do |zip|
-            areas += "#{zip}, "
+            areas += "<a href='/place/#{get_zip_slug(zip)}'>#{zip}</a>, "
           end
-          @area_summary = "#{@hospital.name} serves the #{summary_word} #{areas}and #{a.last}."
+          @area_summary = "#{@hospital.name} serves the #{summary_word} #{areas}and <a href='/place/#{get_zip_slug(a.last)}'>#{a.last}</a>."
         end
 
       end
@@ -40,4 +43,5 @@ class HospitalController < ApplicationController
     end
 
   end
+
 end
