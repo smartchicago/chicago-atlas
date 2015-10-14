@@ -383,4 +383,28 @@ module ApplicationHelper
     {:stats => stat_array, :values => value_array, :start_date => start_date, :end_date => end_date }
   end
 
+  def get_zip_slug(z)
+    case z
+    when "60601"
+    when "60602"
+    when "60603"
+    when "60604"
+    when "60605"
+    when "60611"
+      "12311"
+    when "60606"
+    when "60607"
+    when "60661"
+      "6761"
+    when "60654"
+      "60610"
+    when "60642"
+      "60622"
+    when "60633"
+      "60827"
+    else
+      z
+    end
+  end
+
 end

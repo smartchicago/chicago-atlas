@@ -140,7 +140,8 @@
                         function onEachFeature (feature, layer) {
                             layer.on({
                                mouseover: highlightFeature,
-                               mouseout: resetHighlight 
+                               mouseout: resetHighlight,
+                               click: linkToDetail 
                             });
                             allLayers.push(layer);
                         }
@@ -162,6 +163,42 @@
                         
                         function resetHighlight(e) {
                             geojson.resetStyle(e.target);
+                        }
+                        
+                        // Zips in map need to link to the  
+                        //
+                        function linkToDetail(e) {
+                            var zip = e.target.feature.properties.id;
+                            var slug;
+                            
+                            switch (zip) {
+                                case '60601':
+                                case '60602':
+                                case '60603':
+                                case '60604':
+                                case '60605':
+                                case '60611':
+                                    slug = '12311';
+                                    break;
+                                case '60606':
+                                case '60607':
+                                case '60661':
+                                    slug = '6761';
+                                    break;
+                                case '60654':
+                                    slug = '60610';
+                                    break;
+                                case '60642':
+                                    slug = '60622';
+                                    break;
+                                case '60633':
+                                    slug = '60827';
+                                    break;
+                                default:
+                                    slug = zip;
+                            }
+                            
+                            window.location = '/place/' + slug;
                         }
                         
                         function addBoundedPoint(latlng) {
@@ -197,10 +234,12 @@
                     
                         LeafletLib.initialize("map_detail", hash, [#{@hospital.lat_long}], 0.2);
 
+            
             #map_detail
             %br
             - if @area_summary
-                %p #{@area_summary}
+                %p #{@area_summary.html_safe}
+                %p Use this map to find more information about these areas.
             %p #{@hospital.addr_street} <br> #{@hospital.addr_city}, IL #{@hospital.addr_zip}
             %a{:href => "https://maps.google.com/maps?f=d&hl=en&geocode=&daddr=#{@hospital.addr_street}+#{@hospital.addr_city},+IL+#{@hospital.addr_zip}"} <button class="btn">Get Directions</button> <br>
             
