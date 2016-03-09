@@ -11,7 +11,7 @@ class HospitalController < ApplicationController
     
     if @hospital.geometry != "none"
 
-      if !@hospital.area_alt.empty?
+      if !@hospital.area_alt.blank?
         @area_summary = @hospital.area_alt
       else
       
