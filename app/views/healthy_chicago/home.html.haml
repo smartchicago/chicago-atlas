@@ -1,0 +1,839 @@
+-title 'Healthy Chicago 2.0'
+
+%h1 Healthy Chicago 2.0
+#intro
+    %p
+
+
+.table
+    %table.table.table-bordered
+        / Headers
+        / Row 1
+        %tr.headers
+            %th INDICATOR
+            %th DESCRIPTION
+            %th CITYWIDE BASELINE
+            %th PRIORITY POPULATION
+            %th PRIORITY POPULATION BASELINE
+            %th 2020 TARGET & CHANGE FROM BASELINE
+            %th DATASOURCE
+
+        / Overarching
+        / Row 2
+        %tr.overarching.category
+            %th{:colspan => 7} OVERARCHING
+
+        / Row 3
+        %tr.overarching
+            %td OVERALL HEALTH STATUS 
+            %td Percentage of adults who report their health as “good", "very good" or "excellent"
+            %th 81.6% (2014)
+            %td Citywide
+            %th 81.6% (2014)
+            %th 85.7% (5% increase)
+            %td 
+                %a{:href => @survey_link} #{@survey_text}
+
+        / Row 4
+        %tr.overarching
+            %td LIFE EXPECTANCY
+            %td Life expectancy at birth in years
+            %th 77.8 (2012)
+            %td Citywide
+            %th 77.8 (2012)
+            %th 79.4 (2% increase)
+            %td
+                %a{:href => "http://www.dph.illinois.gov/topics-services/birth-death-other-records"} Death Data, Division of Vital Records, Illinois Department of Public Health
+        / Row 5
+        %tr.overarching
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 6
+        %tr.overarching
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 7
+        %tr.overarching
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+        
+        / Row 8
+        %tr.overarching
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+        
+        / Row 9
+        %tr.overarching
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+        
+        / Row 10
+        %tr.overarching
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 11
+        %tr.overarching
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+
+        / Yellow Supercategory
+
+        / Access
+        / Row 12
+        %tr.yellow.category
+            %th{:colspan => 7} ACCESS
+
+        / Row 13
+        %tr.yellow
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 14
+        %tr.yellow
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 15
+        %tr.yellow
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 16
+        %tr.yellow
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 17
+        %tr.yellow
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 18
+        %tr.yellow
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 19
+        %tr.yellow
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+
+        / Orange Supercategory
+
+        / Built Environment, Economic Development, Housing
+        / Row 20
+        %tr.orange.category
+            %th{:colspan => 7} BUILT ENVIRONMENT, ECONOMIC DEVELOPMENT, HOUSING
+
+        / Row 21
+        %tr.orange
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 22
+        %tr.orange
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 23
+        %tr.orange
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 24
+        %tr.orange
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 25
+        %tr.orange
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 26
+        %tr.orange
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 27
+        %tr.orange
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 28
+        %tr.orange
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 29
+        %tr.orange
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+ 
+        / Education
+        / Row 30
+        %tr.orange.category
+            %th{:colspan => 7} EDUCATION
+
+        / Row 31
+        %tr.orange
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 32
+        %tr.orange
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 33
+        %tr.orange
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 34
+        %tr.orange
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+
+        / Blue Supercategory
+
+        / Behavioral Health
+        / Row 34
+        %tr.blue.category
+            %th{:colspan => 7} BEHAVIORAL HEALTH
+
+        / Row 35
+        %tr.blue
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 36
+        %tr.blue
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 37
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 38
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 39
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 40
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 41
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 42
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 43
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+
+        / Child & Adolescent Health
+        / Row 44
+        %tr.blue.category
+            %th{:colspan => 7} CHILD & ADOLESCENT HEALTH
+
+        / Row 45
+        %tr.blue
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 46
+        %tr.blue
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 47
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 48
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 49
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 50
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+
+        / Chronic Disease
+        / Row 51
+        %tr.blue.category
+            %th{:colspan => 7} CHRONIC DISEASE
+
+        / Row 52
+        %tr.blue
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 53
+        %tr.blue
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 54
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 55
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 56
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 57
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 58
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 59
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 60
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 61
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 62
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 63
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 64
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 65
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 66
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 67
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td             
+
+
+        / Infectious Disease
+        / Row 68
+        %tr.blue.category
+            %th{:colspan => 7} INFECTIOUS DISEASE
+
+        / Row 69
+        %tr.blue
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 70
+        %tr.blue
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 71
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 72
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 73
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 74
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+
+        / Violence
+        / Row 75
+        %tr.blue.category
+            %th{:colspan => 7} VIOLENCE
+
+        / Row 76
+        %tr.blue
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 77
+        %tr.blue
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+
+        / Row 78
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 79
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 80
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 81
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 82
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 83
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 84
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
+
+        / Row 85
+        %tr.blue
+            %td
+            %td
+            %th
+            %td
+            %th
+            %th
+            %td
