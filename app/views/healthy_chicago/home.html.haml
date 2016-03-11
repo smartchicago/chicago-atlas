@@ -2,10 +2,10 @@
 
 %h1 Healthy Chicago 2.0
 #intro
-    %p
+    %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mollis sem vel semper tempus. Sed sed fringilla mi. Pellentesque dictum tortor erat, eget ullamcorper sem malesuada sit amet. Nulla a cursus tellus. Suspendisse vel mauris at purus mollis porta eget eu ante. Proin aliquet, velit sed pretium luctus, quam ex pharetra nibh, nec facilisis lectus nibh id diam. Donec euismod sollicitudin rhoncus. Nulla eget sapien at erat gravida laoreet ac nec ex. Donec ut auctor sapien, varius finibus turpis. In semper interdum pellentesque. Phasellus auctor sapien bibendum leo tincidunt, id maximus diam mattis. Curabitur euismod aliquam varius.
 
 
-.table
+.table#indicators
     %table.table.table-bordered
         / Headers
         / Row 1
@@ -124,13 +124,15 @@
 
         / Row 13
         %tr.yellow
+            %td PRIMARY CARE PROVIDER
+            %td Percentage of adults who have a personal doctor or health care provider
+            %th 80.8% (2014)
+            %td Hispanic
+            %th 68.4% (2014)
+            %th 75.2% (10% increase)
             %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+                %a{:href => @survey_link} #{@survey_text}
+
 
         / Row 14
         %tr.yellow
@@ -202,13 +204,13 @@
 
         / Row 21
         %tr.orange
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+            %td HOUSING COST BURDEN
+            %td Percentage of households whose housing costs are at least 35% of household income
+            %th 38.7% (2014)
+            %td Citywide
+            %th 38.7%(2014)
+            %th 36.8%(5% decrease)
+            %td American Community Survey 2010-2014, US Census Bureau
 
         / Row 22
         %tr.orange
@@ -298,13 +300,14 @@
 
         / Row 31
         %tr.orange
+            %td EARLY CHILDHOOD EDUCATION
+            %td Percentage of eligible 3 to 5 year olds in early childhood education
+            %th 45.0% (2014)
+            %td Citywide
+            %th 45.0% (2014)
+            %th 54.0%(20% increase)
             %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 32
         %tr.orange
@@ -346,13 +349,14 @@
 
         / Row 35
         %tr.blue
+            %td SERIOUS PSYCHOLOGICAL DISTRESS
+            %td Percentage of adults who reported serious psychological distress based on how often they felt nervous, hopeless, restless or fidgety, depressed, worthless, or that everything was an effort in the past 30 days
+            %th 5.2% (2014)
+            %td High poverty communities
+            %th 10.3% (2014)
+            %th 9.8%(5% decrease)
             %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 36
         %tr.blue
@@ -442,23 +446,20 @@
 
         / Row 45
         %tr.blue
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+            %td INFANT MORTALITY
+            %td Rate of deaths before age 1
+            %th 7.8 per 1,000 births (2013)
+            %td High hardship communities
+            %th 9.7 per 1,000 births (2013)
+            %th 8.7 per 1,000 births (10% decrease)
+            %td Birth and Death Data, Division of Vital Records, Illinois Department of Public Health
 
         / Row 46
         %tr.blue
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+            %td EARLY INTERVENTION SERVICES
+            %td Number of children with developmental delays less than 4 years of age who have a plan for special services
+            %td{:colspan => 4} Data available 2016
+            %td Illinois Department of Healthcare and Family Services
 
         / Row 47
         %tr.blue
@@ -508,23 +509,24 @@
 
         / Row 52
         %tr.blue
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+            %td{:rowspan => 2} FRUIT & VEGETABLE SERVINGS
+            %td Percentage of high school students who reported consuming five or more fruit and vegetable servings daily in the past week
+            %th 7.8% (2013)
+            %td Citywide
+            %th 7.8% (2013)
+            %th 8.6% (10% increase)
+            %td Youth Risk Behavioral Surveillance System, Chicago Public Schools
 
         / Row 53
         %tr.blue
+            / %td
+            %td Percentage of adults who reported consuming five or more fruit and vegetable servings yesterday
+            %th 29.2% (2014) 
+            %td African-Americans
+            %th 18.9% (2014)
+            %th 20.8% (10% increase)
             %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 54
         %tr.blue
@@ -674,23 +676,19 @@
 
         / Row 69
         %tr.blue
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+            %td HEPATITIS C TREATMENT
+            %td Access and availability to treatment for persons diagnosed with Hepititis C
+            %td{:colspan => 5} Data and metric forthcoming
 
         / Row 70
         %tr.blue
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+            %td HIV INCIDENCE
+            %td Number of new HIV infections
+            %th 973 (2014)
+            %td African-American men who have sex with men
+            %th 355 (2014)
+            %th 320 (10% decrease)
+            %td HIV Surveillance, Chicago Department of Public Health
 
         / Row 71
         %tr.blue
@@ -740,23 +738,25 @@
 
         / Row 76
         %tr.blue
+            %td GUN-RELATED HOMICIDES
+            %td Age-adjusted homicide rate as the result of firearm use
+            %th 10.8 per 100,000 (2013)
+            %td African-American males
+            %th 55.4 per 100,000 (2013)
+            %th 44.3 per 100,000 (20% decrease)
             %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+                %a{:href => "http://www.dph.illinois.gov/topics-services/birth-death-other-records"} Death Data, Division of Vital Records, Illinois Department of Public Health
+
 
         / Row 77
         %tr.blue
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+            %td NON-FATAL SHOOTINGS
+            %td Number of non-fatal shootings reported
+            %th 2,435 (2014)
+            %td Citywide
+            %th 2,435 (2014)
+            %th 1,948 (20% decrease)
+            %td Chicago Police Department
 
         / Row 78
         %tr.blue
