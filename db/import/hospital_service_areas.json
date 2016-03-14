@@ -423,7 +423,7 @@
       "Auburn Gresham"
     ]
   },
-    {
+  {
     "id": 5843,
     "type": "Zip",
     "alt": "Ann & Robert H. Lurie Children's Hospital serves the entire City of Chicago.",
@@ -489,7 +489,7 @@
       "60610"
     ]
   },
-    {
+  {
     "id": 1958,
     "type": "Zip",
     "alt": "Rehabilitation Institute of Chicago serves the entire City of Chicago.",
@@ -763,11 +763,11 @@
       "60637",
       "60649",
       "60619",
-      "60617",
+      "60617"
     ]
   },
   {
-    "id": 2302,
+    "id": 2303,
     "type": "Zip",
     "alt": "",
     "areas": [
@@ -781,7 +781,7 @@
       "60619",
       "60649",
       "60628",
-      "60617",
+      "60617"
     ]
   },
   {
@@ -794,7 +794,7 @@
       "60624",
       "60639",
       "60647",
-      "60651",
+      "60651"
     ]
-  },
+  }
 ]
