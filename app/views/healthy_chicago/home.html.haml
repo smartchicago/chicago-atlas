@@ -1,8 +1,31 @@
 -title 'Healthy Chicago 2.0'
 
-%h1 Healthy Chicago 2.0
 #intro
-    %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mollis sem vel semper tempus. Sed sed fringilla mi. Pellentesque dictum tortor erat, eget ullamcorper sem malesuada sit amet. Nulla a cursus tellus. Suspendisse vel mauris at purus mollis porta eget eu ante. Proin aliquet, velit sed pretium luctus, quam ex pharetra nibh, nec facilisis lectus nibh id diam. Donec euismod sollicitudin rhoncus. Nulla eget sapien at erat gravida laoreet ac nec ex. Donec ut auctor sapien, varius finibus turpis. In semper interdum pellentesque. Phasellus auctor sapien bibendum leo tincidunt, id maximus diam mattis. Curabitur euismod aliquam varius.
+    .row
+        %h1.span10.offset1 Healthy Chicago 2.0
+        
+    .row
+        %p.span10.offset1 The Chicago Department of Public Health (CDPH), in collaboration with the Partnership for Healthy Chicago, completed a comprehensive community health assessment in 2015. From these findings, CDPH, the Partnership, public health stakeholders and community residents identified 10 priority areas to focus community health improvement efforts on over the next 4 years. These priority areas include both health outcomes and social determinants of health, as well as public health infrastructure elements like partnerships and data: 
+
+    .row
+        %ol.span10.offset2
+            %li Expanding Partnerships and Community Engagement 
+            %li Improving Social, Economic and Community Conditions 
+            %li Improving Education 
+            %li Increasing Access to Health Care and Human Services 
+            %li Promoting Behavioral Health 
+            %li Strengthening Child and Adolescent Health 
+            %li Preventing and Controlling Chronic Disease 
+            %li Preventing Infectious Diseases 
+            %li Reducing Violence 
+            %li Utilizing and Maximizing Data and Research 
+
+    .row
+        %p.span10.offset1 After completing the community health assessment, CDPH convened ten action teams to develop specific goals, objectives and strategies to address each priority. These goals, objectives and actionable strategies form Healthy Chicago 2.0, Chicago’s four-year community health improvement plan. In total, Healthy Chicago 2.0 outlines 82 objectives and over 200 strategies to help reach 30 goals. In order to measure progress towards each goal, CDPH and action team members identified 75 indicators to serve as annual benchmarks towards our 2020 targets.
+
+    .row
+        %p.span10.offset1 The indicators have been categorized into the following sections: Overarching Outcomes, Access, Community Development, Education, Behavioral Health, Child & Adolescent Health, Chronic Disease, Infectious Disease and Violence. Explore the indicator table below to learn more about what CDPH and our partners will be monitoring towards the goal of achieving health equity in Chicago.  Check back regularly for implementation updates and the status of each indicator as new data becomes available. 
+
 
 
 .table#indicators
@@ -46,74 +69,68 @@
                 %a{:href => "http://www.dph.illinois.gov/topics-services/birth-death-other-records"} Death Data, Division of Vital Records, Illinois Department of Public Health
         / Row 5
         %tr.overarching
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td PREVENTABLE HOSPITALIZATIONS
+            %td Rate of potentially preventable hospitalizations which includes certain acute illnesses (e.g., deyhydration) and worsening chronic conditions (e.g., hypertension) that might not have required hospitalization had these conditions been managed successfully by primary care providers in outpatient settings.
+            %th 172.3 per 10,000 (2011)
+            %td Citywide
+            %th 172.3 per 10,000 (2011)
+            %th 163.7 per 10,000 (5% decrease)
+            %td Discharge Data, Division of Patient Safety and Quality, Illinois Department of Public Health
 
         / Row 6
         %tr.overarching
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+            %td{:rowspan => 2} OBESITY
+            %td Percentage of Chicago Public School kindergartners who are obese
+            %th 19.1% (2012-2013)
+            %td Citywide
+            %th 19.1% (2012-2013)
+            %th 18.2% (5% decrease)
+            %td Chicago Public Schools
 
         / Row 7
         %tr.overarching
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+            // %td OBESITY 
+            %td Percentage of adults who are obese
+            %th 28.8% (2014)
+            %td Citywide
+            %th 28.8% (2014)
+            %th 27.4% (5% decrease)
+            %td  
+                %a{:href => @survey_link} #{@survey_text}
         
         / Row 8
         %tr.overarching
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+            %td DISCRIMINATION
+            %td Percentage of adults who report ever experiencing discrimination, been prevented from doing something or been hassled or made to feel inferior because of their race, ethnicity or color
+            %td{:colspan => 4} Data available 2016
+            %td 
+                %a{:href => @survey_link} #{@survey_text}
         
         / Row 9
         %tr.overarching
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+            %td ECONOMIC HARDSHIP
+            %td Population living in communities experiencing high economic hardship
+            %th 835,249 (2014)
+            %td Citywide
+            %th 835,249 (2014)
+            %th 793,487 (5% decrease)
+            %td American Community Survey 2010-2014, US Census Bureau
         
         / Row 10
         %tr.overarching
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+            %td CHILD OPPORTUNITY
+            %td Number of children (0-17 years) living in communities with low or very low child opportunity
+            %th 297,352 (2014)
+            %td Citywide
+            %th 297,352 (2014)
+            %th 282,484 (5% decrease)
+            %td diversitydatakids.org; Kirwan Institute for the Study of Race and Ethnicity
 
         / Row 11
         %tr.overarching
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-
+            %td TRAUMA-INFORMED CITY
+            %td City agencies and community-based organizations are trained and understand the impact that violence and trauma has on individuals and communities.
+            %td{:colspan => 5} Data and metric forthcoming
 
         / Yellow Supercategory
 
@@ -136,63 +153,58 @@
 
         / Row 14
         %tr.yellow
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+            %td NO HEALTH INSURANCE
+            %td Percentage of population without health insurance
+            %th 18.7% (2014)
+            %td Hispanic
+            %th 28.1% (2014)
+            %th 22.5%(20% decrease)
+            %td American Community Survey 2010-2014, US Census Bureau
 
         / Row 15
         %tr.yellow
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td DENTAL CARE EMERGENCIES
+            %td Rate of dental-related emergency department visits
+            %th 39.0 per 10,000 (2011)
+            %td High hardship communities
+            %th 53.8 per 10,000 (2011)
+            %th 51.1 per 10,000 (5% decrease)
+            %td Discharge Data, Division of Patient Safety and Quality, Illinois Department of Public Health
 
         / Row 16
         %tr.yellow
+            %td HEALTH CARE SATISFACTION
+            %td Percentage of adults who were satisfied with the health care they received
+            %td{:colspan => 4} Data available 2016
             %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 17
         %tr.yellow
+            %td ROUTINE CHECKUP
+            %td Percentage of adults who visited a doctor or health care provider for a routine checkup in the past year
+            %th 76.8% (2014)
+            %td Citywide
+            %th 76.8% (2014)
+            %th 80.6% (5% increase)
             %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 18
         %tr.yellow
+            %td RECEIVED NEEDED CARE
+            %td Percentage of adults who report it is “usually” or “always” easy to get the care, tests, or treatment they needed through their health plan
+            %td{:colspan => 4} Data available 2016
             %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 19
         %tr.yellow
+            %td ANNUAL DENTAL CLEANINGS
+            %td Percentage of adults who report having had their teeth cleaned by a dentist or dental hygienist in the past year
+            %td{:colspan => 4} Data available 2016
             %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
 
         / Orange Supercategory
@@ -214,83 +226,73 @@
 
         / Row 22
         %tr.orange
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+            %td PERMANENT SUPPORTIVE HOUSING
+            %td Number of permanent supportive housing units
+            %th 6,946 (2014)
+            %td Citywide
+            %th 6,946 (2014)
+            %th 7,293 (5% increase)
+            %td Department of Family & Support Services, City of Chicago
 
         / Row 23
         %tr.orange
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td HEALTHY HOMES
+            %td Adoption of model of healthy homes codes
+            %td{:colspan => 5} Data and metric forthcoming
 
         / Row 24
         %tr.orange
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td LEAD POISONING
+            %td Percentage of children less than 3 years of age with elevated blood lead levels (> 6 mcg/dL)
+            %th 3.4% (2014)
+            %td Very low child opportunity communities
+            %th 5.7%(2014)
+            %th 3.7%(35% decrease)
+            %td Lead Poisoning Prevention, Chicago Department of Public Health
 
         / Row 25
         %tr.orange
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td UNEMPLOYMENT
+            %td Percentage of civilian labor force who are unemployed
+            %th 8.4% (2014)
+            %td Citywide
+            %th 8.4% (2014)
+            %th 7.6% (10% decrease)
+            %td US Department of Labor; Bureau of Labor Statistics
 
         / Row 26
         %tr.orange
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td SAVINGS & ASSETS
+            %td Asset development through capital, such as savings, financial securities (stocks and bonds), property ownership, as well as education, job training and access to credit.
+            %td{:colspan => 5} Data and metric forthcoming
 
         / Row 27
         %tr.orange
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td ACTIVE TRANSPORTATION
+            %td Percentage of workers who walk, bike, or take public transportation as their primary mode of getting to work
+            %th 37.0% (2014)
+            %td Citywide
+            %th 37.0% (2014)
+            %th 40.7% (10% increase)
+            %td American Community Survey 2010-2014, US Census Bureau
 
         / Row 28
         %tr.orange
+            %td NEIGHBORHOOD SAFETY
+            %td Percentage of adults who feel safe in their neighborhood “all” or “most” of the time
+            %td{:colspan => 4} Data available 2016
             %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 29
         %tr.orange
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td TRAFFIC CRASH INJURIES
+            %td Number of serious injuries resulting from traffic crashes (all roadway users)
+            %th 2,213 (2014)
+            %td Citywide
+            %th 2,213 (2014)
+            %th 1,452  (34% decrease)
+            %td Illinois Department of Transportation
 
  
         / Education
@@ -311,33 +313,20 @@
 
         / Row 32
         %tr.orange
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+            %td SCHOOL ATTENDANCE
+            %td Percentage of school days attended by Chicago Public School students
+            %td 93.0% (2013-2014)
+            %td Homeless students
+            %td 77.0% (2013-2014)
+            %td 93.0%(21% increase)
+            %td Chicago Public Schools
 
         / Row 33
         %tr.orange
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
-
-        / Row 34
-        %tr.orange
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td POST-SECONDARY PROGRAMS
+            %td Percentage of Chicago Public School students who enroll in post-secondary programs (e.g., college, community college, vocational training)
+            %td{:colspan => 4} Data available 2016
+            %td Chicago Public Schools
 
 
         / Blue Supercategory
@@ -360,83 +349,83 @@
 
         / Row 36
         %tr.blue
+            %td BEHAVIORAL HEALTH TREATMENT
+            %td Percentage of adults who experience serious psychological distress and who are currently taking medicine or receiving treatment from a doctor or other health professional for any type of mental health condition or emotional problem
+            %th 50.3% (2014)
+            %td Adults with serious psychological distress
+            %th 50.3% (2014)
+            %th 55.3% (10% increase)
             %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 37
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td SUICIDE ATTEMPTS
+            %td Percentage of high school students who attempted suicide that resulted in an injury, poisoning, or overdose that had to be treated by a doctor or nurse in the past 12 months
+            %th 3.5% (2013)
+            %td LGBTQ youth
+            %th 11.3%(2013)
+            %th 10.2% (10% decrease)
+            %td Youth Risk Behavioral Surveillance System, Chicago Public Schools
 
         / Row 38
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
-
+            %td DEPRESSION
+            %td Percentage of high school students who reported feeling sad or hopeless almost every day for 2 or more weeks in a row so that they stopped doing some usual activities during the past 12 months
+            %th 32.5% (2013)
+            %td Female adolescents
+            %th 40.7% (2013)
+            %th 38.7% (5% decrease)
+            %td Youth Risk Behavioral Surveillance System, Chicago Public Schools
+ 
         / Row 39
         %tr.blue
+            %td PRESCRIPTION OPIATE ABUSE
+            %td Percentage of adults who report in the past 12 months either ever taking prescription pain relievers, such as oxycodone or hydrocodone, at a higher dosage or taking it more often than directed in the prescription, or ever taking a prescription pain reliever that was not prescribed to them
+            %td{:colspan => 4} Data available 2016
             %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 40
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td OPIATE OVERDOSE
+            %td Number of ambulance runs in response to suspected opiate overdose
+            %th 2,506 (2014)
+            %td Citywide
+            %th 2,506 (2014)
+            %th 2,005 (20% decrease)
+            %td Chicago Fire Department
 
         / Row 41
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td BINGE DRINKING
+            %td Percentage of adults who report binge drinking in the past month
+            %th 29.0% (2011)
+            %td Non-Hispanic white males
+            %th 45.8% (2011)
+            %th 43.5% (5% decrease)
+            %td Behavioral Risk Factor Surveillance System, Illinois Center for Health Statistics, Illinois Department of Public Health
 
         / Row 42
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td BEHAVIORAL HEALTH HOSPITALIZATIONS
+            %td Age-adjusted rate of hospitalizations due to behavioral health disorders
+            %th 226.8 per 10,000 (2011)
+            %td Citywide
+            %th 226.8 per 10,000 (2011)
+            %th 204.1 per 10,000 (10% decrease)
+            %td Discharge Data, Division of Patient Safety and Quality, Illinois Department of Public Health
 
         / Row 43
-        %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+        %tr.blue 
+            %td PRIMARY CARE UTILIZATION
+            %td Percentage of adults who visited a doctor or health care provider for a routine checkup in the past year
+            %th 76.8% (2014)
+            %td Adults with serious psychological distress
+            %th 78.9% (2014)
+            %th 86.8% (10% increase)
+            %td 
+                %a{:href => @survey_link} #{@survey_text}
 
 
         / Child & Adolescent Health
@@ -463,43 +452,43 @@
 
         / Row 47
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td{:rowspan => 3} SCHOOL-BASED HEALTH SERVICES
+            %td Number of Chicago Public School students who receive a school-based vision exam
+            %th 38,119 (2014-2015)
+            %td Citywide
+            %th 38,119 (2014-2015)
+            %th 41,931 (10% increase)
+            %td Adolescent & School Health, Chicago Department of Public Health
 
         / Row 48
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            // %td SCHOOL-BASED HEALTH SERVICES
+            %td Number of Chicago Public School students who receive a school-based dental exam
+            %th 112,402 (2014-2015)
+            %td Citywide
+            %th 112,402 (2014-2015)
+            %th 134,882 (20% increase)
+            %td Adolescent & School Health, Chicago Department of Public Health
 
         / Row 49
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            // %td SCHOOL-BASED HEALTH SERVICES
+            %td Number of Chicago Public School students who receive a school-based screening for sexually transmitted infections
+            %th 6,399 (2014-2015)
+            %td Citywide
+            %th 6,399 (2014-2015)
+            %th 7,039 (10% increase)
+            %td Adolescent & School Health, Chicago Department of Public Health
 
         / Row 50
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td TEEN BIRTH RATE
+            %td Rate of births to mothers aged 15-19 years
+            %th 35.5 per 1,000 (2013)
+            %td Very low child opportunity communities
+            %th 57.3 per 1,000 (2013)
+            %th 51.6 per 1,000 (10% decrease)
+            %td Birth Data, Division of Vital Records, Illinois Department of Public Health
 
 
         / Chronic Disease
@@ -530,143 +519,148 @@
 
         / Row 54
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td{:rowspan => 2} SODA CONSUMPTION
+            %td Percentage of high school students who reported consuming one or more can/bottle/glass of soda daily in the past week
+            %th 23.1% (2013)
+            %td Citywide
+            %th 23.1% (2013)
+            %th 21.9% (5% decrease)
+            %td Youth Risk Behavioral Surveillance System, Chicago Public Schools
 
         / Row 55
         %tr.blue
+            // %td SODA CONSUMPTION
+            %td Percentage of adults who drank soda or pop at least once per day in the past month
+            %td{:colspan => 4} Data available 2016
             %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 56
-        %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
+        %tr.blue 
+            %td{:rowspan => 2} PHYSICAL ACTIVITY
+            %td Percentage of high school students who were physically active at least 60 minutes per day during the last week
+            %th 19.6% (2013)
+            %td Citywide
+            %th 19.6% (2013)
+            %th 20.6% (5% increase)
             %td
 
         / Row 57
         %tr.blue
+            // %td PHYSICAL ACTIVITY
+            %td Percentage of adults with no leisure time physical activity in the past month
+            %th 18.3% (2014)
+            %td High poverty communities
+            %th 22.7% (2014)
+            %th 21.6% (5% decrease)
             %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 58
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td{:rowspan => 3} SMOKING
+            %td Percentage of high school students who currently smoke cigarettes
+            %th 10.7% (2013)
+            %td Citywide
+            %th 10.7% (2013)
+            %th 9.6% (10% decrease)
+            %td Youth Risk Behavioral Surveillance System, Chicago Public Schools
 
         / Row 59
         %tr.blue
+            // %td SMOKING
+            %td Percentage of adults who currently smoke cigarettes
+            %th 18.4% (2014)
+            %td Citywide
+            %th 18.4% (2014)
+            %th 16.6% (10% decrease)
             %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 60
         %tr.blue
+            // %td SMOKING
+            %td Percentage of adults who currently use electronic cigarettes
+            %th 3.9% (2014)
+            %td Adults aged 18-29 years
+            %th 6.3% (2014)
+            %th 5.7% (10% decrease)
             %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 61
         %tr.blue
+            %td{:rowspan => 3} CANCER SCREENINGS
+            %td Percentage of women aged 50-74 years reporting having a mammogram in the past 2 years
+            %th 75.6% (2014)
+            %td Citywide
+            %th 75.6% (2014)
+            %th 79.4%(5% increase)
             %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 62
         %tr.blue
+            // %td CANCER SCREENINGS
+            %td Percentage of women aged 21-65 years reporting having a Pap test within the past 3 years
+            %th 82.9% (2014)
+            %td Citywide
+            %th 82.9% (2014)
+            %th 87.0% (5% increase)
             %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 63
         %tr.blue
+            // %td CANCER SCREENINGS
+            %td Percent of adults aged 50-75 years reporting having a sigmoidoscopy/colonoscopy in the past 10 years, having a sigmoidoscopy/colonscopy in the past 5 years and a blood stool test in the past 3 years, or having a blood stool test in past year
+            %th 60.4% (2014)
+            %td High poverty communities
+            %th 47.9% (2014)
+            %th 52.7% (10% increase)
             %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 64
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td HPV VACCINATION
+            %td Percentage of female adolescents aged 13-17 years who received three or more doses of HPV vaccine
+            %th 52.6% (2014)
+            %td Citywide
+            %th 52.6% (2014)
+            %th 80.0% (52% increase)
+            %td National Immunization Survey, National Center for Immunization and Respiratory Diseases, Centers for Disease Control and Prevention
 
         / Row 65
         %tr.blue
+            %td BREAST CANCER MORTALITY
+            %td Age-adjusted rate of female breast cancer deaths
+            %th 24.9 per 100,000 (2013)
+            %td African-American women
+            %th 33.3 per 100,000 (2013)
+            %th 30.0 per 100,000 (10% decrease)
             %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+                %a{:href => "http://www.dph.illinois.gov/topics-services/birth-death-other-records"} Death Data, Division of Vital Records, Illinois Department of Public Health
 
         / Row 66
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td ASTHMA EMERGENCY DEPARTMENT VISITS
+            %td Age-adjusted emergency department visit rate due to asthma for the population less than 18 years of age
+            %th 147.7 per 10,000 (2011)
+            %td African-Americans
+            %th 280.0 per 10,000 (2011)
+            %th 252.0 per 10,000 (10% decrease)
+            %td Discharge Data, Division of Patient Safety and Quality, Illinois Department of Public Health
 
         / Row 67
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td             
+            %td DIABETES-RELATED HOSPITALIZATIONS
+            %td Age-adjusted hospitalization rate due to diabetes-related lower extremity amputations
+            %th 2.0 per 10,000 (2011)
+            %td High hardship communities
+            %th 3.0 per 10,000 (2011)
+            %th 2.7 per 10,000 (10% decrease)
+            %td Discharge Data, Division of Patient Safety and Quality, Illinois Department of Public Health
 
 
         / Infectious Disease
@@ -692,43 +686,43 @@
 
         / Row 71
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td LINKAGE TO HIV CARE
+            %td Percentage of persons with newly diagnosed HIV infections that are linked to HIV medical care within 90 days of diagnosis
+            %th 81.5% (2014)
+            %td African-Americans
+            %th 78.6% (2014)
+            %th 90.0% (15% increase)
+            %td HIV Surveillance, Chicago Department of Public Health
 
         / Row 72
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td ENGAGEMENT IN HIV CARE
+            %td Percentage of persons living with HIV that are engaged in HIV medical care
+            %th 55.0% (2012)
+            %td Citywide
+            %th 55.0% (2012)
+            %th 74.3% (35% increase)
+            %td HIV Surveillance, Chicago Department of Public Health
 
         / Row 73
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td HIV VIRAL SUPPRESSION
+            %td Percentage of persons living with HIV who have an undetectable viral load
+            %th 45.0% (2012)
+            %td Citywide
+            %th 45.0% (2012)
+            %th 90.0% (100% increase)
+            %td HIV Surveillance, Chicago Department of Public Health
 
         / Row 74
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td CHLAMYDIA
+            %td Rate of reported chlamydia cases
+            %th 1,013 per 100,000 (2013)
+            %td African-American females under 25 years
+            %th 4,567 per 100,000 (2013)
+            %th 3,425 per 100,000 (25% decrease)
+            %td STI Surveillance, Chicago Department of Public Health
 
 
         / Violence
@@ -760,80 +754,77 @@
 
         / Row 78
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td SEXUAL ASSAULT
+            %td Number of sexual assault crimes reported
+            %th 2,395 (2014)
+            %td Citywide
+            %th 2,395 (2014)
+            %th 2,156 (10% decrease)
+            %td Chicago Police Department
 
         / Row 79
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td VIOLENT CRIME IN PUBLIC SPACES
+            %td Number of gun-related violent crimes reported that occurred in public spaces (e.g. street, sidewalk, park, etc)
+            %th 9,577 (2014)
+            %td Citywide
+            %th 9,577 (2014)
+            %th 7,662 (20% decrease)
+            %td Chicago Police Department
 
         / Row 80
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td SUSPENSIONS
+            %td Percentage of Chicago Public School students who received out-of-school suspensions
+            %th 2.6% (2014-2015)
+            %td Citywide
+            %th 2.6% (2014-2015)
+            %th 1.3% (50% decrease)
+            %td Chicago Public Schools
 
         / Row 81
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td SCHOOL FIGHTS
+            %td Percentage of high school students who were in a physical fight on school property one or more times during the past 12 months
+            %th 16.9% (2013)
+            %td Citywide
+            %th 16.9% (2013)
+            %th 12.7% (25% decrease)
+            %td Youth Risk Behavioral Surveillance System, Chicago Public Schools
 
         / Row 82
         %tr.blue
+            %td BULLYING
+            %td Percentage of high school students who report being bullied on school property
+            %th 13.0% (2013)
+            %th LGBTQ youth
+            %td 30.4% (2013)
+            %th 27.4% (10% decrease)
             %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 83
         %tr.blue
-            %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+            %td SCHOOL SAFETY
+            %td Percentage of high school students who reported missing school due to safety concerns
+            %th 12.9% (2013)
+            %td Citywide
+            %th 12.9% (2013)
+            %th 10.3% (20% decrease)
+            %td Youth Risk Behavioral Surveillance System, Chicago Public Schools
 
         / Row 84
         %tr.blue
+            %td SOCIAL COHESION
+            %td Shared values and trust among neighbors
+            %td{:colspan => 4} Data and metric forthcoming
             %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+                %a{:href => @survey_link} #{@survey_text}
 
         / Row 85
         %tr.blue
+            %td DISCRIMINATION FROM CRIMINAL JUSTICE SYSTEM
+            %td Percentage of adults who report ever experiencing discrimination, been prevented from doing something or been hassled or made to feel inferior from the police or in the courts because of their race, ethnicity or color
+            %td{:colspan => 4} Data available 2016
             %td
-            %td
-            %th
-            %td
-            %th
-            %th
-            %td
+                %a{:href => @survey_link} #{@survey_text}
