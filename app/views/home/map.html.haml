@@ -282,7 +282,7 @@
         %p 
           %small #{@current_dataset_description}
           - if @current_dataset_url != ''
-            = raw(render_source_links(@current_dataset_provider, @current_dataset_url, @current_dataset_slug+".json", true))
+            = raw(render_source_links(@current_dataset_provider, @current_dataset_url, @current_dataset_slug+".csv", true))
         
     %br
     #map
