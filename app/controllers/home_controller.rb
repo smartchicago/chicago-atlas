@@ -1,7 +1,6 @@
 class HomeController < ApplicationController
   include ApplicationHelper
 
-  caches_action :index
 
   def index
     @current_menu = 'home'
