@@ -1,0 +1,115 @@
+// Place all the styles related to the HealthyChicago controller here.
+// They will automatically be included in application.css.
+// You can use Less here: http://lesscss.org/
+
+@purple: #ccc0da;
+@purple_category: #8064a2;
+@yellow: #ffea93;
+@yellow_category: #ffcc00;
+@orange: #fcd5b4;
+@orange_category: #f79646;
+@blue: #b8cce4;
+@blue_category: #4f81bd;
+
+#indicators a {
+    color: #005580;
+    text-decoration: underline;
+}
+
+#indicators a:hover,
+#indicators a:focus {
+  color: #0088cc;
+}
+
+.table {
+    color: black;
+    border: 0;
+    font-size: 14px;
+}
+
+.table th,
+.table td {
+    border-left: 1px solid rgba(255, 255, 255, 0.7);
+    border-top: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+td.indicator {
+    font-weight: bold;
+}
+
+.table tr td:last-child,
+.table tr th:last-child {
+    border-right: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.table tr:last-child th,
+.table tr:last-child td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+tr.headers th {
+    text-align: center;
+    vertical-align: bottom;
+}
+
+tr.category th {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+tr.headers {
+    color: white;
+    background-color: black;
+}
+
+tr.overarching {
+    background-color: @purple;
+}
+
+tr.overarching.category {
+    background-color: @purple_category;
+    text-align: center;
+}
+
+tr.yellow {
+    background-color: @yellow;
+}
+
+tr.yellow.category {
+    background-color: @yellow_category;
+}
+
+tr.orange {
+    background-color: @orange;
+}
+
+tr.orange.category {
+    background-color: @orange_category;
+}
+
+tr.blue {
+    background-color: @blue;
+}
+
+tr.blue.category {
+    background-color: @blue_category;
+}
+
+td.stat {
+    text-align: center
+}
+
+td.stat .statistic {
+    font-weight: bold;
+}
+
+#intro {
+    margin-top: 40px;
+    text-align: justify;
+}
+
+#indicators {
+    margin-top: 40px;
+}
+
+
