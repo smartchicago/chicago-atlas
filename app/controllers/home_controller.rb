@@ -92,6 +92,7 @@ class HomeController < ApplicationController
     respond_to do |format|
       format.html # render our template
       format.json { render :json => @display_geojson }
+      format.csv { send_data @current_dataset.to_csv }
     end
 
   end
