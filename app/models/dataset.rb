@@ -40,21 +40,27 @@ class Dataset < ActiveRecord::Base
 
       # Iterate through every geographic area
       areas.each do |area_id|
-        row = []
-        row.append(Geography.select("name").where(:id => area_id.geography_id).first.name)
+        
+        # Skip area id 99, it's a catch-all id that doesn't correspond to any
+        # real geographic areas in the city.
+        if area_id.geography_id != 99
+          row = []
+          row.append(Geography.select("name").where(:id => area_id.geography_id).first.name)
 
-        # Iterate through every dataset year
-        year_range.each do |y|
+          # Iterate through every dataset year
+          year_range.each do |y|
 
-          stat = Statistic.select("value").where(:dataset_id => id, :geography_id => area_id.geography_id, :year => y.year).first.value
-          if stat.nil?
-            row.append("")
-          else
-            row.append(stat)
+            stat = Statistic.select("value").where(:dataset_id => id, :geography_id => area_id.geography_id, :year => y.year).first.value
+            if stat.nil?
+              row.append("")
+            else
+              row.append(stat)
+            end
           end
-        end
 
-        csv << row
+          csv << row
+        end
+      
       end
 
     end
