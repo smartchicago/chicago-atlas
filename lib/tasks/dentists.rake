@@ -11,6 +11,11 @@ namespace :db do
           d.delete
         end
 
+        Dataset.where("name LIKE 'Dentists%s'").each do |d|
+          Statistic.delete_all("dataset_id = #{d.id}")
+          d.delete
+        end   
+
         datasets = [
           {:category => 'Dentists', :name => 'Total Dentists', :description => 'Total practicing dentists per 1,000 residents by Chicago zip code', :stat_type => 'rate', :rate => true, :csv_column => 'dentists_total' },
           {:category => 'Dentists', :name => 'General Dentists (No Specialty)', :description => 'Total practicing general dentists with no specialty per 1,000 residents by Chicago zip code', :stat_type => 'rate', :rate => true, :csv_column => 'dentists_general' },
@@ -34,9 +39,8 @@ namespace :db do
           )
           dataset.save!
           new_datasets.append(dataset)
-        end
 
-        puts new_datasets.length
+        end
 
         csv_text = File.read("db/import/dentists_by_zipcode.csv")
         csv = CSV.parse(csv_text, :headers => true)
@@ -58,6 +62,11 @@ namespace :db do
 
           end
 
+        end
+
+        new_datasets.each do |d|
+          stat_count = Statistic.count(:conditions => "dataset_id = #{d.id}")
+          puts "Added #{stat_count} to #{d.name} dataset!"
         end
 
       end
