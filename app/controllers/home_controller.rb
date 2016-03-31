@@ -66,6 +66,8 @@ class HomeController < ApplicationController
         @map_colors = GlobalConstants::GREENS
       elsif (@current_category.name == 'Healthcare Providers')
         @map_colors = GlobalConstants::PURPLES
+      elsif (@current_category.name == 'Dentists')
+        @map_colors = GlobalConstants::ORANGES
       end
 
 
