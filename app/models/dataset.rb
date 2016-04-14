@@ -43,7 +43,7 @@ class Dataset < ActiveRecord::Base
         
         # Skip area id 99, it's a catch-all id that doesn't correspond to any
         # real geographic areas in the city.
-        if area_id.geography_id != 99
+        if area_id.geography_id != 99 and area_id.geography_id != 60633
           row = []
           row.append(Geography.select("name").where(:id => area_id.geography_id).first.name)
 
