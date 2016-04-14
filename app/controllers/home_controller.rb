@@ -1,7 +1,6 @@
 class HomeController < ApplicationController
   include ApplicationHelper
 
-  caches_action :index
 
   def index
     @current_menu = 'home'
@@ -67,6 +66,8 @@ class HomeController < ApplicationController
         @map_colors = GlobalConstants::GREENS
       elsif (@current_category.name == 'Healthcare Providers')
         @map_colors = GlobalConstants::PURPLES
+      elsif (@current_category.name == 'Dentists')
+        @map_colors = GlobalConstants::ORANGES
       end
 
 
@@ -92,6 +93,7 @@ class HomeController < ApplicationController
     respond_to do |format|
       format.html # render our template
       format.json { render :json => @display_geojson }
+      format.csv { send_data @current_dataset.to_csv }
     end
 
   end

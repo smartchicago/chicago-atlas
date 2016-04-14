@@ -314,6 +314,7 @@ module ApplicationHelper
   end
 
   def render_source_links(provider_name, provider_url, source_url, is_oneline=true)
+
     source_string = "<small class='muted'>
       <br>
       Source: 
@@ -326,12 +327,17 @@ module ApplicationHelper
     else
       source_string << "<br>"
     end
-    source_string << "<a href='#{source_url}' class='nowrap'>
-        <i class='icon icon-download-alt'></i>
-        Data
-      </a> | <a href='/about#about-the-data'><i class='fa fa-info-circle'></i></a>
-    </small>"
 
+    if source_url == "affordable_resources.csv"
+      source_string << "<a href='/about#about-the-data'> <i class='fa fa-info-circle'></i></a>
+      </small>"
+    else
+      source_string << "<a href='#{source_url}' class='nowrap'>
+          <i class='icon icon-download-alt'></i>
+          Data
+        </a> | <a href='/about#about-the-data'><i class='fa fa-info-circle'></i></a>
+      </small>"
+    end
     return source_string
   end
 
