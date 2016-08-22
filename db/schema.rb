@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151013231857) do
+ActiveRecord::Schema.define(:version => 20160822165221) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -119,6 +119,7 @@ ActiveRecord::Schema.define(:version => 20151013231857) do
     t.string   "chna_url"
     t.string   "twitter"
     t.string   "facebook"
+    t.string   "doc_embed_url"
   end
 
   create_table "statistics", :force => true do |t|

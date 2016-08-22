@@ -23,6 +23,7 @@ class Provider < ActiveRecord::Base
                   :area_alt,
                   :chna_url,
                   :twitter,
-                  :facebook
+                  :facebook,
+                  :doc_embed_url
 
 end
