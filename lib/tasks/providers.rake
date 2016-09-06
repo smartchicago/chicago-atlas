@@ -69,6 +69,24 @@ namespace :db do
 
         puts 'Done!'
       end
+
+      desc "Import Hospital HDA Google Docs"
+      task :hda => :environment do
+        require 'json'
+
+        j = []
+        File.open("db/import/hospital_hda_docs.json", "r") do |f|
+          j = JSON.load(f)
+        end
+
+        j.each do |h|
+          hospital = Provider.where(:primary_type => 'Hospital', :src_id => h['id']).first
+          hospital.doc_embed_url = h['url']
+          hospital.save!
+          puts "Added HDA URL for #{hospital.name}."
+        end
+
+      end
     end
   end
 end

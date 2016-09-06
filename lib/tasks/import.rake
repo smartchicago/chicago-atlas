@@ -29,6 +29,7 @@ namespace :db do
     desc "Import all provider data"
     task :providers => :environment do
       Rake::Task["db:import:providers:hospitals"].invoke
+      Rake::Task["db:import:providers:hda"].invoke
       Rake::Task["db:import:provider_stats:all"].invoke
     end
 
