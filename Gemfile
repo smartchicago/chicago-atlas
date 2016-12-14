@@ -36,13 +36,19 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 #Use Pg for postgresql
 gem 'pg'
+
 #Use bootstrap-sass for bootstrap-sass
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
-#User for password strength
+
+#Use for password strength
 gem 'devise_zxcvbn'
 
-gem 'mail'
+#Use for Amazon upload
+gem 'aws-sdk', '~>2'
+
+#Use for security
+gem 'dotenv'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
