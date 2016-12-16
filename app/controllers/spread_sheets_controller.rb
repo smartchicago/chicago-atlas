@@ -4,7 +4,18 @@ class SpreadSheetsController < ApplicationController
   # GET /spread_sheets
   # GET /spread_sheets.json
   def index
-    @spread_sheets = SpreadSheet.all
+    @spread_sheets  =   SpreadSheet.all
+    @url            =   SpreadSheet.first.src
+   # send_data data, :filename => "efw"
+    open('downloads/1.xlsx', 'wb') do |file|
+      file << open(@url.to_s).read
+    end
+
+    file = Roo::Spreadsheet.open('./downloads/1.xlsx')
+    file.info
+    @data = file.sheet(0)
+    @val = @data.cell(1,1)
+    byebug
   end
 
   # GET /spread_sheets/1

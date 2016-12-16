@@ -42,7 +42,7 @@ gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 #Use for password strength
 gem 'devise_zxcvbn'
-
+gem 'roo', '~>2.5.0'
 
 ###########################################
 group :development, :test do
