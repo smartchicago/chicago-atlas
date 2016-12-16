@@ -13,27 +13,18 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  
+
 
   <%= yield :top_content %>
 
 
-  <div class="container">
-    <% flash.each do |key, value| %>
-    <% puts "@@@@@@@@@@@@@@@@@@" %>
-    <% puts key %>
-    <% if key == "warning" || key == "danger" || key == "alert" %>
-        <div class="alert alert-dismissible alert-<%= key %>">
-          <%= value %>
-        </div>
-    <% end %>
-    <% end %>
-  </div>
+
 
   <div class="container">
       <h1><%= yield :header %></h1>
     <%= yield %>
   </div>
+
 </body>
 
 <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>

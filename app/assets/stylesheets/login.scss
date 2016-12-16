@@ -87,3 +87,10 @@ $whiteColor: #F2F2F2;
   display: block;
   margin-top: 10px;
 }
+
+.alert {
+  background-color:  $secondaryColor;
+  max-width: 330px;
+  align-items: center;
+  margin-top: 10px;
+}

@@ -1,6 +1,11 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 
+$primaryColor: #13B5EA;
+$secondaryColor:  #EF3E42;
+$whiteColor: #F2F2F2;
+
+
 body,
 html {
   height: 100%;
@@ -9,7 +14,7 @@ html {
 
 body {
   text-align: center;
-  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+
 
   .alert-alert {
     @extend .alert-warning;
@@ -22,4 +27,12 @@ body {
 
 form input {
   color: black;
+}
+
+.container-table {
+    display: table;
+}
+.vertical-center-row {
+    display: table-cell;
+    vertical-align: middle;
 }
