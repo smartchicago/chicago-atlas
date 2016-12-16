@@ -39,11 +39,13 @@ gem 'pg'
 #Use bootstrap-sass for bootstrap-sass
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
-#User for password strength
+#Use for password strength
 gem 'devise_zxcvbn'
+gem 'carrierwave'
+gem 'fog'
+gem 'figaro'
 
-gem 'mail'
-
+###########################################
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

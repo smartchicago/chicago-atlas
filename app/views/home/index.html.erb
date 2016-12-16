@@ -2,10 +2,7 @@
   <div class="jumbotron">
     <div class="container">
       <h1>Welcome!</h1>
-      <p>Register to get started.</p>
-      <p>
-        <%= link_to 'Register', new_user_registration_path, class: 'btn btn-primary btn-lg' %>
-      </p>
+      <%= link_to('Start Upload', new_spreadsheet_path, :class=> "btn_new_spreadsheet") %>
     </div>
   </div>
 <% end %>
