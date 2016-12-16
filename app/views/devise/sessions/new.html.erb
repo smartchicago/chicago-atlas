@@ -1,20 +1,23 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4">
-            <h1 class="text-center login-title">Sign in to continue to Bootsnipp</h1>
+            <h1 class="text-center login-title">Sign in Only For Chicago Health Admins</h1>
             <div class="account-wall">
                 <%= image_tag ("logo_small.png"), class: "profile-img" %>
-                <form class="form-signin">
-                <input type="text" class="form-control" placeholder="Email222" required autofocus>
-                <input type="password" class="form-control" placeholder="Password" required>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">
-                    Sign in</button>
-                <label class="checkbox pull-left">
-                    <input type="checkbox" value="remember-me">
-                    Remember me
-                </label>
-                <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
-                </form>
+                <%= form_for(resource, as: resource_name, :html => {:class=>"form-signin"}, url: session_path(resource_name )) do |f| %>
+                  <%= f.email_field :email, autofocus: true, required: true, :class=> "form-control", :placeholder=>"admin@chicagohealth.org"%>
+                  <%= f.password_field :password, autocomplete: "off", :class=> "form-control", :placeholder=>"Password"%>
+                  <% if devise_mapping.rememberable? -%>
+                    <div class="form-group">
+                        <div class="checkbox">
+                          <label>
+                            <%= f.check_box :remember_me %> Remember me
+                          </label>
+                      </div>
+                    </div>
+                  <% end -%>
+                  <%= f.submit "Log in", :class=>"btn btn-lg btn-primary btn-block"%>
+                <% end %>
             </div>
             <a href="#" class="text-center new-account">Create an account </a>
         </div>
@@ -31,8 +34,7 @@
 
 <%= form_for(resource, as: resource_name, :html => {:class=>"form-horizontal"}, url: session_path(resource_name )) do |f| %>
   <div class="form-group">
-    <%= f.label :email%>
-    <%= f.email_field :email, autofocus: true, :class=> "form-control", :placeholder=>"Email"%>
+
   </div>
 
   <div class="form-group">
