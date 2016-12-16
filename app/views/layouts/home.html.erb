@@ -46,7 +46,9 @@
 
 <div class="container">
   <% flash.each do |key, value| %>
-  <% if key == "warning" || key == "danger" %>
+  <% puts "@@@@@@@@@@@@@@@@@@" %>
+  <% puts key %>
+  <% if key == "warning" || key == "danger" || key == "alert" %>
       <div class="alert alert-dismissible alert-<%= key %>">
         <%= value %>
       </div>
