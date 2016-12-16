@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :sheets
   get 'home/index'
 
   devise_for :users

@@ -11,6 +11,7 @@
 /.env.development
 /.env.test
 /.env.production
+/.env.local
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
