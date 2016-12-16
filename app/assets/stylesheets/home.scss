@@ -20,5 +20,8 @@ body {
   .alert-notice {
     @extend .alert-info;
   }
+}
 
+form input{
+  color: black;
 }

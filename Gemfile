@@ -31,7 +31,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
+gem 'carrierwave'
+gem 'fog'
 #Use Devise for user authentication
 gem 'devise'
 #Use Pg for postgresql
@@ -41,9 +42,7 @@ gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 #Use for password strength
 gem 'devise_zxcvbn'
-gem 'carrierwave'
-gem 'fog'
-gem 'figaro'
+
 
 ###########################################
 group :development, :test do

@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Spread Sheets</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @spread_sheets.each do |spread_sheet| %>
+      <tr>
+        <td><%= spread_sheet.name %></td>
+        <td><%= link_to 'Show', spread_sheet %></td>
+        <td><%= link_to 'Edit', edit_spread_sheet_path(spread_sheet) %></td>
+        <td><%= link_to 'Destroy', spread_sheet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Spread sheet', new_spread_sheet_path %>

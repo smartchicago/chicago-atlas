@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @spread_sheet.name %>
+</p>
+
+<p>
+  <%= @spread_sheet.src.to_s %>
+</p>
+<%= link_to 'Edit', edit_spread_sheet_path(@spread_sheet) %> |
+<%= link_to 'Back', spread_sheets_path %>
