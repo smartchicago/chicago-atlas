@@ -318,7 +318,7 @@ PLATFORMS
 
 DEPENDENCIES
   autoprefixer-rails
-  bootstrap-sass
+  bootstrap-sass (~> 3.3.1)
   byebug
   carrierwave
   coffee-rails (~> 4.1.0)

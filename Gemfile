@@ -38,7 +38,7 @@ gem 'devise'
 #Use Pg for postgresql
 gem 'pg'
 #Use bootstrap-sass for bootstrap-sass
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 3.3.1'
 gem 'autoprefixer-rails'
 #Use for password strength
 gem 'devise_zxcvbn'
