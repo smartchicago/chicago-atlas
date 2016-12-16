@@ -13,13 +13,6 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="container">
-    <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key %>">
-        <%= value %>
-      </div>
-    <% end %>
-  </div>
   <nav class="navbar navbar-inverse">
   <div class="container">
     <div class="navbar-header">
@@ -51,6 +44,19 @@
 </nav>
 
   <%= yield :top_content %>
+
+
+  <div class="container">
+    <% flash.each do |key, value| %>
+    <% puts "@@@@@@@@@@@@@@@@@@" %>
+    <% puts key %>
+    <% if key == "warning" || key == "danger" || key == "alert" %>
+        <div class="alert alert-dismissible alert-<%= key %>">
+          <%= value %>
+        </div>
+    <% end %>
+    <% end %>
+  </div>
 
   <div class="container">
       <h1><%= yield :header %></h1>
