@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+
+  <title>Admin | Chicago Health Atlas</title>
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+  <div class="container">
+      <div class="row profile">
+  		<div class="col-md-3">
+  			<div class="profile-sidebar">
+  				<!-- SIDEBAR USERPIC -->
+  				<div>
+  					<%= image_tag ("logo_small.png") %>
+  				</div>
+  				<!-- END SIDEBAR USERPIC -->
+  				<!-- SIDEBAR USER TITLE -->
+  				<div class="profile-usertitle">
+  					<div class="profile-usertitle-name">
+  						Chicago Health Atlas
+  					</div>
+  					<div class="profile-usertitle-job">
+  						Administrator Panel
+  					</div>
+  				</div>
+  				<!-- END SIDEBAR USER TITLE -->
+
+  				<!-- SIDEBAR MENU -->
+  				<div class="profile-usermenu">
+  					<ul class="nav">
+  						<li class="active">
+                    <%= link_to '<i class="glyphicon glyphicon-home"></i> Home'.html_safe, root_path %>
+  						</li>
+  						<li class="active">
+  							<%= link_to '<i class="glyphicon glyphicon-map-marker"></i> Data Management'.html_safe, new_spread_sheet_path %>
+  						</li>
+  						<li class="active">
+                	  <%= link_to '<i class="glyphicon glyphicon-user"></i> Profile'.html_safe,  edit_user_registration_path %>
+  						</li>
+  						<li class="active">
+                      <%= link_to '<i class="glyphicon glyphicon-flag"></i> Sign Out'.html_safe, destroy_user_session_path, method: :delete %>
+  						</li>
+  					</ul>
+  				</div>
+  				<!-- END MENU -->
+  			</div>
+  		</div>
+      <%= yield :top_content %>
+
+      <div class="container">
+          <h1><%= yield :header %></h1>
+        <%= yield %>
+      </div>
+
+  	</div>
+  </div>
+
+<div class="container">
+  <% flash.each do |key, value| %>
+  <% puts "@@@@@@@@@@@@@@@@@@" %>
+  <% puts key %>
+  <% if key == "warning" || key == "danger" || key == "alert" %>
+      <div class="alert alert-dismissible alert-<%= key %>">
+        <%= value %>
+      </div>
+  <% end %>
+  <% end %>
+</div>
+
+</body>
+
+<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+</html>

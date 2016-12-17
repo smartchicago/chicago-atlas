@@ -1,0 +1,1 @@
+json.partial! "spread_sheets/spread_sheet", spread_sheet: @spread_sheet

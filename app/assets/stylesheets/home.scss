@@ -1,17 +1,20 @@
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
 
-/*
- * Base structure
- */
+$primaryColor: #13B5EA;
+$secondaryColor:  #EF3E42;
+$whiteColor: #F2F2F2;
 
-html,
-body {
+
+body,
+html {
   height: 100%;
-  background-color: #333;
+  background-color: #fff;
 }
+
 body {
-  color: #fff;
   text-align: center;
-  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+
 
   .alert-alert {
     @extend .alert-warning;
@@ -20,5 +23,16 @@ body {
   .alert-notice {
     @extend .alert-info;
   }
+}
 
+form input {
+  color: black;
+}
+
+.container-table {
+    display: table;
+}
+.vertical-center-row {
+    display: table-cell;
+    vertical-align: middle;
 }
