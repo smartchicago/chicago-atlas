@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SpreadSheetTest < ActiveSupport::TestCase
+class UploaderTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  resources :spread_sheets
  
+  resources :uploaders
   authenticated :user do
     root to: 'home#index', as: :authenticated_root
   end

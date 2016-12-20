@@ -1,1 +1,0 @@
-json.array! @spread_sheets, partial: 'spread_sheets/spread_sheet', as: :spread_sheet
