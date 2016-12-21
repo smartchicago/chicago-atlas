@@ -1,10 +1,11 @@
 class UploadersController < ApplicationController
   before_action :set_uploader, only: [:show, :edit, :update, :destroy]
-
   # GET /uploaders
   # GET /uploaders.json
   def index
     @uploaders = Uploader.all
+    @current   = Uploader.first
+    ResourceParser.run(@current.path.to_s)
   end
 
   # GET /uploaders/1
