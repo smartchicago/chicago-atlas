@@ -9,7 +9,7 @@ class Parser
   def parse(&block)
     download_file
     block.call
-    #delete_file
+    delete_file
   end
 
   private

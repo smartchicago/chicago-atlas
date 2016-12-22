@@ -4,7 +4,7 @@ class UploadersController < ApplicationController
   # GET /uploaders.json
   def index
     @uploaders = Uploader.all
-    @current   = Uploader.first
+    @current   = Uploader.second
     ResourceParser.run(@current.path.to_s)
   end
 
