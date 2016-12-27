@@ -2,10 +2,12 @@ class Parser
   attr_accessor :cloned_path
   attr_accessor :new_file_path
   attr_accessor :uploader_id
+  attr_accessor :current_sheet
 
-  def initialize(file_path, id)
-    @cloned_path = file_path
-    @uploader_id = id
+  def initialize(processing_sheet)
+    @cloned_path    =   processing_sheet.path
+    @uploader_id    =   processing_sheet.id
+    @current_sheet  =   processing_sheet
   end
 
   def parse(&block)
@@ -22,7 +24,7 @@ class Parser
     def download_file
       create_new_file_path
       File.open(@new_file_path, 'wb') do |file|
-        file.puts open(@cloned_path).read
+        file.puts open(@cloned_path.to_s).read
       end
     end
 

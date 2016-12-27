@@ -5,7 +5,7 @@ class UploadersController < ApplicationController
   def index
     @uploaders = Uploader.all
     @current   = Uploader.first
-    ResourceParser.run(@current.path.to_s, @current.id)
+    ResourceParser.run(@current)
   end
 
   # GET /uploaders/1

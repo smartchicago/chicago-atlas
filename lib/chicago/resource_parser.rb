@@ -37,6 +37,8 @@ class ResourceParser < Parser
   #Main engine for analyse of excel file
   def run
     parse do
+      self.current_sheet.processing!
+
       ss = Roo::Spreadsheet.open(self.new_file_path)
       ActiveRecord::Base.transaction do
         FIRST_ROW.upto ss.last_row do |row|
@@ -55,7 +57,7 @@ class ResourceParser < Parser
           new_resource.demo_group_id      = demography.id
           new_resource.year  = ss.cell(row, COLUMNS_HEADER[:year])
 
-          rsc_array = -1
+          rsc_array   = -1
           rsc_array.upto COLUMNS.length-1 do |rsc_id|
             rsc_start = 7
             rsc_start.upto ss.last_column-1 do |col_id|
@@ -65,14 +67,18 @@ class ResourceParser < Parser
               end
             end
           end
-          new_resource.save
+          if new_resource.save
+            self.current_sheet.completed!
+          else
+            self.current_sheet.uploaded!
+          end
         end
       end
     end
   end
 
   #initialize resource class
-  def self.run(file_path, id)
-    ResourceParser.new(file_path, id).run
+  def self.run(processing_sheet)
+    ResourceParser.new(processing_sheet).run
   end
 end
