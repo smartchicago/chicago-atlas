@@ -4,10 +4,11 @@ class Parser
   attr_accessor :uploader_id
   attr_accessor :current_sheet
 
-  def initialize(processing_sheet)
-    @cloned_path    =   processing_sheet.path
-    @uploader_id    =   processing_sheet.id
-    @current_sheet  =   processing_sheet
+  def initialize(uploader_id)
+    @sheet          =   Uploader.find(uploader_id)
+    @cloned_path    =   @sheet.path
+    @uploader_id    =   @sheet.id
+    @current_sheet  =   @sheet
   end
 
   def parse(&block)

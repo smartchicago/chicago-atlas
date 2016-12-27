@@ -67,18 +67,15 @@ class ResourceParser < Parser
               end
             end
           end
-          if new_resource.save
-            self.current_sheet.completed!
-          else
-            self.current_sheet.uploaded!
-          end
+          new_resource.save
         end
       end
+      self.current_sheet.completed!
     end
   end
 
   #initialize resource class
-  def self.run(processing_sheet)
-    ResourceParser.new(processing_sheet).run
+  def self.run(uploader_id)
+    ResourceParser.new(uploader_id).run
   end
 end
