@@ -4,8 +4,8 @@ class UploadersController < ApplicationController
   # GET /uploaders.json
   def index
     @uploaders = Uploader.all
-    @current   = Uploader.second
-    ResourceParser.run(@current.path.to_s)
+    @current   = Uploader.first
+    ResourceParser.run(@current.path.to_s, @current.id)
   end
 
   # GET /uploaders/1
@@ -29,6 +29,7 @@ class UploadersController < ApplicationController
 
     respond_to do |format|
       if @uploader.save
+        @uploader.uploaded!
         format.html { redirect_to @uploader, notice: 'Uploader was successfully created.' }
         format.json { render :show, status: :created, location: @uploader }
       else

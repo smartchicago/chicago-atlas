@@ -1,9 +1,11 @@
 class Parser
   attr_accessor :cloned_path
   attr_accessor :new_file_path
+  attr_accessor :uploader_id
 
-  def initialize(file_path)
+  def initialize(file_path, id)
     @cloned_path = file_path
+    @uploader_id = id
   end
 
   def parse(&block)
