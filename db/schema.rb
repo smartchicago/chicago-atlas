@@ -44,13 +44,13 @@ ActiveRecord::Schema.define(version: 20161220155539) do
   end
 
   create_table "resources", force: :cascade do |t|
+    t.integer  "uploader_id"
     t.integer  "category_id"
     t.integer  "sub_category_id"
     t.integer  "indicator_id"
     t.integer  "year"
     t.integer  "geo_group_id"
     t.integer  "demo_group_id"
-    t.integer  "upload_id"
     t.integer  "number"
     t.float    "cum_number"
     t.float    "ave_annual_number"
@@ -71,13 +71,6 @@ ActiveRecord::Schema.define(version: 20161220155539) do
     t.string   "flag"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-  end
-
-  create_table "spread_sheets", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "src"
   end
 
   create_table "uploaders", force: :cascade do |t|

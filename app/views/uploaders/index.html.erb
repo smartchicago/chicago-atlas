@@ -5,13 +5,21 @@
 <table>
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Show</th>
+      <th>Edit</th>
+      <th>Destroy</th>
     </tr>
   </thead>
 
   <tbody>
     <% @uploaders.each do |uploader| %>
       <tr>
+        <td><%= uploader.id %></td>
+        <td><%= uploader.path %></td>
+        <td><%= uploader.status %></td>
         <td><%= link_to 'Show', uploader %></td>
         <td><%= link_to 'Edit', edit_uploader_path(uploader) %></td>
         <td><%= link_to 'Destroy', uploader, method: :delete, data: { confirm: 'Are you sure?' } %></td>
