@@ -29,6 +29,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Unicorn as the app server
 # gem 'unicorn'
 
+###########################################
+
 gem 'carrierwave'
 gem 'fog'
 gem 'devise'
@@ -37,8 +39,10 @@ gem 'bootstrap-sass', '~> 3.3.1'
 gem 'autoprefixer-rails'
 gem 'devise_zxcvbn'
 gem 'roo', '~>2.5.0'
+gem 'sidekiq'
 
 ###########################################
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
