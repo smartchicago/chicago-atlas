@@ -36,3 +36,30 @@ form input {
     display: table-cell;
     vertical-align: middle;
 }
+
+.btn_custom{
+    border-color: #326E99;
+    background-color: #3F8ABF;
+    border-style: solid;
+    border-width: 0px 0px 3px;
+    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
+    color: #FFFFFF;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-block;
+    font-style: normal;
+    overflow: hidden;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    transition: all 200ms ease-in-out 0s;
+    white-space: nowrap;
+    font-family: "Gotham Rounded A","Gotham Rounded B",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    padding: 15px 40px;
+    font-size: 16px;
+}
+
+.btn_custom:hover{
+  background-color: #3979a7;
+}
