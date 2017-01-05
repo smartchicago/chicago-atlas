@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
- 
   resources :uploaders
   authenticated :user do
     root to: 'home#index', as: :authenticated_root
   end
-root to: redirect('/users/sign_in')
+
+  root to: redirect('/users/sign_in')
 
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
