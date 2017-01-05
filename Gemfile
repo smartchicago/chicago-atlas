@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
+ruby '2.3.1'
 
+#  Heroku Gem
+gem 'rails_12factor'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
@@ -39,6 +42,8 @@ gem 'autoprefixer-rails'
 gem 'devise_zxcvbn'
 gem 'roo', '~>2.5.0'
 gem 'sidekiq'
+
+gem 'puma'
 
 ###########################################
 
