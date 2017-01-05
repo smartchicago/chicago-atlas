@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<p><%= @uploader.id %></p>
+<p><a href="<%= @uploader.path %>"><%= @uploader.name %></a></p>
 <%= link_to 'Edit', edit_uploader_path(@uploader) %> |
 <%= link_to 'Back', uploaders_path %>

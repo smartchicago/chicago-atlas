@@ -20,7 +20,7 @@
         <td><%= uploader.id %></td>
         <td><a href="<%= uploader.path %>"><%= uploader.name %></a></td>
         <td><%= uploader.status %></td>
-        <td><%= link_to 'Show', uploader %></td>
+        <td><%= link_to 'Show', uploader_path(uploader) %></td>
         <td><%= link_to 'Edit', edit_uploader_path(uploader) %></td>
         <td><%= link_to 'Destroy', uploader, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
@@ -29,4 +29,4 @@
 </table>
 <br>
 
-<%= link_to 'New Uploader', new_uploader_path %>
+<%= link_to 'New Uploader', new_uploader_path, :class => "btn_custom"%>

@@ -9,6 +9,7 @@ class UploadersController < ApplicationController
   # GET /uploaders/1
   # GET /uploaders/1.json
   def show
+     @uploader = Uploader.find(params[:id])
   end
 
   # GET /uploaders/new
