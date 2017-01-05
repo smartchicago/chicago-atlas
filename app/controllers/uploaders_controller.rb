@@ -4,7 +4,6 @@ class UploadersController < ApplicationController
   # GET /uploaders.json
   def index
     @uploaders = Uploader.all
-    @current   = Uploader.first
   end
 
   # GET /uploaders/1
@@ -24,7 +23,9 @@ class UploadersController < ApplicationController
   # POST /uploaders
   # POST /uploaders.json
   def create
-    @uploader = Uploader.new(uploader_params)
+    @uploader       = Uploader.new(uploader_params)
+    @uploader.name  = uploader_params[:path].original_filename
+
     respond_to do |format|
       if @uploader.save
         @uploader.uploaded!

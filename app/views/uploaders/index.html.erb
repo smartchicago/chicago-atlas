@@ -2,7 +2,7 @@
 
 <h1>Listing Uploaders</h1>
 
-<table>
+<table class="bordered">
   <thead>
     <tr>
       <th>Id</th>
@@ -18,7 +18,7 @@
     <% @uploaders.each do |uploader| %>
       <tr>
         <td><%= uploader.id %></td>
-        <td><%= uploader.path %></td>
+        <td><a href="<%= uploader.path %>"><%= uploader.name %></a></td>
         <td><%= uploader.status %></td>
         <td><%= link_to 'Show', uploader %></td>
         <td><%= link_to 'Edit', edit_uploader_path(uploader) %></td>
@@ -27,13 +27,6 @@
     <% end %>
   </tbody>
 </table>
-
-<div style="" id="progress-bar" class="col-md-12">
-  <div class="progress">
-    <div id="job-progress" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">0%</div>
-  </div>
-</div>
-
 <br>
 
 <%= link_to 'New Uploader', new_uploader_path %>
