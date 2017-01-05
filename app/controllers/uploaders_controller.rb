@@ -30,7 +30,7 @@ class UploadersController < ApplicationController
     respond_to do |format|
       if @uploader.save
         @uploader.uploaded!
-        @job_id = UploadProcessingWorker.perform_async(@uploader.id)
+        UploadProcessingWorker.perform_async(@uploader.id)
         format.html { redirect_to @uploader, notice: 'Uploader was successfully created.' }
         format.json { render :show, status: :created, location: @uploader }
       else
