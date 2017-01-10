@@ -14,4 +14,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require uploader.js
 //= require_tree .
