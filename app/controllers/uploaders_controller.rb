@@ -3,7 +3,7 @@ class UploadersController < ApplicationController
   # GET /uploaders
   # GET /uploaders.json
   def index
-    @uploaders = Uploader.all
+    @uploaders = Uploader.all.sort_by{|m| m.id}
   end
 
   # GET /uploaders/1
@@ -24,9 +24,10 @@ class UploadersController < ApplicationController
   # POST /uploaders
   # POST /uploaders.json
   def create
-    @uploader       = Uploader.new(uploader_params)
-    @uploader.name  = uploader_params[:path].original_filename
-
+    @uploader             =   Uploader.new(uploader_params)
+    @uploader.name        =   uploader_params[:path].original_filename
+    @uploader.total_row   =   0
+    @uploader.current_row =   0
     respond_to do |format|
       if @uploader.save
         @uploader.uploaded!
