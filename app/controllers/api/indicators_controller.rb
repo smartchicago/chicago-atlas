@@ -3,13 +3,12 @@ module API
     before_action :load_resource
 
     def index
-      
+      render json: @resources
     end
 
     private
       def load_resource
-        @indicators = Indicators.all
-
+        @resources = Resources.all
       end
   end
 end
