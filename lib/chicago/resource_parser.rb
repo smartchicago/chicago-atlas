@@ -1,6 +1,6 @@
 class ResourceParser < Parser
 
-  FIRST_ROW       = 1
+  FIRST_ROW       = 2
 
   COLUMNS_HEADER  = {
     category:     'A',
@@ -43,7 +43,7 @@ class ResourceParser < Parser
       current_uploader             = Uploader.find_by(id: self.uploader_id)
       current_uploader.update(total_row: ss.last_row)
 
-      work_count                   = 0
+      work_count                   = 1
       total_count                  = ss.last_row
 
       FIRST_ROW.upto ss.last_row do |row|
