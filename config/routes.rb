@@ -9,7 +9,11 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :api, defaults: {format: :json} do
-
+    resources :indicators, only: [] do
+      collection do
+        get :indicator, :defaults => { :format => 'json'}
+      end
+    end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

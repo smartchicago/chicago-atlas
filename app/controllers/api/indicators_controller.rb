@@ -1,14 +1,14 @@
 module API
-  class IndicatorsController < ApiController
+  class Api::IndicatorsController < ApiController
     before_action :load_resource
 
-    def index
+    def indicator
       render json: @resources
     end
 
     private
       def load_resource
-        @resources = Resources.all
+        @resources = Resource.all
       end
   end
 end
