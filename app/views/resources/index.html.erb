@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Uploaders</h1>
+<table class="bordered">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Uploader_id</th>
+      <th>Category_id</th>
+      <th>Sub_Category_id</th>
+      <th>Indicator_id</th>
+      <th>Year</th>
+      <th>Geo_group_id</th>
+      <th>demo_group_id</th>
+      <th>number</th>
+      <th>cum_number</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @resources.each do |resource| %>
+      <tr>
+        <td><%= resource.id %></td>
+        <td><%= resource.uploader_id %></td>
+        <td><%= resource.category_id %></td>
+        <td><%= resource.sub_category_id %></td>
+        <td><%= resource.indicator_id %></td>
+        <td><%= resource.year%></td>
+        <td><%= resource.geo_group_id %></td>
+        <td><%= resource.demo_group_id %></td>
+        <td><%= resource.number %></td>
+        <td><%= resource.cum_number%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<%= link_to 'View Uploaders', uploaders_path, :class => "btn_custom"%>
