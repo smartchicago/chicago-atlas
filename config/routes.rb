@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   resources :uploaders
+  resources :resources
+
   authenticated :user do
     root to: 'home#index', as: :authenticated_root
   end
