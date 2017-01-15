@@ -4,6 +4,9 @@ class ResourcesController < ApplicationController
   end
 
   def create
+  end
 
+  def show
+    @resources = Resource.where(uploader_id: params[:id])
   end
 end

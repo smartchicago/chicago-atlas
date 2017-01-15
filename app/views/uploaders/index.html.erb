@@ -7,6 +7,7 @@
       <th>Id</th>
       <th>Name</th>
       <th>Status</th>
+      <th>View</th>
       <th>Total</th>
       <th>Processed</th>
       <th>Show</th>
@@ -21,6 +22,7 @@
         <td><%= uploader.id %></td>
         <td><a href="<%= uploader.path %>"><%= uploader.name %></a></td>
         <td><%= uploader.status %></td>
+        <td><%= link_to 'View Data', resource_path(uploader.id) %></td>
         <td><%= uploader.total_row %></td>
         <td><%= uploader.current_row %></td>
         <td><%= link_to 'Show', uploader_path(uploader) %></td>
