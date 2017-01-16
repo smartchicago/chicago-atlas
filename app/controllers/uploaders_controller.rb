@@ -1,5 +1,6 @@
 class UploadersController < ApplicationController
   before_action :set_uploader, only: [:show, :edit, :update, :destroy]
+
   # GET /uploaders
   # GET /uploaders.json
   def index
