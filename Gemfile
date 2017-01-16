@@ -43,6 +43,7 @@ gem 'devise_zxcvbn'
 gem 'roo', '~>2.5.0'
 gem 'sidekiq'
 gem 'sidekiq_status'
+gem 'will_paginate', '~>3.1.0'
 gem 'puma'
 
 ###########################################
