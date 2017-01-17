@@ -27,6 +27,7 @@ class UploadersController < ApplicationController
   def create
     @uploader             =   Uploader.new(uploader_params)
     @uploader.name        =   uploader_params[:path].original_filename
+    @uploader.user_id     =   current_user.id
     @uploader.total_row   =   0
     @uploader.current_row =   0
     respond_to do |format|

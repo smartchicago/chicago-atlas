@@ -73,15 +73,24 @@ ActiveRecord::Schema.define(version: 20170110021409) do
     t.datetime "updated_at",                null: false
   end
 
+  add_index "resources", ["category_id"], name: "index_resources_on_category_id", using: :btree
+  add_index "resources", ["demo_group_id"], name: "index_resources_on_demo_group_id", using: :btree
+  add_index "resources", ["geo_group_id"], name: "index_resources_on_geo_group_id", using: :btree
+  add_index "resources", ["indicator_id"], name: "index_resources_on_indicator_id", using: :btree
+  add_index "resources", ["uploader_id"], name: "index_resources_on_uploader_id", using: :btree
+
   create_table "uploaders", force: :cascade do |t|
+    t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "path"
     t.integer  "status"
     t.string   "name"
-    t.string   "total_row"
-    t.string   "current_row"
+    t.integer  "total_row"
+    t.integer  "current_row"
   end
+
+  add_index "uploaders", ["user_id"], name: "index_uploaders_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -109,4 +118,10 @@ ActiveRecord::Schema.define(version: 20170110021409) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "resources", "categories"
+  add_foreign_key "resources", "demo_groups"
+  add_foreign_key "resources", "geo_groups"
+  add_foreign_key "resources", "indicators"
+  add_foreign_key "resources", "uploaders"
+  add_foreign_key "uploaders", "users"
 end

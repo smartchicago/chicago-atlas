@@ -27,6 +27,12 @@ class CreateResources < ActiveRecord::Migration
       t.string  :map_key
       t.string  :flag
 
+      t.references :uploader,   index:true, foreign_key: true
+      t.references :category,   index:true, foreign_key: true
+      t.references :demo_group, index:true, foreign_key: true
+      t.references :geo_group,  index:true, foreign_key: true
+      t.references :indicator,  index:true, foreign_key: true
+
       t.timestamps null: false
     end
   end

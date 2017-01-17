@@ -67,5 +67,6 @@ end
 group :test do
   gem 'factory_girl_rails'
   gem 'faker',                '1.6.3'
-  gem 'shoulda-matchers',     '~> 2.5.0', :require => false
+  # gem 'shoulda-matchers',     '~> 2.5.0', :require => false
+  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers', :require => false
 end

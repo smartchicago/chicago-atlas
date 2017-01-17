@@ -1,6 +1,4 @@
-# spec/factories/contacts.rb
-
-require 'faker'
+# spec/factories/user.rb
 
 FactoryGirl.define do
   factory :user do
