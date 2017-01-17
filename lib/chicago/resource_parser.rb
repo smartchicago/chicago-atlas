@@ -63,7 +63,7 @@ class ResourceParser < Parser
         rsc_array   = -1
         rsc_array.upto COLUMNS.length-1 do |rsc_id|
           rsc_start = 7
-          rsc_start.upto ss.last_column-1 do |col_id|
+          rsc_start.upto ss.last_column do |col_id|
             if COLUMNS[rsc_id].casecmp(ss.cell(1, col_id)) == 0
               new_resource[COLUMNS[rsc_id]] = ss.cell(row, col_id)
               break
