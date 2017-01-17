@@ -18,9 +18,9 @@ ActiveRecord::Schema.define(version: 20170110021409) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
-    t.integer  "parent_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "sub_category"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "demo_groups", force: :cascade do |t|
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20170110021409) do
     t.float    "ave_annual_number"
     t.float    "crude_rate"
     t.float    "lower_95ci_crude_rate"
-    t.float    "uppper_95ci_crude_rate"
+    t.float    "upper_95ci_crude_rate"
     t.float    "age_adj_rate"
     t.float    "lower_95ci_adj_rate"
     t.float    "upper_95ci_adj_rate"

@@ -13,7 +13,7 @@ class CreateResources < ActiveRecord::Migration
       t.float   :ave_annual_number
       t.float   :crude_rate
       t.float   :lower_95ci_crude_rate
-      t.float   :uppper_95ci_crude_rate
+      t.float   :upper_95ci_crude_rate
       t.float   :age_adj_rate
       t.float   :lower_95ci_adj_rate
       t.float   :upper_95ci_adj_rate

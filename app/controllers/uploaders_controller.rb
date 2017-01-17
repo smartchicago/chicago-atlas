@@ -25,9 +25,8 @@ class UploadersController < ApplicationController
   # POST /uploaders
   # POST /uploaders.json
   def create
-    @uploader             =   Uploader.new(uploader_params)
+    @uploader             =   current_user.uploaders.build(uploader_params)
     @uploader.name        =   uploader_params[:path].original_filename
-    @uploader.user_id     =   current_user.id
     @uploader.total_row   =   0
     @uploader.current_row =   0
     respond_to do |format|
@@ -77,4 +76,5 @@ class UploadersController < ApplicationController
     def uploader_params
       params.require(:uploader).permit(:path)
     end
+
 end
