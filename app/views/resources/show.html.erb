@@ -22,12 +22,12 @@
       <tr>
         <td><%= resource.id %></td>
         <td><%= resource.uploader_id %></td>
-        <td><%= resource.category_id %></td>
-        <td><%= resource.sub_category_id %></td>
-        <td><%= resource.indicator_id %></td>
+        <td><%= resource.category.name %></td>
+        <td><%= resource.category.sub_category %></td>
+        <td><%= resource.indicator.name %></td>
         <td><%= resource.year%></td>
-        <td><%= resource.geo_group_id %></td>
-        <td><%= resource.demo_group_id %></td>
+        <td><%= resource.geo_group.name %></td>
+        <td><%= resource.demo_group.name %></td>
         <td><%= resource.number %></td>
         <td><%= resource.cum_number%></td>
       </tr>

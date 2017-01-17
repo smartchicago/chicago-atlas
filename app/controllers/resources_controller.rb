@@ -1,6 +1,6 @@
 class ResourcesController < ApplicationController
   def index
-    @resources = Resource.all
+    @resources = Resource.all.sort_by{ |m| m.id }
   end
 
   def create

@@ -76,4 +76,5 @@ class UploadersController < ApplicationController
     def uploader_params
       params.require(:uploader).permit(:path)
     end
+
 end

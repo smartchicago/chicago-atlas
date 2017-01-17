@@ -19,7 +19,7 @@ class ResourceParser < Parser
     'ave_annual_number',
     'crude_rate',
     'lower_95ci_crude_rate',
-    'uppper_95ci_crude_rate',
+    'upper_95ci_crude_rate',
     'age_adj_rate',
     'lower_95ci_adj_rate',
     'upper_95ci_adj_rate',
@@ -47,20 +47,18 @@ class ResourceParser < Parser
       total_count                  = ss.last_row
 
       FIRST_ROW.upto ss.last_row do |row|
-        category     = Category.where(name: ss.cell(row, COLUMNS_HEADER[:category]).to_s, parent_id:1).first_or_create
-        subcategory  = Category.where(name: ss.cell(row, COLUMNS_HEADER[:subcategory]), parent_id:2).first_or_create
-        indicator    = Indicator.where(name: ss.cell(row, COLUMNS_HEADER[:indicator])).first_or_create
-        geography    = GeoGroup.where(name: ss.cell(row, COLUMNS_HEADER[:geo_group]), geography: ss.cell(row, COLUMNS_HEADER[:geography])).first_or_create
-        demography   = DemoGroup.where(name: ss.cell(row, COLUMNS_HEADER[:demo_group]), demography: ss.cell(row, COLUMNS_HEADER[:demography])).first_or_create
+        category     =  Category.where(name: ss.cell(row, COLUMNS_HEADER[:category]).to_s, sub_category: ss.cell(row, COLUMNS_HEADER[:subcategory]).to_s).first_or_create
+        indicator    =  Indicator.where(name: ss.cell(row, COLUMNS_HEADER[:indicator])).first_or_create
+        geography    =  GeoGroup.where(name: ss.cell(row, COLUMNS_HEADER[:geo_group]), geography: ss.cell(row, COLUMNS_HEADER[:geography])).first_or_create
+        demography   =  DemoGroup.where(name: ss.cell(row, COLUMNS_HEADER[:demo_group]), demography: ss.cell(row, COLUMNS_HEADER[:demography])).first_or_create
         Resource.transaction do
-        new_resource                    = Resource.new
-        new_resource.uploader_id        = self.uploader_id
-        new_resource.category_id        = category.id
-        new_resource.sub_category_id    = subcategory.id
-        new_resource.indicator_id       = indicator.id
-        new_resource.geo_group_id       = geography.id
-        new_resource.demo_group_id      = demography.id
-        new_resource.year               = ss.cell(row, COLUMNS_HEADER[:year])
+        new_resource                    =   Resource.new
+        new_resource.uploader_id        =   self.uploader_id
+        new_resource.category_id        =   category.id
+        new_resource.indicator_id       =   indicator.id
+        new_resource.geo_group_id       =   geography.id
+        new_resource.demo_group_id      =   demography.id
+        new_resource.year               =   ss.cell(row, COLUMNS_HEADER[:year])
 
         rsc_array   = -1
         rsc_array.upto COLUMNS.length-1 do |rsc_id|
