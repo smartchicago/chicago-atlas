@@ -3,6 +3,21 @@ require 'rails_helper'
 describe UploadersController, type: :controller do
   let(:user) { create(:user) }
 
+  describe 'GET #index' do
+    it "populates an array of uploaders" do
+      sign_in user
+      uploader = FactoryGirl.create(:uploader)
+      get :index
+      expect(assigns(:uploaders)).to eq([uploader])
+    end
+
+    it "renders the :index view" do
+      sign_in user
+      get :index
+      expect(response).to render_template("index")
+    end
+  end
+
   describe "#upload" do
     it "should upload file and run parser" do
       sign_in user

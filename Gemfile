@@ -54,6 +54,7 @@ group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
   gem 'rspec-rails', '~> 3.0'
+  gem 'pry-rails'
 end
 
 group :development do
@@ -67,6 +68,5 @@ end
 group :test do
   gem 'factory_girl_rails'
   gem 'faker',                '1.6.3'
-  # gem 'shoulda-matchers',     '~> 2.5.0', :require => false
   gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers', :require => false
 end
