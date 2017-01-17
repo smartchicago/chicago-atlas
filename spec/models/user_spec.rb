@@ -10,6 +10,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "Associations" do
-    it { is_expected.to validate_presence_of(:name) }
+    #it { is_expected.to validate_presence_of(:name) }
+    it { should have_one(:uploader).dependent(:destroy) }
   end
 end
