@@ -25,8 +25,8 @@ class UploadersController < ApplicationController
   # POST /uploaders
   # POST /uploaders.json
   def create
-    @uploader             =   current_user.uploaders.build(uploader_params)
-    #'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    @uploader = current_user.uploaders.build(uploader_params)
+
     if uploader_params[:path].content_type.include? "spreadsheet"
       @uploader.name        =   uploader_params[:path].original_filename
       @uploader.total_row   =   0

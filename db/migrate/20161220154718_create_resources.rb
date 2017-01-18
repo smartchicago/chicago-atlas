@@ -3,7 +3,6 @@ class CreateResources < ActiveRecord::Migration
     create_table :resources do |t|
       t.integer :uploader_id
       t.integer :category_id
-      t.integer :sub_category_id
       t.integer :indicator_id
       t.integer :year
       t.integer :geo_group_id

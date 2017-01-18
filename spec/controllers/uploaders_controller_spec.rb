@@ -1,9 +1,11 @@
 require 'rails_helper'
 
+###########################################################################################
 XML_FILE_TYPE       =   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 XML_TEST_FILE_NAME  =   'test.xlsx'
 INVALID_FILE_NAME   =   'invalid.jpg'
 INVALID_FILE_TYPE   =   'jpeg'
+###########################################################################################
 
 describe UploadersController, type: :controller do
   let(:user) { create(:user) }
@@ -80,6 +82,7 @@ describe UploadersController, type: :controller do
       expect(response).to render_template(nil)
     end
 
+    #background job test case
     describe "#upload" do
       it "should upload file and run parser" do
         sign_in user
@@ -100,6 +103,7 @@ describe UploadersController, type: :controller do
     end
   end
 
+  # Test case for delete acton
   describe "DELETE destroy" do
     before :each do
       @uploader = FactoryGirl.create(:uploader)
