@@ -2,8 +2,9 @@
 
 FactoryGirl.define do
   factory :uploader do
-    name { "test.xlsx" }
     user
+    name { "test.xlsx" }
+    path { "downloads/test.xml" }
     status { Uploader.statuses[:uploaded] }
     total_row 5
     current_row 0
