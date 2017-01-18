@@ -16,7 +16,7 @@ describe UploadersController, type: :controller do
       sign_in user
       uploader = FactoryGirl.create(:uploader)
       get :index
-      expect(assigns(:uploaders)).to eq([uploader])
+      expect(assigns(:uploaders).last).to eq(uploader)
     end
 
     it "renders the :index view" do

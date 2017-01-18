@@ -1,7 +1,5 @@
 require 'rails_helper'
 
-SAMPLE_UPLOADER_ID = 99
-
 describe ResourcesController, type: :controller do
   let(:user) { create(:user) }
 
