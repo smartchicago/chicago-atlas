@@ -26,19 +26,24 @@ class UploadersController < ApplicationController
   # POST /uploaders.json
   def create
     @uploader             =   current_user.uploaders.build(uploader_params)
-    @uploader.name        =   uploader_params[:path].original_filename
-    @uploader.total_row   =   0
-    @uploader.current_row =   0
-    respond_to do |format|
-      if @uploader.save
-        @uploader.uploaded!
-        UploadProcessingWorker.perform_async(@uploader.id)
-        format.html { redirect_to @uploader, notice: 'Uploader was successfully created.' }
-        format.json { render :show, status: :created, location: @uploader }
-      else
-        format.html { render :new }
-        format.json { render json: @uploader.errors, status: :unprocessable_entity }
+    #'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    if uploader_params[:path].content_type.include? "spreadsheet"
+      @uploader.name        =   uploader_params[:path].original_filename
+      @uploader.total_row   =   0
+      @uploader.current_row =   0
+      respond_to do |format|
+        if @uploader.save
+          @uploader.uploaded!
+          UploadProcessingWorker.perform_async(@uploader.id)
+          format.html { redirect_to @uploader, notice: 'Uploader was successfully created.' }
+          format.json { render :show, status: :created, location: @uploader }
+        else
+          format.html { render :new }
+          format.json { render json: @uploader.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to new_uploader_path
     end
   end
 
