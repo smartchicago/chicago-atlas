@@ -8,5 +8,15 @@ FactoryGirl.define do
     status { Uploader.statuses[:uploaded] }
     total_row 5
     current_row 0
+
+    factory :uploader_with_resources do
+      transient do
+        resources_count 10
+      end
+
+      after(:create) do |uploader, evaluator|
+        create_list(:resource, evaluator.resources_count, uploader: uploader)
+      end
+    end
   end
 end

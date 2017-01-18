@@ -11,7 +11,7 @@ describe ResourcesController, type: :controller do
       sign_in user
       resource = FactoryGirl.create(:resource)
       get :index
-      expect(assigns[:resources]).to eq([resource])
+      expect(assigns[:resources].last).to eq(resource)
     end
 
     it "renders the index view" do
@@ -22,13 +22,33 @@ describe ResourcesController, type: :controller do
   end
 
   describe "GET #show" do
-    before(:all) { 10.times {
-            resource = FactoryGirl.create(:resource)
-            resource.uploader_id = SAMPLE_UPLOADER_ID
-            }}
     it "searches resources with uploader_id" do
-      get :show, id: SAMPLE_UPLOADER_ID
-      assigns(:resources)
+      sign_in user
+      uploader = FactoryGirl.create(:uploader_with_resources, resources_count: 10)
+      get :show, id: uploader
+      expect(assigns(:resources)).to eq(uploader.resources)
+    end
+
+    it "renders the show view" do
+      sign_in user
+      uploader = FactoryGirl.create(:uploader_with_resources, resources_count: 10)
+      get :show, id: uploader
+      expect(assigns(:resources)).to render_template("show")
+    end
+
+    # test case for pagination
+    it "doesn't show second page" do
+      sign_in user
+      uploader =  FactoryGirl.create(:uploader_with_resources, resources_count: 9)
+      get :show, {id: uploader, page: 2}
+      expect(assigns(:resources).length).to be(0)
+    end
+
+    it "should show second page" do
+      sign_in user
+      uploader = FactoryGirl.create(:uploader_with_resources, resources_count: 11)
+      get :show, {id: uploader, page: 2}
+      expect(assigns(:resources).length).to be(1)
     end
   end
 end
