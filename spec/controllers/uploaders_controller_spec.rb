@@ -1,5 +1,10 @@
 require 'rails_helper'
 
+XML_FILE_TYPE       =   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+XML_TEST_FILE_NAME  =   'test.xlsx'
+INVALID_FILE_NAME   =   'invalid.jpg'
+INVALID_FILE_TYPE   =   'jpeg'
+
 describe UploadersController, type: :controller do
   let(:user) { create(:user) }
 
@@ -54,31 +59,31 @@ describe UploadersController, type: :controller do
   describe "POST #create" do
     it "creates a new uploader" do
       sign_in user
-      expect{ post :create, uploader: { path: fixture_file_upload('test.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') } }.to change(Uploader, :count).by(1)
+      expect{ post :create, uploader: { path: fixture_file_upload(XML_TEST_FILE_NAME, XML_FILE_TYPE) } }.to change(Uploader, :count).by(1)
     end
 
     it "redirects to the new uploader" do
       sign_in user
-      post :create, uploader: { path: fixture_file_upload('test.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') }
+      post :create, uploader: { path: fixture_file_upload(XML_TEST_FILE_NAME, XML_FILE_TYPE) }
       expect(response).to redirect_to Uploader.last
     end
 
     it "does not save the new uploader" do
       sign_in user
-      post :create, uploader: { path: fixture_file_upload('invalid.jpg', 'jpeg') }
+      post :create, uploader: { path: fixture_file_upload(INVALID_FILE_NAME, INVALID_FILE_TYPE) }
       expect{ response }.to_not change(Uploader, :count)
     end
 
     it "re-renders the new method" do
       sign_in user
-      post :create, uploader: { patith: fixture_file_upload('invalid.jpg', 'jpeg') }
+      post :create, uploader: { path: fixture_file_upload(INVALID_FILE_NAME, INVALID_FILE_TYPE) }
       expect(response).to render_template(nil)
     end
 
     describe "#upload" do
       it "should upload file and run parser" do
         sign_in user
-        post :create, uploader: {path: fixture_file_upload('test.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')}
+        post :create, uploader: {path: fixture_file_upload(XML_TEST_FILE_NAME, XML_FILE_TYPE)}
 
         expect(user.uploaders.count).to be(1)
         uploader = user.uploaders.last
@@ -88,6 +93,9 @@ describe UploadersController, type: :controller do
       end
 
       it "should not run parser if invalid file type" do
+        sign_in user
+        post :create, uploader: { path: fixture_file_upload(INVALID_FILE_NAME, INVALID_FILE_TYPE) }
+        expect{ response }.to_not change(Uploader, :count)
       end
     end
   end
