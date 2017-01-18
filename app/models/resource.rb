@@ -10,4 +10,5 @@ class Resource < ActiveRecord::Base
   # validates :indicator_id, presence: true
   # validates :geo_group_id, presence: true
   # validates :demo_group_id, presence: true
+
 end
