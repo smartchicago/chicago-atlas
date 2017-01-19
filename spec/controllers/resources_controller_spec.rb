@@ -17,6 +17,21 @@ describe ResourcesController, type: :controller do
       get :index
       expect(response).to render_template("index")
     end
+
+    # test case for pagination
+    it "doesn't show second page" do
+      sign_in user
+      uploader =  FactoryGirl.create(:uploader_with_resources, resources_count: 9)
+      get :index, { page: 2 }
+      expect(assigns(:resources).length).to be(0)
+    end
+
+    it "should show second page" do
+      sign_in user
+      uploader = FactoryGirl.create(:uploader_with_resources, resources_count: 11)
+      get :index, { page: 2 }
+      expect(assigns(:resources).length).to be(1)
+    end
   end
 
   describe "GET #show" do
