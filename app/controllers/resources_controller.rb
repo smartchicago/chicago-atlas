@@ -1,6 +1,6 @@
 class ResourcesController < ApplicationController
   def index
-    @resources = Resource.all.sort_by{ |m| m.id }
+    @resources = Resource.all.paginate(:page => params[:page], :per_page => 10)
   end
 
   def create
