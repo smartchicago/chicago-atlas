@@ -10,7 +10,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "Active record associations" do
-    it { should have_one(:uploader).dependent(:destroy) }
+    it { should have_many(:uploaders).dependent(:destroy) }
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:email) }
   end
