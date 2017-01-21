@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
-
+<% if @uploaders.count > 0 %>
 <h1>Listing Uploaders</h1>
-<table class="bordered">
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Id</th>
@@ -32,6 +32,8 @@
     <% end %>
   </tbody>
 </table>
-<br>
+<% else %>
+<h1>Add your First Document</h1>
+<% end %>
 
 <%= link_to 'New Uploader', new_uploader_path, :class => "btn_custom"%>
