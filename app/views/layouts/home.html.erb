@@ -7,59 +7,41 @@
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
   <title>Admin | Chicago Health Atlas</title>
-
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+
 </head>
 <body>
 
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-brand navbar-right">
+
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-lg fa-user" aria-hidden="true"></i> <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+                <li><a href="#">
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+
+                  Edit Profile</a></li>
+                <li>
+                  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+                </li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+    </div>
+  </div>
+</nav>
+
   <div class="container">
-      <div class="row profile">
-  		<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-  			<div class="profile-sidebar">
-  				<!-- SIDEBAR USERPIC -->
-  				<div>
-  					<%= image_tag ("logo_small.png") %>
-  				</div>
-  				<!-- END SIDEBAR USERPIC -->
-  				<!-- SIDEBAR USER TITLE -->
-  				<div class="profile-usertitle">
-  					<div class="profile-usertitle-name">
-  						Chicago Health Atlas
-  					</div>
-  					<div class="profile-usertitle-job">
-  						Administrator Panel
-  					</div>
-  				</div>
-  				<!-- END SIDEBAR USER TITLE -->
-
-  				<!-- SIDEBAR MENU -->
-  				<div class="profile-usermenu">
-  					<ul class="nav">
-  						<li class="active">
-                    <%= link_to '<i class="glyphicon glyphicon-home"></i> Home'.html_safe, root_path %>
-  						</li>
-  						<li class="active">
-  							<%= link_to '<i class="glyphicon glyphicon-map-marker"></i> Data Management'.html_safe, new_uploader_path %>
-  						</li>
-  						<li class="active">
-                	  <%= link_to '<i class="glyphicon glyphicon-user"></i> Profile'.html_safe,  edit_user_registration_path %>
-  						</li>
-  						<li class="active">
-                      <%= link_to '<i class="glyphicon glyphicon-flag"></i> Sign Out'.html_safe, destroy_user_session_path, method: :delete %>
-  						</li>
-  					</ul>
-  				</div>
-  				<!-- END MENU -->
-  			</div>
-  		</div>
       <%= yield :top_content %>
-
-      <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <h1><%= yield :header %></h1>
-        <%= yield %>
+          <%= yield %>
       </div>
-
   	</div>
   </div>
 
