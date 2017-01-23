@@ -44,7 +44,7 @@ namespace :db do
             dataset = Dataset.new(
               :name => d[:name],
               :slug => handle,
-              :description => d[:description],
+              # :description => d[:description],
               :provider => 'Illinois Department of Public Health',
               :url => 'http://www.dph.illinois.gov',
               :category_id => Category.where(:name => cat).first.id,
@@ -76,7 +76,7 @@ namespace :db do
                     :dataset_id => Dataset.where("slug = '#{handle}'").first.id,
                     :geography_id => zip_id,
                     :year => year,
-                    :name => handle, 
+                    :name => handle,
                     :value => rate
                   )
                   statistic.save!
@@ -130,7 +130,7 @@ namespace :db do
             dataset = Dataset.new(
               :name => d[:name],
               :slug => handle,
-              :description => d[:description],
+              # :description => d[:description],
               :provider => 'Illinois Department of Public Health',
               :url => 'http://www.dph.illinois.gov',
               :category_id => Category.where(:name => cat).first.id,
@@ -162,7 +162,7 @@ namespace :db do
                     :dataset_id => Dataset.where("slug = '#{handle}'").first.id,
                     :geography_id => zip_id,
                     :year => year,
-                    :name => handle, 
+                    :name => handle,
                     :value => rate
                   )
                   statistic.save!
