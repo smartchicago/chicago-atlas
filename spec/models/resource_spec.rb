@@ -13,8 +13,8 @@ RSpec.describe Resource, type: :model do
         expect(FactoryGirl.build(:resource, uploader: nil)).not_to be_valid
       end
 
-      it "is invalid without category" do
-        expect(FactoryGirl.build(:resource, category: nil)).not_to be_valid
+      it "is invalid without category_group" do
+        expect(FactoryGirl.build(:resource, category_group: nil)).not_to be_valid
       end
 
       it "is invalid without indicator" do
@@ -33,7 +33,7 @@ RSpec.describe Resource, type: :model do
 
   describe "Active record assocations" do
     it { should belong_to(:uploader) }
-    it { should belong_to(:category) }
+    it { should belong_to(:category_group) }
     it { should belong_to(:demo_group) }
     it { should belong_to(:geo_group) }
     it { should belong_to(:indicator) }
@@ -41,7 +41,7 @@ RSpec.describe Resource, type: :model do
 
   describe "Validations" do
     it { should validate_presence_of(:uploader_id) }
-    it { should validate_presence_of(:category_id) }
+    it { should validate_presence_of(:category_group_id) }
     it { should validate_presence_of(:indicator_id) }
     it { should validate_presence_of(:geo_group_id) }
     it { should validate_presence_of(:demo_group_id) }

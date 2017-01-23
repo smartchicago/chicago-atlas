@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :resource do
     uploader
-    category
+    category_group
     demo_group
     geo_group
     indicator
