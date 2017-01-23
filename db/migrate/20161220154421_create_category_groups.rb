@@ -1,6 +1,6 @@
-class CreateCategories < ActiveRecord::Migration
+class CreateCategoryGroups < ActiveRecord::Migration
   def change
-    create_table :categories do |t|
+    create_table :category_groups do |t|
       t.string :name
       t.string :sub_category
 
