@@ -11,23 +11,85 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161220152145) do
+ActiveRecord::Schema.define(version: 20170110021409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "spread_sheets", force: :cascade do |t|
+  create_table "category_groups", force: :cascade do |t|
+    t.string   "name"
+    t.string   "sub_category"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "demo_groups", force: :cascade do |t|
+    t.string   "name"
+    t.string   "demography"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "geo_groups", force: :cascade do |t|
+    t.string   "name"
+    t.string   "geography"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "indicators", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "src"
   end
 
-  create_table "uploaders", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "path"
+  create_table "resources", force: :cascade do |t|
+    t.integer  "uploader_id"
+    t.integer  "category_group_id"
+    t.integer  "indicator_id"
+    t.integer  "year"
+    t.integer  "geo_group_id"
+    t.integer  "demo_group_id"
+    t.integer  "number"
+    t.float    "cum_number"
+    t.float    "ave_annual_number"
+    t.float    "crude_rate"
+    t.float    "lower_95ci_crude_rate"
+    t.float    "upper_95ci_crude_rate"
+    t.float    "age_adj_rate"
+    t.float    "lower_95ci_adj_rate"
+    t.float    "upper_95ci_adj_rate"
+    t.float    "percent"
+    t.float    "lower_95ci_percent"
+    t.float    "upper_95ci_percent"
+    t.float    "weight_number"
+    t.float    "weight_percent"
+    t.float    "lower_95ci_weight_percent"
+    t.float    "upper_95ci_weight_percent"
+    t.string   "map_key"
+    t.string   "flag"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
+
+  add_index "resources", ["category_group_id"], name: "index_resources_on_category_group_id", using: :btree
+  add_index "resources", ["demo_group_id"], name: "index_resources_on_demo_group_id", using: :btree
+  add_index "resources", ["geo_group_id"], name: "index_resources_on_geo_group_id", using: :btree
+  add_index "resources", ["indicator_id"], name: "index_resources_on_indicator_id", using: :btree
+  add_index "resources", ["uploader_id"], name: "index_resources_on_uploader_id", using: :btree
+
+  create_table "uploaders", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "path"
+    t.integer  "status"
+    t.string   "name"
+    t.integer  "total_row"
+    t.integer  "current_row"
+  end
+
+  add_index "uploaders", ["user_id"], name: "index_uploaders_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -55,4 +117,10 @@ ActiveRecord::Schema.define(version: 20161220152145) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "resources", "category_groups"
+  add_foreign_key "resources", "demo_groups"
+  add_foreign_key "resources", "geo_groups"
+  add_foreign_key "resources", "indicators"
+  add_foreign_key "resources", "uploaders"
+  add_foreign_key "uploaders", "users"
 end

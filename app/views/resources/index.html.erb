@@ -1,0 +1,77 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Resources View</h1>
+<table class="bordered">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Uploader_id</th>
+      <th>Category_group_id</th>
+      <th>Sub_Category_id</th>
+      <th>Indicator_id</th>
+      <th>Year</th>
+      <th>Geo_group_id</th>
+      <th>demo_group_id</th>
+      <th>number</th>
+      <th>cum_number</th>
+      <th>ave_annual_number</th>
+      <th>crude_rate</th>
+      <th>lower_95ci_crude_rate</th>
+      <th>upper_95ci_crude_rate</th>
+      <th>age_adj_rate</th>
+      <th>lower_95ci_adj_rate</th>
+      <th>upper_95ci_adj_rate</th>
+      <th>percent</th>
+      <th>lower_95ci_percent</th>
+      <th>upper_95ci_percent</th>
+      <th>weight_number</th>
+      <th>weight_percent</th>
+      <th>lower_95ci_weight_percent</th>
+      <th>upper_95ci_weight_percent</th>
+      <th>map_key</th>
+      <th>flag</th>
+      <th>created_at</th>
+      <th>updated_at</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @resources.each do |resource| %>
+      <tr>
+        <td><%= resource.id %></td>
+        <td><%= resource.uploader_id %></td>
+        <td><%= resource.category_group.name %></td>
+        <td><%= resource.category_group.sub_category %></td>
+        <td><%= resource.indicator.name %></td>
+        <td><%= resource.year%></td>
+        <td><%= resource.geo_group.name %></td>
+        <td><%= resource.demo_group.name %></td>
+        <td><%= resource.number %></td>
+        <td><%= resource.cum_number %></td>
+        <td><%= resource.ave_annual_number %></td>
+        <td><%= resource.crude_rate %></td>
+        <td><%= resource.lower_95ci_crude_rate %></td>
+        <td><%= resource.upper_95ci_crude_rate %></td>
+        <td><%= resource.age_adj_rate %></td>
+        <td><%= resource.lower_95ci_adj_rate %></td>
+        <td><%= resource.upper_95ci_adj_rate %></td>
+        <td><%= resource.percent %></td>
+        <td><%= resource.lower_95ci_percent %></td>
+        <td><%= resource.upper_95ci_percent %></td>
+        <td><%= resource.weight_number %></td>
+        <td><%= resource.weight_percent %></td>
+        <td><%= resource.lower_95ci_weight_percent %></td>
+        <td><%= resource.upper_95ci_weight_percent %></td>
+        <td><%= resource.map_key %></td>
+        <td><%= resource.flag %></td>
+        <td><%= resource.created_at %></td>
+        <td><%= resource.updated_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<%= will_paginate @resources %>
+<br>
+<%= link_to 'View Uploaders', uploaders_path, :class => "btn_custom"%>

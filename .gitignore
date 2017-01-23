@@ -24,3 +24,5 @@
 
 # Ignore Database Config
 /config/database.yml
+.env
+/Gemfile.lock

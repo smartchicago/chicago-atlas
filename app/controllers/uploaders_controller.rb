@@ -4,12 +4,13 @@ class UploadersController < ApplicationController
   # GET /uploaders
   # GET /uploaders.json
   def index
-    @uploaders = Uploader.all
+    @uploaders = Uploader.all.sort_by{|m| m.id}
   end
 
   # GET /uploaders/1
   # GET /uploaders/1.json
   def show
+     @uploader = Uploader.find(params[:id])
   end
 
   # GET /uploaders/new
@@ -24,16 +25,25 @@ class UploadersController < ApplicationController
   # POST /uploaders
   # POST /uploaders.json
   def create
-    @uploader = Uploader.new(uploader_params)
+    @uploader = current_user.uploaders.build(uploader_params)
 
-    respond_to do |format|
-      if @uploader.save
-        format.html { redirect_to @uploader, notice: 'Uploader was successfully created.' }
-        format.json { render :show, status: :created, location: @uploader }
-      else
-        format.html { render :new }
-        format.json { render json: @uploader.errors, status: :unprocessable_entity }
+    if uploader_params[:path].content_type.include? "spreadsheet"
+      @uploader.name        =   uploader_params[:path].original_filename
+      @uploader.total_row   =   0
+      @uploader.current_row =   0
+      respond_to do |format|
+        if @uploader.save
+          @uploader.uploaded!
+          UploadProcessingWorker.perform_async(@uploader.id)
+          format.html { redirect_to @uploader, notice: 'Uploader was successfully created.' }
+          format.json { render :show, status: :created, location: @uploader }
+        else
+          format.html { render :new }
+          format.json { render json: @uploader.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to new_uploader_path
     end
   end
 
@@ -71,4 +81,5 @@ class UploadersController < ApplicationController
     def uploader_params
       params.require(:uploader).permit(:path)
     end
+
 end

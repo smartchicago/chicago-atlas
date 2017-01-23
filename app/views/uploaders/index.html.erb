@@ -1,25 +1,39 @@
 <p id="notice"><%= notice %></p>
-
+<% if @uploaders.count > 0 %>
 <h1>Listing Uploaders</h1>
-
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Status</th>
+      <th>View</th>
+      <th>Total</th>
+      <th>Processed</th>
+      <th>Show</th>
+      <th>Edit</th>
+      <th>Destroy</th>
     </tr>
   </thead>
 
   <tbody>
     <% @uploaders.each do |uploader| %>
       <tr>
-        <td><%= link_to 'Show', uploader %></td>
+        <td><%= uploader.id %></td>
+        <td><a href="<%= uploader.path %>"><%= uploader.name %></a></td>
+        <td><%= uploader.status %></td>
+        <td><%= link_to 'View Data', resource_path(uploader.id) %></td>
+        <td><%= uploader.total_row %></td>
+        <td><%= uploader.current_row %></td>
+        <td><%= link_to 'Show', uploader_path(uploader) %></td>
         <td><%= link_to 'Edit', edit_uploader_path(uploader) %></td>
         <td><%= link_to 'Destroy', uploader, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<% else %>
+<h1>Add your First Document</h1>
+<% end %>
 
-<br>
-
-<%= link_to 'New Uploader', new_uploader_path %>
+<%= link_to 'New Uploader', new_uploader_path, :class => "btn_custom"%>
