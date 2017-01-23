@@ -2,14 +2,14 @@ class CreateStatistics < ActiveRecord::Migration
   def change
     create_table :statistics do |t|
 
-      t.integer :year
-      t.string :name
-      t.float :value
-      t.float :lower_ci
-      t.float :upper_ci
-      t.references :geography
-      t.references :dataset
-      t.timestamps
+      t.integer     :year
+      t.string      :name
+      t.float       :value
+      t.float       :lower_ci
+      t.float       :upper_ci
+      t.references  :geography
+      t.references  :dataset
+      t.timestamps null: false
     end
 
     add_index :statistics, :dataset_id

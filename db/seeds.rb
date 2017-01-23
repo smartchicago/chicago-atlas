@@ -10,3 +10,13 @@ user.email    = 'niels@parrolabs.com'
 user.password = '1234567890'
 user.name     = 'admin'
 user.save!
+
+
+chicago = Geography.new(
+  :geo_type => "City",
+  :name => 'Chicago',
+  :slug => 'chicago',
+  :geometry => ''
+)
+chicago.id = 100
+chicago.save!
