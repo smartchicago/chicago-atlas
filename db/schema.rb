@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(version: 20170110021409) do
   create_table "categories", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "category_groups", force: :cascade do |t|
@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 20170110021409) do
     t.string   "url"
     t.text     "metadata"
     t.integer  "category_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.string   "data_type"
     t.string   "stat_type"
     t.boolean  "is_visible",  default: true
@@ -66,8 +66,8 @@ ActiveRecord::Schema.define(version: 20170110021409) do
     t.string   "name"
     t.string   "slug"
     t.text     "geometry"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "centroid"
     t.string   "adjacent_zips",            default: "[]"
     t.string   "adjacent_community_areas", default: "[]"
@@ -97,8 +97,8 @@ ActiveRecord::Schema.define(version: 20170110021409) do
     t.float    "latitude"
     t.float    "longitude"
     t.integer  "dataset_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.text     "tags",              default: ""
     t.string   "organization_name", default: ""
     t.text     "categories",        default: ""
@@ -114,8 +114,8 @@ ActiveRecord::Schema.define(version: 20170110021409) do
     t.float    "value"
     t.datetime "date_start"
     t.datetime "date_end"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.string   "data_type"
   end
 
@@ -134,8 +134,8 @@ ActiveRecord::Schema.define(version: 20170110021409) do
     t.string   "ownership_type"
     t.string   "contact_email"
     t.string   "contact_phone"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.string   "lat_long"
     t.text     "description"
     t.string   "phone"
@@ -195,8 +195,8 @@ ActiveRecord::Schema.define(version: 20170110021409) do
     t.float    "upper_ci"
     t.integer  "geography_id"
     t.integer  "dataset_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.string   "year_range",   default: ""
   end
 
