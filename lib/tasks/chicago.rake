@@ -154,7 +154,7 @@ namespace :db do
         dataset = Dataset.new(
           :name => d[:name],
           :slug => "#{handle}",
-          :description => '', # leaving blank for now
+          # :description => '', # leaving blank for now
           :provider => 'Chicago Department of Public Health',
           :url => d[:url],
           :category_id => Category.where(:name => d[:category]).first.id,
@@ -278,7 +278,7 @@ namespace :db do
           dataset = Dataset.new(
             :name => d[:name],
             :slug => handle,
-            :description => d[:description],
+            # :description => d[:description],
             :provider => 'Chicago Police Department',
             :url => 'https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-present/ijzp-q8t2',
             :category_id => Category.where(:name => d[:category]).first.id,
