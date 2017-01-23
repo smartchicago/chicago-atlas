@@ -1,0 +1,41 @@
+hospital_id,hospital_name,year,outpatient_count_medicare,outpatient_count_medicaid,outpatient_count_other_public,outpatient_count_private_insurance,outpatient_count_private_payment,outpatient_count_charity_care,outpatient_count_total
+0315,Advocate Christ Medical Center,2012,69518,75653,0,164605,5778,11478,327032
+5165,Advocate Illinois Masonic Medical Center,2012,39461,28583,0,110888,1154,6460,186546
+4176,Advocate Trinity Hospital,2012,13234,21729,0,33416,1391,7011,76781
+5843,Ann & Robert H. Lurie Children's Hospital of Chicago,2012,1749,223967,1188,286286,13372,3193,529755
+5207,Aurora Chicago Lakeshore Hospital,2012,154,110,2,470,6,0,742
+992,Holy Cross Hospital,2012,17674,25131,147,21875,8250,3246,76323
+1115,Jackson Park Hosp. Foundation,2012,9657,25377,0,7810,12180,832,55856
+5272,John H. Stroger Hospital of Cook County,2012,68050,130315,0,34192,188748,344957,766262
+4564,Kindred Chicago Central Hospital,2012,0,0,0,0,0,0,0
+4937,Kindred Hospital  Chicago North,2012,0,0,0,0,0,0,0
+3012,LaRabida Children's Hospital,2012,10,18840,0,3026,96,20,21992
+1271,Little Company of Mary Hospital and Health Care Centers,2012,69518,75653,0,164605,5778,11478,327032
+1289,Loretto Hospital,2012,9027,14706,233,3762,6472,4036,38236
+5249,Louis A. Weiss Memorial Hospital,2012,34963,19072,0,23437,8257,773,86502
+1578,Mercy Hospital & Medical Center,2012,79981,113452,1186,177670,2989,2458,377736
+125,Methodist Hospital of Chicago,2012,8487,6453,0,1927,367,3199,20433
+1644,Mount Sinai Hospital Medical Center,2012,19157,64852,8645,46807,8923,25488,173872
+3251,Northwestern Memorial Hospital,2012,164301,50128,525,301411,14686,29243,560294
+1727,Norwegian American Hospital,2012,5796,29199,0,16595,4950,4873,61413
+1719,Presence Our Lady of the Resurrection Medical Center,2012,39251,37039,120,31681,9662,1465,119218
+1974,Presence Resurrection Medical Center,2012,66066,30624,119,78637,4939,1017,181402
+2402,Presence Saint Francis Hospital,2012,69518,75653,0,164605,5778,11478,327032
+5181,Presence Saint Joseph Hospital Chicago,2012,54621,31079,0,103189,6801,1235,196925
+2584,Presence Saint Mary Of Nazareth Hospital,2012,36162,70754,207,50803,8416,2912,169254
+5314,Presence St. Elizabeth's Hospital,2012,6927,10330,24,6153,764,282,24480
+4549,Provident Hospital of Cook County,2012,10783,16124,361,5409,38401,26673,97751
+1958,Rehabilitation Institute of Chicago,2012,6814,2583,42,12445,104,82,22070
+5678,RML Specialty Hospital Chicago,2012,2,31,0,8,32,9,82
+2063,Roseland Community Hospital,2012,1121,5921,0,3745,990,58,11835
+1917,Rush University Medical Center,2012,132660,85323,281,174398,14158,15490,422310
+2147,Schwab Rehabilitation Center,2012,5708,19171,889,8811,2077,485,37141
+3152,Shriners Hospitals for Children - Chicago,2012,0,6154,0,5213,1016,84,12467
+3459,"South Shore Hospital, Corp.",2012,5061,9539,0,2227,4093,4419,25339
+5637,St. Anthony Hospital,2012,17200,68933,0,31815,7242,4138,129328
+2303,St. Bernard Hospital,2012,8142,44492,237,4720,3905,10877,72373
+2717,Swedish Covenant Hospital,2012,53679,65401,0,73987,23127,8541,224735
+5371,Thorek Memorial Hospital,2012,12135,8231,0,30986,2154,697,54203
+5454,UHS Hartgrove Hospital,2012,54,2885,0,3176,0,0,6115
+3897,University Of Chicago Medical Center,2012,148677,88211,0,228523,0,20446,485857
+5280,University of Illinois Medical Center @ Chicago,2012,104463,143822,0,186363,7898,12220,454766
