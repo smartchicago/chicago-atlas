@@ -12,10 +12,10 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
-      resources :indicators, only: [] do
-        collection do
-          get :indicator, :defaults => { :format => 'json'}
-        end
+      resources :indicators, only: [:index, :show] do
+      end
+
+      resources :geographies, only: [:index, :show] do
       end
     end
   end
