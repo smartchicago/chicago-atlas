@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20170110021409) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "categories", force: :cascade do |t|
+  create_table "category_groups", force: :cascade do |t|
     t.string   "name"
     t.string   "sub_category"
     t.datetime "created_at",   null: false
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20170110021409) do
 
   create_table "resources", force: :cascade do |t|
     t.integer  "uploader_id"
-    t.integer  "category_id"
+    t.integer  "category_group_id"
     t.integer  "indicator_id"
     t.integer  "year"
     t.integer  "geo_group_id"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 20170110021409) do
     t.datetime "updated_at",                null: false
   end
 
-  add_index "resources", ["category_id"], name: "index_resources_on_category_id", using: :btree
+  add_index "resources", ["category_group_id"], name: "index_resources_on_category_group_id", using: :btree
   add_index "resources", ["demo_group_id"], name: "index_resources_on_demo_group_id", using: :btree
   add_index "resources", ["geo_group_id"], name: "index_resources_on_geo_group_id", using: :btree
   add_index "resources", ["indicator_id"], name: "index_resources_on_indicator_id", using: :btree
@@ -117,7 +117,7 @@ ActiveRecord::Schema.define(version: 20170110021409) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "resources", "categories"
+  add_foreign_key "resources", "category_groups"
   add_foreign_key "resources", "demo_groups"
   add_foreign_key "resources", "geo_groups"
   add_foreign_key "resources", "indicators"

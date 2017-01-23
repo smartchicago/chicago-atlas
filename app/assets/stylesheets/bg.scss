@@ -1,0 +1,29 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body, html{
+    height: 100%;
+}
+body {
+  background: url('https://upload.wikimedia.org/wikipedia/commons/2/26/Chicago_Theatre_blend.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+ .container-table {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     height: 100%;
+     border-radius: 20px;
+ }
+
+ .container-table p{
+     max-width: 50%;
+     padding: 15px;
+     background-color: #f1f1f1;
+ }
