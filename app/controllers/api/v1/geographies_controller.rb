@@ -14,7 +14,8 @@ module Api
 
         @zip_codes        =   Geography.where("geo_type = 'Zip'").order("name").all
 
-        render :json => {:community_areas => @community_areas, :zip_codes => @zip_codes}
+        # render :json => {:community_areas => @community_areas, :zip_codes => @zip_codes}
+        render json: @community_areas, each_serializer: GeographySerializer
       end
 
       #returns detailed information for community_areas and zip_codes
@@ -45,14 +46,16 @@ module Api
 
         @adjacent_zips = @adjacent_zips.sort_by { |z| z[:name] }
 
-        eval(@geography.adjacent_community_areas).each do |a|
+        eval( @geography.adjacent_community_areas).each do |a|
           @adjacent_community_areas << Geography.find(a)
         end
 
         @adjacent_community_areas   = @adjacent_community_areas.sort_by { |a| a[:name] }
         @has_category               = @geography.has_category("All Uninsured")
 
-        render :json => {:geography => @geography, :categories => @categories, :adjacent_zips => @adjacent_zips, :adjacent_community_areas => @adjacent_community_areas, :male_percent => @male_percent, :female_percent => @female_percent, :has_category => @has_category}
+        # render :json => {:geography => @geography, :categories => @categories, :adjacent_zips => @adjacent_zips, :adjacent_community_areas => @adjacent_community_areas, :male_percent => @male_percent, :female_percent => @female_percent, :has_category => @has_category}
+        render json: @categories
+
       end
 
       def show_dataset
