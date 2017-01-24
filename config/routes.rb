@@ -15,8 +15,10 @@ Rails.application.routes.draw do
       resources :indicators, only: [:index, :show] do
       end
 
-      resources :geographies, only: [:index, :show] do
-      end
+      # resources :geographies, only: [:index, :show] do
+      # end
+      get "/places", to: 'geographies#index', as: 'community_areas'
+      get "/place/:geo_slug", to: 'geographies#show', as: 'community_area'
     end
   end
 end

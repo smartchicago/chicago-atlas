@@ -23,7 +23,7 @@ module Api
         @adjacent_zips            = []
         @adjacent_community_areas = []
 
-        @geography  =   Geography.where(:slug => params[:id]).first || not_found
+        @geography  =   Geography.where(:slug => params[:geo_slug]).first || not_found
         @categories =   Category.select('categories.id, categories.name, categories.description')
                               .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
                               .joins('INNER JOIN statistics ON datasets.id = statistics.dataset_id')
@@ -56,15 +56,10 @@ module Api
       end
 
       def show_dataset
-        @current_menu = 'places'
+        @geography  = Geography.where(:slug => params[:geo_slug]).first || not_found
+        @dataset    = Dataset.where(:slug => params[:dataset_slug]).first || not_found
 
-        @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
-        @dataset = Dataset.where(:slug => params[:dataset_slug]).first || not_found
-
-        respond_to do |format|
-          format.json { render :json => fetch_chart_data(@dataset.id, @geography.id) }
-          format.html { not_found }
-        end
+        render :json => fetch_chart_data(@dataset.id, @geography.id)
       end
 
       def show_death_dataset
@@ -83,10 +78,7 @@ module Api
           death_dataset << death_data
         end
 
-        respond_to do |format|
-          format.json { render :json => {:location => @geography.slug, :death_cause_data => death_dataset} }
-          format.html { not_found }
-        end
+        render :json => {:location => @geography.slug, :death_cause_data => death_dataset}
       end
 
       def show_demographic_dataset
@@ -115,7 +107,8 @@ module Api
       end
 
       def show_insurance_dataset
-        @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
+        @geography = Geography.where(:slug => params[:id]).first || not_found
+        byebug
         cat = Category.find_by_name(params[:cat_name])
 
         insurance_area = fetch_custom_chart_data(@geography.id, cat.id, nil, [])
