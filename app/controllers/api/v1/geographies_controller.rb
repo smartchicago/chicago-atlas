@@ -53,7 +53,7 @@ module Api
         @has_category               = @geography.has_category("All Uninsured")
 
         # render :json => {:geography => @geography, :categories => @categories, :adjacent_zips => @adjacent_zips, :adjacent_community_areas => @adjacent_community_areas, :male_percent => @male_percent, :female_percent => @female_percent, :has_category => @has_category}
-        render :json => {:categories => @categories}
+        render :json => {:geography => @geography}
       end
 
       def show_dataset
