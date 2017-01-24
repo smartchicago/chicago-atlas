@@ -63,11 +63,11 @@ module Api
         render :json => fetch_chart_data(@dataset.id, @geography.id)
       end
 
-      def show_death_dataset
+      def show_category_dataset
         @current_menu = 'places' #?
 
         @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
-        @datasets = get_datasets(@geography.id, 2)
+        @datasets = get_datasets(@geography.id, params[:cat_id])
 
         death_dataset = []
 
@@ -178,6 +178,7 @@ module Api
           @dataset = Dataset.where(:slug => params[:dataset_slug]).first || not_found
           @dataset_url_fragment << "/#{@dataset.id}"
         end
+        byebug
       end
 
       def resources_json
