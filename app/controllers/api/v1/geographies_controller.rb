@@ -52,7 +52,8 @@ module Api
         @adjacent_community_areas   = @adjacent_community_areas.sort_by { |a| a[:name] }
         @has_category               = @geography.has_category("All Uninsured")
 
-        render :json => {:geography => @geography, :categories => @categories, :adjacent_zips => @adjacent_zips, :adjacent_community_areas => @adjacent_community_areas, :male_percent => @male_percent, :female_percent => @female_percent, :has_category => @has_category}
+        # render :json => {:geography => @geography, :categories => @categories, :adjacent_zips => @adjacent_zips, :adjacent_community_areas => @adjacent_community_areas, :male_percent => @male_percent, :female_percent => @female_percent, :has_category => @has_category}
+        render :json => {:categories => @categories}
       end
 
       def show_dataset
@@ -98,19 +99,16 @@ module Api
           demographic_data_all << population_data
         end
 
-        respond_to do |format|
-          format.json { render :json => {
-            :location => @geography.slug,
-            :demographic_data => demographic_data_all} }
-          format.html { not_found }
-        end
+        render :json => {
+          :location => @geography.slug,
+          :demographic_data => demographic_data_all}
+
       end
 
       def show_insurance_dataset
-        @geography = Geography.where(:slug => params[:id]).first || not_found
-        byebug
+        @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
         cat = Category.find_by_name(params[:cat_name])
-
+        byebug
         insurance_area = fetch_custom_chart_data(@geography.id, cat.id, nil, [])
         insurance_chicago = fetch_custom_chart_data(100, cat.id, nil, [])
         group_labels = []
@@ -130,14 +128,11 @@ module Api
           all_data << data
         end
 
-        respond_to do |format|
-          format.json { render :json => {
-            :area => @geography.slug,
-            :uninsured_data_type => cat.name,
-            :data => all_data
-            } }
-          format.html { not_found }
-        end
+        render :json => {
+          :area => @geography.slug,
+          :uninsured_data_type => cat.name,
+          :data => all_data
+          }
 
       end
 
