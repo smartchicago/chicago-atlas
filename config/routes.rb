@@ -12,13 +12,16 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
+
       resources :indicators, only: [:index, :show] do
       end
 
-      # resources :geographies, only: [:index, :show] do
-      # end
       get "/places", to: 'geographies#index', as: 'community_areas'
       get "/place/:geo_slug", to: 'geographies#show', as: 'community_area'
+      get "/place/demography/:geo_slug", to: "geographies#show_demographic_dataset", as: "community_area_demography"
+      get "/place/insurance/:cat_name/:geo_slug", to: "geographies#show_insurance_dataset", as: "community_area_insurance"
+      get "/place/providers/:geo_slug", to: "geographies#show_provider_dataset", as: "community_area_provider"
+
     end
   end
 end
