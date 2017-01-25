@@ -52,8 +52,8 @@ module Api
         @adjacent_community_areas   = @adjacent_community_areas.sort_by { |a| a[:name] }
         @has_category               = @geography.has_category("All Uninsured")
 
-        # render :json => {:geography => @geography, :categories => @categories, :adjacent_zips => @adjacent_zips, :adjacent_community_areas => @adjacent_community_areas, :male_percent => @male_percent, :female_percent => @female_percent, :has_category => @has_category}
-        render :json => {:geography => @geography}
+        render :json => {:geography => @geography, :categories => @categories, :adjacent_zips => @adjacent_zips, :adjacent_community_areas => @adjacent_community_areas, :male_percent => @male_percent, :female_percent => @female_percent, :has_category => @has_category}
+        # render :json => {:geography => @geography}
       end
 
       def show_dataset
@@ -178,14 +178,26 @@ module Api
           @dataset = Dataset.where(:slug => params[:dataset_slug]).first || not_found
           @dataset_url_fragment << "/#{@dataset.id}"
         end
-        byebug
       end
 
       def resources_json
+
+        @current_menu = 'places'
+        @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
+
+        @dataset_url_fragment = ""
+
+        # for specific location view
+        if not params[:dataset_slug].nil?
+          @dataset = Dataset.where(:slug => params[:dataset_slug]).first || not_found
+          @dataset_url_fragment << "/#{@dataset.id}"
+        end
+
         dataset_id = params[:dataset_id]
         # send boundary with [ north, east, south, west ]
         bounds = [params[:north], params[:east], params[:south], params[:west] ]
-        community_area = params[:community_area_slug]
+        # community_area = params[:community_area_slug]
+        community_area = params[:geo_slug]
 
         resources = InterventionLocation
 
@@ -234,9 +246,12 @@ module Api
           r_c[:resources] = r_c[:resources].sort_by { |r| r[:organization_name]}
         end
 
-        respond_to do |format|
-          format.json { render :json => resources_by_cat }
-        end
+        # respond_to do |format|
+        #   format.json { render :json => resources_by_cat }
+        # end
+
+        render :json => { :resources_by_cat => resources_by_cat, :geography =>  @geography, :dataset_url_fragment => @dataset_url_fragment, :dataset => @dataset }
+
       end
     end
   end
