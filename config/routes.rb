@@ -19,14 +19,11 @@ Rails.application.routes.draw do
       get '/places', to: 'geographies#index', as: 'community_areas'
       get '/place/:geo_slug', to: 'geographies#show', as: 'community_area'
       get '/place/:geo_slug/resources(/:dataset_slug)', to: 'geographies#resources_json', as: 'community_area_resources'
-      # get '/place/resources/:dataset_id', to: 'geographies#resources_json', as: 'resources'
-      # match "resources(/:dataset_id)/:north/:east/:south/:west" => 'geographies#resources_json', :via => [:get], :as => 'gallery_shows'
-      # match "resources(/:dataset_id)/:community_area_slug" => 'geographies#resources_json', :via => [:get], :as => 'gallery_show'
-
       get '/place/demography/:geo_slug', to: 'geographies#show_demographic_dataset', as: 'community_area_demography'
       get '/place/insurance/:cat_name/:geo_slug', to: 'geographies#show_insurance_dataset', as: 'community_area_insurance'
       get '/place/providers/:geo_slug', to: 'geographies#show_provider_dataset', as: 'community_area_provider'
       get '/place/category/:cat_id/:geo_slug', to: 'geographies#show_category_dataset', as: 'community_area_category'
+      get '/place/:geo_slug/hospitals', to: 'hospital#index', as: 'community_area_hospitals'
     end
   end
 end
