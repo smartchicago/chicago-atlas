@@ -64,18 +64,20 @@ module Api
       end
 
       def show_category_dataset
-        @current_menu = 'places' #?
+        # @current_menu = 'places' #?
 
-        @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
-        @datasets = get_datasets(@geography.id, params[:cat_id])
+        @geography  = Geography.where(:slug => params[:geo_slug]).first || not_found
+        @datasets   = get_datasets(@geography.id, params[:cat_id])
 
         death_dataset = []
 
         @datasets.each do |dataset|
-          death_data = { :death_cause => dataset.name,
-            :description => dataset.description,
-            :death_stat => fetch_chart_data(dataset.id, @geography.id)[:data].first,
+          death_data = {
+            :death_cause        => dataset.name,
+            :description        => dataset.description,
+            :death_stat         => fetch_chart_data(dataset.id, @geography.id)[:data].first,
             :chicago_death_stat => fetch_chart_data(dataset.id, 100)[:data].first }
+
           death_dataset << death_data
         end
 
@@ -92,28 +94,28 @@ module Api
 
         pop_2000.each_index do |i|
           population_data = {
-            :age_group => GlobalConstants::AGE_GROUPS[i],
-            :pop_2000 => pop_2000[i],
-            :pop_2010 => pop_2010[i]
+            :age_group  => GlobalConstants::AGE_GROUPS[i],
+            :pop_2000   => pop_2000[i],
+            :pop_2010   => pop_2010[i]
           }
+
           demographic_data_all << population_data
         end
 
         render :json => {
           :location => @geography.slug,
-          :demographic_data => demographic_data_all}
+          :demographic_data => demographic_data_all
+        }
 
       end
 
       def show_insurance_dataset
-        @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
-        cat = Category.find_by_name(params[:cat_name])
-        byebug
-        insurance_area = fetch_custom_chart_data(@geography.id, cat.id, nil, [])
+        @geography        = Geography.where(:slug => params[:geo_slug]).first || not_found
+        cat               = Category.find_by_name(params[:cat_name])
+        insurance_area    = fetch_custom_chart_data(@geography.id, cat.id, nil, [])
         insurance_chicago = fetch_custom_chart_data(100, cat.id, nil, [])
-        group_labels = []
-
-        all_data = []
+        group_labels      = []
+        all_data          = []
 
         Dataset.where(:category_id => cat.id).each do |dataset|
           group_labels << dataset.name
@@ -121,9 +123,9 @@ module Api
 
         group_labels.each_index do |i|
           data = {
-            :group => group_labels[i],
-            :uninsured_area => insurance_area[i],
-            :uninsured_chicago => insurance_chicago[i]
+            :group              => group_labels[i],
+            :uninsured_area     => insurance_area[i],
+            :uninsured_chicago  => insurance_chicago[i]
           }
           all_data << data
         end
