@@ -139,22 +139,22 @@ module Api
       end
 
       def show_provider_dataset
-        @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
-        @category = Category.where("name = 'Healthcare Providers'").first
+        @geography  = Geography.where(:slug => params[:geo_slug]).first || not_found
+        @category   = Category.where("name = 'Healthcare Providers'").first
 
-        all_data = []
-
+        all_data    = []
         professions = []
+
         Dataset.where(:category_id => @category.id).each { |dataset| professions << dataset.name }
 
-        providers_area = fetch_custom_chart_data(@geography.id, nil, nil, professions)
+        providers_area    = fetch_custom_chart_data(@geography.id, nil, nil, professions)
         providers_chicago = fetch_custom_chart_data(100, nil, nil, professions)
 
         professions.each_index do |i|
           data = {
-            :profession => professions[i],
-            :providers_area => providers_area[i],
-            :providers_chicago => providers_chicago[i]
+            :profession         => professions[i],
+            :providers_area     => providers_area[i],
+            :providers_chicago  => providers_chicago[i]
           }
           all_data << data
         end
@@ -163,16 +163,16 @@ module Api
           format.json { render :json => {
             :area => @geography.slug,
             :data => all_data
-            } }
+            }
+          }
+
           format.html { not_found }
         end
 
       end
 
       def show_resources
-        @current_menu = 'places'
-        @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
-
+        @geography            = Geography.where(:slug => params[:geo_slug]).first || not_found
         @dataset_url_fragment = ""
 
         # for specific location view
@@ -184,9 +184,7 @@ module Api
 
       def resources_json
 
-        @current_menu = 'places'
-        @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
-
+        @geography            = Geography.where(:slug => params[:geo_slug]).first || not_found
         @dataset_url_fragment = ""
 
         # for specific location view
@@ -195,11 +193,11 @@ module Api
           @dataset_url_fragment << "/#{@dataset.id}"
         end
 
-        dataset_id = params[:dataset_id]
+        dataset_id      = params[:dataset_id]
         # send boundary with [ north, east, south, west ]
-        bounds = [params[:north], params[:east], params[:south], params[:west] ]
+        bounds          = [params[:north], params[:east], params[:south], params[:west] ]
         # community_area = params[:community_area_slug]
-        community_area = params[:geo_slug]
+        community_area  = params[:geo_slug]
 
         resources = InterventionLocation
 
@@ -225,8 +223,8 @@ module Api
         resources = resources.order('program_name, organization_name')
 
         # convert in to a JSON object grouped by category
-        resources_by_cat = [{:category => 'all', :resources => []}]
-        resources_all = []
+        resources_by_cat  = [{:category => 'all', :resources => []}]
+        resources_all     = []
         resources.each do |r|
           categories = eval(r[:categories])
           categories.each do |c|
@@ -240,9 +238,9 @@ module Api
           end
         end
 
-        resources_all = resources_all.uniq
+        resources_all     = resources_all.uniq
         resources_by_cat.select {|r_c| r_c[:category] == 'all' }.first[:resources] = resources_all
-        resources_by_cat = resources_by_cat.sort_by { |r_c| r_c[:category] }
+        resources_by_cat  = resources_by_cat.sort_by { |r_c| r_c[:category] }
 
         resources_by_cat.each do |r_c|
           r_c[:resources] = r_c[:resources].sort_by { |r| r[:organization_name]}
