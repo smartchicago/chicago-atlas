@@ -16,3 +16,11 @@
 //= require bootstrap
 //= require uploader.js
 //= require_tree .
+
+(function () {
+  $(".alert").fadeIn(500).css("opacity","0.85").delay( 6000 ).fadeOut( 1000 )
+  $('.alert').on('click', function(e) {
+    e.preventDefault();
+    $(this).remove();
+  })
+})()
