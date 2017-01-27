@@ -1,22 +1,52 @@
-<%= form_for(@uploader) do |f| %>
-  <% if @uploader.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@uploader.errors.count, "error") %> prohibited this uploader from being saved:</h2>
 
-      <ul>
-      <% @uploader.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+
+<div id="product-modal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><%= title %></h4>
+      </div>
+
+      <%= form_for(@uploader) do |f| %>
+        <% if @uploader.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@uploader.errors.count, "error") %> prohibited this uploader from being saved:</h2>
+
+            <ul>
+            <% @uploader.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="container">
+       <div class="col-lg-6 col-sm-6 col-12">
+         <h4>Please select a file:</h4>
+         <div class="input-group">
+           <label class="input-group-btn">
+             <span class="btn btn-primary">
+
+               Browse&hellip; <%= f.file_field :path, class:"uploader", style:"display: none" %>
+             </span>
+           </label>
+
+           <input type="text" class="form-control uploader-display" readonly>
+         </div>
+         <br>
+         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa in quaerat cumque quasi, velit voluptate nesciunt totam delectus voluptatibus incidunt odio praesentium obcaecati omnis officiis voluptatum consectetur molestias, nam tempora?</p>
+       </div>
+     </div>
+
+
+        <div class="modal-footer">
+          <div class="text-center">
+            <%= f.submit 'Upload file now', class: "btn-custom" %>
+          </div>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :path %><br>
-    <%= f.file_field :path %>
-  </div>
-  
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

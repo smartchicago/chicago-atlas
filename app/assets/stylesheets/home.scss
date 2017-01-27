@@ -1,20 +1,13 @@
-@import 'bootstrap-sprockets';
-@import 'bootstrap';
-
-$primaryColor: #13B5EA;
-$secondaryColor:  #EF3E42;
-$whiteColor: #F2F2F2;
 
 
 body,
 html {
+  background-color: $white;
   height: 100%;
-  background-color: #fff;
 }
 
 body {
   text-align: center;
-
 
   .alert-alert {
     @extend .alert-warning;
@@ -25,41 +18,68 @@ body {
   }
 }
 
-form input {
-  color: black;
+form  {
+  input {
+    color: $black;
+  }
 }
 
 .container-table {
-    display: table;
+  display: table;
 }
+
 .vertical-center-row {
-    display: table-cell;
-    vertical-align: middle;
+  display: table-cell;
+  vertical-align: middle;
 }
 
-.btn_custom{
-    border-color: #326E99;
-    background-color: #3F8ABF;
-    border-style: solid;
-    border-width: 0px 0px 3px;
-    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
-    color: #FFFFFF;
-    border-radius: 6px;
-    cursor: pointer;
-    display: inline-block;
-    font-style: normal;
-    overflow: hidden;
-    text-align: center;
+.btn-custom {
+  background-color: $custom-button-bg-color;
+  border-color: $custom-button-border-color;
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 0 0 3px;
+  box-shadow: 0 -1px 0 $custom-button-boxshadow-bg inset;
+  color: $white;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Gotham Rounded A', 'Gotham Rounded B', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 8px 40px;
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  transition: 200ms ease-in-out 0s;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: $custom-button-hover-bg-color;
     text-decoration: none;
-    text-overflow: ellipsis;
-    transition: all 200ms ease-in-out 0s;
-    white-space: nowrap;
-    font-family: "Gotham Rounded A","Gotham Rounded B",Helvetica,Arial,sans-serif;
-    font-weight: 700;
-    padding: 0 40px;
-    font-size: 16px;
+  }
 }
 
-.btn_custom:hover{
-  background-color: #3979a7;
+
+.btn-file {
+  overflow: hidden;
+  position: relative;
+
+  input {
+    background: $white;
+    cursor: inherit;
+    display: block;
+    filter: alpha(opacity=0);
+    font-size: 100px;
+    min-height: 100%;
+    min-width: 100%;
+    opacity: 0;
+    outline: none;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+  }
 }

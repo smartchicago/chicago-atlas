@@ -35,4 +35,4 @@
 <h1>Add your First Document</h1>
 <% end %>
 
-<%= link_to 'New Uploader', new_uploader_path, :class => "btn_custom"%>
+<%= link_to "New file upload <i class='fa fa-2 fa-cloud-upload' aria-hidden='true'></i>".html_safe , new_uploader_path, remote: true, class: "btn-custom" %>

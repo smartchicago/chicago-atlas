@@ -23,4 +23,10 @@
     e.preventDefault();
     $(this).remove();
   })
+
+  $('body').on('change',".uploader", function(event){
+    $('.uploader-display').val(event.target.files[0].name)
+  });
+
+
 })()
