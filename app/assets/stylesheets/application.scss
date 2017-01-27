@@ -9,3 +9,23 @@
 @import 'main-nav';
 @import 'admin_login';
 @import 'alert-custom-styles';
+
+
+.modal-edit-user {
+  .modal-body {
+    .modal-container {
+      margin: 0 auto;
+      max-width: 500px;
+      padding: 2em;
+    }
+
+    .form-group {
+      margin-bottom: 4px;
+    }
+
+    .bg-warning {
+      padding: 1em;
+      margin-bottom: 8px;
+    }
+  }
+}

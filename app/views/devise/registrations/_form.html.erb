@@ -1,0 +1,66 @@
+<div class="modal fade modal-edit-user">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><%= title %></h4>
+      </div>
+
+      <div class="modal-body text-left">
+
+          <div class="modal-container">
+            <%= form_for(resource, as: resource_name, class: 'form-signin form-horizontal', url: registration_path(resource_name), html: { method: :put }) do |f| %>
+            <%= devise_error_messages! %>
+            <div class="form-group">
+              <%= f.label :email %><br />
+              <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+            </div>
+
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <span class="label label-info">Currently waiting confirmation for: <%= resource.unconfirmed_email %></span>
+            <% end %>
+
+            <hr>
+            <div class="form-group">
+              <%= f.label :password , 'New password <small>(6 characters minimum)</small>'.html_safe %>
+              <%= f.password_field :password, autocomplete: "off", class: 'form-control',
+                placeholder: 'leave blank if you don\'t want to change it' %>
+              <% if @minimum_password_length %>
+              <br />
+              <!-- <em><%= @minimum_password_length %> characters minimum</em> -->
+              <% end %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :password_confirmation, 'Confirm new password' %><br />
+              <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
+            </div>
+
+            <hr>
+
+            <div class="form-group">
+              <%= f.label :current_password, 'Password' %>
+              <%= f.password_field :current_password, autocomplete: "off", class: 'form-control',
+              placeholder: 'Needed to confirm your changes' %>
+            </div>
+            <div class="bg-warning text-center">
+              <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+              <span class="sr-only">Error:</span>
+              Please input your password to confirm your changes
+            </div>
+
+            <br>
+            <div class="text-right">
+              <%= f.submit "Update", class: "btn btn-primary" %>
+              <a class="btn btn-default" data-dismiss="modal" aria-label="Close">Cancel</a>
+            </div>
+            <% end %>
+
+          </div>
+
+      </div>
+
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
