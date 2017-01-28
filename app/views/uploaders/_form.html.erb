@@ -5,7 +5,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><%= title %></h4>
+        <h4 class="modal-title">
+          <% if defined? title  %>
+            <%=  title  %>
+          <%end  %>
+        </h4>
       </div>
 
       <%= form_for(@uploader) do |f| %>
@@ -28,7 +32,7 @@
            <label class="input-group-btn">
              <span class="btn btn-primary">
 
-               Browse&hellip; <%= f.file_field :path, class:"uploader", style:"display: none" %>
+               Browse&hellip; <%= f.file_field :path, class:"uploader", required: 'required', style:"display: none" %>
              </span>
            </label>
 

@@ -1,40 +1,51 @@
 <div class="row">
   <div class="col-sm-4 col-md-4 col-md-offset-4">
-    <h1> Edit Your Profile </h1>
-    <div class="account-wall">
-      <%= image_tag ("logo_small.png"), class: "profile-img" %>
-
-      <%= form_for(resource, as: resource_name, class: 'form-signin', url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <div class="modal-container">
+      <%= form_for(resource, as: resource_name, class: 'form-signin form-horizontal', url: registration_path(resource_name), html: { method: :put }) do |f| %>
       <%= devise_error_messages! %>
       <div class="form-group">
         <%= f.label :email %><br />
         <%= f.email_field :email, autofocus: true, class: 'form-control' %>
       </div>
+
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
       <span class="label label-info">Currently waiting confirmation for: <%= resource.unconfirmed_email %></span>
       <% end %>
 
+      <hr>
       <div class="form-group">
-        <%= f.label :password %> <span class="help-block">(leave blank if you don't want to change it)</span>
-        <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+        <%= f.label :password , 'New password <small>(6 characters minimum)</small>'.html_safe %>
+        <%= f.password_field :password, autocomplete: "off", class: 'form-control',
+          placeholder: 'leave blank if you don\'t want to change it' %>
         <% if @minimum_password_length %>
         <br />
-        <em><%= @minimum_password_length %> characters minimum</em>
+        <!-- <em><%= @minimum_password_length %> characters minimum</em> -->
         <% end %>
       </div>
 
       <div class="form-group">
-        <%= f.label :password_confirmation %><br />
+        <%= f.label :password_confirmation, 'Confirm new password' %><br />
         <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
       </div>
 
+      <hr>
+
       <div class="form-group">
-        <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-        <%= f.password_field :current_password, autocomplete: "off", class: 'form-control' %>
-        <span class="help-block">we need your current password to confirm your changes</span>
+        <%= f.label :current_password, 'Password' %>
+        <%= f.password_field :current_password, autocomplete: "off", class: 'form-control',
+        placeholder: 'Needed to confirm your changes' %>
+      </div>
+      <div class="bg-warning text-center">
+        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        Please input your password to confirm your changes
       </div>
 
-      <%= f.submit "Update", class: "btn btn-primary" %>  <%= link_to 'Back', :back , class: "btn btn-default"%>
+      <br>
+      <div class="text-right">
+        <%= f.submit "Update", class: "btn btn-primary" %>
+        <a class="btn btn-default" href="/" data-dismiss="modal" aria-label="Close">go to listings</a>
+      </div>
       <% end %>
 
     </div>

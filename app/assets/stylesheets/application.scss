@@ -24,8 +24,26 @@
     }
 
     .bg-warning {
-      padding: 1em;
       margin-bottom: 8px;
+      padding: 1em;
+    }
+  }
+}
+
+#error_explanation {
+  h2 {
+    font-size: 18px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+      background: $warning-red;
+      border-radius: 4px;
+      color: $white;
+      padding: 5px;
     }
   }
 }

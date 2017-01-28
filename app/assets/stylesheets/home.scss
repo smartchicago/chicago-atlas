@@ -34,31 +34,37 @@ form  {
 }
 
 .btn-custom {
-  background-color: $custom-button-bg-color;
-  border-color: $custom-button-border-color;
-  border-radius: 6px;
-  border-style: solid;
-  border-width: 0 0 3px;
-  box-shadow: 0 -1px 0 $custom-button-boxshadow-bg inset;
-  color: $white;
-  cursor: pointer;
-  display: inline-block;
-  font-family: 'Gotham Rounded A', 'Gotham Rounded B', Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  margin: 0 auto;
-  overflow: hidden;
-  padding: 8px 40px;
-  text-align: center;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  transition: 200ms ease-in-out 0s;
-  white-space: nowrap;
-
-  &:hover {
-    background-color: $custom-button-hover-bg-color;
+  &.btn-custom {
+    background-color: $custom-button-bg-color;
+    border-color: $custom-button-border-color;
+    border-radius: 6px;
+    border-style: solid;
+    border-width: 0 0 3px;
+    box-shadow: 0 -1px 0 $custom-button-boxshadow-bg inset;
+    color: $white;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Gotham Rounded A', 'Gotham Rounded B', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 8px 40px;
+    text-align: center;
     text-decoration: none;
+    text-overflow: ellipsis;
+    transition: 200ms ease-in-out 0s;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: $custom-button-border-color;
+      text-decoration: none;
+    }
+
+    &:focus {
+      outline: 0;
+    }
   }
 }
 
