@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       get '/place/category/:cat_id/:geo_slug', to: 'geographies#show_category_dataset', as: 'community_area_category'
       get '/hospitals', to: 'hospital#index', as: 'community_area_hospitals'
       get '/hospital/slug', to: 'hospital#slug', as: 'hospital_with_slug'
+      get '/topics', to: 'topics#index', as: 'topics_list'
     end
   end
 end
