@@ -205,6 +205,7 @@ ActiveRecord::Schema.define(version: 20170110021409) do
 
   create_table "uploaders", force: :cascade do |t|
     t.integer  "user_id"
+    t.string   "comment"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "path"
