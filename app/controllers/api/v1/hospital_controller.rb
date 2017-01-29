@@ -40,19 +40,24 @@ module Api
             # time constraints. - AJB 13 OCT 2015
             a = @hospital.areas
             case
-            when a.length == 1
-              @area_summary = "#{@hospital.name} serves the #{summary_word.singularize} <a href='/place/#{get_zip_slug(a[0])}'>#{a[0]}</a>."
-            when a.length == 2
-              @area_summary = "#{@hospital.name} serves the #{summary_word} <a href='/place/#{get_zip_slug(a[0])}'>#{a[0]}</a> and <a href='/place/#{get_zip_slug(a[1])}'>#{a[1]}</a>."
-            when a.length > 2
-              areas = ""
-              a[0..(a.length-2)].each do |zip|
-                areas += "<a href='/place/#{get_zip_slug(zip)}'>#{zip}</a>, "
-              end
-              @area_summary = "#{@hospital.name} serves the #{summary_word} #{areas}and <a href='/place/#{get_zip_slug(a.last)}'>#{a.last}</a>."
+              when a.length == 1
+                @area_summary = "#{@hospital.name} serves the #{summary_word.singularize} <a href='/place/#{get_zip_slug(a[0])}'>#{a[0]}</a>."
+              when a.length == 2
+                @area_summary = "#{@hospital.name} serves the #{summary_word} <a href='/place/#{get_zip_slug(a[0])}'>#{a[0]}</a> and <a href='/place/#{get_zip_slug(a[1])}'>#{a[1]}</a>."
+              when a.length > 2
+                areas = ""
+                a[0..(a.length-2)].each do |zip|
+                  areas += "<a href='/place/#{get_zip_slug(zip)}'>#{zip}</a>, "
+                end
+                @area_summary = "#{@hospital.name} serves the #{summary_word} #{areas}and <a href='/place/#{get_zip_slug(a.last)}'>#{a.last}</a>."
             end
+
           end
+
         end
+
+        render :json => {:hospital => @hospital, :area_summary => @area_summary}
+
       end
     end
   end
