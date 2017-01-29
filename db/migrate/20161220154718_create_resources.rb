@@ -4,7 +4,7 @@ class CreateResources < ActiveRecord::Migration
       t.integer :uploader_id
       t.integer :category_group_id
       t.integer :indicator_id
-      t.integer :year
+      t.string  :year
       t.integer :geo_group_id
       t.integer :demo_group_id
       t.integer :number
