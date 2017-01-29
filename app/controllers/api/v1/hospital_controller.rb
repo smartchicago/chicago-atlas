@@ -20,8 +20,8 @@ module Api
       end
 
       def show
-      	@hospital = Provider.where(:slug => params[:slug]).first || not_found
-        @area_summary = ''
+      	@hospital       = Provider.where(:slug => params[:slug]).first || not_found
+        @area_summary   = ''
 
         if @hospital.geometry != "none"
 
