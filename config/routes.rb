@@ -23,7 +23,8 @@ Rails.application.routes.draw do
       get '/place/insurance/:cat_name/:geo_slug', to: 'geographies#show_insurance_dataset', as: 'community_area_insurance'
       get '/place/providers/:geo_slug', to: 'geographies#show_provider_dataset', as: 'community_area_provider'
       get '/place/category/:cat_id/:geo_slug', to: 'geographies#show_category_dataset', as: 'community_area_category'
-      get '/place/:geo_slug/hospitals', to: 'hospital#index', as: 'community_area_hospitals'
+      get '/hospitals', to: 'hospital#index', as: 'community_area_hospitals'
+      get '/hospital/slug', to: 'hospital#slug', as: 'hospital_with_slug'
     end
   end
 end
