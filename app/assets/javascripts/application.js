@@ -17,16 +17,15 @@
 //= require uploader.js
 //= require_tree .
 
-(function () {
-  $(".alert").fadeIn(500).css("opacity","0.85").delay( 6000 ).fadeOut( 1000 )
-  $('.alert').on('click', function(e) {
+use 'strict';
+$( document ).ready(function () {
+  $(".alert").fadeIn(500).css("opacity","0.85").delay(6000).fadeOut(1000);
+  $('.alert').on('click', function (e) {
     e.preventDefault();
     $(this).remove();
-  })
-
-  $('body').on('change',".uploader", function(event){
-    $('.uploader-display').val(event.target.files[0].name)
   });
 
-
-})()
+  $('body').on('change',".uploader", function (event) {
+    $('.uploader-display').val(event.target.files[0].name);
+  });
+});
