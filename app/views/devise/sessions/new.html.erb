@@ -9,7 +9,7 @@
                   <%= f.password_field :password, autocomplete: "off", :class=> "form-control", :placeholder=>"Password"%>
                   <%= f.submit "Log in", :class=>"btn btn-lg btn-primary btn-block"%>
                 <% end %>
-
+                <%= render "devise/shared/links" %>
             </div>
             <div class="container">
               <% flash.each do |key, value| %>
