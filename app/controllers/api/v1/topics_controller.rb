@@ -1,9 +1,13 @@
 module Api
   module V1
     class TopicsController < ApiController
+      api :GET, '/topics', 'Fetch category, subcategory, indicators list'
+      formats ['json']
+      description <<-EOS
+        == Fetch category, subcategory, indicators
+      EOS
       def index
-        @resources = Resource.all
-        render json: @resources
+        render json: CategoryGroup.first
       end
 
       api :GET, '/topic/:year/:indicator_slug', 'Fetch detailed data of topic'

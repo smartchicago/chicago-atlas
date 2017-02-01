@@ -1,3 +1,4 @@
 class CategoryGroupSerializer < ActiveModel::Serializer
-  attributes :id, :name, :sub_category
+  attributes :id, :name
+  has_many :sub_categories
 end
