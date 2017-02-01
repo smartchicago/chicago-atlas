@@ -10,7 +10,7 @@ class ResourceParser < Parser
     geography:    'E',
     geo_group:    'F',
     demography:   'G',
-    demo_group:   'F'
+    demo_group:   'H'
   }
 
   COLUMNS = [
@@ -54,7 +54,7 @@ class ResourceParser < Parser
         Resource.transaction do
         new_resource                    =   Resource.new
         new_resource.uploader_id        =   self.uploader_id
-        new_resource.category_group_id        =   category.id
+        new_resource.category_group_id  =   category.id
         new_resource.indicator_id       =   indicator.id
         new_resource.geo_group_id       =   geography.id
         new_resource.demo_group_id      =   demography.id
