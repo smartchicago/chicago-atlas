@@ -4,7 +4,13 @@ module Api
       include ApplicationHelper
       # cache_store :index, :show, :show_dataset, :show_death_dataset, :show_demographic_dataset, :show_insurance_dataset, :show_provider_dataset, :resources_json
 
-      #returns the array of community_areas and zip_codes
+      api :GET, '/places', 'Fetch community_areas and zip codes list'
+      formats ['json']
+      description <<-EOS
+        == Fetch community areas and zip codes list
+          This API is used to fetch community areas and zip codes list
+          Response data is composed of community_areas list and zip_codes list
+      EOS
       def index
         @community_areas  =   Geography.select("geographies.name, geographies.slug, count(intervention_locations.community_area_id) as resource_cnt")
                               .joins("LEFT JOIN intervention_locations on intervention_locations.community_area_id = geographies.id")
@@ -17,7 +23,16 @@ module Api
         render :json => {:community_areas => @community_areas, :zip_codes => @zip_codes}
       end
 
-      #returns detailed information for community_areas and zip_codes
+      api :GET, '/place/:geo_slug', 'Fetch community_area/zip_code details'
+      formats ['json']
+      param :geo_slug, String, :desc => 'community_area slug or zip code', :required => true
+      description <<-EOS
+        == Fetch community area details using community area slug or zip code
+          This API is used to fetch community area or zip code details.
+          It has basic info for community area or zip code.
+          Detailed charts and statistics data can be get using detailed apis.
+          This API has only basic info for community area or zip code.
+      EOS
       def show
         @demographics_list        = ['Below Poverty Level', 'Crowded Housing', 'Dependency', 'No High School Diploma', 'Per capita income', 'Unemployment']
         @adjacent_zips            = []
@@ -63,6 +78,15 @@ module Api
         render :json => fetch_chart_data(@dataset.id, @geography.id)
       end
 
+      api :GET, '/place/category/:cat_id/:geo_slug', 'Fetch category dataset using category id and community area/zip code'
+      formats ['json']
+      param :geo_slug, String, :desc => 'community_area slug or zip code', :required => true
+      param :cat_id, String, :desc => 'category_id', :required => true
+      description <<-EOS
+        == Fetch category dataset using category id and community area/zip code
+        category id is index number of category table and community area/zip code is slug.
+        It has useful data for chart.
+      EOS
       def show_category_dataset
         # @current_menu = 'places' #?
 
@@ -84,6 +108,15 @@ module Api
         render :json => {:location => @geography.slug, :death_cause_data => death_dataset}
       end
 
+      api :GET, '/place/demography/:geo_slug', 'Fetch demography chart info of community_area or zip code'
+      formats ['json']
+      param :geo_slug, String, :desc => 'community_area slug or zip code', :required => true
+      description <<-EOS
+        == Fetch demography info for community_area or zip code
+          This api gets detailed domography info for community_area or zip code.
+          You can get the chart info too(map box) using this api.
+          The result can be easily used on map box.
+      EOS
       def show_demographic_dataset
         @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
 
@@ -109,6 +142,14 @@ module Api
 
       end
 
+      api :GET, '/place/insurance/:cat_name/:geo_slug', 'Fetch insurance info regarding community area or zip code and category name'
+      formats ['json']
+      param :geo_slug, String, :desc => 'community_area slug or zip code', :required => true
+      param :cat_name, String, :desc => 'category name', :required => true
+      description <<-EOS
+        == Fetch insurance data using category id and community area / zip code
+        Result data is easily used on chart and it has info for insurance
+      EOS
       def show_insurance_dataset
         @geography        = Geography.where(:slug => params[:geo_slug]).first || not_found
         cat               = Category.find_by_name(params[:cat_name])
@@ -138,6 +179,13 @@ module Api
 
       end
 
+      api :GET, '/place/providers/:geo_slug', 'Fetch provider info using community area or zip code'
+      formats ['json']
+      param :geo_slug, String, :desc => 'community_area slug or zip code', :required => true
+      description <<-EOS
+        == Fetch provides info using community_area or zip code.
+        It can be easily used on charts.
+      EOS
       def show_provider_dataset
         @geography  = Geography.where(:slug => params[:geo_slug]).first || not_found
         @category   = Category.where("name = 'Healthcare Providers'").first
@@ -182,6 +230,15 @@ module Api
         end
       end
 
+      api :GET, '/place/:geo_slug/resources(/:dataset_slug)', 'Fetch resources info for community_area/zip code'
+      formats ['json']
+      param :geo_slug, String, :desc => 'community_area slug or zip code', :required => true
+      param :dataset_slug, String, :desc => 'dataset slug'
+      description <<-EOS
+        == Fetch community area or zip code resources
+          This api fetches the detailed resources info of community_area or zip code.
+          It has detailed info for resources placed in community area or zip code.
+      EOS
       def resources_json
 
         @geography            = Geography.where(:slug => params[:geo_slug]).first || not_found
