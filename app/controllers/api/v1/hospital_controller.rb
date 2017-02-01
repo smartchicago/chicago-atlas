@@ -3,11 +3,19 @@ module Api
     class HospitalController < ApiController
       include ApplicationHelper
 
+      api :GET, '/:geo_slug/hospitals', 'Fetch hospitals data of community area or zip code'
+      param :geo_slug, String, :desc => "community area or zip code", :required => true
+      formats ['json']
+      description <<-EOS
+        == Fetch hospitals data of community area or zip code
+        response data has all of the hospitals list and it's data for community area or zip code.
+        Each hospitals detailed can be get using another api
+      EOS
       def index
         @result     =   []
         @slug       =   params[:geo_slug]
         @geometry   =   Geography.find_by_slug(@slug)
-        @hospitals  =    Provider.where("primary_type = 'Hospital'")
+        @hospitals  =   Provider.where("primary_type = 'Hospital'")
         @zips       =   @geometry.adjacent_zips
 
         @hospitals.each do |page|
@@ -19,6 +27,13 @@ module Api
         render json: @result
       end
 
+      api :GET, 'hospital/:slug', 'Fetch detailed data of hospital'
+      param :slug, String, :desc => "hospital slug", :required => true
+      formats ['json']
+      description <<-EOS
+        == Fetch detailed data for hospital
+        response data detailed data for hospital and it can be get using hospital slug.
+      EOS
       def show
       	@hospital       = Provider.where(:slug => params[:slug]).first || not_found
         @area_summary   = ''
