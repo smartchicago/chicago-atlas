@@ -3,6 +3,7 @@ class CreateResources < ActiveRecord::Migration
     create_table :resources do |t|
       t.integer :uploader_id
       t.integer :category_group_id
+      t.integer :sub_category_id
       t.integer :indicator_id
       t.string  :year
       t.integer :geo_group_id
@@ -28,6 +29,7 @@ class CreateResources < ActiveRecord::Migration
 
       t.references :uploader,   index:true, foreign_key: true
       t.references :category_group,   index:true, foreign_key: true
+      t.references :sub_category, index:true, foreign_key: true
       t.references :demo_group, index:true, foreign_key: true
       t.references :geo_group,  index:true, foreign_key: true
       t.references :indicator,  index:true, foreign_key: true
