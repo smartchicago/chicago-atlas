@@ -40,11 +40,10 @@ class ResourceParser < Parser
       self.current_sheet.processing!
       ss = Roo::Spreadsheet.open(self.new_file_path)
 
-      current_uploader             = Uploader.find_by(id: self.uploader_id)
-      current_uploader.update(total_row: ss.last_row)
-
-      work_count                   = 1
-      total_count                  = ss.last_row
+      current_uploader             = Uploader.find(self.uploader_id)
+      work_count                   = 0
+      total_count                  = ss.last_row - 1
+      current_uploader.update_total_row(total_count)
 
       FIRST_ROW.upto ss.last_row do |row|
         category     =  CategoryGroup.where(name: ss.cell(row, COLUMNS_HEADER[:category]).to_s).first_or_create
@@ -52,7 +51,7 @@ class ResourceParser < Parser
         indicator    =  Indicator.where(name: ss.cell(row, COLUMNS_HEADER[:indicator])).first_or_create
         geography    =  GeoGroup.where(name: ss.cell(row, COLUMNS_HEADER[:geo_group]), geography: ss.cell(row, COLUMNS_HEADER[:geography])).first_or_create
         demography   =  DemoGroup.where(name: ss.cell(row, COLUMNS_HEADER[:demo_group]), demography: ss.cell(row, COLUMNS_HEADER[:demography])).first_or_create
-        Resource.transaction do
+
         new_resource                    =   Resource.new
         new_resource.uploader_id        =   self.uploader_id
         new_resource.category_group_id  =   category.id
@@ -60,11 +59,9 @@ class ResourceParser < Parser
         new_resource.indicator_id       =   indicator.id
         new_resource.geo_group_id       =   geography.id
         new_resource.demo_group_id      =   demography.id
-        new_resource.year               =   ss.cell(row, COLUMNS_HEADER[:year])
-        sub_category.category_group_id  =   category.id
-        sub_category.save
-        indicator.sub_category_id       = sub_category.id
-        indicator.save
+        new_resource.year               =   ss.cell(row, COLUMNS_HEADER[:year]).to_s
+        sub_category.update(category_group_id: category.id)
+        indicator.update(sub_category_id: sub_category.id)
 
         rsc_array   = -1
         rsc_array.upto COLUMNS.length-1 do |rsc_id|
@@ -79,13 +76,9 @@ class ResourceParser < Parser
 
         if new_resource.save
           work_count+= 1
+          current_uploader.update_current_state(work_count)
         else
           self.current_sheet.failed!
-        end
-      end
-
-        if work_count == total_count || work_count % 100 == 0
-          current_uploader.update(current_row: work_count)
         end
       end
     end
