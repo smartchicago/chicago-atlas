@@ -1,0 +1,23 @@
+
+<%= form_for(@uploader) do |f| %>
+  <% if @uploader.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@uploader.errors.count, "error") %> prohibited this uploader from being saved:</h2>
+
+      <ul>
+      <% @uploader.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :path %><br>
+    <%= f.file_field :path %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
