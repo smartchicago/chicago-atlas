@@ -30,6 +30,6 @@ class Parser
     end
 
     def delete_file
-      File.delete(@new_file_path) if File.exist?(@new_file_path)
+      File.delete(@new_file_path.to_s) if File.exist?(@new_file_path.to_s)
     end
 end

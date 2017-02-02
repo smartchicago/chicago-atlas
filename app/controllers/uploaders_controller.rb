@@ -28,9 +28,8 @@ class UploadersController < ApplicationController
     @uploader = current_user.uploaders.build(uploader_params)
 
     if uploader_params[:path].content_type.include? "spreadsheet"
-      @uploader.name        =   uploader_params[:path].original_filename
-      @uploader.total_row   =   0
-      @uploader.current_row =   0
+      @uploader.update_name(uploader_params[:path].original_filename)
+      @uploader.initialize_state
       respond_to do |format|
         if @uploader.save
           @uploader.uploaded!
@@ -50,10 +49,9 @@ class UploadersController < ApplicationController
   # PATCH/PUT /uploaders/1
   # PATCH/PUT /uploaders/1.json
   def update
-    @uploader.name        =   uploader_params[:path].original_filename
-    @uploader.total_row   =   0
-    @uploader.current_row =   0
-    @uploader.resources.delete_all
+    @uploader.remove_resources
+    @uploader.update_name(uploader_params[:path].original_filename)
+    @uploader.initialize_state
     respond_to do |format|
       if @uploader.update(uploader_params)
         @uploader.uploaded!
