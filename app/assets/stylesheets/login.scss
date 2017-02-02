@@ -1,12 +1,3 @@
-$primaryColor: #13B5EA;
-$secondaryColor:  #EF3E42;
-$whiteColor: #F2F2F2;
-
-
-.navbar {
-  background-color: $secondaryColor;
-}
-
 .navbar-inverse .navbar-nav > li > a {
     color: $primaryColor;
 }
@@ -65,18 +56,12 @@ $whiteColor: #F2F2F2;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
 }
 
-.login-title {
-  color: #555;
-  font-size: 18px;
-  font-weight: 400;
-  display: block;
-}
 
 .profile-img {
-  width: 207px;
+  display: block;
   height: 52px;
   margin: 0 auto 10px;
-  display: block;
+  width: 207px;
 }
 
 .need-help {
@@ -85,12 +70,5 @@ $whiteColor: #F2F2F2;
 
 .new-account {
   display: block;
-  margin-top: 10px;
-}
-
-.alert {
-  background-color:  $secondaryColor;
-  max-width: 330px;
-  align-items: center;
   margin-top: 10px;
 }

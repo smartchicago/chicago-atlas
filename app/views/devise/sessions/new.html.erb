@@ -1,9 +1,9 @@
-<div class="container container-table">
+<div class="container container-table admin-login">
     <div class="row vertical-center-row">
-        <div class="col-sm-6 col-md-4 col-md-offset-4 ">
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4 ">
 
             <div class="account-wall">
-                <%= image_tag ("logo_small.png"), class: "profile-img" %>
+                <%= image_tag ("logo_no_bg.png"), class: "profile-img" %>
                 <%= form_for(resource, as: resource_name, :html => {:class=>"form-signin"}, url: session_path(resource_name )) do |f| %>
                   <%= f.email_field :email, autofocus: true, required: true, :class=> "form-control", :placeholder=>"admin@chicagohealth.org"%>
                   <%= f.password_field :password, autocomplete: "off", :class=> "form-control", :placeholder=>"Password"%>

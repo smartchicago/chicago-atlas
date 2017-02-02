@@ -1,6 +1,49 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
+@import 'colors';
 @import 'login';
 @import 'home';
+@import 'uploaders';
 @import 'profile';
 @import 'uploaders';
+@import 'main-nav';
+@import 'admin_login';
+@import 'alert-custom-styles';
+
+
+.modal-edit-user {
+  .modal-body {
+    .modal-container {
+      margin: 0 auto;
+      max-width: 500px;
+      padding: 2em;
+    }
+
+    .form-group {
+      margin-bottom: 4px;
+    }
+
+    .bg-warning {
+      margin-bottom: 8px;
+      padding: 1em;
+    }
+  }
+}
+
+#error_explanation {
+  h2 {
+    font-size: 18px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+      background: $warning-red;
+      border-radius: 4px;
+      color: $white;
+      padding: 5px;
+    }
+  }
+}

@@ -35,7 +35,7 @@ class UploadersController < ApplicationController
         if @uploader.save
           @uploader.uploaded!
           UploadProcessingWorker.perform_async(@uploader.id)
-          format.html { redirect_to @uploader, notice: 'Uploader was successfully created.' }
+          format.html { redirect_to root_path, notice: 'File successfully uploaded.' }
           format.json { render :show, status: :created, location: @uploader }
         else
           format.html { render :new }
@@ -58,10 +58,12 @@ class UploadersController < ApplicationController
       if @uploader.update(uploader_params)
         @uploader.uploaded!
         UploadProcessingWorker.perform_async(@uploader.id)
-        format.html { redirect_to @uploader, notice: 'Uploader was successfully updated.' }
+        format.html { redirect_to root_path, notice: 'File successfully updated.' }
         format.json { render :show, status: :ok, location: @uploader }
       else
-        format.html { render :edit }
+        puts '---------------------------------'
+        puts @uploader.errors
+        format.html { render :edit  }
         format.json { render json: @uploader.errors, status: :unprocessable_entity }
       end
     end
