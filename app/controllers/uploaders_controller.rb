@@ -50,8 +50,14 @@ class UploadersController < ApplicationController
   # PATCH/PUT /uploaders/1
   # PATCH/PUT /uploaders/1.json
   def update
+    @uploader.name        =   uploader_params[:path].original_filename
+    @uploader.total_row   =   0
+    @uploader.current_row =   0
+    @uploader.resources.delete_all
     respond_to do |format|
       if @uploader.update(uploader_params)
+        @uploader.uploaded!
+        UploadProcessingWorker.perform_async(@uploader.id)
         format.html { redirect_to root_path, notice: 'File successfully updated.' }
         format.json { render :show, status: :ok, location: @uploader }
       else
@@ -81,7 +87,7 @@ class UploadersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def uploader_params
-      params.require(:uploader).permit(:path)
+      params.require(:uploader).permit(:path, :comment)
     end
 
 end

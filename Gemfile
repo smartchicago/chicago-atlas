@@ -45,6 +45,8 @@ gem 'sidekiq'
 gem 'sidekiq_status'
 gem 'will_paginate',          '~>3.1.0'
 gem 'puma'
+gem 'active_model_serializers'
+gem 'apipie-rails'
 
 ###########################################
 
