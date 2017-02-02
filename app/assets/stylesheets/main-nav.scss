@@ -1,0 +1,38 @@
+.main-nav {
+  z-index: 1;
+
+  .navbar-brand {
+    padding: 0;
+    padding-top: 5px;
+  }
+
+  img {
+    margin-left: 15px;
+    margin-top: 3px;
+    max-width: 160px;
+  }
+
+  a {
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+
+  .fa-user-o {
+    background: $nav-user-icon-bg;
+    border-radius: 50%;
+    font-size: .75em;
+    margin-right: 5px;
+    margin-top: -16px;
+    padding: 8px;
+  }
+
+  .user-email {
+    font-size: 16px;
+  }
+
+  .fa-chevron-down {
+    font-size: .75em;
+  }
+}

@@ -1,0 +1,4 @@
+$('<%= j render "form", title: "Edit Your Profile" %>').on('hidden.bs.modal', function (e) {
+  $(this).remove();
+  $('.modal-backdrop').remove();
+}).modal();

@@ -26,3 +26,4 @@
 /config/database.yml
 .env
 /Gemfile.lock
+.DS_Store
