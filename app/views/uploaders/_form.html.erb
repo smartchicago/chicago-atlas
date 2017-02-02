@@ -16,7 +16,6 @@
         <% if @uploader.errors.any? %>
           <div id="error_explanation">
             <h2><%= pluralize(@uploader.errors.count, "error") %> prohibited this uploader from being saved:</h2>
-
             <ul>
             <% @uploader.errors.full_messages.each do |message| %>
               <li><%= message %></li>
@@ -31,7 +30,6 @@
          <div class="input-group">
            <label class="input-group-btn">
              <span class="btn btn-primary">
-
                Browse&hellip; <%= f.file_field :path, class:"uploader", required: 'required', style:"display: none" %>
              </span>
            </label>
@@ -42,7 +40,6 @@
          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa in quaerat cumque quasi, velit voluptate nesciunt totam delectus voluptatibus incidunt odio praesentium obcaecati omnis officiis voluptatum consectetur molestias, nam tempora?</p>
        </div>
      </div>
-
 
         <div class="modal-footer">
           <div class="text-center">
