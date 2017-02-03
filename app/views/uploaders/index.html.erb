@@ -2,12 +2,12 @@
   <div class="col-xs-12">
     <% if @uploaders.count > 0 %>
     <br>
-    <h1>Listing Uploaders
+    <h1>Listing Indicators
       <a  onClick="window.location.reload()" class="btn btn-primary btn-sm">
         refresh <i class="fa fa-refresh" aria-hidden="true"></i>
       </a>
     </h1>
-    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores aperiam eum voluptates fugit assumenda nobis totam magnam iusto mollitia impedit, odio dolores quis reiciendis, modi odit veniam. Natus, maxime, hic.</p>
+    <p class="lead">This is the full list of indicators that are in the system</p>
     <br>
     <table class="table table-striped table-hover uploaders">
       <thead>
@@ -38,8 +38,8 @@
             <td><%= uploader.total_row %></td>
             <td><%= uploader.current_row %></td>
             <!-- <td><%= link_to 'Show', uploader_path(uploader) %></td> -->
-            <td><%= link_to 'View', resource_path(uploader.id), class: 'btn btn-primary btn-xs'  %></td>
-            <td><%= link_to 'Edit', edit_uploader_path(uploader), class: 'btn btn-primary btn-xs', remote: true %></td>
+            <td><%= link_to 'View Data', resource_path(uploader.id), class: 'btn btn-primary btn-xs'  %></td>
+            <td><%= link_to 'Replace', edit_uploader_path(uploader), class: 'btn btn-primary btn-xs', remote: true %></td>
             <td><%= link_to '<i class="glyphicon glyphicon-remove-circle"></i>'.html_safe, uploader, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
@@ -47,10 +47,10 @@
     </table>
     <br>
     <% else %>
-    <h1>Add your First document</h1>
+    <h1>Add your First Indicator File</h1>
     <br>
     <% end %>
 
-    <%= link_to "New file upload <i class='fa fa-2 fa-cloud-upload' aria-hidden='true'></i>".html_safe , new_uploader_path, remote: true, class: "btn-custom" %>
+    <%= link_to "Upload New File <i class='fa fa-2 fa-cloud-upload' aria-hidden='true'></i>".html_safe , new_uploader_path, remote: true, class: "btn-custom" %>
   </div>
 </div>
