@@ -1,4 +1,5 @@
 class ResourcesController < ApplicationController
+  before_action :authenticate_user!
   def index
     @resources = Resource.all.paginate(:page => params[:page], :per_page => 16)
   end
