@@ -37,7 +37,6 @@ module Api
         @demographics_list        = ['Below Poverty Level', 'Crowded Housing', 'Dependency', 'No High School Diploma', 'Per capita income', 'Unemployment']
         @adjacent_zips            = []
         @adjacent_community_areas = []
-
         @geography  =   Geography.where(:slug => params[:geo_slug]).first || not_found
         @categories =   Category.select('categories.id, categories.name, categories.description')
                               .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
