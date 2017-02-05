@@ -14,9 +14,13 @@ namespace :db do
         id = ss.cell(row, 1)
         area = ss.cell(row, 2)
         side = ss.cell(row, 3)
-        new_name = ""
-        new_name = new_name + id.to_s + '-' + area.to_s
-        AreaPart.where(name: new_name, part: side).first_or_create
+        name = ""
+        name = name + id.to_s + '-' + area.to_s
+        # AreaPart.where(name: new_name, part: side).first_or_create
+        field = GeoGroup.find_by_name(name)
+        unless field.nil?
+          field.update(:part => side)
+        end
       end
     end
   end
