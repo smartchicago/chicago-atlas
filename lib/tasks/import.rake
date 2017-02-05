@@ -11,6 +11,7 @@ namespace :db do
       Rake::Task["db:import:stats"].invoke
       Rake::Task["db:import:purple_binder:all"].invoke
       Rake::Task["db:import:providers"].invoke
+      Rake::Task["db:import:hierarchy"].invoke
     end
 
     desc "Fetch and import all health data"

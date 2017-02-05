@@ -7,7 +7,7 @@ module Api
         == Fetch category, subcategory, indicators
       EOS
       def index
-        render json: CategoryGroup.first
+        render json: CategoryGroup.all
       end
 
       api :GET, '/topic/:year/:indicator_slug', 'Fetch detailed data of topic'
