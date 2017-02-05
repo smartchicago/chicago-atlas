@@ -1,7 +1,7 @@
 namespace :db do
   namespace :import do
     namespace :providers do
-      
+
       desc "Import hospital info from local file"
       task :hospitals => :environment do
         require 'csv'
