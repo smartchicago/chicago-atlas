@@ -27,7 +27,7 @@ module Api
         render json: @result
       end
 
-      api :GET, 'hospital/:slug', 'Fetch detailed data of hospital'
+      api :GET, '/hospital/:slug', 'Fetch detailed data of hospital'
       param :slug, String, :desc => "hospital slug", :required => true
       formats ['json']
       description <<-EOS

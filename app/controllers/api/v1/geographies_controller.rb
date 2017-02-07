@@ -195,7 +195,6 @@ module Api
         professions = []
 
         Dataset.where(:category_id => @category.id).each { |dataset| professions << dataset.name }
-
         providers_area    = fetch_custom_chart_data(@geography.id, nil, nil, professions)
         providers_chicago = fetch_custom_chart_data(100, nil, nil, professions)
 

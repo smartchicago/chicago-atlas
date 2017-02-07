@@ -7,7 +7,7 @@ module ApplicationHelper
   def title(page_title)
     content_for :title, page_title.to_s
   end
-  
+
   def current_menu_class(menu_name)
     return "active" if current_menu == menu_name
   end
@@ -41,7 +41,7 @@ module ApplicationHelper
     elsif category_name
       query = query.where("categories.name LIKE '%#{category_name}%' ")
     end
-    
+
     query = query.joins('INNER JOIN datasets ON datasets.category_id = categories.id')
               .group('categories.id, categories.name, categories.description')
               .having('count(datasets.id) > 0')
@@ -62,7 +62,7 @@ module ApplicationHelper
     geojson = []
     values_by_year = { }
     last_geo = { "id" => nil }
-    
+
     area_stats.all.each do |c|
       if c['id'] == last_geo['id']
         # append value to existing timeline of values for this geography
@@ -71,7 +71,7 @@ module ApplicationHelper
         if last_geo['id'] != nil
           # there are no more points for the previous geo; output it
           geojson << {
-            "type" => "Feature", 
+            "type" => "Feature",
             "id" => last_geo['id'],
             "properties" => {
               "name" => last_geo['name'],
@@ -101,7 +101,7 @@ module ApplicationHelper
     if last_geo['id'] != nil
       # there are no more points for the previous geo; output it
       geojson << {
-        "type" => "Feature", 
+        "type" => "Feature",
         "id" => last_geo['id'],
         "properties" => {
           "name" => last_geo['name'],
@@ -126,10 +126,10 @@ module ApplicationHelper
       .group("geographies.id")
       .where("geo_type = 'Community Area' ")
 
-    geojson = []    
+    geojson = []
     area_stats.all.each do |c|
       geojson << {
-        "type" => "Feature", 
+        "type" => "Feature",
         "id" => c.id,
         "properties" => {
           "name" => c.name,
@@ -152,10 +152,10 @@ module ApplicationHelper
       .select("geographies.id, geographies.name, geographies.slug, geographies.geometry")
       .where("geo_type = 'Community Area'")
 
-    geojson = []    
+    geojson = []
     area_stats.all.each do |c|
       geojson << {
-        "type" => "Feature", 
+        "type" => "Feature",
         "id" => c.id,
         "properties" => {
           "name" => c.name,
@@ -238,23 +238,13 @@ module ApplicationHelper
   end
 
   def fetch_custom_chart_data(geography_id, category_id=nil, like_query=nil, list_in=[])
-    stats = Statistic.joins('INNER JOIN datasets ON datasets.id = statistics.dataset_id')                 
-
-    if category_id
-      stats = stats.where("datasets.category_id = ?", category_id)
-    end
-    if like_query
-      stats = stats.where("datasets.name LIKE '#{like_query}%'")
-    end
-    if list_in.count > 0
-      stats = stats.where("datasets.name IN (?)", list_in)
-    end
-    stats = stats.where("geography_id = ?", geography_id)
-                 .order("datasets.id")
-
-    if stats.length == 0
-      return []
-    end
+    stats = Statistic.joins('INNER JOIN datasets ON datasets.id = statistics.dataset_id')
+    stats = stats.where("datasets.category_id = ?", category_id) if category_id
+    stats = stats.where("datasets.name LIKE '#{like_query}%'") if like_query
+    stats = stats.where("datasets.name IN (?)", list_in) if list_in.count > 0
+    stats = stats.where("geography_id = ?", geography_id).order("datasets.id")
+    
+    return [] if stats.length == 0
 
     stats_array = []
     stats.each do |s|
@@ -265,7 +255,7 @@ module ApplicationHelper
   end
 
   def fetch_dataset_chart_headers(cat_id=nil)
-    datasets = Dataset.where("category_id = '#{cat_id}'")                 
+    datasets = Dataset.where("category_id = '#{cat_id}'")
 
     if datasets.length == 0
       return []
@@ -292,7 +282,7 @@ module ApplicationHelper
     ret.gsub! /\s*&\s*/, " and "
 
     #replace all non alphanumeric, underscore or periods with underscore
-     ret.gsub! /\s*[^A-Za-z0-9\.\-]\s*/, '_'  
+     ret.gsub! /\s*[^A-Za-z0-9\.\-]\s*/, '_'
 
      #convert double underscores to single
      ret.gsub! /_+/,"_"
@@ -317,13 +307,13 @@ module ApplicationHelper
 
     source_string = "<small class='muted'>
       <br>
-      Source: 
+      Source:
       <a href='#{provider_url}'>
         #{provider_name}
       </a>"
     if is_oneline
       source_string << "|"
-      
+
     else
       source_string << "<br>"
     end
