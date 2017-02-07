@@ -67,7 +67,7 @@ describe UploadersController, type: :controller do
     it "redirects to the new uploader" do
       sign_in user
       post :create, uploader: { path: fixture_file_upload(XML_TEST_FILE_NAME, XML_FILE_TYPE) }
-      expect(response).to redirect_to Uploader.last
+      expect(response).to redirect_to root_path
     end
 
     it "does not save the new uploader" do
@@ -91,8 +91,8 @@ describe UploadersController, type: :controller do
         expect(user.uploaders.count).to be(1)
         uploader = user.uploaders.last
         expect(uploader.completed?).to be_truthy
-        expect(uploader.total_row).to be(5)
-        expect(uploader.current_row).to be(5)
+        expect(uploader.total_row).to be(4)
+        expect(uploader.current_row).to be(4)
       end
 
       it "should not run parser if invalid file type" do
