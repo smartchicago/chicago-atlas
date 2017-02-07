@@ -40,12 +40,12 @@
       <tr>
         <td><%= resource.id %></td>
         <td><%= resource.uploader_id %></td>
-        <td><%= resource.category_group.name %></td>
-        <td><%= resource.sub_category.name %></td>
-        <td><%= resource.indicator.name %></td>
-        <td><%= resource.year%></td>
-        <td><%= resource.geo_group.name %></td>
-        <td><%= resource.demo_group.name %></td>
+        <td><%= resource.category_group.name unless resource.category_group_id.nil? %></td>
+        <td><%= resource.sub_category.name unless resource.sub_category_id.nil? %></td>
+        <td><%= resource.indicator.name unless resource.indicator_id.nil? %></td>
+        <td><%= resource.year unless resource.year.nil? %></td>
+        <td><%= resource.geo_group.name unless resource.geo_group_id.nil? %></td>
+        <td><%= resource.demo_group.name unless resource.demo_group_id.nil? %></td>
         <td><%= resource.number %></td>
         <td><%= resource.cum_number %></td>
         <td><%= resource.ave_annual_number %></td>
