@@ -12,7 +12,7 @@ module Api
           Response data is composed of community_areas list and zip_codes list
       EOS
       def index
-        @community_areas  =   Geography.select("geographies.name, geographies.slug, count(intervention_locations.community_area_id) as resource_cnt")
+        @community_areas  =   Geography.select("geographies.name, geographies.slug, geographies.part, count(intervention_locations.community_area_id) as resource_cnt")
                               .joins("LEFT JOIN intervention_locations on intervention_locations.community_area_id = geographies.id")
                               .group("geographies.id")
                               .where("geo_type = 'Community Area'")

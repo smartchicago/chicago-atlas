@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170205181735) do
+
+ActiveRecord::Schema.define(version: 20170205184549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +80,7 @@ ActiveRecord::Schema.define(version: 20170205181735) do
     t.string   "centroid"
     t.string   "adjacent_zips",            default: "[]"
     t.string   "adjacent_community_areas", default: "[]"
+    t.string   "part"
   end
 
   create_table "indicators", force: :cascade do |t|
