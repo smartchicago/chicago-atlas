@@ -13,21 +13,21 @@ RSpec.describe Resource, type: :model do
         expect(FactoryGirl.build(:resource, uploader: nil)).not_to be_valid
       end
 
-      it "is invalid without category_group" do
-        expect(FactoryGirl.build(:resource, category_group: nil)).not_to be_valid
-      end
-
-      it "is invalid without indicator" do
-        expect(FactoryGirl.build(:resource, indicator: nil)).not_to be_valid
-      end
-
-      it "is invalid without geo_group" do
-        expect(FactoryGirl.build(:resource, geo_group: nil)).not_to be_valid
-      end
-
-      it "is invalid without demo_group" do
-        expect(FactoryGirl.build(:resource, demo_group: nil)).not_to be_valid
-      end
+      # it "is invalid without category_group" do
+      #   expect(FactoryGirl.build(:resource, category_group: nil)).not_to be_valid
+      # end
+      #
+      # it "is invalid without indicator" do
+      #   expect(FactoryGirl.build(:resource, indicator: nil)).not_to be_valid
+      # end
+      #
+      # it "is invalid without geo_group" do
+      #   expect(FactoryGirl.build(:resource, geo_group: nil)).not_to be_valid
+      # end
+      #
+      # it "is invalid without demo_group" do
+      #   expect(FactoryGirl.build(:resource, demo_group: nil)).not_to be_valid
+      # end
     end
   end
 
@@ -41,9 +41,9 @@ RSpec.describe Resource, type: :model do
 
   describe "Validations" do
     it { should validate_presence_of(:uploader_id) }
-    it { should validate_presence_of(:category_group_id) }
-    it { should validate_presence_of(:indicator_id) }
-    it { should validate_presence_of(:geo_group_id) }
-    it { should validate_presence_of(:demo_group_id) }
+    # it { should validate_presence_of(:category_group_id) }
+    # it { should validate_presence_of(:indicator_id) }
+    # it { should validate_presence_of(:geo_group_id) }
+    # it { should validate_presence_of(:demo_group_id) }
   end
 end

@@ -16,8 +16,6 @@ RSpec.describe Uploader, type: :model do
   describe "Validations" do
     it { should validate_presence_of(:user_id) }
     it { should validate_presence_of(:name) }
-    it { should validate_presence_of(:total_row) }
-    it { should validate_presence_of(:current_row) }
 
     it "should allow valid values in status" do
       Uploader::statuses.keys.each do |v|

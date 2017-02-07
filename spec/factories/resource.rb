@@ -4,6 +4,7 @@ FactoryGirl.define do
   factory :resource do
     uploader
     category_group
+    sub_category
     demo_group
     geo_group
     indicator

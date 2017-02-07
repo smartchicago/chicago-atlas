@@ -16,7 +16,7 @@ RSpec.describe CategoryGroup, type: :model do
   end
 
   describe "ActiveRecord associations" do
-    it { should have_many(:resources) }
+    it { should have_many(:sub_categories) }
   end
 
   describe "Validations" do
