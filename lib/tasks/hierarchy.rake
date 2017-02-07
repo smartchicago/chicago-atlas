@@ -11,11 +11,11 @@ namespace :db do
       ss = Roo::Spreadsheet.open("db/import/CommunityAreas.xlsx")
 
       FIRST_ROW.upto ss.last_row do |row|
-        id = ss.cell(row, 1)
-        area = ss.cell(row, 2)
-        side = ss.cell(row, 3)
-        name = ""
-        name = name + id.to_s + '-' + area.to_s
+        id    = ss.cell(row, 1)
+        area  = ss.cell(row, 2)
+        side  = ss.cell(row, 3)
+        name  = ""
+        name  = name + id.to_s + '-' + area.to_s
         field = GeoGroup.find_by_name(name)
         unless field.nil?
           field.update(:part => side)

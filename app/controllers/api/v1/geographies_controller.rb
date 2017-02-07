@@ -18,6 +18,8 @@ module Api
                               .where("geo_type = 'Community Area'")
                               .order("name").all
 
+        @community_areas = Geography.all
+
         @zip_codes        =   Geography.where("geo_type = 'Zip'").order("name").all
 
         render :json => {:community_areas => @community_areas, :zip_codes => @zip_codes}
