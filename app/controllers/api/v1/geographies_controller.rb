@@ -143,17 +143,17 @@ module Api
 
       end
 
-      api :GET, '/place/insurance/:cat_name/:geo_slug', 'Fetch insurance info regarding community area or zip code and category name'
+      api :GET, '/place/insurance/:cat_id/:geo_slug', 'Fetch insurance info regarding community area or zip code and category name'
       formats ['json']
       param :geo_slug, String, :desc => 'community_area slug or zip code', :required => true
-      param :cat_name, String, :desc => 'category name', :required => true
+      param :cat_id, String, :desc => 'category id', :required => true
       description <<-EOS
         == Fetch insurance data using category id and community area / zip code
         Result data is easily used on chart and it has info for insurance
       EOS
       def show_insurance_dataset
         @geography        = Geography.where(:slug => params[:geo_slug]).first || not_found
-        cat               = Category.find_by_name(params[:cat_name])
+        cat               = Category.find_by_id(params[:cat_id])
         insurance_area    = fetch_custom_chart_data(@geography.id, cat.id, nil, [])
         insurance_chicago = fetch_custom_chart_data(100, cat.id, nil, [])
         group_labels      = []
