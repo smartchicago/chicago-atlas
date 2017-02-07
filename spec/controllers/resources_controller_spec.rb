@@ -28,7 +28,7 @@ describe ResourcesController, type: :controller do
 
     it "should show second page" do
       sign_in user
-      uploader = FactoryGirl.create(:uploader_with_resources, resources_count: 11)
+      uploader = FactoryGirl.create(:uploader_with_resources, resources_count: 17)
       get :index, { page: 2 }
       expect(assigns(:resources).length).to be(1)
     end
@@ -59,7 +59,7 @@ describe ResourcesController, type: :controller do
 
     it "should show second page" do
       sign_in user
-      uploader = FactoryGirl.create(:uploader_with_resources, resources_count: 11)
+      uploader = FactoryGirl.create(:uploader_with_resources, resources_count: 17)
       get :show, {id: uploader, page: 2}
       expect(assigns(:resources).length).to be(1)
     end
