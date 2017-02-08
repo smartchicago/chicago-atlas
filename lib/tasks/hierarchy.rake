@@ -5,7 +5,7 @@ namespace :db do
       require 'csv'
       require 'json'
 
-      AreaPart.delete_all
+      # AreaPart.delete_all
       FIRST_ROW = 2
 
       ss = Roo::Spreadsheet.open("db/import/CommunityAreas.xlsx")
