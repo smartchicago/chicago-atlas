@@ -26,7 +26,8 @@ class UploadersController < ApplicationController
   # POST /uploaders.json
   def create
     @uploader = current_user.uploaders.build(uploader_params)
-    if uploader_params[:path].content_type.include? "spreadsheet" || "excel"
+    content_type = uploader_params[:path].content_type
+    if (content_type.include? "spreadsheet") || (content_type.include? "excel")
       @uploader.update_name(uploader_params[:path].original_filename)
       @uploader.initialize_state
       respond_to do |format|
