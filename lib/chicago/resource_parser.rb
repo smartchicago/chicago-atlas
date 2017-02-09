@@ -60,7 +60,14 @@ class ResourceParser < Parser
         new_resource.indicator_id       =   indicator.id
         new_resource.geo_group_id       =   geography.id
         new_resource.demo_group_id      =   demography.id
-        new_resource.year               =   ss.cell(row, COLUMNS_HEADER[:year]).to_s
+        str_year                        =   ss.cell(row, COLUMNS_HEADER[:year]).to_s
+        if (str_year.include? '-') || (str_year.length == 9)
+          new_resource.year_from = str_year[0,4].to_i
+          new_resource.year_to   = str_year[5,8].to_i
+        else
+          new_resource.year_from = str_year.to_i
+          new_resource.year_to   = str_year.to_i
+        end
         sub_category.update(category_group_id: category.id)
         indicator.update(sub_category_id: sub_category.id)
 
