@@ -49,6 +49,7 @@ class UploadersController < ApplicationController
   # PATCH/PUT /uploaders/1.json
   def update
     @uploader.remove_resources
+    Indicator.find(@uploader.indicator_id).destroy
     @uploader.update_name(uploader_params[:path].original_filename)
     @uploader.initialize_state
     respond_to do |format|
@@ -69,7 +70,9 @@ class UploadersController < ApplicationController
   # DELETE /uploaders/1
   # DELETE /uploaders/1.json
   def destroy
+
     @uploader.destroy
+    Indicator.find(@uploader.indicator_id).destroy
     respond_to do |format|
       format.html { redirect_to uploaders_url, notice: 'Uploader was successfully destroyed.' }
       format.json { head :no_content }

@@ -29,4 +29,8 @@ class Uploader < ActiveRecord::Base
       self.resources.delete_all
     end
 
+    def update_indicator(id)
+      self.update(indicator_id: id)
+    end
+
 end

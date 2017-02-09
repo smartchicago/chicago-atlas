@@ -19,9 +19,9 @@ module Api
         response data has detailed data for indicator and year
       EOS
       def show
-        @year = params[:year]
-        @slug = params[:indicator_slug]
-        @data = Resource.where("year like ?": @year, indicator_id: @slug)
+        year = params[:year]
+        slug = params[:indicator_slug]
+        @data = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(indicator_id: slug)
         render json: @data
       end
     end

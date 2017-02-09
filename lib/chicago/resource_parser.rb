@@ -85,6 +85,7 @@ class ResourceParser < Parser
         if new_resource.save
           work_count+= 1
           current_uploader.update_current_state(work_count)
+          current_uploader.update_indicator(indicator.id)
         else
           self.current_sheet.failed!
         end
