@@ -11,18 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 20170205184549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "area_parts", force: :cascade do |t|
-    t.string   "name"
-    t.string   "part"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -170,7 +162,8 @@ ActiveRecord::Schema.define(version: 20170205184549) do
     t.integer  "category_group_id"
     t.integer  "sub_category_id"
     t.integer  "indicator_id"
-    t.string   "year"
+    t.integer  "year_from"
+    t.integer  "year_to"
     t.integer  "geo_group_id"
     t.integer  "demo_group_id"
     t.integer  "number"
