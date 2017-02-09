@@ -21,7 +21,7 @@ module Api
       def show
         @year = params[:year]
         @slug = params[:indicator_slug]
-        @data = Resource.where(year: @year, indicator_id: @slug)
+        @data = Resource.where("year like ?": @year, indicator_id: @slug)
         render json: @data
       end
     end

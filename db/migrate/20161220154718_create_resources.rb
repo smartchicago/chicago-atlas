@@ -5,7 +5,8 @@ class CreateResources < ActiveRecord::Migration
       t.integer :category_group_id
       t.integer :sub_category_id
       t.integer :indicator_id
-      t.string  :year
+      t.integer :year_from
+      t.integer :year_to
       t.integer :geo_group_id
       t.integer :demo_group_id
       t.integer :number
