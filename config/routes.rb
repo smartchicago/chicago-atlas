@@ -29,6 +29,9 @@ Rails.application.routes.draw do
       get '/topics', to: 'topics#index', as: 'topics_list'
       get '/topic/:year/:indicator_id', to: 'topics#show', as: 'topic_detail'
       get '/topic/:indicator_id', to: 'topics#trend', as: 'topic_detailed_all'
+      get '/resources(/:dataset_slug)', to: 'geographies#resources_all', as: 'chicago_resources'
+      # get '/resources(/:dataset_id)/:north/:east/:south/:west', to: 'geographies#resources_json', as: 'htthr'
+      # get '/resources(/:dataset_id)/:community_area_slug', to: 'geographies#resources_json', as: 'ewwef'
     end
   end
 end
