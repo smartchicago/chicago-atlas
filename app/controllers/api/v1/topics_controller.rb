@@ -22,6 +22,7 @@ module Api
         year = params[:year]
         slug = params[:indicator_slug]
         @data = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(indicator_id: slug)
+        @demo_group = DemoGroup.all
         render json: @data
       end
     end
