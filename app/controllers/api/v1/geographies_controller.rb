@@ -310,6 +310,50 @@ module Api
         render :json => { :resources_by_cat => resources_by_cat, :geography =>  @geography, :dataset_url_fragment => @dataset_url_fragment, :dataset => @dataset }
 
       end
+
+      api :GET, '/place/resources(/:dataset_slug)', 'Fetch all resources'
+      formats ['json']
+      param :dataset_slug, String, :desc => 'dataset slug'
+      description <<-EOS
+        == Fetch all of the resources exists in chicago city.
+      EOS
+      def resources_all
+        dataset_id  = params[:dataset_id]
+        resources   = InterventionLocation
+
+        if dataset_id
+          resources = resources.where('dataset_id = ?', dataset_id)
+        end
+
+        resources = resources.order('program_name, organization_name')
+
+        # convert in to a JSON object grouped by category
+        resources_by_cat  = [{:category => 'all', :resources => []}]
+        resources_all     = []
+        resources.each do |r|
+          categories = eval(r[:categories])
+          categories.each do |c|
+            if resources_by_cat.select {|r_c| r_c[:category] == c }.empty?
+              resources_by_cat << {:category => c, :resources => []}
+            end
+            unless r[:address].empty?
+              resources_by_cat.select {|r_c| r_c[:category] == c }.first[:resources] << r
+              resources_all << r
+            end
+          end
+        end
+
+        resources_all     = resources_all.uniq
+        resources_by_cat.select {|r_c| r_c[:category] == 'all' }.first[:resources] = resources_all
+        resources_by_cat  = resources_by_cat.sort_by { |r_c| r_c[:category] }
+
+        resources_by_cat.each do |r_c|
+          r_c[:resources] = r_c[:resources].sort_by { |r| r[:organization_name]}
+        end
+
+        render :json => { :resources_by_cat => resources_by_cat, :geography =>  @geography, :dataset_url_fragment => @dataset_url_fragment, :dataset => @dataset }
+
+      end
     end
   end
 end
