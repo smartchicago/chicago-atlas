@@ -27,7 +27,8 @@ Rails.application.routes.draw do
       get '/:geo_slug/hospitals', to: 'hospital#index', as: 'community_area_hospitals'
       get '/hospital/:slug', to: 'hospital#show', as: 'hospital_with_slug'
       get '/topics', to: 'topics#index', as: 'topics_list'
-      get '/topic/:year/:indicator_slug', to: 'topics#show', as: 'topic_detail'
+      get '/topic/:year/:indicator_id', to: 'topics#show', as: 'topic_detail'
+      get '/topic/:indicator_id', to: 'topics#trend', as: 'topic_detailed_all'
     end
   end
 end
