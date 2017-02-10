@@ -3,6 +3,16 @@ module Api
     class HospitalController < ApiController
       include ApplicationHelper
 
+      api :GET, '/chicago/hospitals', 'Fetch all of hospitals data'
+      formats ['json']
+      description <<-EOS
+        == Fetch all of hospitals data.
+      EOS
+      def hospitals_all
+        @hospitals  =   Provider.where("primary_type = 'Hospital'")
+        render json: @hospitals
+      end
+
       api :GET, '/:geo_slug/hospitals', 'Fetch hospitals data of community area or zip code'
       param :geo_slug, String, :desc => "community area or zip code", :required => true
       formats ['json']
@@ -71,7 +81,18 @@ module Api
 
         end
 
-        render :json => {:hospital => @hospital, :area_summary => @area_summary}
+        @admissions_by_race         = fetch_provider_data(@hospital.src_id, "Admissions by Race")
+        @admissions_by_ethnicity    = fetch_provider_data(@hospital.src_id, "Admissions by Ethnicity")
+        @admissions_by_type         = fetch_sorted_provider_data(@hospital.src_id, "Admissions by Type")
+        @medsurg_admissions_by_age  = fetch_provider_data(@hospital.src_id, "Medical-Surgical Admissions By Age")
+        @total_admissions           = @admissions_by_race[:values].sum
+        @revenue_inpatient          = fetch_provider_data(@hospital.src_id, "Inpatient Revenue by Payment Type")
+        @inpatient_total            = @revenue_inpatient[:values].sum
+        @revenue_outpatient         = fetch_provider_data(@hospital.src_id, "Outpatient Revenue by Payment Type")
+        @outpatient_total           = @revenue_outpatient[:values].sum
+        @total_revenue              = @inpatient_total + @outpatient_total
+
+        render :json => {:hospital => @hospital, :area_summary => @area_summary, :total_admissions =>  @total_admissions, :total_revenue => @total_revenue}
 
       end
     end

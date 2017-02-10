@@ -311,7 +311,7 @@ module Api
 
       end
 
-      api :GET, '/place/resources(/:dataset_slug)', 'Fetch all resources'
+      api :GET, '/resources(/:dataset_slug)', 'Fetch all resources'
       formats ['json']
       param :dataset_slug, String, :desc => 'dataset slug'
       description <<-EOS
