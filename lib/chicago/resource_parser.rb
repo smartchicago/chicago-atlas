@@ -50,7 +50,7 @@ class ResourceParser < Parser
         category     =  CategoryGroup.where(name: ss.cell(row, COLUMNS_HEADER[:category]).to_s).first_or_create
         sub_category =  SubCategory.where(name: ss.cell(row, COLUMNS_HEADER[:subcategory]).to_s).first_or_create
         indicator    =  Indicator.where(name: ss.cell(row, COLUMNS_HEADER[:indicator])).first_or_create
-        geography    =  GeoGroup.where(name: ss.cell(row, COLUMNS_HEADER[:geo_group]), geography: ss.cell(row, COLUMNS_HEADER[:geography]), geo_id: ss.cell(row, COLUMNS_HEADER[:geo_id])).first_or_create
+        geography    =  GeoGroup.where(name: ss.cell(row, COLUMNS_HEADER[:geo_group]), geography: ss.cell(row, COLUMNS_HEADER[:geography])).first_or_create
         demography   =  DemoGroup.where(name: ss.cell(row, COLUMNS_HEADER[:demo_group]), demography: ss.cell(row, COLUMNS_HEADER[:demography])).first_or_create
 
         new_resource                    =   Resource.new
