@@ -71,9 +71,7 @@ class UploadersController < ApplicationController
   # DELETE /uploaders/1
   # DELETE /uploaders/1.json
   def destroy
-
     @uploader.destroy
-    Indicator.find(@uploader.indicator_id).destroy
     respond_to do |format|
       format.html { redirect_to uploaders_url, notice: 'Uploader was successfully destroyed.' }
       format.json { head :no_content }
