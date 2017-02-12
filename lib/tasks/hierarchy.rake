@@ -7,7 +7,7 @@ namespace :db do
 
       FIRST_ROW = 2
 
-      ss = Roo::Spreadsheet.open("db/import/CommunityAreas.xlsx")
+      ss = Roo::Spreadsheet.open("db/import/hierarchy.xlsx")
 
       FIRST_ROW.upto ss.last_row do |row|
         id    = ss.cell(row, 1)
