@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       get '/place/providers/:geo_slug', to: 'geographies#show_provider_dataset', as: 'community_area_provider'
       get '/place/category/:cat_id/:geo_slug', to: 'geographies#show_category_dataset', as: 'community_area_category'
       get '/topics', to: 'topics#index', as: 'topics_list'
-      get '/topic/:year/:indicator_id', to: 'topics#show', as: 'topic_detail'
+      get '/topic_city/:year/:indicator_id', to: 'topics#city_show', as: 'topic_detail'
       get '/topic_detail/:indicator_id', to: 'topics#trend', as: 'topic_detailed_all'
       get '/topic_recent/:indicator_id', to: 'topics#recent', as: 'topic_recent'
       get '/resources(/:dataset_slug)', to: 'geographies#resources_all', as: 'chicago_resources'
