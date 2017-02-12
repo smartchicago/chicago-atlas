@@ -120,7 +120,6 @@ module Api
       EOS
       def show_demographic_dataset
         @geography = Geography.where(:slug => params[:geo_slug]).first || not_found
-
         pop_2000 = fetch_demographic_age_data(2000, @geography.id)
         pop_2010 = fetch_demographic_age_data(2010, @geography.id)
 
@@ -136,11 +135,27 @@ module Api
           demographic_data_all << population_data
         end
 
-        render :json => {
-          :location => @geography.slug,
-          :demographic_data => demographic_data_all
+        total_population_data = {
+          :pop_2000 => @geography.population(2000),
+          :pop_2010 => @geography.population(2010)
         }
 
+        @demographics_list = ['Below Poverty Level', 'Crowded Housing', 'Dependency', 'No High School Diploma', 'Per capita income', 'Unemployment']
+        @topics_data       = []
+        @demographics_list.each_with_index do |element, index|
+          detailed_data = {
+            :title => element,
+            :data  => @geography.demographic_by_name(element)
+          }
+          @topics_data << detailed_data
+        end
+
+        render :json => {
+          :location => @geography.slug,
+          :demographic_data => demographic_data_all,
+          :total_population_data => total_population_data,
+          :topics_data => @topics_data
+        }
       end
 
       api :GET, '/place/insurance/:cat_id/:geo_slug', 'Fetch insurance info regarding community area or zip code and category name'
