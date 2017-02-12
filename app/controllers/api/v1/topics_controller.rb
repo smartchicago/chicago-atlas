@@ -11,7 +11,7 @@ module Api
         render json: category_groups
       end
 
-      api :GET, '/topic/:year/:indicator_slug', 'Fetch detailed data of topic'
+      api :GET, '/topic/:year/:indicator_id', 'Fetch detailed data of topic'
       param :year, String, :desc => 'year', :required => true
       param :indicator_id, String, :desc => 'indicator id', :required => true
       formats ['json']
@@ -26,7 +26,7 @@ module Api
         render json: @data
       end
 
-      api :GET, '/topic/:indicator_slug', 'Fetch detailed data of topic for trend'
+      api :GET, '/topic_detail/:indicator_id', 'Fetch detailed data of topic for trend'
       param :indicator_id, String, :desc => 'indicator id', :required => true
       formats ['json']
       description <<-EOS
@@ -36,6 +36,20 @@ module Api
       def trend
         slug  = params[:indicator_id]
         @data = Resource.where(indicator_id: slug)
+        render json: @data
+      end
+
+      api :GET, '/topic_recent/:indicator_slug', 'Fetch detailed data of topic'
+      param :indicator_id, String, :desc => 'indicator id', :required => true
+      formats ['json']
+      description <<-EOS
+        == Fetch detailed data for indicatior and year
+        response data has detailed data for indicator and year
+      EOS
+      def recent
+        slug  = params[:indicator_id]
+        year  = Resource.maximum('year_to', :conditions => [indicator_id: slug])
+        @data = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(indicator_id: slug)
         render json: @data
       end
     end
