@@ -43,7 +43,7 @@
         <td><%= resource.category_group.name unless resource.category_group_id.nil? %></td>
         <td><%= resource.sub_category.name unless resource.sub_category_id.nil? %></td>
         <td><%= resource.indicator.name unless resource.indicator_id.nil? %></td>
-        <td><%= resource.year_from.to_s + "-" + resource.year_to unless resource.year_from.nil? %></td>
+        <td><%= resource.year_from.to_s + "-" + resource.year_to.to_s unless resource.year_from.nil? %></td>
         <td><%= resource.geo_group.name unless resource.geo_group_id.nil? %></td>
         <td><%= resource.demo_group.name unless resource.demo_group_id.nil? %></td>
         <td><%= resource.number %></td>

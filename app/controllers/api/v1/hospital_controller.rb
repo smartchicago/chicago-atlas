@@ -92,8 +92,7 @@ module Api
         @outpatient_total           = @revenue_outpatient[:values].sum
         @total_revenue              = @inpatient_total + @outpatient_total
 
-        render :json => {:hospital => @hospital, :area_summary => @area_summary, :total_admissions =>  @total_admissions, :total_revenue => @total_revenue}
-
+        render :json => {:hospital => @hospital, :area_summary => @area_summary, :total_admissions =>  @total_admissions, :total_revenue => @total_revenue, :admissions_by_type => @admissions_by_type, :admissions_by_race => @admissions_by_race, :admissions_by_ethnicity => @admissions_by_ethnicity, :medsurg_admissions_by_age => @medsurg_admissions_by_age,:inpatient_total => @inpatient_total, :outpatient_total => @outpatient_total, :revenue_outpatient => @revenue_outpatient, :revenue_inpatient => @revenue_inpatient}
       end
     end
   end
