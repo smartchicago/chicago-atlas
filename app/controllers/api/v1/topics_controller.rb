@@ -56,7 +56,7 @@ module Api
         render json: @data
       end
 
-      api :GET, '/topic_recent/:indicator_slug', 'Fetch detailed data of topic'
+      api :GET, '/topic_recent/:indicator_id', 'Fetch detailed data of topic'
       param :indicator_id, String, :desc => 'indicator id', :required => true
       formats ['json']
       description <<-EOS
@@ -68,6 +68,25 @@ module Api
         year  = Resource.maximum('year_to', :conditions => [indicator_id: slug])
         @data = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(indicator_id: slug)
         render json: @data
+      end
+
+      api :GET, '/topic_cent/:geo_slug/:indicator_id', 'Fetch detailed data of topic for community area'
+      param :indicator_id, String, :desc => 'indicator id', :required => true
+      formats ['json']
+      description <<-EOS
+        == Fetch detailed data for community area
+      EOS
+      def info
+        indicator_id  = params[:indicator_id]
+        geo_slug      = params[:geo_slug]
+        geo_group_id  = GeoGroup.find_by_slug(geo_slug)
+        chicago_id    = GeoGroup.find_by_slug('chicago')
+        @area_data    = Resource.where(indicator_id: indicator_id, geo_group_id: geo_group_id)
+        @city_data    = Resource.where(indicator_id: indicator_id, geo_group_id: chicago_id)
+        render :json => {
+          :area_data => @area_data,
+          :city_data => @city_data
+        }
       end
     end
   end
