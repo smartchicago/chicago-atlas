@@ -12,8 +12,9 @@ namespace :db do
       FIRST_ROW.upto ss.last_row do |row|
         geography  = ss.cell(row, 1)
         name       = ss.cell(row, 2)
+        slug       = ss.cell(row, 3)
 
-        field = GeoGroup.where(name: name, geography: geography).first_or_create
+        field = GeoGroup.where(name: name, geography: geography, slug: slug).first_or_create
         field.save
       end
     end
