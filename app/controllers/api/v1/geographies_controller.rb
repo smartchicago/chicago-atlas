@@ -51,6 +51,7 @@ module Api
 
         male_pop    =   @geography.population_by_sex('MALE')
         female_pop  =   @geography.population_by_sex('FEMALE')
+        population  =   @geography.population(2010)
 
         @male_percent   = (male_pop.to_f / (male_pop + female_pop) * 100).round(1)
         @female_percent = (female_pop.to_f / (male_pop + female_pop) * 100).round(1)
@@ -68,8 +69,7 @@ module Api
         @adjacent_community_areas   = @adjacent_community_areas.sort_by { |a| a[:name] }
         @has_category               = @geography.has_category("All Uninsured")
 
-        render :json => {:geography => @geography, :categories => @categories, :adjacent_zips => @adjacent_zips, :adjacent_community_areas => @adjacent_community_areas, :male_percent => @male_percent, :female_percent => @female_percent, :has_category => @has_category}
-        # render :json => {:geography => @geography}
+        render :json => {:geography => @geography, :categories => @categories, :adjacent_zips => @adjacent_zips, :adjacent_community_areas => @adjacent_community_areas, :male_percent => @male_percent, :female_percent => @female_percent, :has_category => @has_category, :total_population => population}
       end
 
       def show_dataset
