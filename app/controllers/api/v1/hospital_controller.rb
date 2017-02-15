@@ -84,16 +84,20 @@ module Api
         @admissions_by_race         = fetch_provider_data(@hospital.src_id, "Admissions by Race")
         @admissions_by_ethnicity    = fetch_provider_data(@hospital.src_id, "Admissions by Ethnicity")
         @admissions_by_type         = fetch_sorted_provider_data(@hospital.src_id, "Admissions by Type")
-        @admissions_by_age  = fetch_provider_data(@hospital.src_id, "Medical-Surgical Admissions By Age")
+        @admissions_by_age          = fetch_provider_data(@hospital.src_id, "Medical-Surgical Admissions By Age")
         @total_admissions           = @admissions_by_race[:values].sum
         @revenue_inpatient          = fetch_provider_data(@hospital.src_id, "Inpatient Revenue by Payment Type")
         @inpatient_total            = @revenue_inpatient[:values].sum
         @revenue_outpatient         = fetch_provider_data(@hospital.src_id, "Outpatient Revenue by Payment Type")
         @outpatient_total           = @revenue_outpatient[:values].sum
         @total_revenue              = @inpatient_total + @outpatient_total
+        @charity_care               = fetch_provider_data(@hospital.src_id, "Actual Cost Charity Care")
+        @inpatient_cc               = charity_care[:values][charity_care[:stats].index('Charity Care - Inpatient')]
+        @outpatient_cc              = charity_care[:values][charity_care[:stats].index('Charity Care - Outpatient')]
+        @finance_data               = { outpatient_total: @outpatient_total, inpatient_total: @inpatient_total, outpatient_cc: @outpatient_cc, inpatient_cc: @inpatient_cc }
 
         render :json => {:hospital => @hospital, :area_summary => @area_summary, :total_admissions =>  @total_admissions, :total_revenue => @total_revenue, :admissions_by_type => @admissions_by_type, :admissions_by_race => @admissions_by_race, :admissions_by_ethnicity => @admissions_by_ethnicity, :admissions_by_age => @admissions_by_age,
-          :inpatient_total => @inpatient_total, :outpatient_total => @outpatient_total, :revenue_outpatient => @revenue_outpatient, :revenue_inpatient => @revenue_inpatient}
+          :finance_data => @finance_data, :revenue_outpatient => @revenue_outpatient, :revenue_inpatient => @revenue_inpatient}
       end
     end
   end
