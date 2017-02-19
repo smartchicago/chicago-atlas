@@ -334,37 +334,37 @@ module Api
         dataset_id  = params[:dataset_id]
         resources   = InterventionLocation
 
-        if dataset_id
-          resources = resources.where('dataset_id = ?', dataset_id)
-        end
+        resources_all = resources.all
+        render :json => { :resources_all => resources_all, :geography =>  @geography, :dataset_url_fragment => @dataset_url_fragment, :dataset => @dataset }
+
+      end
+
+      api :GET, '/resources_category/:category_slug(/:dataset_slug)', 'Fetch all resources with category slug'
+      formats ['json']
+      param :dataset_slug, String, :desc => 'dataset slug'
+      param :category_slug, String, :desc => 'category slug'
+      description <<-EOS
+        == Fetch all of the resources exists in chicago city with category slug.
+      EOS
+      def resources_category
+        resources   = InterventionLocation
 
         resources = resources.order('program_name, organization_name')
 
         # convert in to a JSON object grouped by category
-        resources_by_cat  = [{:category => 'all', :resources => []}]
-        resources_all     = []
+        resources_by_cat  = [{:category => params[:category_slug], :resources => []}]
         resources.each do |r|
           categories = eval(r[:categories])
           categories.each do |c|
-            if resources_by_cat.select {|r_c| r_c[:category] == c }.empty?
-              resources_by_cat << {:category => c, :resources => []}
-            end
             unless r[:address].empty?
-              resources_by_cat.select {|r_c| r_c[:category] == c }.first[:resources] << r
-              resources_all << r
+              if c == params[:category_slug]
+                resources_by_cat.select {|r_c| r_c[:category] == params[:category_slug]}.first[:resources] << r
+              end
             end
           end
         end
 
-        resources_all     = resources_all.uniq
-        resources_by_cat.select {|r_c| r_c[:category] == 'all' }.first[:resources] = resources_all
-        resources_by_cat  = resources_by_cat.sort_by { |r_c| r_c[:category] }
-
-        resources_by_cat.each do |r_c|
-          r_c[:resources] = r_c[:resources].sort_by { |r| r[:organization_name]}
-        end
-
-        render :json => { :resources_by_cat => resources_by_cat, :geography =>  @geography, :dataset_url_fragment => @dataset_url_fragment, :dataset => @dataset }
+        render :json => { :resources_by_cat => resources_by_cat}
 
       end
     end

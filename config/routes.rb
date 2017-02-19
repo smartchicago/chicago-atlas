@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       get '/topic_recent/:indicator_id', to: 'topics#recent', as: 'topic_recent'
       get '/topic_info/:geo_slug/:indicator_id', to: 'topics#info', as: 'topic_info'
       get '/resources(/:dataset_slug)', to: 'geographies#resources_all', as: 'chicago_resources'
+      get '/resources_category/:category_slug(/:dataset_slug)', to: 'geographies#resources_category', as: 'chicago_resources_category'
       get '/hospital/:slug', to: 'hospital#show', as: 'hospital_with_slug'
       get '/:geo_slug/hospitals', to: 'hospital#index', as: 'community_area_hospitals'
       get '/hospitals', to: 'hospital#hospitals_all', as: 'chicago_hospitals'
