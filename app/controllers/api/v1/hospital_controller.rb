@@ -92,8 +92,8 @@ module Api
         @outpatient_total           = @revenue_outpatient[:values].sum
         @total_revenue              = @inpatient_total + @outpatient_total
         @charity_care               = fetch_provider_data(@hospital.src_id, "Actual Cost Charity Care")
-        @inpatient_cc               = charity_care[:values][charity_care[:stats].index('Charity Care - Inpatient')]
-        @outpatient_cc              = charity_care[:values][charity_care[:stats].index('Charity Care - Outpatient')]
+        @inpatient_cc               = @charity_care[:values][@charity_care[:stats].index('Charity Care - Inpatient')]
+        @outpatient_cc              = @charity_care[:values][@charity_care[:stats].index('Charity Care - Outpatient')]
         @finance_data               = { outpatient_total: @outpatient_total, inpatient_total: @inpatient_total, outpatient_cc: @outpatient_cc, inpatient_cc: @inpatient_cc }
 
         render :json => {:hospital => @hospital, :area_summary => @area_summary, :total_admissions =>  @total_admissions, :total_revenue => @total_revenue, :admissions_by_type => @admissions_by_type, :admissions_by_race => @admissions_by_race, :admissions_by_ethnicity => @admissions_by_ethnicity, :admissions_by_age => @admissions_by_age,
