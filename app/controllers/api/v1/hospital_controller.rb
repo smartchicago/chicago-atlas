@@ -3,7 +3,7 @@ module Api
     class HospitalController < ApiController
       include ApplicationHelper
 
-      api :GET, '/chicago/hospitals', 'Fetch all of hospitals data'
+      api :GET, '/hospitals', 'Fetch all of hospitals data'
       formats ['json']
       description <<-EOS
         == Fetch all of hospitals data.
