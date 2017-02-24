@@ -48,8 +48,8 @@ class ResourceParser < Parser
 
       FIRST_ROW.upto ss.last_row do |row|
         category     =  CategoryGroup.where(name: ss.cell(row, COLUMNS_HEADER[:category]).to_s).first_or_create
-        sub_category =  SubCategory.where(name: ss.cell(row, COLUMNS_HEADER[:subcategory]).to_s).first_or_create
-        indicator    =  Indicator.where(name: ss.cell(row, COLUMNS_HEADER[:indicator])).first_or_create
+        sub_category =  SubCategory.where(name: ss.cell(row, COLUMNS_HEADER[:subcategory]).to_s, category_group_id: category.id).first_or_create
+        indicator    =  Indicator.where(name: ss.cell(row, COLUMNS_HEADER[:indicator]), sub_category_id: sub_category.id).first_or_create
         geography    =  GeoGroup.where(name: ss.cell(row, COLUMNS_HEADER[:geo_group]), geography: ss.cell(row, COLUMNS_HEADER[:geography])).first_or_create
         demography   =  DemoGroup.where(name: ss.cell(row, COLUMNS_HEADER[:demo_group]), demography: ss.cell(row, COLUMNS_HEADER[:demography])).first_or_create
 
@@ -68,8 +68,6 @@ class ResourceParser < Parser
           new_resource.year_from = str_year.to_i
           new_resource.year_to   = str_year.to_i
         end
-        sub_category.update(category_group_id: category.id)
-        indicator.update(sub_category_id: sub_category.id)
 
         rsc_array   = -1
         rsc_array.upto COLUMNS.length-1 do |rsc_id|
