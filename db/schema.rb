@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20170209045455) do
   create_table "geo_groups", force: :cascade do |t|
     t.string   "name"
     t.string   "geography"
+    t.string   "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "geo_id"
