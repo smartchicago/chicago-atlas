@@ -24,7 +24,7 @@ module Api
         slug = params[:indicator_id]
         city = GeoGroup.find_by_geography('City')
         @data = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(indicator_id: slug).where(geo_group_id: city.id)
-        render json: @data
+        render json: @data, each_serializer: TopicCitySerializer
       end
 
       api :GET, '/topic_area/:year/:indicator_id', 'Fetch detailed data of topic'
@@ -70,7 +70,7 @@ module Api
         render json: @data
       end
 
-      api :GET, '/topic_cent/:geo_slug/:indicator_id', 'Fetch detailed data of topic for community area'
+      api :GET, '/topic_info/:geo_slug/:indicator_id', 'Fetch detailed data of topic for community area'
       param :indicator_id, String, :desc => 'indicator id', :required => true
       formats ['json']
       description <<-EOS
