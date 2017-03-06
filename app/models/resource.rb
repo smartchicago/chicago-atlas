@@ -7,4 +7,5 @@ class Resource < ActiveRecord::Base
   belongs_to :indicator
 
   validates :uploader_id, presence: true
+
 end

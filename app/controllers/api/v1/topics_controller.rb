@@ -53,7 +53,7 @@ module Api
       def trend
         slug  = params[:indicator_id]
         @data = Resource.where(indicator_id: slug)
-        render json: @data
+        render json: @data, each_serializer: TopicDetailSerializer
       end
 
       api :GET, '/topic_recent/:indicator_id', 'Fetch detailed data of topic'
