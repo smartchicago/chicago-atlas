@@ -66,8 +66,9 @@ module Api
 
         @adjacent_community_areas   = @adjacent_community_areas.sort_by { |a| a[:name] }
         @has_category               = @geography.has_category("All Uninsured")
-
-        render :json => {:geography => @geography, :categories => @categories, :adjacent_zips => @adjacent_zips, :adjacent_community_areas => @adjacent_community_areas, :male_percent => @male_percent, :female_percent => @female_percent, :has_category => @has_category, :total_population => population}
+        @child_resource = Resource.select {|resource| resource.geo_group.slug == params[:geo_slug] && resource.indicator.name == "Child Opportunity Index"}.first
+        @child_opportunity = @child_resource.demo_group.name unless @child_resource.demo_group.blank?
+        render :json => {:geography => @geography, :categories => @categories, :adjacent_zips => @adjacent_zips, :adjacent_community_areas => @adjacent_community_areas, :male_percent => @male_percent, :female_percent => @female_percent, :has_category => @has_category, :total_population => population, :child_opportunity => @child_opportunity}
       end
 
       def show_dataset
@@ -184,13 +185,12 @@ module Api
           }
           all_data << data
         end
-
+        
         render :json => {
           :area => @geography.slug,
           :uninsured_data_type => cat.name,
           :data => all_data
           }
-
       end
 
       api :GET, '/place/providers/:geo_slug', 'Fetch provider info using community area or zip code'
@@ -243,9 +243,13 @@ module Api
         end
       end
 
-      api :GET, '/place/:geo_slug/resources(/:dataset_slug)', 'Fetch resources info for community_area/zip code'
+      api :GET, '/place/resources(/:dataset_slug)', 'Fetch resources info for community_area/zip code'
       formats ['json']
-      param :geo_slug, String, :desc => 'community_area slug or zip code', :required => true
+      param :geo_slug, String, :desc => 'community_area slug or zip code'
+      param :north, String, :desc => 'north'
+      param :east, String, :desc => 'east'
+      param :southh, String, :desc => 'south'
+      param :west, String, :desc => 'west'
       param :dataset_slug, String, :desc => 'dataset slug'
       description <<-EOS
         == Fetch community area or zip code resources
@@ -254,20 +258,77 @@ module Api
       EOS
       def resources_json
 
-        @geography            = Geography.where(:slug => params[:geo_slug]).first || not_found
-        @dataset_url_fragment = ""
+        # @dataset_url_fragment = ""
 
-        # for specific location view
-        if not params[:dataset_slug].nil?
-          @dataset = Dataset.where(:slug => params[:dataset_slug]).first || not_found
-          @dataset_url_fragment << "/#{@dataset.id}"
-        end
+        # # for specific location view
+        # if not params[:dataset_slug].nil?
+        #   @dataset = Dataset.where(:slug => params[:dataset_slug]).first || not_found
+        #   @dataset_url_fragment << "/#{@dataset.id}"
+        # end
 
-        dataset_id      = params[:dataset_id]
+        # dataset_id      = params[:dataset_id]
+        # # send boundary with [ north, east, south, west ]
+        # bounds          = [params[:north], params[:east], params[:south], params[:west] ]
+        # # community_area = params[:community_area_slug]
+        # community_area  = params[:geo_slug]
+
+        # resources = InterventionLocation
+
+        # if dataset_id
+        #   resources = resources.where('dataset_id = ?', dataset_id)
+        # end
+
+        # if community_area
+        #   resources = resources
+        #                 .joins("JOIN geographies on intervention_locations.community_area_id = geographies.id")
+        #                 .where("geographies.slug = ?", community_area)
+        # end
+
+        # if bounds[0] != nil
+        #   bounds[0] = bounds[0].gsub(/[,]/, '.').to_f
+        #   bounds[1] = bounds[1].gsub(/[,]/, '.').to_f
+        #   bounds[2] = bounds[2].gsub(/[,]/, '.').to_f
+        #   bounds[3] = bounds[3].gsub(/[,]/, '.').to_f
+
+        #   resources = resources.where("latitude < #{bounds[0]} AND longitude < #{bounds[1]} AND latitude > #{bounds[2]} AND longitude > #{bounds[3]}")
+        # end
+
+        # resources = resources.order('program_name, organization_name')
+
+        # # convert in to a JSON object grouped by category
+        # resources_by_cat  = [{:category => 'all', :resources => []}]
+        # resources_all     = []
+        # resources.each do |r|
+        #   categories = eval(r[:categories])
+        #   categories.each do |c|
+        #     if resources_by_cat.select {|r_c| r_c[:category] == c }.empty?
+        #       resources_by_cat << {:category => c, :resources => []}
+        #     end
+        #     unless r[:address].empty?
+        #       resources_by_cat.select {|r_c| r_c[:category] == c }.first[:resources] << r
+        #       resources_all << r
+        #     end
+        #   end
+        # end
+
+        # resources_all     = resources_all.uniq
+        # resources_by_cat.select {|r_c| r_c[:category] == 'all' }.first[:resources] = resources_all
+        # resources_by_cat  = resources_by_cat.sort_by { |r_c| r_c[:category] }
+
+        # resources_by_cat.each do |r_c|
+        #   r_c[:resources] = r_c[:resources].sort_by { |r| r[:organization_name]}
+        # end
+
+        # # respond_to do |format|
+        # #   format.json { render :json => resources_by_cat }
+        # # end
+
+        # render :json => { :resources_by_cat => resources_by_cat, :geography =>  @geography, :dataset_url_fragment => @dataset_url_fragment, :dataset => @dataset }
+
+        dataset_id = params[:dataset_id]
         # send boundary with [ north, east, south, west ]
-        bounds          = [params[:north], params[:east], params[:south], params[:west] ]
-        # community_area = params[:community_area_slug]
-        community_area  = params[:geo_slug]
+        bounds = [params[:north], params[:east], params[:south], params[:west] ]
+        community_area = params[:community_area_slug]
 
         resources = InterventionLocation
 
@@ -293,8 +354,8 @@ module Api
         resources = resources.order('program_name, organization_name')
 
         # convert in to a JSON object grouped by category
-        resources_by_cat  = [{:category => 'all', :resources => []}]
-        resources_all     = []
+        resources_by_cat = [{:category => 'all', :resources => []}]
+        resources_all = []
         resources.each do |r|
           categories = eval(r[:categories])
           categories.each do |c|
@@ -308,20 +369,15 @@ module Api
           end
         end
 
-        resources_all     = resources_all.uniq
+        resources_all = resources_all.uniq
         resources_by_cat.select {|r_c| r_c[:category] == 'all' }.first[:resources] = resources_all
-        resources_by_cat  = resources_by_cat.sort_by { |r_c| r_c[:category] }
-
+        resources_by_cat = resources_by_cat.sort_by { |r_c| r_c[:category] }
+        
         resources_by_cat.each do |r_c|
           r_c[:resources] = r_c[:resources].sort_by { |r| r[:organization_name]}
         end
 
-        # respond_to do |format|
-        #   format.json { render :json => resources_by_cat }
-        # end
-
-        render :json => { :resources_by_cat => resources_by_cat, :geography =>  @geography, :dataset_url_fragment => @dataset_url_fragment, :dataset => @dataset }
-
+        render :json => { :resources_by_cat => resources_by_cat }
       end
 
       api :GET, '/resources(/:dataset_slug)', 'Fetch all resources'
