@@ -56,6 +56,19 @@ module Api
         render json: @data, each_serializer: TopicDetailSerializer
       end
 
+      api :GET, '/topic_demo/:demography', 'Fetch trend data regarding demography'
+      param :demography, String, :desc => 'demography', :required => true
+      formats ['json']
+      description <<-EOS
+        == Fecth detailed data for demography
+        response data has detailed data for demography(for trend all year data)
+      EOS
+      def demo
+        slug  = params[:demography]
+        @data = Resource.select { |d| d.demo_group.demography == slug unless d.demo_group.blank? }
+        render json: @data, each_serializer: TopicDemoSerializer 
+      end
+
       api :GET, '/topic_recent/:indicator_id', 'Fetch detailed data of topic'
       param :indicator_id, String, :desc => 'indicator id', :required => true
       formats ['json']
