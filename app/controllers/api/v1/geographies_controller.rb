@@ -66,10 +66,21 @@ module Api
 
         @adjacent_community_areas   = @adjacent_community_areas.sort_by { |a| a[:name] }
         @has_category               = @geography.has_category("All Uninsured")
-        # @child_resource = Resource.select {|resource| resource.geo_group.slug == params[:geo_slug] && resource.indicator.name == "Child Opportunity Index"}
-        # @child_opportunity = @child_resource.first.demo_group.name unless @child_resource.first.demo_group.blank?
-        # render :json => {:geography => @geography, :categories => @categories, :adjacent_zips => @adjacent_zips, :adjacent_community_areas => @adjacent_community_areas, :male_percent => @male_percent, :female_percent => @female_percent, :has_category => @has_category, :total_population => population, :child_opportunity => @child_opportunity}
-        render :json => {:geography => @geography, :adjacent_zips => @adjacent_zips, :adjacent_community_areas => @adjacent_community_areas, :male_percent => @male_percent, :female_percent => @female_percent, :has_category => @has_category, :total_population => population}
+
+        indicator  = Indicator.find_by_slug('childopportunityindex')
+        geo_group  = GeoGroup.find_by_slug(params[:geo_slug])
+        resource   = Resource.find_by(geo_group_id: geo_group.id, indicator_id: indicator.id) unless indicator.blank?
+        child      = resource.demo_group.name unless resource.blank?
+        render :json => {
+          :geography => @geography, 
+          :adjacent_zips => @adjacent_zips, 
+          :adjacent_community_areas => @adjacent_community_areas, 
+          :male_percent => @male_percent, 
+          :female_percent => @female_percent, 
+          :has_category => @has_category, 
+          :total_population => population,
+          :child_opportunity_index => child
+        }
       end
 
       def show_dataset
