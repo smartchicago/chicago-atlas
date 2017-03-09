@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20170209045455) do
 
   create_table "category_groups", force: :cascade do |t|
     t.string   "name"
+    t.string   "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -49,6 +50,7 @@ ActiveRecord::Schema.define(version: 20170209045455) do
   create_table "demo_groups", force: :cascade do |t|
     t.string   "name"
     t.string   "demography"
+    t.string   "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -79,6 +81,7 @@ ActiveRecord::Schema.define(version: 20170209045455) do
   create_table "indicators", force: :cascade do |t|
     t.string   "name"
     t.integer  "sub_category_id"
+    t.string   "slug"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
@@ -215,6 +218,7 @@ ActiveRecord::Schema.define(version: 20170209045455) do
   create_table "sub_categories", force: :cascade do |t|
     t.string   "name"
     t.integer  "category_group_id"
+    t.string   "slug"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end

@@ -47,14 +47,14 @@ class ResourceParser < Parser
       current_uploader.update_total_row(total_count)
 
       FIRST_ROW.upto ss.last_row do |row|
-        category_slug     = ss.cell(row, COLUMNS_HEADER[:category]).to_s.gsub!(/\s+/, '').downcase
-        sub_category_slug = ss.cell(row, COLUMNS_HEADER[:subcategory]).to_s.gsub!(/\s+/, '').downcase
-        indicator_slug    = ss.cell(row, COLUMNS_HEADER[:indicator]).to_s.gsub!(/\s+/, '').downcase
-        demography_slug   = ss.cell(row, COLUMNS_HEADER[:demo_group]).to_s.gsub!(/\s+/, '').downcase
+        category_slug     = ss.cell(row, COLUMNS_HEADER[:category]).to_s.gsub(/[^0-9A-Za-z]/, '').delete(' ').downcase
+        sub_category_slug = ss.cell(row, COLUMNS_HEADER[:subcategory]).to_s.gsub(/[^0-9A-Za-z]/, '').delete(' ').downcase
+        indicator_slug    = ss.cell(row, COLUMNS_HEADER[:indicator]).to_s.gsub(/[^0-9A-Za-z]/, '').delete(' ').downcase
+        demography_slug   = ss.cell(row, COLUMNS_HEADER[:demography]).to_s.gsub(/[^0-9A-Za-z]/, '').delete(' ').downcase
 
         category     =  CategoryGroup.where(name: ss.cell(row, COLUMNS_HEADER[:category]).to_s, slug: category_slug).first_or_create
         sub_category =  SubCategory.where(name: ss.cell(row, COLUMNS_HEADER[:subcategory]).to_s, category_group_id: category.id, slug: sub_category_slug).first_or_create
-        indicator    =  Indicator.where(name: ss.cell(row, COLUMNS_HEADER[:indicator]), sub_category_id: sub_category.id), slug: indicator_slug).first_or_create
+        indicator    =  Indicator.where(name: ss.cell(row, COLUMNS_HEADER[:indicator]), sub_category_id: sub_category.id, slug: indicator_slug).first_or_create
         geography    =  GeoGroup.where(name: ss.cell(row, COLUMNS_HEADER[:geo_group]), geography: ss.cell(row, COLUMNS_HEADER[:geography])).first_or_create
         demography   =  DemoGroup.where(name: ss.cell(row, COLUMNS_HEADER[:demo_group]), demography: ss.cell(row, COLUMNS_HEADER[:demography]), slug:demography_slug).first_or_create
 
