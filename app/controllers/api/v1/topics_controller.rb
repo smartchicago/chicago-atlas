@@ -11,9 +11,9 @@ module Api
         render json: category_groups
       end
 
-      api :GET, '/topic_city/:year/:indicator_id', 'Fetch detailed data of topic'
+      api :GET, '/topic_city/:year/:indicator_slug', 'Fetch detailed data of topic'
       param :year, String, :desc => 'year', :required => true
-      param :indicator_id, String, :desc => 'indicator id', :required => true
+      param :indicator_slug, String, :desc => 'indicator slug', :required => true
       formats ['json']
       description <<-EOS
         == Fetch detailed data for indicatior and year in city area
@@ -21,9 +21,10 @@ module Api
       EOS
       def city_show
         year  = params[:year]
-        slug  = params[:indicator_id]
+        slug  = params[:indicator_slug]
         city  = GeoGroup.find_by_geography('City')
-        @data = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(indicator_id: slug).where(geo_group_id: city.id)
+        @data = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(geo_group_id: city.id).select { |resource| resource.indicator.slug == slug }
+        
         render json: @data, each_serializer: TopicCitySerializer
       end
 
@@ -56,21 +57,22 @@ module Api
         render json: @data, each_serializer: TopicDetailSerializer
       end
 
-      api :GET, '/topic_demo/:indicator_id/:demography', 'Fetch trend data regarding demography'
-      param :demography, String, :desc => 'demography', :required => true
+      api :GET, '/topic_demo/:indicator_slug/:demo_slug', 'Fetch trend data regarding demography'
+      param :demo_slug, String, :desc => 'demography slug', :required => true
+      param :indicator_slug, String, :desc => 'indicator_slug', :required => true
       formats ['json']
       description <<-EOS
         == Fecth detailed data for demography
         response data has detailed data for demography(for trend all year data)
       EOS
       def demo
-        demo_slug       = params[:demography]
-        indicator_slug  = params[:indicator_id] 
-        @data           = Resource.where(indicator_id: indicator_slug).select { |d| d.demo_group.demography == demo_slug unless d.demo_group.blank? }
+        demo_slug       = params[:demo_slug]
+        indicator_slug  = params[:indicator_slug] 
+        @data           = Resource.select { |d| (d.demo_group.demography == demo_slug unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
         render json: @data, each_serializer: TopicDemoSerializer 
       end
 
-      api :GET, '/topic_recent/:indicator_id', 'Fetch detailed data of topic'
+      api :GET, '/topic_recent/:indicator_slug', 'Fetch detailed data of topic'
       param :indicator_id, String, :desc => 'indicator id', :required => true
       formats ['json']
       description <<-EOS
@@ -78,9 +80,10 @@ module Api
         response data has detailed data for indicator and year
       EOS
       def recent
-        slug  = params[:indicator_id]
-        year  = Resource.maximum('year_to', :conditions => [indicator_id: slug])
-        @data = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(indicator_id: slug)
+        slug  = params[:indicator_slug]
+        index = Indicator.find_by(slug: slug).id
+        year  = Resource.maximum('year_to', :conditions => [indicator_id: index])
+        @data = Resource.where("year_from <= ? AND year_to >= ?", year, year).select {|s| s.indicator.slug = slug}
         render json: @data
       end
 
