@@ -244,7 +244,8 @@ module Api
         end
       end
 
-      api :GET, '/place/resources(/:dataset_slug)', 'Fetch resources info for community_area/zip code'
+      api :GET, '/resources(/:dataset_id)/:north/:east/:south/:west', 'Fetch resources info for community_area/zip code'
+      api :GET, '/resources(/:dataset_id)/:community_area_slug', 'Fetch resources info for community_area/zip code'
       formats ['json']
       param :geo_slug, String, :desc => 'community_area slug or zip code'
       param :north, String, :desc => 'north'
@@ -252,6 +253,7 @@ module Api
       param :southh, String, :desc => 'south'
       param :west, String, :desc => 'west'
       param :dataset_slug, String, :desc => 'dataset slug'
+      param :community_area_slug, String, :desc => 'community_area_slug'
       description <<-EOS
         == Fetch community area or zip code resources
           This api fetches the detailed resources info of community_area or zip code.
@@ -330,7 +332,6 @@ module Api
         # send boundary with [ north, east, south, west ]
         bounds = [params[:north], params[:east], params[:south], params[:west] ]
         community_area = params[:community_area_slug]
-
         resources = InterventionLocation
 
         if dataset_id
@@ -378,7 +379,7 @@ module Api
           r_c[:resources] = r_c[:resources].sort_by { |r| r[:organization_name]}
         end
 
-        render :json => { :resources_by_cat => resources_by_cat }
+        render :json => { :resources_all => resources_all }
       end
 
       api :GET, '/resources(/:dataset_slug)', 'Fetch all resources'
