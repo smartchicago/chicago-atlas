@@ -47,11 +47,16 @@ class ResourceParser < Parser
       current_uploader.update_total_row(total_count)
 
       FIRST_ROW.upto ss.last_row do |row|
-        category     =  CategoryGroup.where(name: ss.cell(row, COLUMNS_HEADER[:category]).to_s).first_or_create
-        sub_category =  SubCategory.where(name: ss.cell(row, COLUMNS_HEADER[:subcategory]).to_s, category_group_id: category.id).first_or_create
-        indicator    =  Indicator.where(name: ss.cell(row, COLUMNS_HEADER[:indicator]), sub_category_id: sub_category.id).first_or_create
+        category_slug     = ss.cell(row, COLUMNS_HEADER[:category]).to_s.gsub!(/\s+/, '').downcase
+        sub_category_slug = ss.cell(row, COLUMNS_HEADER[:subcategory]).to_s.gsub!(/\s+/, '').downcase
+        indicator_slug    = ss.cell(row, COLUMNS_HEADER[:indicator]).to_s.gsub!(/\s+/, '').downcase
+        demography_slug   = ss.cell(row, COLUMNS_HEADER[:demo_group]).to_s.gsub!(/\s+/, '').downcase
+
+        category     =  CategoryGroup.where(name: ss.cell(row, COLUMNS_HEADER[:category]).to_s, slug: category_slug).first_or_create
+        sub_category =  SubCategory.where(name: ss.cell(row, COLUMNS_HEADER[:subcategory]).to_s, category_group_id: category.id, slug: sub_category_slug).first_or_create
+        indicator    =  Indicator.where(name: ss.cell(row, COLUMNS_HEADER[:indicator]), sub_category_id: sub_category.id), slug: indicator_slug).first_or_create
         geography    =  GeoGroup.where(name: ss.cell(row, COLUMNS_HEADER[:geo_group]), geography: ss.cell(row, COLUMNS_HEADER[:geography])).first_or_create
-        demography   =  DemoGroup.where(name: ss.cell(row, COLUMNS_HEADER[:demo_group]), demography: ss.cell(row, COLUMNS_HEADER[:demography])).first_or_create
+        demography   =  DemoGroup.where(name: ss.cell(row, COLUMNS_HEADER[:demo_group]), demography: ss.cell(row, COLUMNS_HEADER[:demography]), slug:demography_slug).first_or_create
 
         new_resource                    =   Resource.new
         new_resource.uploader_id        =   self.uploader_id
@@ -61,6 +66,7 @@ class ResourceParser < Parser
         new_resource.geo_group_id       =   geography.id
         new_resource.demo_group_id      =   demography.id
         str_year                        =   ss.cell(row, COLUMNS_HEADER[:year]).to_s
+        
         if (str_year.include? '-') || (str_year.length == 9)
           new_resource.year_from = str_year[0,4].to_i
           new_resource.year_to   = str_year[5,8].to_i
