@@ -50,7 +50,7 @@ class ResourceParser < Parser
         category_slug     = ss.cell(row, COLUMNS_HEADER[:category]).to_s.gsub(/[^0-9A-Za-z]/, '').delete(' ').downcase
         sub_category_slug = ss.cell(row, COLUMNS_HEADER[:subcategory]).to_s.gsub(/[^0-9A-Za-z]/, '').delete(' ').downcase
         indicator_slug    = ss.cell(row, COLUMNS_HEADER[:indicator]).to_s.gsub(/[^0-9A-Za-z]/, '').delete(' ').downcase
-        demography_slug   = (ss.cell(row, COLUMNS_HEADER[:demo_group]) + ss.cell(row, COLUMNS_HEADER[:demography])).to_s.gsub(/[^0-9A-Za-z]/, '').delete(' ').downcase
+        demography_slug   = (ss.cell(row, COLUMNS_HEADER[:demo_group]).to_s + ss.cell(row, COLUMNS_HEADER[:demography]).to_s).gsub(/[^0-9A-Za-z]/, '').delete(' ').downcase
 
         category     =  CategoryGroup.where(name: ss.cell(row, COLUMNS_HEADER[:category]).to_s, slug: category_slug).first_or_create
         sub_category =  SubCategory.where(name: ss.cell(row, COLUMNS_HEADER[:subcategory]).to_s, category_group_id: category.id, slug: sub_category_slug).first_or_create
