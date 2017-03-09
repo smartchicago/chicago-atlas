@@ -27,7 +27,7 @@ Rails.application.routes.draw do
       get '/topics', to: 'topics#index', as: 'topics_list'
       get '/topic_city/:year/:indicator_slug', to: 'topics#city_show', as: 'topic_city_detail'
       get '/topic_area/:year/:indicator_slug', to: 'topics#area_show', as: 'topic_community_area_detail'
-      get '/topic_demo/:indicator_slug/:demography', to: 'topics#demo', as: 'topic_detail_demography'
+      get '/topic_demo/:indicator_slug/:demo_slug', to: 'topics#demo', as: 'topic_detail_demography'
       get '/topic_detail/:indicator_slug', to: 'topics#trend', as: 'topic_detailed_all'
       get '/topic_recent/:indicator_slug', to: 'topics#recent', as: 'topic_recent'
       get '/topic_info/:geo_slug/:indicator_slug', to: 'topics#info', as: 'topic_info'

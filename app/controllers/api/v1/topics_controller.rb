@@ -30,7 +30,7 @@ module Api
 
       api :GET, '/topic_area/:year/:indicator_slug', 'Fetch detailed data of topic'
       param :year, String, :desc => 'year', :required => true
-      param :indicator_id, String, :desc => 'indicator id', :required => true
+      param :indicator_slug, String, :desc => 'indicator id', :required => true
       formats ['json']
       description <<-EOS
         == Fetch detailed data for indicatior and year in city area
@@ -41,12 +41,12 @@ module Api
         slug          = params[:indicator_slug]
         city          = GeoGroup.find_by_geography('City')
         indicator_id  = Indicator.find_by_slug(slug).id
-        @data         = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(indicator_id: slug).where.not(geo_group_id: city.id)
+        @data         = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(indicator_id: indicator_id).where.not(geo_group_id: city.id)
         render json: @data, each_serializer: TopicAreaSerializer
       end
 
       api :GET, '/topic_detail/:indicator_slug', 'Fetch detailed data of topic for trend'
-      param :indicator_id, String, :desc => 'indicator slug', :required => true
+      param :indicator_slug, String, :desc => 'indicator slug', :required => true
       formats ['json']
       description <<-EOS
         == Fetch detailed data for indicatior
@@ -56,12 +56,16 @@ module Api
         slug          = params[:indicator_slug]
         indicator_id  = Indicator.find_by_slug(slug).id
         @data         = Resource.where(indicator_id: indicator_id)
-        render json: @data, each_serializer: TopicDetailSerializer
+        @demo_list    = DemoGroup.select {|s| Resource.find_by(indicator_id: indicator_id, demo_group_id: s.id) != nil}
+        render json: {
+          data: ActiveModel::Serializer::ArraySerializer.new(@data, serializer: TopicDetailSerializer),
+          demo_list: ActiveModel::Serializer::ArraySerializer.new(@demo_list, serializer: DemoListSerializer)
+        }
       end
 
       api :GET, '/topic_demo/:indicator_slug/:demo_slug', 'Fetch trend data regarding demography'
-      param :demo_slug, String, :desc => 'demography slug', :required => true
       param :indicator_slug, String, :desc => 'indicator_slug', :required => true
+      param :demo_slug, String, :desc => 'demography slug', :required => true
       formats ['json']
       description <<-EOS
         == Fecth detailed data for demography
