@@ -74,12 +74,12 @@ module Api
       def demo
         demo_slug       = params[:demo_slug]
         indicator_slug  = params[:indicator_slug] 
-        @data           = Resource.select { |d| (d.demo_group.demography == demo_slug unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
+        @data           = Resource.select { |d| (d.demo_group.slug == demo_slug unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
         render json: @data, each_serializer: TopicDemoSerializer 
       end
 
       api :GET, '/topic_recent/:indicator_slug', 'Fetch detailed data of topic'
-      param :indicator_id, String, :desc => 'indicator id', :required => true
+      param :indicator_slug, String, :desc => 'indicator slug', :required => true
       formats ['json']
       description <<-EOS
         == Fetch detailed data for indicatior and year
@@ -88,13 +88,14 @@ module Api
       def recent
         slug  = params[:indicator_slug]
         index = Indicator.find_by(slug: slug).id
-        year  = Resource.maximum('year_to', :conditions => [indicator_id: index])
-        @data = Resource.where("year_from <= ? AND year_to >= ?", year, year).select {|s| s.indicator.slug = slug}
+        year  = Resource.where(indicator_id: index).maximum('year_to')
+        @data = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(indicator_id: index)
         render json: @data
       end
 
       api :GET, '/topic_info/:geo_slug/:indicator_slug', 'Fetch detailed data of topic for community area'
       param :indicator_slug, String, :desc => 'indicator slug', :required => true
+      param :geo_slug, String, :desc => 'geo_slug', :required => true
       formats ['json']
       description <<-EOS
         == Fetch detailed data for community area
@@ -107,9 +108,10 @@ module Api
         chicago_id     = GeoGroup.find_by_slug('chicago')
         @area_data     = Resource.where(indicator_id: indicator_id, geo_group_id: geo_group_id)
         @city_data     = Resource.where(indicator_id: indicator_id, geo_group_id: chicago_id)
-        render :json => {
-          :area_data => @area_data,
-          :city_data => @city_data
+      
+        render json: {
+          :area_data => ActiveModel::Serializer::ArraySerializer.new(@area_data, serializer: TopicAreaInfoSerializer),
+          :demo_list => ActiveModel::Serializer::ArraySerializer.new(@city_data, serializer: TopicCityInfoSerializer)
         }
       end
     end
