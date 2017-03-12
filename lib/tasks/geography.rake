@@ -33,7 +33,7 @@ namespace :db do
           area = Geography.new(
             :geo_type => 'Community Area',
             :name => area_json['name'],
-            :slug => area_json['name'].parameterize.underscore.to_sym,
+            :slug => area_json['name'].parameterize.to_sym,
             :geometry => ActiveSupport::JSON.encode(area_json['simple_shape']),
             :centroid => ActiveSupport::JSON.encode(area_json['centroid']['coordinates']),
             :adjacent_zips => ActiveSupport::JSON.encode(area_json['adjacent_zips']),
