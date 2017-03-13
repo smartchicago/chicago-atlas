@@ -1,3 +1,3 @@
 class DemoListSerializer < ActiveModel::Serializer
-  attributes :name, :slug
+  attributes :name, :demography, :slug
 end
