@@ -75,7 +75,7 @@ module Api
         demo_slug       = params[:demo_slug]
         indicator_slug  = params[:indicator_slug] 
         # @data           = Resource.select { |d| (d.demo_group.slug == demo_slug unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
-        @data           = Resource.select { |d| (d.demo_group.demography == demo_slug unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
+        @data           = Resource.select { |d| (d.demo_group.demography.downcase == demo_slug unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
         render json: @data, each_serializer: TopicDemoSerializer 
       end
 
