@@ -393,7 +393,7 @@ module Api
         render :json => { :resources_all => resources_all }
       end
 
-      api :GET, '/resources(/:dataset_slug)', 'Fetch all resources'
+      api :GET, '/resources_all(/:dataset_slug)', 'Fetch all resources'
       formats ['json']
       param :dataset_slug, String, :desc => 'dataset slug'
       description <<-EOS
@@ -435,6 +435,19 @@ module Api
 
         render :json => { :resources_by_cat => resources_by_cat}
 
+      end
+
+      api :GET, '/:geo_slug/community_area_detail', 'Fetch all community area details'
+      formats ['json']
+      param :geo_slug, String, :desc => 'geo slug'
+      description <<-EOS
+        == Fetch all of the community area details.
+      EOS
+      def community_area_detail
+        slug        = params[:geo_slug]
+        geo_slug    = GeoGroup.find_by_slug(slug).id
+        category_groups = CategoryGroup.with_sub_categories.select { |cg| cg.sub_categories.with_indicators.count > 0 }
+        render json: category_groups, each_serializer: CommunityAreaDetailSerializer, geo_slug: geo_slug
       end
     end
   end

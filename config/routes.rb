@@ -31,11 +31,13 @@ Rails.application.routes.draw do
       get '/topic_detail/:indicator_slug', to: 'topics#trend', as: 'topic_detailed_all'
       get '/topic_recent/:indicator_slug', to: 'topics#recent', as: 'topic_recent'
       get '/topic_info/:geo_slug/:indicator_slug', to: 'topics#info', as: 'topic_info'
+      get '/resources_all(/:dataset_slug)', to: 'geographies#resources_all', as: 'resources_all'
       get '/resources_category/:category_slug(/:dataset_slug)', to: 'geographies#resources_category', as: 'chicago_resources_category'
       get '/resources(/:dataset_id)/:north/:east/:south/:west' => 'geographies#resources_json'
       get '/resources(/:dataset_id)/:community_area_slug' => 'geographies#resources_json'
       get '/hospital/:slug', to: 'hospital#show', as: 'hospital_with_slug'
       get '/:geo_slug/hospitals', to: 'hospital#index', as: 'community_area_hospitals'
+      get '/:geo_slug/community_area_detail', to: 'geographies#community_area_detail', as: 'community_area_detail'
       get '/hospitals', to: 'hospital#hospitals_all', as: 'chicago_hospitals'
     end
   end
