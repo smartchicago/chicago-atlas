@@ -3,7 +3,7 @@ class CommunityAreaDetailSerializer < ActiveModel::Serializer
 
   def sub_categories
     object.sub_categories.map do |sub_category|
-      CommunityAreaSubCategorySerializer.new(sub_category, scope: scope, root: false, geo_slug: @instance_options[:geo_slug]) 
+      CommunityAreaSubCategorySerializer.new(sub_category, scope: scope, root: false, geo_id: @instance_options[:geo_id]) 
     end
   end
 end

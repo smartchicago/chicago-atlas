@@ -37,7 +37,7 @@ Rails.application.routes.draw do
       get '/resources(/:dataset_id)/:community_area_slug' => 'geographies#resources_json'
       get '/hospital/:slug', to: 'hospital#show', as: 'hospital_with_slug'
       get '/:geo_slug/hospitals', to: 'hospital#index', as: 'community_area_hospitals'
-      get '/:geo_slug/community_area_detail', to: 'geographies#community_area_detail', as: 'community_area_detail'
+      get '/:geo_slug/:category_slug/community_area_detail', to: 'geographies#community_area_detail', as: 'community_area_detail'
       get '/hospitals', to: 'hospital#hospitals_all', as: 'chicago_hospitals'
     end
   end

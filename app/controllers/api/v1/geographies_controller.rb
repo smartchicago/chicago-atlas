@@ -71,6 +71,8 @@ module Api
         geo_group  = GeoGroup.find_by_slug(params[:geo_slug])
         resource   = Resource.find_by(geo_group_id: geo_group.id, indicator_id: indicator.id) unless indicator.blank?
         child      = resource.demo_group.name unless resource.blank?
+        categories = CategoryGroup.with_sub_categories.select { |cg| cg.sub_categories.with_indicators.count > 0 }
+
         render :json => {
           :geography => @geography, 
           :adjacent_zips => @adjacent_zips, 
@@ -79,7 +81,8 @@ module Api
           :female_percent => @female_percent, 
           :has_category => @has_category, 
           :total_population => population,
-          :child_opportunity_index => child
+          :child_opportunity_index => child,
+          :categories => categories
         }
       end
 
@@ -437,17 +440,18 @@ module Api
 
       end
 
-      api :GET, '/:geo_slug/community_area_detail', 'Fetch all community area details'
+      api :GET, '/:geo_slug/:category_slug/community_area_detail', 'Fetch all community area details'
       formats ['json']
       param :geo_slug, String, :desc => 'geo slug'
       description <<-EOS
         == Fetch all of the community area details.
       EOS
       def community_area_detail
-        slug        = params[:geo_slug]
-        geo_slug    = GeoGroup.find_by_slug(slug).id
-        category_groups = CategoryGroup.with_sub_categories.select { |cg| cg.sub_categories.with_indicators.count > 0 }
-        render json: category_groups, each_serializer: CommunityAreaDetailSerializer, geo_slug: geo_slug
+        geo_slug        = params[:geo_slug]
+        category_slug   = params[:category_slug]
+        geo_id          = GeoGroup.find_by_slug(geo_slug).id
+        category        = CategoryGroup.where(slug: category_slug)
+        render json: category, each_serializer: CommunityAreaDetailSerializer, geo_id: geo_id
       end
     end
   end
