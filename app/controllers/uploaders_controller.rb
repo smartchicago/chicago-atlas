@@ -70,14 +70,11 @@ class UploadersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_uploader
       @uploader = Uploader.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def uploader_params
       params.require(:uploader).permit(:path, :comment)
     end
-
 end
