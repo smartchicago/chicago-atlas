@@ -106,7 +106,8 @@ describe UploadersController, type: :controller do
   # Test case for delete acton
   describe "DELETE destroy" do
     before :each do
-      @uploader = FactoryGirl.create(:uploader)
+      @indicator = FactoryGirl.create(:indicator)
+      @uploader = FactoryGirl.create(:uploader, indicator_id: @indicator)
     end
 
     it "deletes the uploader" do

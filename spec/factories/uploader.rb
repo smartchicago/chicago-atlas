@@ -6,6 +6,7 @@ FactoryGirl.define do
     name { "test.xlsx" }
     path { "downloads/test.xml" }
     status { Uploader.statuses[:uploaded] }
+    indicator_id { 1 }
     total_row 5
     current_row 0
 

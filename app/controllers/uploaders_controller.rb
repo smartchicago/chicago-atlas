@@ -62,7 +62,7 @@ class UploadersController < ApplicationController
   def destroy
     current_indicator = Indicator.find_by_id(@uploader.indicator_id)
     @uploader.destroy
-    current_indicator.destroy
+    current_indicator.destroy if current_indicator
     respond_to do |format|
       format.html { redirect_to uploaders_url, notice: 'Uploader was successfully destroyed.' }
       format.json { head :no_content }
