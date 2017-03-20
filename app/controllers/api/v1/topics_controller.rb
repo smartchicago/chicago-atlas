@@ -24,7 +24,7 @@ module Api
         slug  = params[:indicator_slug]
         city  = GeoGroup.find_by_geography('City')
         @data = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(geo_group_id: city.id).select { |resource| resource.indicator.slug == slug }
-        
+
         render json: @data, each_serializer: TopicCitySerializer
       end
 
@@ -73,9 +73,9 @@ module Api
       EOS
       def demo
         demo_slug       = params[:demo_slug]
-        indicator_slug  = params[:indicator_slug] 
-        data            = Resource.select { |d| (d.demo_group.demography.downcase == demo_slug.downcase unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
-        render json: data, each_serializer: TopicDemoSerializer 
+        indicator_slug  = params[:indicator_slug]
+        data            = Resource.find_each { |d| (d.demo_group.demography.downcase == demo_slug.downcase unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
+        render json: data, each_serializer: TopicDemoSerializer
       end
 
       api :GET, '/topic_recent/:indicator_slug', 'Fetch detailed data of topic'
@@ -108,7 +108,7 @@ module Api
         chicago_id     = GeoGroup.find_by_slug('chicago')
         @area_data     = Resource.where(indicator_id: indicator_id, geo_group_id: geo_group_id)
         @city_data     = Resource.where(indicator_id: indicator_id, geo_group_id: chicago_id)
-      
+
         render json: {
           :area_data => ActiveModel::Serializer::ArraySerializer.new(@area_data, serializer: TopicAreaInfoSerializer),
           :demo_list => ActiveModel::Serializer::ArraySerializer.new(@city_data, serializer: TopicCityInfoSerializer)
