@@ -73,8 +73,11 @@ module Api
       EOS
       def demo
         demo_slug       = params[:demo_slug]
+        puts "-----------------------------"
+        puts demo_slug
+        puts "-----------------------------"
         indicator_slug  = params[:indicator_slug]
-        data            = Resource.find_each { |d| (d.demo_group.demography.downcase == demo_slug.downcase unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
+        data            = Resource.find_each { |d| (d.demo_group.demography.downcase == demo_slug.downcase.try unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
         render json: data, each_serializer: TopicDemoSerializer
       end
 
