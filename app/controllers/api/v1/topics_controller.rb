@@ -55,11 +55,22 @@ module Api
       def trend
         slug          = params[:indicator_slug]
         indicator_id  = Indicator.find_by_slug(slug).id
-        @data         = Resource.where(indicator_id: indicator_id)
-        @demo_list    = DemoGroup.select {|s| Resource.find_by(indicator_id: indicator_id, demo_group_id: s.id) != nil}
+        # @data         = Resource.where(indicator_id: indicator_id)
+        @data         = Resource.eager_load(:demo_group,:category_group, :sub_category, :indicator)
+                          .where('indicators.id = ?', indicator_id)
+        # @demo_list    = DemoGroup.select {|s| Resource.find_by(indicator_id: indicator_id, demo_group_id: s.id) != nil}
+        @demo_list    = DemoGroup
+                          .select {
+                            |s| Resource.eager_load(:demo_group, :indicator)
+                              .find_by(indicator_id: indicator_id, demo_group_id: s.id)
+                          }
+
+        # @demo_list    = DemoGroup.eager_load(:resources)
+        #                   .where('resources.id = ? AND resources.demo_group_id = ?', indicator_id, DemoGroup.ids)
+
         render json: {
-          data: ActiveModel::Serializer::ArraySerializer.new(@data, serializer: TopicDetailSerializer),
-          demo_list: ActiveModel::Serializer::ArraySerializer.new(@demo_list, serializer: DemoListSerializer)
+          data: ActiveModel::Serializer::CollectionSerializer.new(@data, serializer: TopicDetailSerializer),
+          demo_list: ActiveModel::Serializer::CollectionSerializer.new(@demo_list, serializer: DemoListSerializer)
         }
       end
 
@@ -72,26 +83,11 @@ module Api
         response data has detailed data for demography(for trend all year data)
       EOS
 
-      # def demo
-      #
-      #   demo_slug = params[:demo_slug] ? params[:demo_slug].downcase : nil
-      #
-      #   # demo_slug       = params[:demo_slug].downcase
-      #   indicator_slug  = params[:indicator_slug]
-      #   # data            = Resource.select { |d| (d.demo_group.demography.downcase == demo_slug.downcase unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
-      #   data            = Resource.where(:demo_group['demography'] == demo_slug && indicator.slug == indicator_slug).find_each { |d| d }
-      #   render json: data, each_serializer: TopicDemoSerializer
-      # end
-
       def demo
         demo_slug       = params[:demo_slug]
         indicator_slug  = params[:indicator_slug]
-        #  data            = Resource.select { |d| (d.demo_group.demography.downcase == demo_slug.downcase unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
-        # 3n + 1
-
         data = Resource.eager_load(:demo_group, :indicator, :category_group, :sub_category).where('lower(demo_groups.demography) = ? AND indicators.slug = ?', demo_slug.downcase, indicator_slug)
         render json: data, each_serializer: TopicDemoSerializer
-        # , include:['demo_group', 'indicator', 'category_group', 'sub_category']
       end
 
       api :GET, '/topic_recent/:indicator_slug', 'Fetch detailed data of topic'
