@@ -84,10 +84,12 @@ module Api
       # end
 
       def demo
-         demo_slug       = params[:demo_slug]
-         indicator_slug  = params[:indicator_slug]
-         data            = Resource.select { |d| (d.demo_group.demography.downcase == demo_slug.downcase unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
-         render json: data, each_serializer: TopicDemoSerializer
+        demo_slug       = params[:demo_slug]
+        indicator_slug  = params[:indicator_slug]
+        #  data            = Resource.select { |d| (d.demo_group.demography.downcase == demo_slug.downcase unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
+
+        data = Resource.joins(:demo_group, :indicator).where('lower(demo_groups.demography) = ? AND indicators.slug = ?', demo_slug.downcase, indicator_slug)
+        render json: data, each_serializer: TopicDemoSerializer
       end
 
       api :GET, '/topic_recent/:indicator_slug', 'Fetch detailed data of topic'
