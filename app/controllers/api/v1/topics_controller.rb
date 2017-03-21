@@ -71,16 +71,23 @@ module Api
         == Fecth detailed data for demography
         response data has detailed data for demography(for trend all year data)
       EOS
+
+      # def demo
+      #
+      #   demo_slug = params[:demo_slug] ? params[:demo_slug].downcase : nil
+      #
+      #   # demo_slug       = params[:demo_slug].downcase
+      #   indicator_slug  = params[:indicator_slug]
+      #   # data            = Resource.select { |d| (d.demo_group.demography.downcase == demo_slug.downcase unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
+      #   data            = Resource.where(:demo_group['demography'] == demo_slug && indicator.slug == indicator_slug).find_each { |d| d }
+      #   render json: data, each_serializer: TopicDemoSerializer
+      # end
+
       def demo
-
-        demo_slug = params[:demo_slug] ? params[:demo_slug].downcase : nil
-
-        # demo_slug       = params[:demo_slug].downcase
-        indicator_slug  = params[:indicator_slug]
-        # data            = Resource.select { |d| (d.demo_group.demography.downcase == demo_slug.downcase unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
-        data            = Resource.where(:demo_group['demography'] == demo_slug && indicator.slug == indicator_slug)
-
-        render json: data, each_serializer: TopicDemoSerializer
+         demo_slug       = params[:demo_slug]
+         indicator_slug  = params[:indicator_slug]
+         data            = Resource.select { |d| (d.demo_group.demography.downcase == demo_slug.downcase unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
+         render json: data, each_serializer: TopicDemoSerializer
       end
 
       api :GET, '/topic_recent/:indicator_slug', 'Fetch detailed data of topic'
