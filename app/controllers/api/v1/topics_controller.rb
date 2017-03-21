@@ -89,8 +89,9 @@ module Api
         #  data            = Resource.select { |d| (d.demo_group.demography.downcase == demo_slug.downcase unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
         # 3n + 1
 
-        data = Resource.includes(:demo_group, :indicator).where('lower(demo_groups.demography) = ? AND indicators.slug = ?', demo_slug.downcase, indicator_slug).references(:demo_group, :indicator)
+        data = Resource.eager_load(:demo_group, :indicator, :category_group, :sub_category).where('lower(demo_groups.demography) = ? AND indicators.slug = ?', demo_slug.downcase, indicator_slug)
         render json: data, each_serializer: TopicDemoSerializer
+        # , include:['demo_group', 'indicator', 'category_group', 'sub_category']
       end
 
       api :GET, '/topic_recent/:indicator_slug', 'Fetch detailed data of topic'
