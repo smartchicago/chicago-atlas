@@ -1,4 +1,5 @@
 class TopicDetailSerializer < ActiveModel::Serializer
+  cache key: 'TopicDetail', expires_in: 3.hours
   attributes :id, :category_group_name, :sub_category_name, :indicator,
     :year_from, :year_to, :demo_group, :number, :cum_number, :ave_annual_number,
     :crude_rate, :lower_95ci_crude_rate, :upper_95ci_crude_rate, :percent,
