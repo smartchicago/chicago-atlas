@@ -24,7 +24,7 @@ module Api
         slug  = params[:indicator_slug]
         city  = GeoGroup.find_by_geography('City')
         @data = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(geo_group_id: city.id).select { |resource| resource.indicator.slug == slug }
-        
+
         render json: @data, each_serializer: TopicCitySerializer
       end
 
@@ -36,12 +36,9 @@ module Api
         == Fetch detailed data for indicatior and year in city area
         response data has detailed data for indicator and year
       EOS
+
       def area_show
-        year          = params[:year]
-        slug          = params[:indicator_slug]
-        city          = GeoGroup.find_by_geography('City')
-        indicator_id  = Indicator.find_by_slug(slug).id
-        @data         = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(indicator_id: indicator_id).where.not(geo_group_id: city.id)
+        @data         = Resource.where("year_from <= ? AND year_to >= ?", params[:year], params[:year]).where(indicator_id: Indicator.find_by_slug(params[:indicator_slug])).where.not(geo_group_id: GeoGroup.find_by_geography('City'))
         render json: @data, each_serializer: TopicAreaSerializer
       end
 
@@ -53,10 +50,11 @@ module Api
         response data has detailed data for indicator(for trend all year data)
       EOS
       def trend
-        slug          = params[:indicator_slug]
-        indicator_id  = Indicator.find_by_slug(slug).id
-        @data         = Resource.where(indicator_id: indicator_id)
-        @demo_list    = DemoGroup.select {|s| Resource.find_by(indicator_id: indicator_id, demo_group_id: s.id) != nil}
+        # slug          = params[:indicator_slug]
+        # indicator  = Indicator.find_by_slug(params[:indicator_slug])
+        @data         =   Resource.where(indicator_id: Indicator.find_by_slug(params[:indicator_slug]))
+        @demo_list    = DemoGroup.select {|s| Resource.find_by(indicator_id: Indicator.find_by_slug(params[:indicator_slug]), demo_group_id: s) != nil}
+
         render json: {
           data: ActiveModel::Serializer::ArraySerializer.new(@data, serializer: TopicDetailSerializer),
           demo_list: ActiveModel::Serializer::ArraySerializer.new(@demo_list, serializer: DemoListSerializer)
@@ -96,9 +94,9 @@ module Api
 
       def demo
         demo_slug       = params[:demo_slug]
-        indicator_slug  = params[:indicator_slug] 
+        indicator_slug  = params[:indicator_slug]
         data            = Resource.select { |d| (d.demo_group.demography.downcase == demo_slug.downcase unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
-        render json: data, each_serializer: TopicDemoSerializer 
+        render json: data, each_serializer: TopicDemoSerializer
       end
 
 
