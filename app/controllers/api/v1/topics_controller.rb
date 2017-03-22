@@ -51,13 +51,26 @@ module Api
       def trend
         indicator_id  =   Indicator.find_by_slug(params[:indicator_slug])
         @data         =   Resource.includes(:category_group, :sub_category, :indicator, :demo_group).where(indicator_id: indicator_id )
+
+        render json: @data, each_serializer: TopicDetailSerializer
+      end
+
+      api :GET, '/topic_demo_list/:indicator_slug', 'Fetch detailed data of topic for trend'
+      param :indicator_slug, String, :desc => 'indicator slug', :required => true
+      formats ['json']
+      description <<-EOS
+        == Fetch detailed data for indicatior
+        response data has detailed data for indicator(for trend all year data)
+      EOS
+
+      def demo_list
+        indicator_id  =   Indicator.find_by_slug(params[:indicator_slug])
         @demo_list    =   DemoGroup.includes(:resources).select {|s| Resource.includes(:demo_group).where(indicator_id: indicator_id, demo_group_id: s) != nil}
 
-        render json: {
-          data: ActiveModel::Serializer::ArraySerializer.new(@data, serializer: TopicDetailSerializer),
-          demo_list: ActiveModel::Serializer::ArraySerializer.new(@demo_list, serializer: DemoListSerializer)
-        }
+        render json: @demo_list, each_serializer: DemoListSerializer
       end
+
+      # render json: @demo_list: ActiveModel::Serializer::ArraySerializer.new(@demo_list, serializer: DemoListSerializer)
 
       api :GET, '/topic_demo/:indicator_slug/:demo_slug', 'Fetch trend data regarding demography'
       param :indicator_slug, String, :desc => 'indicator_slug', :required => true
