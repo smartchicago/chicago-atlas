@@ -82,7 +82,10 @@ module Api
       EOS
 
       def demo
-        @data = Resource.select { |d| (d.demo_group.demography.downcase == params[:demo_slug].downcase unless d.demo_group.blank?) && (d.indicator.slug == params[:indicator_slug]) }
+        demo_group_id = DemoGroup.select { |d| d.demography.downcase == params[:demo_slug] }.first.id
+        indicator_id = Indicator.find_by_slug(params[:indicator_slug])
+        # @data = Resource.select { |d| (d.demo_group.demography.downcase == params[:demo_slug].downcase unless d.demo_group.blank?) && (d.indicator.slug == params[:indicator_slug]) }
+        @data = Resource.includes(:category_group, :sub_category, :indicator, :demo_group).where(indicator_id: indicator_id, demo_group_id: demo_group_id)
         render json: @data, each_serializer: TopicDemoSerializer
       end
 
