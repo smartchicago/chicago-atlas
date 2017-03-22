@@ -6,6 +6,7 @@ module Api
       description <<-EOS
         == Fetch category, subcategory, indicators
       EOS
+
       def index
         category_groups = CategoryGroup.with_sub_categories.select { |cg| cg.sub_categories.with_indicators.count > 0 }
         render json: category_groups
@@ -19,12 +20,12 @@ module Api
         == Fetch detailed data for indicatior and year in city area
         response data has detailed data for indicator and year
       EOS
+
       def city_show
-        year  = params[:year]
-        slug  = params[:indicator_slug]
-        city  = GeoGroup.find_by_geography('City')
-        @data = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(geo_group_id: city.id).select { |resource| resource.indicator.slug == slug }
-        
+        # year  = params[:year]
+        # slug  = params[:indicator_slug]
+        # city  = GeoGroup.find_by_geography('City')
+        @data = Resource.where("year_from <= ? AND year_to >= ?", params[:year], params[:year]).where(geo_group_id: GeoGroup.find_by_geography('City')).select { |resource| resource.indicator.slug == params[:indicator_slug] }
         render json: @data, each_serializer: TopicCitySerializer
       end
 
@@ -36,12 +37,9 @@ module Api
         == Fetch detailed data for indicatior and year in city area
         response data has detailed data for indicator and year
       EOS
+
       def area_show
-        year          = params[:year]
-        slug          = params[:indicator_slug]
-        city          = GeoGroup.find_by_geography('City')
-        indicator_id  = Indicator.find_by_slug(slug).id
-        @data         = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(indicator_id: indicator_id).where.not(geo_group_id: city.id)
+        @data = Resource.where("year_from <= ? AND year_to >= ?", params[:year], params[:year]).where(indicator_id: Indicator.find_by_slug(params[:indicator_slug])).where.not(geo_group_id: GeoGroup.find_by_geography('City'))
         render json: @data, each_serializer: TopicAreaSerializer
       end
 
@@ -52,11 +50,11 @@ module Api
         == Fetch detailed data for indicatior
         response data has detailed data for indicator(for trend all year data)
       EOS
+
       def trend
-        slug          = params[:indicator_slug]
-        indicator_id  = Indicator.find_by_slug(slug).id
-        @data         = Resource.where(indicator_id: indicator_id)
-        @demo_list    = DemoGroup.select {|s| Resource.find_by(indicator_id: indicator_id, demo_group_id: s.id) != nil}
+        @data         =   Resource.where(indicator_id: Indicator.find_by_slug(params[:indicator_slug]))
+        @demo_list    = DemoGroup.select {|s| Resource.find_by(indicator_id: Indicator.find_by_slug(params[:indicator_slug]), demo_group_id: s) != nil}
+
         render json: {
           data: ActiveModel::Serializer::ArraySerializer.new(@data, serializer: TopicDetailSerializer),
           demo_list: ActiveModel::Serializer::ArraySerializer.new(@demo_list, serializer: DemoListSerializer)
@@ -73,10 +71,8 @@ module Api
       EOS
 
       def demo
-        demo_slug       = params[:demo_slug]
-        indicator_slug  = params[:indicator_slug] 
-        data            = Resource.select { |d| (d.demo_group.demography.downcase == demo_slug.downcase unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
-        render json: data, each_serializer: TopicDemoSerializer 
+        @data = Resource.select { |d| (d.demo_group.demography.downcase == params[:demo_slug].downcase unless d.demo_group.blank?) && (d.indicator.slug == params[:indicator_slug]) }
+        render json: @data, each_serializer: TopicDemoSerializer
       end
 
       api :GET, '/topic_recent/:indicator_slug', 'Fetch detailed data of topic'
@@ -87,10 +83,10 @@ module Api
         response data has detailed data for indicator and year
       EOS
       def recent
-        slug  = params[:indicator_slug]
-        index = Indicator.find_by(slug: slug).id
-        year  = Resource.where(indicator_id: index).maximum('year_to')
-        @data = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(indicator_id: index)
+        # slug  = params[:indicator_slug]
+        # index = Indicator.find_by(slug: slug)
+         year  = Resource.where(indicator_id: index).maximum('year_to')
+        @data = Resource.where("year_from <= ? AND year_to >= ?",year,year).where(indicator_id: Indicator.find_by(slug: params[:indicator_slug]))
         render json: @data
       end
 
@@ -102,13 +98,13 @@ module Api
         == Fetch detailed data for community area
       EOS
       def info
-        indicator_slug = params[:indicator_slug]
-        geo_slug       = params[:geo_slug]
-        geo_group_id   = GeoGroup.find_by_slug(geo_slug)
-        indicator_id   = Indicator.find_by_slug(indicator_slug)
-        chicago_id     = GeoGroup.find_by_slug('chicago')
-        @area_data     = Resource.where(indicator_id: indicator_id, geo_group_id: geo_group_id)
-        @city_data     = Resource.where(indicator_id: indicator_id, geo_group_id: chicago_id)
+        # indicator_slug = params[:indicator_slug]
+        # geo_slug       = params[:geo_slug]
+        # geo_group_id   = GeoGroup.find_by_slug(params[:geo_slug])
+        # indicator_id   = Indicator.find_by_slug(params[:indicator_slug])
+        # chicago_id     = GeoGroup.find_by_slug('chicago')
+        @area_data     = Resource.where(indicator_id: Indicator.find_by_slug(params[:indicator_slug]), geo_group_id: GeoGroup.find_by_slug(params[:geo_slug]))
+        @city_data     = Resource.where(indicator_id: Indicator.find_by_slug(params[:indicator_slug]), geo_group_id: GeoGroup.find_by_slug('chicago'))
 
         render json: {
           :area_data => ActiveModel::Serializer::ArraySerializer.new(@area_data, serializer: TopicAreaInfoSerializer),
