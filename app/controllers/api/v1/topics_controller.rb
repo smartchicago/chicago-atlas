@@ -22,10 +22,8 @@ module Api
       EOS
 
       def city_show
-        # year  = params[:year]
-        # slug  = params[:indicator_slug]
-        # city  = GeoGroup.find_by_geography('City')
-        @data = Resource.where("year_from <= ? AND year_to >= ?", params[:year], params[:year]).where(geo_group_id: GeoGroup.find_by_geography('City')).select { |resource| resource.indicator.slug == params[:indicator_slug] }
+       @data = Resource.includes(:demo_group, :uploader, :indicator, :number, :cum_number, :ave_annual_number, :crude_rate, :lower_95ci_crude_rate, :upper_95ci_crude_rate, :percent, :lower_95ci_percent, :upper_95ci_percent, :weight_number, :weight_percent, :lower_95ci_weight_percent, :upper_95ci_weight_percent).where("year_from <= ? AND year_to >= ?", params[:year], params[:year]).where(geo_group_id: GeoGroup.find_by_geography('City')).select { |resource| resource.indicator.slug == params[:indicator_slug] }
+        render json: @data, each_serializer: TopicCitySerializer
         render json: @data, each_serializer: TopicCitySerializer
       end
 
