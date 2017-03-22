@@ -36,7 +36,7 @@ module Api
         @demographics_list        = ['Below Poverty Level', 'Crowded Housing', 'Dependency', 'No High School Diploma', 'Per capita income', 'Unemployment']
         @adjacent_zips            = []
         @adjacent_community_areas = []
-        @geography  =   Geography.where(:slug => params[:geo_slug]).first || not_found
+        @geography  =  Geography.where(:slug => params[:geo_slug]).first || not_found
         @categories =   Category.select('categories.id, categories.name, categories.description')
                               .joins('INNER JOIN datasets ON datasets.category_id = categories.id')
                               .joins('INNER JOIN statistics ON datasets.id = statistics.dataset_id')
@@ -73,12 +73,12 @@ module Api
         categories = CategoryGroup.with_sub_categories.select { |cg| cg.sub_categories.with_indicators.count > 0 }
 
         render :json => {
-          :geography => @geography, 
-          :adjacent_zips => @adjacent_zips, 
-          :adjacent_community_areas => @adjacent_community_areas, 
-          :male_percent => @male_percent, 
-          :female_percent => @female_percent, 
-          :has_category => @has_category, 
+          :geography => @geography,
+          :adjacent_zips => @adjacent_zips,
+          :adjacent_community_areas => @adjacent_community_areas,
+          :male_percent => @male_percent,
+          :female_percent => @female_percent,
+          :has_category => @has_category,
           :total_population => population,
           :child_opportunity_index => child,
           :categories => categories
@@ -197,7 +197,7 @@ module Api
           }
           all_data << data
         end
-        
+
         render :json => {
           :area => @geography.slug,
           :uninsured_data_type => cat.name,
@@ -317,7 +317,7 @@ module Api
         resources_all = resources_all.uniq
         resources_by_cat.select {|r_c| r_c[:category] == 'all' }.first[:resources] = resources_all
         resources_by_cat = resources_by_cat.sort_by { |r_c| r_c[:category] }
-        
+
         resources_by_cat.each do |r_c|
           r_c[:resources] = r_c[:resources].sort_by { |r| r[:organization_name]}
         end
