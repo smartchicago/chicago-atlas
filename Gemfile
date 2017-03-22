@@ -49,6 +49,7 @@ gem 'active_model_serializers'
 gem 'apipie-rails'
 gem 'goldiloader' 
 gem 'puma_worker_killer'
+gem 'appsignal'
 
 ###########################################
 
