@@ -1,3 +1,3 @@
 class IndicatorSerializer < ActiveModel::Serializer
-  attributes :id, :name
+  attributes :id, :name, :slug
 end

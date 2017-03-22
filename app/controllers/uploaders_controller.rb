@@ -1,29 +1,22 @@
 class UploadersController < ApplicationController
   before_action :set_uploader, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  # GET /uploaders
-  # GET /uploaders.json
+
   def index
     @uploaders = Uploader.all.sort_by{|m| m.name}
   end
 
-  # GET /uploaders/1
-  # GET /uploaders/1.json
   def show
      @uploader = Uploader.find(params[:id])
   end
 
-  # GET /uploaders/new
   def new
     @uploader = Uploader.new
   end
 
-  # GET /uploaders/1/edit
   def edit
   end
 
-  # POST /uploaders
-  # POST /uploaders.json
   def create
     @uploader = current_user.uploaders.build(uploader_params)
     content_type = uploader_params[:path].original_filename.last(4)
@@ -46,8 +39,6 @@ class UploadersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /uploaders/1
-  # PATCH/PUT /uploaders/1.json
   def update
     @uploader.remove_resources
     Indicator.find(@uploader.indicator_id).destroy
@@ -68,12 +59,10 @@ class UploadersController < ApplicationController
     end
   end
 
-  # DELETE /uploaders/1
-  # DELETE /uploaders/1.json
   def destroy
     current_indicator = Indicator.find_by_id(@uploader.indicator_id)
     @uploader.destroy
-    current_indicator.destroy
+    current_indicator.destroy if current_indicator
     respond_to do |format|
       format.html { redirect_to uploaders_url, notice: 'Uploader was successfully destroyed.' }
       format.json { head :no_content }
@@ -81,14 +70,11 @@ class UploadersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_uploader
       @uploader = Uploader.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def uploader_params
       params.require(:uploader).permit(:path, :comment)
     end
-
 end

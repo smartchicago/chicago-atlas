@@ -4,16 +4,17 @@ namespace :db do
     task :geo_group =>  :environment do
       require 'csv'
       require 'json'
-
+      
       FIRST_ROW = 2
       
+      GeoGroup.delete_all
+
       ss = Roo::Spreadsheet.open("db/import/geo_group.xlsx")
 
       FIRST_ROW.upto ss.last_row do |row|
         geography  = ss.cell(row, 1)
         name       = ss.cell(row, 2)
-        slug       = ss.cell(row, 3)
-
+        slug       = ss.cell(row, 3).gsub '_', '-'.downcase
         field = GeoGroup.where(name: name, geography: geography, slug: slug).first_or_create
         field.save
       end

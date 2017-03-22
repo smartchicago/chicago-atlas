@@ -4,7 +4,7 @@ class CreateIndicators < ActiveRecord::Migration
       t.string :name
       t.integer :sub_category_id
       t.references :sub_category, index:true, foreign_key: true
-
+      t.string :slug
       t.timestamps null: false
     end
   end

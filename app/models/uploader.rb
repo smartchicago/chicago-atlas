@@ -6,7 +6,6 @@ class Uploader < ActiveRecord::Base
 
     validates :user_id, presence: true
     validates :name, presence: true
-    # validates :path, presence: true
 
     def initialize_state
       self.update(current_row: 0)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170209045455) do
+ActiveRecord::Schema.define(version: 20170322140028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20170209045455) do
 
   create_table "category_groups", force: :cascade do |t|
     t.string   "name"
+    t.string   "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -49,6 +50,7 @@ ActiveRecord::Schema.define(version: 20170209045455) do
   create_table "demo_groups", force: :cascade do |t|
     t.string   "name"
     t.string   "demography"
+    t.string   "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -79,6 +81,7 @@ ActiveRecord::Schema.define(version: 20170209045455) do
   create_table "indicators", force: :cascade do |t|
     t.string   "name"
     t.integer  "sub_category_id"
+    t.string   "slug"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
@@ -148,7 +151,6 @@ ActiveRecord::Schema.define(version: 20170209045455) do
     t.string   "url"
     t.string   "report_url"
     t.string   "report_name"
-    t.text     "geometry"
     t.text     "areas"
     t.string   "area_type"
     t.text     "area_alt"
@@ -215,6 +217,7 @@ ActiveRecord::Schema.define(version: 20170209045455) do
   create_table "sub_categories", force: :cascade do |t|
     t.string   "name"
     t.integer  "category_group_id"
+    t.string   "slug"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end

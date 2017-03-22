@@ -8,7 +8,8 @@ FactoryGirl.define do
     demo_group
     geo_group
     indicator
-    year { 2017 }
+    year_from { 2017 }
+    year_to { 2017 }
     number { 0 }
     cum_number { 0 }
     ave_annual_number { 0.0 }

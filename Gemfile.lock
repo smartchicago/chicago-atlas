@@ -28,7 +28,7 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    active_model_serializers (0.10.4)
+    active_model_serializers (0.10.0)
       actionpack (>= 4.1, < 6)
       activemodel (>= 4.1, < 6)
       case_transform (>= 0.2)
@@ -227,8 +227,12 @@ GEM
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
     formatador (0.2.5)
+    get_process_mem (0.2.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    goldiloader (0.0.11)
+      activerecord (>= 3.2, < 5.1)
+      activesupport (>= 3.2, < 5.1)
     i18n (0.7.0)
     inflecto (0.0.2)
     ipaddress (0.8.3)
@@ -267,6 +271,9 @@ GEM
     pry-rails (0.3.4)
       pry (>= 0.9.10)
     puma (3.6.2)
+    puma_worker_killer (0.0.7)
+      get_process_mem (~> 0.2)
+      puma (>= 2.7, < 4)
     rack (1.6.5)
     rack-protection (1.5.3)
       rack
@@ -384,7 +391,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers
+  active_model_serializers (= 0.10.0)
   apipie-rails
   autoprefixer-rails
   bootstrap-sass (~> 3.3.1)
@@ -396,11 +403,13 @@ DEPENDENCIES
   factory_girl_rails
   faker (= 1.6.3)
   fog
+  goldiloader
   jbuilder (~> 2.0)
   jquery-rails
   pg
   pry-rails
   puma
+  puma_worker_killer
   rails (= 4.2.6)
   rails_12factor
   roo (~> 2.5.0)
@@ -420,4 +429,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.13.6
+   1.14.6
