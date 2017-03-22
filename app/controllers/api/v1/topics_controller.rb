@@ -36,7 +36,7 @@ module Api
       EOS
 
       def area_show
-        @data = Resource.where("year_from <= ? AND year_to >= ?", params[:year], params[:year]).where(indicator_id: Indicator.find_by_slug(params[:indicator_slug])).where.not(geo_group_id: GeoGroup.find_by_geography('City'))
+        @data = Resource.includes(:uploader, :indicator, :geo_group, :demo_group).where("year_from <= ? AND year_to >= ?", params[:year], params[:year]).where(indicator_id: Indicator.find_by_slug(params[:indicator_slug])).where.not(geo_group_id: GeoGroup.find_by_geography('City'))
         render json: @data, each_serializer: TopicAreaSerializer
       end
 
