@@ -9,9 +9,9 @@ class TopicDemoSerializer < ActiveModel::Serializer
       object.demo_group.demography unless object.demo_group.blank?
   end
 
-  def category_group_name 
+  def category_group_name
     object.category_group.name
-  end 
+  end
 
   def sub_category_name
     object.sub_category.name
