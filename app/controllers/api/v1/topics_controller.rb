@@ -49,7 +49,8 @@ module Api
       EOS
 
       def trend
-        @data         =   Resource.includes(:category_group, :sub_category, :indicator, :demo_group).where(indicator_id: Indicator.find_by_slug(params[:indicator_slug]))
+        indicator_id  =   Indicator.find_by_slug(params[:indicator_slug])
+        @data         =   Resource.includes(:category_group, :sub_category, :indicator, :demo_group).where(indicator_id: indicator_id )
         @demo_list    =   DemoGroup.includes(:resources).select {|s| Resource.find_by(indicator_id: Indicator.find_by_slug(params[:indicator_slug]), demo_group_id: s) != nil}
 
         render json: {
