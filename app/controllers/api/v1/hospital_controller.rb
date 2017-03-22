@@ -9,7 +9,16 @@ module Api
         == Fetch all of hospitals data.
       EOS
       def hospitals_all
-        @hospitals  =   Provider.where("primary_type = 'Hospital'")
+        @hospitals  =   Provider.select("src_id",
+                                                    "name",
+                                                    "slug",
+                                                    "primary_type",
+                                                    "sub_type",
+                                                    "addr_street",
+                                                    "addr_city",
+                                                    "addr_zip",
+                                                    "contact_phone",
+                                                    "lat_long").where("primary_type = 'Hospital'")
         render json: @hospitals
       end
 
