@@ -20,11 +20,8 @@ module Api
         response data has detailed data for indicator and year
       EOS
       def city_show
-        year  = params[:year]
-        slug  = params[:indicator_slug]
         city  = GeoGroup.find_by_geography('City')
-        @data = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(geo_group_id: city.id).select { |resource| resource.indicator.slug == slug }
-
+        @data = Resource.where("year_from <= ? AND year_to >= ?", params[:year], params[:year]).where(geo_group_id: city.id).select { |resource| resource.indicator.slug == params[:slug] }
         render json: @data, each_serializer: TopicCitySerializer
       end
 
@@ -37,11 +34,7 @@ module Api
         response data has detailed data for indicator and year
       EOS
       def area_show
-        year          = params[:year]
-        slug          = params[:indicator_slug]
-        city          = GeoGroup.find_by_geography('City')
-        indicator_id  = Indicator.find_by_slug(slug).id
-        @data         = Resource.where("year_from <= ? AND year_to >= ?", year, year).where(indicator_id: indicator_id).where.not(geo_group_id: city.id)
+        @data = Resource.where("year_from <= ? AND year_to >= ?", params[:year], params[:year]).where(indicator_id: Indicator.find_by_slug(params[:indicator_id]).id).where.not(geo_group_id: GeoGroup.find_by_geography('City').id)
         render json: @data, each_serializer: TopicAreaSerializer
       end
 
@@ -78,8 +71,8 @@ module Api
       #
       #   # demo_slug       = params[:demo_slug].downcase
       #   indicator_slug  = params[:indicator_slug]
-      #   # data            = Resource.select { |d| (d.demo_group.demography.downcase == demo_slug.downcase unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
-      #   data            = Resource.where(:demo_group['demography'] == demo_slug && indicator.slug == indicator_slug).find_each { |d| d }
+        # data            = Resource.select { |d| (d.demo_group.demography.downcase == demo_slug.downcase unless d.demo_group.blank?) && (d.indicator.slug == indicator_slug) }
+        # data            = Resource.where(:demo_group['demography'] == demo_slug && indicator.slug == indicator_slug).find_each { |d| d }
       #   render json: data, each_serializer: TopicDemoSerializer
       # end
 
