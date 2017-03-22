@@ -227,6 +227,7 @@ GEM
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
     formatador (0.2.5)
+    get_process_mem (0.2.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     goldiloader (0.0.11)
@@ -270,6 +271,9 @@ GEM
     pry-rails (0.3.4)
       pry (>= 0.9.10)
     puma (3.6.2)
+    puma_worker_killer (0.0.7)
+      get_process_mem (~> 0.2)
+      puma (>= 2.7, < 4)
     rack (1.6.5)
     rack-protection (1.5.3)
       rack
@@ -405,6 +409,7 @@ DEPENDENCIES
   pg
   pry-rails
   puma
+  puma_worker_killer
   rails (= 4.2.6)
   rails_12factor
   roo (~> 2.5.0)
