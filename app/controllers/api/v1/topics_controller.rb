@@ -48,15 +48,15 @@ module Api
       def trend
         slug          = params[:indicator_slug]
         indicator_id  = Indicator.find_by_slug(slug).id
-        # @data         = Resource.where(indicator_id: indicator_id)
-        @data         = Resource.eager_load(:demo_group,:category_group, :sub_category, :indicator)
-                          .where('indicators.id = ?', indicator_id)
-        # @demo_list    = DemoGroup.select {|s| Resource.find_by(indicator_id: indicator_id, demo_group_id: s.id) != nil}
-        @demo_list    = DemoGroup
-                          .select {
-                            |s| Resource.eager_load(:demo_group, :indicator)
-                              .find_by(indicator_id: indicator_id, demo_group_id: s.id)
-                          }
+        @data         = Resource.where(indicator_id: indicator_id)
+        # @data         = Resource.eager_load(:demo_group,:category_group, :sub_category, :indicator)
+        #                   .where('indicators.id = ?', indicator_id)
+        @demo_list    = DemoGroup.select {|s| Resource.find_by(indicator_id: indicator_id, demo_group_id: s.id) != nil}
+        # @demo_list    = DemoGroup
+        #                   .select {
+        #                     |s| Resource.eager_load(:demo_group, :indicator)
+        #                       .find_by(indicator_id: indicator_id, demo_group_id: s.id)
+        #                   }
 
         # @demo_list    = DemoGroup.eager_load(:resources)
         #                   .where('resources.id = ? AND resources.demo_group_id = ?', indicator_id, DemoGroup.ids)
