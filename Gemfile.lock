@@ -391,7 +391,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers (= 0.10.0)
+  active_model_serializers
   apipie-rails
   autoprefixer-rails
   bootstrap-sass (~> 3.3.1)
