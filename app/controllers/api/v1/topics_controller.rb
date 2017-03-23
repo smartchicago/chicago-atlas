@@ -110,34 +110,16 @@ module Api
         == Fetch detailed data for community area
       EOS
       def info
-        # indicator_slug = params[:indicator_slug]
-        # geo_slug       = params[:geo_slug]
-        # geo_group_id   = GeoGroup.find_by_slug(params[:geo_slug])
-        # indicator_id   = Indicator.find_by_slug(params[:indicator_slug])
-        # chicago_id     = GeoGroup.find_by_slug('chicago')
-        @area_data     = Resource.where(indicator_id: Indicator.find_by_slug(params[:indicator_slug]), geo_group_id: GeoGroup.find_by_slug(params[:geo_slug]))
-        @city_data     = Resource.where(indicator_id: Indicator.find_by_slug(params[:indicator_slug]), geo_group_id: GeoGroup.find_by_slug('chicago'))
+        @area_data     = Resource.includes(:category_group, :sub_category, :indicator, :demo_group)
+                                 .where(indicator_id: Indicator.find_by_slug(params[:indicator_slug]), geo_group_id: GeoGroup.find_by_slug(params[:geo_slug]))
+        @city_data     = Resource.includes(:category_group, :sub_category, :indicator, :demo_group)
+                                 .where(indicator_id: Indicator.find_by_slug(params[:indicator_slug]), geo_group_id: GeoGroup.find_by_slug('chicago'))
 
         render json: {
           :area_data => ActiveModel::Serializer::ArraySerializer.new(@area_data, serializer: TopicAreaInfoSerializer),
-          :demo_list => ActiveModel::Serializer::ArraySerializer.new(@city_data, serializer: TopicCityInfoSerializer)
+          :city_data => ActiveModel::Serializer::ArraySerializer.new(@city_data, serializer: TopicCityInfoSerializer)
         }
       end
     end
   end
 end
-
-
-
-# class UpdateDonaer
-#   def process
-#   end
-  
-#   def self.process(donation_id)
-#     dontaion = Donation.find donation_id
-#     UpdateDonaer.new(donation).process
-#   end
-# end
-
-
-# UpdateDonaer.delay.process(dontaion.id)
