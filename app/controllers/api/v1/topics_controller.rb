@@ -89,7 +89,7 @@ module Api
         #     demo_list << { :name => demo_group.name, :demography => demo_group.demography, :slug => slug }
         #   end
         # end
-        @demo_list = DemoGroup.joins("INNER JOIN resources ON resources.demo_group_id = demo_groups.id AND resources.indicator_id = #{ indicator.id }").flatten.uniq
+        @demo_list = DemoGroup.includes(:resources).joins("INNER JOIN resources ON resources.demo_group_id = demo_groups.id AND resources.indicator_id = #{ indicator.id }").flatten.uniq
         # @demo_list    = DemoGroup.select {|s| Resource.where(indicator_id: indicator_id, demo_group_id: s.id).first != nil}
         render json: {
           static_header: static_header,
