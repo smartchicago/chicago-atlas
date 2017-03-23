@@ -52,7 +52,7 @@ module Api
       param :indicator_slug, String, :desc => 'indicator slug', :required => true
       formats ['json']
       description <<-EOS
-        == Fetch detailed data for indicatior
+        == Fetch detailed data for topic
         response data has detailed data for indicator(for trend all year data)
       EOS
 
@@ -81,8 +81,8 @@ module Api
         render json: [] and return unless demo_group
 
         indicator_id = Indicator.find_by_slug(params[:indicator_slug])
-        @data = Resource.includes(:category_group, :sub_category, :indicator, :demo_group)
-                  .where(indicator_id: indicator_id, demo_group_id: demo_group)
+        @data = Resource.includes(:category_group, :sub_category, :indicator, :demo_group).where(indicator_id: indicator_id, demo_group_id: demo_group)
+                  
         render json: @data, each_serializer: TopicDemoSerializer
       end
 
