@@ -64,13 +64,12 @@ module Api
       EOS
 
       def demo_list
-        indicator_id  =   Indicator.find_by_slug(params[:indicator_slug])
-        @demo_list    =   DemoGroup.includes(:resources).select {|s| Resource.includes(:demo_group).where(indicator_id: indicator_id, demo_group_id: s) != nil}
+        indicator     =   Indicator.find_by_slug(params[:indicator_slug])
+        # @demo_list    =   DemoGroup.joins(:resources).where(resources: {id: indicator.resources.pluck(:id)})
+        @demo_list    =   DemoGroup.includes(:resources).select {|s| Resource.includes(:demo_group).where(indicator_id: indicator, demo_group_id: s) != nil}
 
         render json: @demo_list, each_serializer: DemoListSerializer
       end
-
-      # render json: @demo_list: ActiveModel::Serializer::ArraySerializer.new(@demo_list, serializer: DemoListSerializer)
 
       api :GET, '/topic_demo/:indicator_slug/:demo_slug', 'Fetch trend data regarding demography'
       param :indicator_slug, String, :desc => 'indicator_slug', :required => true
@@ -85,7 +84,6 @@ module Api
         demo_group = DemoGroup.select { |d| d.demography.downcase == params[:demo_slug] if d.demography.present? }
         demo_group_id = demo_group.present? ? demo_group.first.id : false
         indicator_id = Indicator.find_by_slug(params[:indicator_slug])
-        # @data = Resource.select { |d| (d.demo_group.demography.downcase == params[:demo_slug].downcase unless d.demo_group.blank?) && (d.indicator.slug == params[:indicator_slug]) }
         @data = Resource.includes(:category_group, :sub_category, :indicator, :demo_group).where(indicator_id: indicator_id, demo_group_id: demo_group_id)
         render json: @data, each_serializer: TopicDemoSerializer
       end
@@ -98,8 +96,6 @@ module Api
         response data has detailed data for indicator and year
       EOS
       def recent
-        # slug  = params[:indicator_slug]
-        # index = Indicator.find_by(slug: slug)
         year  = Resource.where(indicator_id: index).maximum('year_to')
         @data = Resource.where("year_from <= ? AND year_to >= ?",year,year).where(indicator_id: Indicator.find_by(slug: params[:indicator_slug]))
         render json: @data
@@ -129,3 +125,18 @@ module Api
     end
   end
 end
+
+
+
+# class UpdateDonaer
+#   def process
+#   end
+  
+#   def self.process(donation_id)
+#     dontaion = Donation.find donation_id
+#     UpdateDonaer.new(donation).process
+#   end
+# end
+
+
+# UpdateDonaer.delay.process(dontaion.id)
