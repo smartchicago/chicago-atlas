@@ -30,9 +30,9 @@ module Api
         render json: @data, each_serializer: TopicCitySerializer
       end
 
-      api :GET, '/topic_area/:year/:indicator_slug', 'Fetch detailed data of topic'
+      api :GET, '/topic_area/:year/:indicator_slug', 'Fetch detailed data of topic regarding year'
       param :year, String, :desc => 'year', :required => true
-      param :indicator_slug, String, :desc => 'indicator id', :required => true
+      param :indicator_slug, String, :desc => 'indicator_id', :required => true
       formats ['json']
       description <<-EOS
         == Fetch detailed data for indicatior and year in city area
@@ -41,9 +41,10 @@ module Api
 
       def area_show
         @data = Resource.includes(:uploader, :indicator, :geo_group, :demo_group)
-                  .where("year_from <= ? AND year_to >= ?", params[:year], params[:year])
+                  .where(year_from: params[:year]..params[:year])
                   .where(indicator_id: Indicator.find_by_slug(params[:indicator_slug]))
                   .where.not(geo_group_id: GeoGroup.find_by_geography('City'))
+                  
         render json: @data, each_serializer: TopicAreaSerializer
       end
 
