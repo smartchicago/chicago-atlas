@@ -80,21 +80,22 @@ module Api
         static_header = []
         static_header << { :name => static.indicator.name, :category => static.category_group.name, :sub_category => static.sub_category.name, :slug => static.indicator.slug, :id => static.indicator.id }
 
-        demo_list     = []
-        Resource.where(indicator_id: indicator).group_by { |d| d.demo_group_id }.each do |demo, resource|
-          demo_group = DemoGroup.find_by_id(demo)
-          if demo_group.present?
-            demo_graphy = demo_group.demography.present? ? demo_group.demography : nil
-            slug = demo_group.demography.present? ? demo_group.demography.downcase : nil
-            demo_list << { :name => demo_group.name, :demography => demo_group.demography, :slug => slug }
-          end
-        end
+        # demo_list     = []
+        # Resource.where(indicator_id: indicator).group_by { |d| d.demo_group_id }.each do |demo, resource|
+        #   demo_group = DemoGroup.find_by_id(demo)
+        #   if demo_group.present?
+        #     demo_graphy = demo_group.demography.present? ? demo_group.demography : nil
+        #     slug = demo_group.demography.present? ? demo_group.demography.downcase : nil
+        #     demo_list << { :name => demo_group.name, :demography => demo_group.demography, :slug => slug }
+        #   end
+        # end
+        @demo_list = DemoGroup.joins("INNER JOIN resources ON resources.demo_group_id = demo_groups.id AND resources.indicator_id = #{ indicator.id }").flatten.uniq
         # @demo_list    = DemoGroup.select {|s| Resource.where(indicator_id: indicator_id, demo_group_id: s.id).first != nil}
         render json: {
           static_header: static_header,
-          demo_list: demo_list,
-          data: ActiveModel::Serializer::ArraySerializer.new(@data, serializer: TopicDetailSerializer)
-          # demo_list: ActiveModel::Serializer::ArraySerializer.new(@demo_list, serializer: DemoListSerializer)
+          # demo_list: demo_list,
+          data: ActiveModel::Serializer::ArraySerializer.new(@data, serializer: TopicDetailSerializer),
+          demo_list: ActiveModel::Serializer::ArraySerializer.new(@demo_list, serializer: DemoListSerializer)
         }
       end
 
