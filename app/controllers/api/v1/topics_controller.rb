@@ -57,14 +57,23 @@ module Api
       EOS
 
       def trend
+        data = []
         indicator     =   Indicator.find_by_slug(params[:indicator_slug])
-        @data         =   Resource.includes(:category_group, :sub_category, :indicator, :demo_group).where(indicator_id: indicator)
-        @demo_list    =   DemoGroup.joins(:resources).where(resources: {id: indicator.resources.pluck(:id)})
-
-        render json: {
-          :area_data => ActiveModel::Serializer::ArraySerializer.new(@data, serializer: TopicDetailSerializer),
-          :demo_list => ActiveModel::Serializer::ArraySerializer.new(@demo_list, serializer: DemoListSerializer)
-        }
+        resource = Resource.where(indicator_id: indicator)
+        resource.group_by { |d| d.year_from }.each do |year, resources|
+          year_unit = []
+          element = []
+          year_unit << { :year => year, :data => [] }
+          resources.each do |r|
+            if r.demo_group.present?
+              element << { :demography => r.demo_group.demography, :value => r.weight_number } 
+            end
+          end
+          year_unit.select {|s| s[:year] == year}.first[:data] << element
+          data << year_unit
+        end
+        
+        render :json => { :data => data }
       end
 
       api :GET, '/topic_demo/:indicator_slug/:demo_slug', 'Fetch trend data regarding demography'
