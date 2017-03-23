@@ -74,16 +74,27 @@ module Api
         # end
         
         # render :json => { :data => data }
-        indicator_id  = Indicator.find_by_slug(params[:indicator_slug]).id
-        @data         = Resource.includes(:demo_group).where(indicator_id: indicator_id)
+        indicator     = Indicator.find_by_slug(params[:indicator_slug])
+        @data         = Resource.includes(:demo_group).where(indicator_id: indicator)
         static        = @data.first
         static_header = []
         static_header << { :name => static.indicator.name, :category => static.category_group.name, :sub_category => static.sub_category.name, :slug => static.indicator.slug, :id => static.indicator.id }
-        @demo_list    = DemoGroup.select {|s| Resource.find_by(indicator_id: indicator_id, demo_group_id: s.id) != nil}
+
+        demo_list     = []
+        Resource.where(indicator_id: indicator).group_by { |d| d.demo_group_id }.each do |demo, resource|
+          demo_group = DemoGroup.find_by_id(demo)
+          if demo_group.present?
+            demo_graphy = demo_group.demography.present? ? demo_group.demography : nil
+            slug = demo_group.demography.present? ? demo_group.demography.downcase : nil
+            demo_list << { :name => demo_group.name, :demography => demo_group.demography, :slug => slug }
+          end
+        end
+        # @demo_list    = DemoGroup.select {|s| Resource.where(indicator_id: indicator_id, demo_group_id: s.id).first != nil}
         render json: {
           static_header: static_header,
-          data: ActiveModel::Serializer::ArraySerializer.new(@data, serializer: TopicDetailSerializer),
-          demo_list: ActiveModel::Serializer::ArraySerializer.new(@demo_list, serializer: DemoListSerializer)
+          demo_list: demo_list,
+          data: ActiveModel::Serializer::ArraySerializer.new(@data, serializer: TopicDetailSerializer)
+          # demo_list: ActiveModel::Serializer::ArraySerializer.new(@demo_list, serializer: DemoListSerializer)
         }
       end
 
