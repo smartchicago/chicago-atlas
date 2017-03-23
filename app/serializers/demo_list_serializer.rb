@@ -3,6 +3,6 @@ class DemoListSerializer < ActiveModel::Serializer
   attributes :name, :demography, :slug
 
   def slug
-    object.demography.downcase if object.demography.present?
+    object.demography.downcase.parameterize if object.demography.present?
   end
 end
