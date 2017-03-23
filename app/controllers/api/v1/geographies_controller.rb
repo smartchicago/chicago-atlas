@@ -12,10 +12,10 @@ module Api
       EOS
       def index
         @community_areas  =   Geography.select("geographies.geo_type, geographies.name, geographies.slug, geographies.geometry, geographies.centroid, geographies.part, count(intervention_locations.community_area_id) as resource_cnt")
-                              .joins("LEFT JOIN intervention_locations on intervention_locations.community_area_id = geographies.id")
-                              .group("geographies.id")
-                              .where("geo_type = 'Community Area'")
-                              .order("name").all
+                                .joins("LEFT JOIN intervention_locations on intervention_locations.community_area_id = geographies.id")
+                                .group("geographies.id")
+                                .where("geo_type = 'Community Area'")
+                                .order("name").all
 
         @zip_codes        =   Geography.where("geo_type = 'Zip'").order("name").all
 

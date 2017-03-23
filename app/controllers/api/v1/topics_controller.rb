@@ -4,7 +4,7 @@ module Api
       api :GET, '/topics', 'Fetch category, subcategory, indicators list'
       formats ['json']
       description <<-EOS
-        == Fetch category, subcategory, indicators
+        == Fetch category, subcategory, indicators from db in order to get the full list of indicators. 
       EOS
 
       def index
@@ -22,7 +22,10 @@ module Api
       EOS
 
       def city_show
-       @data = Resource.includes(:demo_group, :uploader, :indicator).where("year_from <= ? AND year_to >= ?", params[:year], params[:year]).where(geo_group_id: GeoGroup.find_by_geography('City')).select { |resource| resource.indicator.slug == params[:indicator_slug] }
+        @data = Resource.includes(:demo_group, :uploader, :indicator)
+                  .where("year_from <= ? AND year_to >= ?", params[:year], params[:year])
+                  .where(geo_group_id: GeoGroup.find_by_geography('City'))
+                  .joins(:indicator).where(indicators: {slug: params[:indicator_slug]})
         render json: @data, each_serializer: TopicCitySerializer
       end
 
@@ -36,7 +39,10 @@ module Api
       EOS
 
       def area_show
-        @data = Resource.includes(:uploader, :indicator, :geo_group, :demo_group).where("year_from <= ? AND year_to >= ?", params[:year], params[:year]).where(indicator_id: Indicator.find_by_slug(params[:indicator_slug])).where.not(geo_group_id: GeoGroup.find_by_geography('City'))
+        @data = Resource.includes(:uploader, :indicator, :geo_group, :demo_group)
+                  .where("year_from <= ? AND year_to >= ?", params[:year], params[:year])
+                  .where(indicator_id: Indicator.find_by_slug(params[:indicator_slug]))
+                  .where.not(geo_group_id: GeoGroup.find_by_geography('City'))
         render json: @data, each_serializer: TopicAreaSerializer
       end
 
@@ -65,8 +71,8 @@ module Api
 
       def demo_list
         indicator     =   Indicator.find_by_slug(params[:indicator_slug])
-        # @demo_list    =   DemoGroup.joins(:resources).where(resources: {id: indicator.resources.pluck(:id)})
-        @demo_list    =   DemoGroup.includes(:resources).select {|s| Resource.includes(:demo_group).where(indicator_id: indicator, demo_group_id: s) != nil}
+        @demo_list    =   DemoGroup.joins(:resources).where(resources: {id: indicator.resources.pluck(:id)})
+        # @demo_list    =   DemoGroup.includes(:resources).select {|s| Resource.includes(:demo_group).where(indicator_id: indicator, demo_group_id: s) != nil}
 
         render json: @demo_list, each_serializer: DemoListSerializer
       end
@@ -81,10 +87,12 @@ module Api
       EOS
 
       def demo
-        demo_group = DemoGroup.select { |d| d.demography.downcase == params[:demo_slug] if d.demography.present? }
-        demo_group_id = demo_group.present? ? demo_group.first.id : false
+        demo_group = DemoGroup.where("LOWER(demography) = ?", params[:demo_slug]).first
+        render json: [] and return unless demo_group
+
         indicator_id = Indicator.find_by_slug(params[:indicator_slug])
-        @data = Resource.includes(:category_group, :sub_category, :indicator, :demo_group).where(indicator_id: indicator_id, demo_group_id: demo_group_id)
+        @data = Resource.includes(:category_group, :sub_category, :indicator, :demo_group)
+                  .where(indicator_id: indicator_id, demo_group_id: demo_group)
         render json: @data, each_serializer: TopicDemoSerializer
       end
 
