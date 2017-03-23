@@ -82,7 +82,8 @@ module Api
       EOS
 
       def demo
-        demo_group_id = DemoGroup.select { |d| d.demography.downcase == params[:demo_slug] }.first.id
+        demo_group = DemoGroup.select { |d| d.demography.downcase == params[:demo_slug] if d.demography.present? }
+        demo_group_id = demo_group.present? ? demo_group.first.id : false
         indicator_id = Indicator.find_by_slug(params[:indicator_slug])
         # @data = Resource.select { |d| (d.demo_group.demography.downcase == params[:demo_slug].downcase unless d.demo_group.blank?) && (d.indicator.slug == params[:indicator_slug]) }
         @data = Resource.includes(:category_group, :sub_category, :indicator, :demo_group).where(indicator_id: indicator_id, demo_group_id: demo_group_id)
@@ -99,7 +100,7 @@ module Api
       def recent
         # slug  = params[:indicator_slug]
         # index = Indicator.find_by(slug: slug)
-         year  = Resource.where(indicator_id: index).maximum('year_to')
+        year  = Resource.where(indicator_id: index).maximum('year_to')
         @data = Resource.where("year_from <= ? AND year_to >= ?",year,year).where(indicator_id: Indicator.find_by(slug: params[:indicator_slug]))
         render json: @data
       end
