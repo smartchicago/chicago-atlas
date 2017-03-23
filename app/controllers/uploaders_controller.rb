@@ -20,6 +20,7 @@ class UploadersController < ApplicationController
   def create
     @uploader = current_user.uploaders.build(uploader_params)
     content_type = uploader_params[:path].original_filename.last(4)
+    byebug
     if (content_type.include? "csv") || (content_type.include? "xls")
       @uploader.update_name(uploader_params[:path].original_filename)
       @uploader.initialize_state
