@@ -86,17 +86,20 @@ module Api
         render json: @data, each_serializer: TopicDemoSerializer
       end
 
-      api :GET, '/topic_recent/:indicator_slug', 'Fetch detailed data of topic'
+      api :GET, '/topic_recent/:indicator_slug', 'Fetch detailed data of recent topic'
       param :indicator_slug, String, :desc => 'indicator slug', :required => true
       formats ['json']
       description <<-EOS
-        == Fetch detailed data for indicatior and year
-        response data has detailed data for indicator and year
+        == Fetch detailed data for indicatior and recent year
+        response data has detailed data for indicator and recent year
       EOS
       def recent
-        year  = Resource.where(indicator_id: index).maximum('year_to')
-        @data = Resource.where("year_from <= ? AND year_to >= ?",year,year).where(indicator_id: Indicator.find_by(slug: params[:indicator_slug]))
-        render json: @data
+        year  = Resource.where(indicator_id: Indicator.find_by(slug: params[:indicator_slug])).maximum('year_to')
+        @data = Resource.includes(:category_group, :sub_category, :demo_group)
+                        .where(year_from: year..year)
+                        .where(indicator_id: Indicator.find_by(slug: params[:indicator_slug]))
+
+        render json: @data, each_serializer: TopicRecentSerializer
       end
 
       api :GET, '/topic_info/:geo_slug/:indicator_slug', 'Fetch detailed data of topic for community area'
