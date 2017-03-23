@@ -14,18 +14,19 @@ module Api
 
       api :GET, '/topic_city/:year/:indicator_slug', 'Fetch detailed data of topic'
       param :year, String, :desc => 'year', :required => true
-      param :indicator_slug, String, :desc => 'indicator slug', :required => true
+      param :indicator_slug, String, :desc => 'indicator_slug', :required => true
       formats ['json']
       description <<-EOS
         == Fetch detailed data for indicatior and year in city area
-        response data has detailed data for indicator and year
+        response data has detailed data for indicator and specific year
       EOS
 
       def city_show
         @data = Resource.includes(:demo_group, :uploader, :indicator)
-                  .where("year_from <= ? AND year_to >= ?", params[:year], params[:year])
+                  .where(year_from: params[:year] .. params[:year])
                   .where(geo_group_id: GeoGroup.find_by_geography('City'))
                   .joins(:indicator).where(indicators: {slug: params[:indicator_slug]})
+
         render json: @data, each_serializer: TopicCitySerializer
       end
 
