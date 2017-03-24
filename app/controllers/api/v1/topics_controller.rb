@@ -111,11 +111,11 @@ module Api
       EOS
 
       def demo
-        demo_group = DemoGroup.where("LOWER(demography) = ?", params[:demo_slug]).first
+        demo_group = DemoGroup.where("LOWER(demography) = ?", params[:demo_slug])
         render json: [] and return unless demo_group
 
         indicator_id = Indicator.find_by_slug(params[:indicator_slug])
-        @data = Resource.includes(:category_group, :sub_category, :indicator, :demo_group).where(indicator_id: indicator_id, demo_group_id: demo_group)
+        @data = Resource.includes(:category_group, :sub_category, :indicator, :demo_group).where(indicator_id: indicator_id, demo_group_id: demo_group.pluck(:id))
                   
         render json: @data, each_serializer: TopicDemoSerializer
       end
