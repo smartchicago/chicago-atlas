@@ -26,3 +26,6 @@
 .env
 /Gemfile.lock
 .DS_Store
+
+
+.byebug_history

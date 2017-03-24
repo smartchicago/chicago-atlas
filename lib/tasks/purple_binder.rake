@@ -1,12 +1,12 @@
 namespace :db do
-  namespace :import do    
-    namespace :purple_binder do 
+  namespace :import do
+    namespace :purple_binder do
 
       desc "Fetch all Purple Binder locations"
       task :all => :environment do
         require 'open-uri'
         require 'json'
-        
+
         # clear out existing intervention locations and relational talbes
         Dataset.where(:provider => ["Purple Binder", "Chicago Community Oral Health Forum"]).each do |d|
           InterventionLocation.delete_all("dataset_id = #{d.id}")
