@@ -78,7 +78,9 @@ module Api
         @data         = Resource.includes(:demo_group).where(indicator_id: indicator)
         static        = @data.first
         static_header = []
-        static_header << { :name => static.indicator.name, :category => static.category_group.name, :sub_category => static.sub_category.name, :slug => static.indicator.slug, :id => static.indicator.id }
+        if static.present? 
+          static_header << { :name => static.indicator.name, :category => static.category_group.name, :sub_category => static.sub_category.name, :slug => static.indicator.slug, :id => static.indicator.id }
+        end
 
         # demo_list     = []
         # Resource.where(indicator_id: indicator).group_by { |d| d.demo_group_id }.each do |demo, resource|
