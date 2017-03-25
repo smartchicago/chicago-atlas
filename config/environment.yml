@@ -1,5 +1,3 @@
-# S3_KEY: <%= ENV['S3_KEY'] %>
-# S3_SECRET: <%= ENV['S3_SECRET'] %>
-# S3_BUCKET_NAME: <%= ENV['S3_BUCKET_NAME'] %>
-
-# Don't think this is needed for Rails 4
+S3_KEY: <%= ENV['S3_KEY'] %>
+S3_SECRET: <%= ENV['S3_SECRET'] %>
+S3_BUCKET_NAME: <%= ENV['S3_BUCKET_NAME'] %>
