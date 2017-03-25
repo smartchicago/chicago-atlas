@@ -32,7 +32,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'unicorn'
 
 ###########################################
-
+gem 'dotenv'
 gem 'carrierwave'
 gem 'fog'
 gem 'devise'
@@ -47,7 +47,7 @@ gem 'will_paginate',          '~>3.1.0'
 gem 'puma'
 gem 'active_model_serializers'
 gem 'apipie-rails'
-gem 'goldiloader' 
+gem 'goldiloader'
 gem 'puma_worker_killer'
 gem 'appsignal'
 
