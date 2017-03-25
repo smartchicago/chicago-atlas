@@ -1,0 +1,22 @@
+# AppSignal Variables
+APPSIGNAL_PUSH_API_KEY=
+APPSIGNAL_APP_NAME=
+
+# S3 Variables (See AWS Manual)
+S3_KEY=
+S3_SECRET=
+S3_BUCKET_NAME=
+
+# Port to Be using
+PORT=
+RACK_ENV=
+
+
+# Rails Secret Key
+SECRET_KEY_BASE =
+
+# Devise Secret key
+
+DEVISE_SECRET_KEY=
+DEVISE_EMAIL_SENDER=
+COOKIE_STORAGE_KEY=

@@ -51,6 +51,9 @@ GEM
       tzinfo (~> 1.1)
     apipie-rails (0.3.7)
       json
+    appsignal (2.1.2)
+      rack
+      thread_safe
     arel (6.0.4)
     autoprefixer-rails (6.6.1)
       execjs
@@ -89,6 +92,7 @@ GEM
       devise
       zxcvbn-js (~> 4.2.0)
     diff-lcs (1.2.5)
+    dotenv (2.2.0)
     erubis (2.7.0)
     excon (0.54.0)
     execjs (2.7.0)
@@ -391,8 +395,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers (= 0.10.0)
+  active_model_serializers
   apipie-rails
+  appsignal
   autoprefixer-rails
   bootstrap-sass (~> 3.3.1)
   byebug
@@ -400,6 +405,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   devise
   devise_zxcvbn
+  dotenv
   factory_girl_rails
   faker (= 1.6.3)
   fog
