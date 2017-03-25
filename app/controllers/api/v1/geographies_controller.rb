@@ -378,7 +378,7 @@ module Api
       def community_area_detail
         geo_slug        = params[:geo_slug]
         category_slug   = params[:category_slug]
-        geo_id          = GeoGroup.find_by_slug(geo_slug).id
+        geo_id          = GeoGroup.find_by_slug(geo_slug).id if GeoGroup.find_by_slug(geo_slug).present?
         category        = CategoryGroup.where(slug: category_slug)
         render json: category, each_serializer: CommunityAreaDetailSerializer, geo_id: geo_id
       end
