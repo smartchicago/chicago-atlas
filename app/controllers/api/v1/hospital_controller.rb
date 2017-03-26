@@ -105,8 +105,17 @@ module Api
         @outpatient_cc              = @charity_care[:values][@charity_care[:stats].index('Charity Care - Outpatient')]
         @finance_data               = { outpatient_total: @outpatient_total, inpatient_total: @inpatient_total, outpatient_cc: @outpatient_cc, inpatient_cc: @inpatient_cc }
 
-        render :json => {:hospital => @hospital, :area_summary => @area_summary, :total_admissions =>  @total_admissions, :total_revenue => @total_revenue, :admissions_by_type => @admissions_by_type, :admissions_by_race => @admissions_by_race, :admissions_by_ethnicity => @admissions_by_ethnicity, :admissions_by_age => @admissions_by_age,
-          :finance_data => @finance_data, :revenue_outpatient => @revenue_outpatient, :revenue_inpatient => @revenue_inpatient}
+        render :json => { :hospital => @hospital, 
+                          :area_summary => @area_summary, 
+                          :total_admissions =>  @total_admissions, 
+                          :total_revenue => @total_revenue, 
+                          :admissions_by_type => @admissions_by_type, 
+                          :admissions_by_race => @admissions_by_race, 
+                          :admissions_by_ethnicity => @admissions_by_ethnicity,                    
+                          :admissions_by_age => @admissions_by_age,
+                          :finance_data => @finance_data, 
+                          :revenue_outpatient => @revenue_outpatient, 
+                          :revenue_inpatient => @revenue_inpatient }
       end
     end
   end

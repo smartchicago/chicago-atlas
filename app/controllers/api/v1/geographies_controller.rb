@@ -332,7 +332,6 @@ module Api
         == Fetch all of the resources exists in chicago city.
       EOS
       def resources_all
-        # dataset_id  = params[:dataset_id]
         resources   = InterventionLocation
 
         resources_all = resources.all
