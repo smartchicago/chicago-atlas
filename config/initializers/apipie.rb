@@ -1,5 +1,5 @@
 Apipie.configure do |config|
-  config.app_name                = "Parrolabs Chicago Health"
+  config.app_name                = "Chicago Health Atlas "
   config.api_base_url            = "/api/v1"
   config.doc_base_url            = "/apidoc"
   # where is your API defined?
