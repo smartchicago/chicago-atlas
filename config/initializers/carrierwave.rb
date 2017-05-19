@@ -1,3 +1,5 @@
+require 'dotenv/load'
+
 CarrierWave.configure do |config|
   config.fog_credentials = {
     provider:              'AWS',

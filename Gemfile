@@ -50,7 +50,6 @@ gem 'apipie-rails'
 gem 'goldiloader'
 gem 'puma_worker_killer'
 gem 'appsignal'
-
 ###########################################
 
 group :development, :test do
