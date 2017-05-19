@@ -5,31 +5,31 @@ class TopicAreaInfoSerializer < ActiveModel::Serializer
 
   SOURCE_CHANGE_LIST = {
     'accidents' => {
-      'weight_number'  => 'number',
+      'weight_number'  => 'ave_annual_number',
       'weight_percent' => 'age_adj_rate'      
     },
     'alcohol-induced-deaths' => {
-      'weight_number'  => 'number',
+      'weight_number'  => 'ave_annual_number',
       'weight_percent' => 'age_adj_rate'      
     },
     'alzheimers-disease' => {
-      'weight_number'  => 'number',
+      'weight_number'  => 'ave_annual_number',
       'weight_percent' => 'age_adj_rate'      
     }
   }
 
   CI_CHANGE_LIST = {
     'accidents' => {
-      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
-      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'      
+      'lower_95ci_weight_percent'  => 'lower_95ci_crude_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'      
     },
     'alcohol-induced-deaths' => {
-      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
-      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'      
+      'lower_95ci_weight_percent'  => 'lower_95ci_crude_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'      
     },
     'alzheimers-disease' => {
-      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
-      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'      
+      'lower_95ci_weight_percent'  => 'lower_95ci_crude_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'      
     }
   }
 
