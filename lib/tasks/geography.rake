@@ -44,6 +44,16 @@ namespace :db do
           area.save!
         end
 
+        #  Upload Geography
+        chicago = Geography.new(
+          :geo_type => "City",
+          :name => 'Chicago',
+          :slug => 'chicago',
+          :geometry => ''
+        )
+        chicago.id = 100
+        chicago.save!
+
         puts 'Done!'
       end
 
