@@ -25,7 +25,7 @@ namespace :db do
       task :community_areas => :environment do
         require 'open-uri'
         require 'json'
-        Geography.delete_all(:geo_type => 'Community Area')
+        Geography.delete_all
 
         community_areas = JSON.parse(open("db/import/community_areas.geojson").read)['features']
         community_areas.each do |area_json|
