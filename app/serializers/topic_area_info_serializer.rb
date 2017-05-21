@@ -493,6 +493,10 @@ class TopicAreaInfoSerializer < ActiveModel::Serializer
     CI_CHANGE_LIST[object.indicator.slug].present? ? object[CI_CHANGE_LIST[object.indicator.slug]['upper_95ci_adj_rate']] : object.upper_95ci_adj_rate
   end 
   
+  def crude_rate
+    object['crude_rate'].present? ? object['crude_rate'] : object['age_adj_rate']
+  end
+  
   def category_group_name 
     object.category_group.name
   end 

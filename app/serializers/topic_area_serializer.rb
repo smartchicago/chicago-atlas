@@ -508,6 +508,10 @@ class TopicAreaSerializer < ActiveModel::Serializer
     object.geo_group.name 
   end
 
+  def crude_rate
+    object['crude_rate'].present? ? object['crude_rate'] : object['age_adj_rate']
+  end
+
   def geo_group_part
     object.geo_group.part 
   end

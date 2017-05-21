@@ -827,4 +827,8 @@ class TopicCitySerializer < ActiveModel::Serializer
   def uploader_path
     object.uploader.path
   end
+
+  def crude_rate
+    object['crude_rate'].present? ? object['crude_rate'] : object['age_adj_rate']
+  end
 end

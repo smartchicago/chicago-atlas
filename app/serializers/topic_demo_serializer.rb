@@ -17,4 +17,8 @@ class TopicDemoSerializer < ActiveModel::Serializer
   def sub_category_name
     object.sub_category.name
   end
+
+  def crude_rate
+    object['crude_rate'].present? ? object['crude_rate'] : object['age_adj_rate']
+  end
 end

@@ -8,4 +8,7 @@ class ResourceSerializer < ActiveModel::Serializer
   belongs_to :geo_group
   belongs_to :indicator
 
+  def crude_rate
+    object['crude_rate'].present? ? object['crude_rate'] : object['age_adj_rate']
+  end
 end
