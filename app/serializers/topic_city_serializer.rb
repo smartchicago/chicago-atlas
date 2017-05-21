@@ -7,13 +7,93 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
     },
+    'active-transportation' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'adult-binge-drinking' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'adult-e-cigarette-use' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'adult-flu-vaccine' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'adult-fruit-and-vegetable-servings' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'adult-obesity' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'adult-physical-inactivity' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'adult-smoking' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'adult-soda-consumption' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
     'alcohol-induced-deaths' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'age_adj_rate'
+    },
+    'alcohol-related-hospitalizations' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
     },
     'alzheimers-disease' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
+    },
+    'annual-dental-cleaning' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'asthma' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'asthma-ed-visits-age-0-4-years' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'crude_rate'
+    },
+    'asthma-ed-visits-age-18-years' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'age_adj_rate'
+    },
+    'asthma-ed-visits-age-65-years' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'age_adj_rate'
+    },
+    'avoidable-ed-visits' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'age_adj_rate'
+    },
+    'behavioral-health-hospitalizations' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'age_adj_rate'
+    },
+    'behavioral-health-treatment' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'breast-cancer-screening' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'bullying' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
     },
     'cancer-deaths' => {
       'weight_number'  => 'number',
@@ -31,6 +111,10 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_number'  => 'ave_annual_number',
       'weight_percent' => 'age_adj_rate'
     },
+    'cervical-cancer-screening' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
     'cesarean-delivery' => {
       'weight_number'  => 'number',
       'weight_percent' => 'percent'
@@ -38,6 +122,10 @@ class TopicCitySerializer < ActiveModel::Serializer
     'child-obesity' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
+    },
+    'child-poverty' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
     },
     'chlamydia' => {
       'weight_number'  => 'number',
@@ -51,23 +139,55 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
     },
+    'college-graduation-or-more' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
     'colorectal-cancer-deaths' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
+    },
+    'colorectal-cancer-incidence' => {
+      'weight_number'  => 'ave_annual_number',
+      'weight_percent' => 'age_adj_rate'
+    },
+    'colorectal-cancer-screening' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
     },
     'coronary-heart-disease-deaths' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
     },
+    'crowded-housing' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
     'crude-birth-rate' => {
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
+    },
+    'dental-care-emergencies' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'age_adj_rate'
+    },
+    'diabetes' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
     },
     'diabetes-deaths' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
     },
     'diabetes-related-deaths' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'age_adj_rate'
+    },
+    'diabetes-related-hospitalizations' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'age_adj_rate'
+    },
+    'diabetes-related-lower-extremity-amputation-hospitalizations' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
     },
@@ -80,6 +200,10 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_percent' => 'age_adj_rate'
     },
     'drug-induced-deaths' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'age_adj_rate'
+    },
+    'drug-related-hospitalizations' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
     },
@@ -99,6 +223,10 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_number'  => 'ave_annual_number',
       'weight_percent' => 'age_adj_rate'
     },
+    'female-population' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
     'firearm-related-homicides' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
@@ -106,6 +234,18 @@ class TopicCitySerializer < ActiveModel::Serializer
     'firearm-related-homicides-by-injury-location' => {
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
+    },
+    'food-access' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'food-stamps-snap' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'foreign-born' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
     },
     'general-fertility-rate' => {
       'weight_number'  => 'number',
@@ -115,9 +255,25 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
     },
+    'have-a-disability' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'health-care-satisfaction' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
     'heart-disease-deaths' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
+    },
+    'high-school-graduation' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'hispanic-or-latino' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
     },
     'hiv-incidence' => {
       'weight_number'  => 'number',
@@ -127,9 +283,29 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
     },
-    'homocides' => {
+    'hiv-viral-suppression' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'homicides' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
+    },
+    'household-poverty' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'hypertension' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'individual-poverty' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'infant-mortality' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'crude_rate'
     },
     'influenza-and-pneumonia-deaths' => {
       'weight_number'  => 'number',
@@ -147,6 +323,10 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
     },
+    'limited-english-proficiency' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
     'linkage-to-hiv-care' => {
       'weight_number'  => 'number',
       'weight_percent' => 'percent'
@@ -163,29 +343,77 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_number'  => 'ave_annual_number',
       'weight_percent' => 'age_adj_rate'
     },
+    'male-population' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'mood-and-depressive-disorder-hospitalizations' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'age_adj_rate'
+    },
     'motor-vehicle-crash-deaths' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
+    },
+    'neighborhood-safety' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
     },
     'nephritis-nephrotic-syndrome-and-nephrosis-deaths' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
     },
+    'no-health-insurance' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'no-high-school-graduation' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'non-hispanic-african-american-or-black' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'non-hispanic-asian-or-pacific-islander' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'non-hispanic-white' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
     'opioid-related-overdose-deaths' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
     },
+    'overall-health-status' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'pertussis' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'crude_rate'
+    },
     'prenatal-care-in-first-trimester' => {
       'weight_number'  => 'number',
       'weight_percent' => 'percent'
+    },
+    'prescription-opiate-misuse' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'preterm-births' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'preventable-hospitalizations' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'age_adj_rate'
     },
     'primary-care-provider' => {
       'weight_number'  => 'weight_number',
       'weight_percent' => 'weight_percent'
-    },
-    'prenatal-care-in-first-trimester' => {
-      'weight_number'  => 'number',
-      'weight_percent' => 'percent'
     },
     'prostate-cancer-deaths' => {
       'weight_number'  => 'number',
@@ -195,17 +423,53 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_number'  => 'ave_annual_number',
       'weight_percent' => 'age_adj_rate'
     },
+    'received-needed-care' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
     'routine-checkup' => {
       'weight_number'  => 'weight_number',
       'weight_percent' => 'weight_percent'
+    },
+    'schizophrenic-disorder-hospitalizations' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'age_adj_rate'
+    },
+    'school-fights' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'school-safety' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'serious-psychological-distress' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'severe-housing-cost-burden' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'single-parent-households' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
     },
     'smoking-during-pregnancy' => {
       'weight_number'  => 'number',
       'weight_percent' => 'percent'
     },
+    'stroke-deaths' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'age_adj_rate'
+    },
     'suicide' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
+    },
+    'suspensions' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
     },
     'syphilis' => {
       'weight_number'  => 'number',
@@ -223,17 +487,77 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
     },
+    'total-population' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'traffic-crash-fatalities' => {
+      'weight_number'  => 'ave_annual_number',
+      'weight_percent' => 'age_adj_rate'
+    },
+    'tuberculosis' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'crude_rate'
+    },
     'twin-birth-rate' => {
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
     },
+    'unemployment' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'vacant-housing' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
     'varicella' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'crude_rate'
+    },
+    'very-low-birthweight' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'violent-crime' => {
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
     },
     'ypll' => {
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
+    },
+    'youth-binge-drinking' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'youth-condom-use' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'youth-depression' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'youth-fruit-and-vegetable-servings' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'youth-physical-activity' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'youth-smoking' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'youth-soda-consumption' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
+    },
+    'youth-suicide-attempts' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'weight_percent'
     }
   }
 
