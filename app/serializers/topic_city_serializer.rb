@@ -104,7 +104,7 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_percent' => 'age_adj_rate'
     },
     'cervical-cancer-deaths' => {
-      'weight_number'  => 'number',
+      'weight_number'  => 'ave_annual_number',
       'weight_percent' => 'age_adj_rate'
     },
     'cervical-cancer-incidence' => {
@@ -322,6 +322,10 @@ class TopicCitySerializer < ActiveModel::Serializer
     'lead-poisoning' => {
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
+    },
+    'life-expectancy' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight_percent'
     },
     'limited-english-proficiency' => {
       'weight_number'  => 'number',
@@ -631,7 +635,6 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_number'  => 'number',
       'weight_percent' => 'weight-percent'
     }
-
   }
 
   CI_CHANGE_LIST = {

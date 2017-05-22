@@ -3,7 +3,7 @@ class TopicCityInfoSerializer < ActiveModel::Serializer
 
   attributes :id, :category_group_name, :sub_category_name, :indicator, :year_from, :year_to, :demo_group, :number, :cum_number, :ave_annual_number, :crude_rate, :lower_95ci_crude_rate, :upper_95ci_crude_rate, :percent, :lower_95ci_percent, :upper_95ci_percent, :weight_number, :weight_percent, :lower_95ci_weight_percent, :upper_95ci_weight_percent
 
-   SOURCE_CHANGE_LIST = {
+  SOURCE_CHANGE_LIST = {
     'accidents' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
@@ -105,7 +105,7 @@ class TopicCityInfoSerializer < ActiveModel::Serializer
       'weight_percent' => 'age_adj_rate'
     },
     'cervical-cancer-deaths' => {
-      'weight_number'  => 'number',
+      'weight_number'  => 'ave_annual_number',
       'weight_percent' => 'age_adj_rate'
     },
     'cervical-cancer-incidence' => {
@@ -323,6 +323,10 @@ class TopicCityInfoSerializer < ActiveModel::Serializer
     'lead-poisoning' => {
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
+    },
+    'life-expectancy' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight_percent'
     },
     'limited-english-proficiency' => {
       'weight_number'  => 'number',
@@ -632,7 +636,6 @@ class TopicCityInfoSerializer < ActiveModel::Serializer
       'weight_number'  => 'number',
       'weight_percent' => 'weight-percent'
     }
-
   }
 
   CI_CHANGE_LIST = {

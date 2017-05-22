@@ -291,6 +291,10 @@ class TopicAreaSerializer < ActiveModel::Serializer
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
     },
+    'life-expectancy' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight_percent'
+    },
     'limited-english-proficiency' => {
       'weight_number'  => 'number',
       'weight_percent' => 'percent'
@@ -390,6 +394,10 @@ class TopicAreaSerializer < ActiveModel::Serializer
     'severe-housing-cost-burden' => {
       'weight_number'  => 'number',
       'weight_percent' => 'percent'
+    },
+    'sexual-assault' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight_percent'
     },
     'single-parent-households' => {
       'weight_number'  => 'number',
