@@ -63,15 +63,15 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_number'  => 'weight_number',
       'weight_percent' => 'weight_percent'
     },
-    'asthma-ed-visits-age-0-4-years' => {
+    'asthma-ed-visits-(0-4-years)' => {
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
     },
-    'asthma-ed-visits-age-18-years' => {
+    'asthma-ed-visits-(0-18-years)' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
     },
-    'asthma-ed-visits-age-65-years' => {
+    'asthma-ed-visits-(65+-years)' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
     },
@@ -558,7 +558,80 @@ class TopicCitySerializer < ActiveModel::Serializer
     'youth-suicide-attempts' => {
       'weight_number'  => 'weight_number',
       'weight_percent' => 'weight_percent'
+    },
+    'early-childhood-education' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'percent'
+    },
+    'early-intervention-services' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'percent'
+    },
+    'grandparents-raising-grandchildren' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight_percent'
+    },
+    'income-diversity' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'percent'
+    },
+    'life-expectancy' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight_percent'
+    },
+    'mean-age-at-first-birth' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight_percent'
+    },
+    'median-household-income' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight_percent'
+    },
+    'non-fatal-shootings' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight_percent'
+    },
+    'per-capita-income' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight_percent'
+    },
+    'permanent-supportive-housing' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight_percent'
+    },
+    'school-attendance' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'percent'
+    },
+    'school-based-health-services-dental' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight-percent'
+    },
+    'school-based-health-services-sti-screening' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight-percent'
+    },
+    'school-based-health-services-vision' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight-percent'
+    },
+    'seniors-living-alone' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight-percent'
+    },
+    'serious-traffic-crash-injuries' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight-percent'
+    },
+    'sexual-assault' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight-percent'
+    },
+    'violent-crime-in-public-spaces' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight-percent'
     }
+
   }
 
   CI_CHANGE_LIST = {

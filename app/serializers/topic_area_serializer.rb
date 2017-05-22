@@ -47,15 +47,15 @@ class TopicAreaSerializer < ActiveModel::Serializer
       'weight_number'  => 'weight_number',
       'weight_percent' => 'weight_percent'
     },
-    'asthma-ed-visits-age-0-4-years' => {
+    'asthma-ed-visits-(0-4-years)' => {
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
     },
-    'asthma-ed-visits-age-18-years' => {
+    'asthma-ed-visits-(0-18-years)' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
     },
-    'asthma-ed-visits-age-65-years' => {
+    'asthma-ed-visits-(65+-years)' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
     },
