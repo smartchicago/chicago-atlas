@@ -528,7 +528,7 @@ class TopicCityInfoSerializer < ActiveModel::Serializer
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
     },
-    'ypll' => {
+    'years-of-potential-life-lost-(ypll)' => {
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
     },
