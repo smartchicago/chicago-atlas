@@ -871,7 +871,7 @@ class TopicCityInfoSerializer < ActiveModel::Serializer
       'lower_95ci_weight_percent'  => 'lower_95ci_crude_rate',
       'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'
     },
-    'years-of-potential-life-lost-ypll' => {
+    'years-of-potential-life-lost-(ypll)' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_crude_rate',
       'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'
     }
