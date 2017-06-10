@@ -464,7 +464,7 @@ SOURCE_CHANGE_LIST = {
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
     },
-    'ypll' => {
+    'years-of-potential-life-lost' => {
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
     }

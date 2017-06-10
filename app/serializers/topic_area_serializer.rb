@@ -463,7 +463,7 @@ class TopicAreaSerializer < ActiveModel::Serializer
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
     },
-    'ypll' => {
+    'years-of-potential-life-lost' => {
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
     }
@@ -472,48 +472,48 @@ class TopicAreaSerializer < ActiveModel::Serializer
   CI_CHANGE_LIST = {
     'accidents' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_crude_rate',
-      'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'      
+      'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'
     },
     'alcohol-induced-deaths' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_crude_rate',
-      'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'      
+      'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'
     },
     'alzheimers-disease' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_crude_rate',
-      'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'      
+      'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'
     }
   }
 
   def weight_number
     SOURCE_CHANGE_LIST[object.indicator.slug].present? ? object[SOURCE_CHANGE_LIST[object.indicator.slug]['weight_number']] : object.weight_number
-  end 
+  end
 
-  def weight_percent 
+  def weight_percent
     SOURCE_CHANGE_LIST[object.indicator.slug].present? ? object[SOURCE_CHANGE_LIST[object.indicator.slug]['weight_percent']] : object.weight_percent
-  end 
+  end
 
-  def lower_95ci_adj_rate 
+  def lower_95ci_adj_rate
     CI_CHANGE_LIST[object.indicator.slug].present? ? object[CI_CHANGE_LIST[object.indicator.slug]['lower_95ci_adj_rate']] : object.lower_95ci_adj_rate
-  end 
-  
+  end
+
   def upper_95ci_adj_rate
     CI_CHANGE_LIST[object.indicator.slug].present? ? object[CI_CHANGE_LIST[object.indicator.slug]['upper_95ci_adj_rate']] : object.upper_95ci_adj_rate
-  end 
-  
+  end
+
   def demo_group_name
     object.demo_group.name unless object.demo_group.nil?
   end
 
   def demography
     object.demo_group.demography unless object.demo_group.nil?
-  end    
+  end
 
   def uploader_path
     object.uploader.path
   end
 
   def geo_group_name
-    object.geo_group.name 
+    object.geo_group.name
   end
 
   def crude_rate
@@ -521,6 +521,6 @@ class TopicAreaSerializer < ActiveModel::Serializer
   end
 
   def geo_group_part
-    object.geo_group.part 
+    object.geo_group.part
   end
 end

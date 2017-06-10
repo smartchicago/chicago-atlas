@@ -528,7 +528,7 @@ class TopicCityInfoSerializer < ActiveModel::Serializer
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
     },
-    'years-of-potential-life-lost-(ypll)' => {
+    'years-of-potential-life-lost' => {
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
     },
@@ -871,7 +871,7 @@ class TopicCityInfoSerializer < ActiveModel::Serializer
       'lower_95ci_weight_percent'  => 'lower_95ci_crude_rate',
       'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'
     },
-    'years-of-potential-life-lost-(ypll)' => {
+    'years-of-potential-life-lost' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_crude_rate',
       'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'
     }
