@@ -51,8 +51,6 @@ class UploadersController < ApplicationController
         format.html { redirect_to root_path, notice: 'File successfully updated.' }
         format.json { render :show, status: :ok, location: @uploader }
       else
-        puts '---------------------------------'
-        puts @uploader.errors
         format.html { render :edit  }
         format.json { render json: @uploader.errors, status: :unprocessable_entity }
       end
