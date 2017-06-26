@@ -3,7 +3,7 @@ class UploadersController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @uploaders = Uploader.all.sort_by{|m| m.name}
+    @uploaders = Uploader.all
   end
 
   def show
