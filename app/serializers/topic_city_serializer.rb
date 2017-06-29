@@ -1,6 +1,10 @@
 class TopicCitySerializer < ActiveModel::Serializer
   cache key: 'TopicCity', expires_in: 3.hours
-  attributes :id, :uploader_path, :indicator, :demo_group_name, :demography, :number, :cum_number, :ave_annual_number, :crude_rate, :lower_95ci_crude_rate, :upper_95ci_crude_rate, :percent, :lower_95ci_weight_percent, :upper_95ci_weight_percent, :weight_number, :weight_percent, :lower_95ci_weight_percent, :upper_95ci_weight_percent
+  attributes :id, :uploader_path, :indicator, :demo_group_name,
+             :demography, :number, :cum_number, :ave_annual_number,
+             :crude_rate, :lower_95ci_crude_rate, :upper_95ci_crude_rate,
+             :percent, :lower_95ci_weight_percent, :upper_95ci_weight_percent,
+             :weight_number, :weight_percent
 
   SOURCE_CHANGE_LIST = {
     'accidents' => {
@@ -890,6 +894,14 @@ class TopicCitySerializer < ActiveModel::Serializer
 
   def upper_95ci_adj_rate
     CI_CHANGE_LIST[object.indicator.slug].present? ? object[CI_CHANGE_LIST[object.indicator.slug]['upper_95ci_adj_rate']] : object.upper_95ci_adj_rate
+  end
+
+  def upper_95ci_weight_percent
+    CI_CHANGE_LIST[object.indicator.slug].present? ? object[CI_CHANGE_LIST[object.indicator.slug]['upper_95ci_weight_percent']] : object.upper_95ci_weight_percent
+  end
+
+  def lower_95ci_weight_percent
+    CI_CHANGE_LIST[object.indicator.slug].present? ? object[CI_CHANGE_LIST[object.indicator.slug]['lower_95ci_weight_percent']] : object.lower_95ci_weight_percent
   end
 
   def demo_group_name
