@@ -667,8 +667,8 @@ class TopicCitySerializer < ActiveModel::Serializer
       'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
     },
     'cesarean-delivery' => {
-      'lower_95ci_weight_percent'  => 'lower_95ci_weight_percent',
-      'upper_95ci_weight_percent'  => 'upper_95ci_weight_percent'
+      'lower_95ci_weight_percent'  => 'lower_95ci_percent',
+      'upper_95ci_weight_percent'  => 'upper_95ci_percent'
     },
     'child-obesity' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_weight_percent',
