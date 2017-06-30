@@ -66,7 +66,7 @@ class ResourceParser < Parser
         new_resource.geo_group_id       =   geography.id
         new_resource.demo_group_id      =   demography.id
         str_year                        =   ss.cell(row, COLUMNS_HEADER[:year]).to_s
-        
+
         if (str_year.include? '-') || (str_year.length == 9)
           new_resource.year_from = str_year[0,4].to_i
           new_resource.year_to   = str_year[5,8].to_i
@@ -79,7 +79,10 @@ class ResourceParser < Parser
         rsc_array.upto COLUMNS.length-1 do |rsc_id|
           rsc_start = 7
           rsc_start.upto ss.last_column do |col_id|
-            if COLUMNS[rsc_id].casecmp(ss.cell(1, col_id)) == 0
+            name_attr = COLUMNS[rsc_id]
+            name_attr = 'lower_95ci_age_adj_rate' if COLUMNS[rsc_id] == 'lower_95ci_adj_rate'
+            name_attr = 'upper_95ci_age_adj_rate' if COLUMNS[rsc_id] == 'upper_95ci_adj_rate'
+            if (name_attr.casecmp(ss.cell(1, col_id)) == 0)
               new_resource[COLUMNS[rsc_id]] = ss.cell(row, col_id)
               break
             end
