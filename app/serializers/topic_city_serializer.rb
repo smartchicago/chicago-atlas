@@ -329,7 +329,7 @@ class TopicCitySerializer < ActiveModel::Serializer
     },
     'life-expectancy' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight_percent'
+      'weight_percent' => 'number'
     },
     'limited-english-proficiency' => {
       'weight_number'  => 'number',
