@@ -646,6 +646,34 @@ class TopicCitySerializer < ActiveModel::Serializer
       'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
       'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
     },
+    'asthma-ed-visits-(0-18-years)' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
+    'asthma-ed-visits-(65+-years)' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
+    'diabetes-related-hospitalizations' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
+    'diabetes-related-lower-extremity-amputation-hospitalizations' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
+    'dental-care-emergencies' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
+    'behavioral-health-hospitalizations' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
+    'avoidable-ed-visits' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
     'alzheimers-disease' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
       'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
@@ -714,17 +742,25 @@ class TopicCitySerializer < ActiveModel::Serializer
       'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
       'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
     },
+    'drug-related-hospitalizations' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
+    'alcohol-related-hospitalizations' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
     'drug-induced-deaths' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
       'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
     },
     'early-and-adequate-prenatal-care' => {
-      'lower_95ci_weight_percent'  => 'lower_95ci_weight_percent',
-      'upper_95ci_weight_percent'  => 'upper_95ci_weight_percent'
+      'lower_95ci_weight_percent'  => 'lower_95ci_percent',
+      'upper_95ci_weight_percent'  => 'upper_95ci_percent'
     },
     'engagement-in-hiv-care' => {
-      'lower_95ci_weight_percent'  => 'lower_95ci_weight_percent',
-      'upper_95ci_weight_percent'  => 'upper_95ci_weight_percent'
+      'lower_95ci_weight_percent'  => 'lower_95ci_percent',
+      'upper_95ci_weight_percent'  => 'upper_95ci_percent'
     },
     'female-breast-cancer-deaths' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
