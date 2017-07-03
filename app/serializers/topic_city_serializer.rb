@@ -513,7 +513,7 @@ class TopicCitySerializer < ActiveModel::Serializer
     },
     'unemployment' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'percent'
+      'weight_percent' => 'crude_rate'
     },
     'vacant-housing' => {
       'weight_number'  => 'number',
@@ -654,6 +654,30 @@ class TopicCitySerializer < ActiveModel::Serializer
       'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
       'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
     },
+    'traffic-crash-fatalities' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
+    'schizophrenic-disorder-hospitalizations' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
+    'prostate-cancer-deaths' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
+    'preventable-hospitalizations' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
+    'mood-and-depressive-disorder-hospitalizations' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
+    'influenza-and-pneumonia-deaths' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
     'diabetes-related-hospitalizations' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
       'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
@@ -698,11 +722,31 @@ class TopicCitySerializer < ActiveModel::Serializer
       'lower_95ci_weight_percent'  => 'lower_95ci_percent',
       'upper_95ci_weight_percent'  => 'upper_95ci_percent'
     },
+    'preterm-births' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_percent',
+      'upper_95ci_weight_percent'  => 'upper_95ci_percent'
+    },
+    'hiv-viral-suppression' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_percent',
+      'upper_95ci_weight_percent'  => 'upper_95ci_percent'
+    },
     'child-obesity' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_weight_percent',
       'upper_95ci_weight_percent'  => 'upper_95ci_weight_percent'
     },
     'chlamydia' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_crude_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'
+    },
+    'unemployment' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_crude_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'
+    },
+    'pertussis' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_crude_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'
+    },
+    'hiv-prevalence' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_crude_rate',
       'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'
     },
@@ -819,12 +863,12 @@ class TopicCitySerializer < ActiveModel::Serializer
       'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'
     },
     'linkage-to-hiv-care' => {
-      'lower_95ci_weight_percent'  => 'lower_95ci_weight_percent',
-      'upper_95ci_weight_percent'  => 'upper_95ci_weight_percent'
+      'lower_95ci_weight_percent'  => 'lower_95ci_percent',
+      'upper_95ci_weight_percent'  => 'upper_95ci_percent'
     },
     'low-birthweight' => {
-      'lower_95ci_weight_percent'  => 'lower_95ci_weight_percent',
-      'upper_95ci_weight_percent'  => 'upper_95ci_weight_percent'
+      'lower_95ci_weight_percent'  => 'lower_95ci_percent',
+      'upper_95ci_weight_percent'  => 'upper_95ci_percent'
     },
     'lung-cancer-deaths' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
@@ -847,8 +891,8 @@ class TopicCitySerializer < ActiveModel::Serializer
       'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
     },
     'prenatal-care-in-first-trimester' => {
-      'lower_95ci_weight_percent'  => 'lower_95ci_weight_percent',
-      'upper_95ci_weight_percent'  => 'upper_95ci_weight_percent'
+      'lower_95ci_weight_percent'  => 'lower_95cipercent',
+      'upper_95ci_weight_percent'  => 'upper_95cipercent'
     },
     'primary-care-provider' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_weight_percent',
@@ -863,8 +907,8 @@ class TopicCitySerializer < ActiveModel::Serializer
       'upper_95ci_weight_percent'  => 'upper_95ci_weight_percent'
     },
     'smoking-during-pregnancy' => {
-      'lower_95ci_weight_percent'  => 'lower_95ci_weight_percent',
-      'upper_95ci_weight_percent'  => 'upper_95ci_weight_percent'
+      'lower_95ci_weight_percent'  => 'lower_95ci_percent',
+      'upper_95ci_weight_percent'  => 'upper_95ci_percent'
     },
     'stroke-deaths' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
