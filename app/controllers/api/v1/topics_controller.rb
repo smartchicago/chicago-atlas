@@ -4,7 +4,7 @@ module Api
       api :GET, '/topics', 'Fetch category, subcategory, indicators list'
       formats ['json']
       description <<-EOS
-        == Fetch category, subcategory, indicators from db in order to get the full list of indicators. 
+        == Fetch category, subcategory, indicators from db in order to get the full list of indicators.
       EOS
 
       def index
@@ -44,7 +44,7 @@ module Api
                   .where(year_from: params[:year]..params[:year])
                   .where(indicator_id: Indicator.find_by_slug(params[:indicator_slug]))
                   .where.not(geo_group_id: GeoGroup.find_by_geography('City'))
-                  
+
         render json: @data, each_serializer: TopicAreaSerializer
       end
 
@@ -58,10 +58,10 @@ module Api
 
       def trend
         indicator     = Indicator.find_by_slug(params[:indicator_slug])
-        @data         = Resource.includes(:demo_group).where(indicator_id: indicator)
+        @data         = Resource.includes(:demo_group, :geo_group).where(indicator_id: indicator)
         static        = @data.first
         static_header = []
-        if static.present? 
+        if static.present?
           static_header << { :name => static.indicator.name, :category => static.category_group.name, :sub_category => static.sub_category.name, :slug => static.indicator.slug, :id => static.indicator.id }
         end
 
@@ -89,7 +89,7 @@ module Api
 
         indicator_id = Indicator.find_by_slug(params[:indicator_slug])
         @data = Resource.includes(:category_group, :sub_category, :indicator, :demo_group).where(indicator_id: indicator_id, demo_group_id: demo_group.pluck(:id))
-                  
+
         render json: @data, each_serializer: TopicDemoSerializer
       end
 

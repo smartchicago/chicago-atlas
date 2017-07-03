@@ -5,10 +5,18 @@ class TopicDetailSerializer < ActiveModel::Serializer
   #   :crude_rate, :lower_95ci_crude_rate, :upper_95ci_crude_rate, :percent,
   #   :lower_95ci_percent, :upper_95ci_percent, :weight_number,
   #   :weight_percent, :lower_95ci_weight_percent, :upper_95ci_weight_percent
-  attributes :id, :year_from, :year_to, :demography
-  
-  def demography 
+  attributes :id, :year_from, :year_to, :demography, :for_map
+
+  def demography
     object.demo_group.demography if object.demo_group.present?
+  end
+
+  def for_map
+    if object.geo_group.geography && object.geo_group.geography == 'Community Area'
+      true
+    else
+      false
+    end
   end
 
   # def category_group_name
