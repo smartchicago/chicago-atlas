@@ -407,6 +407,10 @@ class TopicAreaSerializer < ActiveModel::Serializer
       'weight_number'  => 'number',
       'weight_percent' => 'percent'
     },
+    'income-diversity' => {
+      'weight_number'  => 'weight_number',
+      'weight_percent' => 'percent'
+    },
     'stroke-deaths' => {
       'weight_number'  => 'ave_annual_number',
       'weight_percent' => 'age_adj_rate'

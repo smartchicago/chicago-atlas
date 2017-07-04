@@ -891,8 +891,12 @@ class TopicCitySerializer < ActiveModel::Serializer
       'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
     },
     'prenatal-care-in-first-trimester' => {
-      'lower_95ci_weight_percent'  => 'lower_95cipercent',
-      'upper_95ci_weight_percent'  => 'upper_95cipercent'
+      'lower_95ci_weight_percent'  => 'lower_95ci_percent',
+      'upper_95ci_weight_percent'  => 'upper_95ci_percent'
+    },
+    'very-low-birthweight' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_percent',
+      'upper_95ci_weight_percent'  => 'upper_95ci_percent'
     },
     'primary-care-provider' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_weight_percent',
