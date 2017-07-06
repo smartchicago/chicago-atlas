@@ -293,7 +293,7 @@ class TopicAreaSerializer < ActiveModel::Serializer
     },
     'life-expectancy' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight_percent'
+      'weight_percent' => 'number'
     },
     'limited-english-proficiency' => {
       'weight_number'  => 'number',
@@ -350,6 +350,10 @@ class TopicAreaSerializer < ActiveModel::Serializer
     'opioid-related-overdose-deaths' => {
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
+    },
+    'pertussis' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'crude_rate'
     },
     'overall-health-status' => {
       'weight_number'  => 'weight_number',
