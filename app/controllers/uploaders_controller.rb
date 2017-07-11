@@ -1,6 +1,7 @@
 class UploadersController < ApplicationController
   before_action :set_uploader, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  require 'roo'
 
   def index
     @uploaders = Uploader.all
@@ -11,6 +12,7 @@ class UploadersController < ApplicationController
   end
 
   def new
+    @previous_uploader = params[:previous_uploader] ? Uploader.find_by_id(params[:previous_uploader]) : nil
     @uploader = Uploader.new
   end
 
@@ -20,7 +22,8 @@ class UploadersController < ApplicationController
   def create
     @uploader = current_user.uploaders.build(uploader_params)
     content_type = uploader_params[:path].original_filename.last(4)
-    if (content_type.include? "csv") || (content_type.include? "xls")
+    previous_uploader = find_previous_uploader
+    if (content_type.include? "csv") || (content_type.include? "xls") && !previous_uploader
       @uploader.update_name(uploader_params[:path].original_filename)
       @uploader.initialize_state
       respond_to do |format|
@@ -35,7 +38,11 @@ class UploadersController < ApplicationController
         end
       end
     else
-      redirect_to new_uploader_path
+      if previous_uploader
+        redirect_to new_uploader_path(previous_uploader: previous_uploader)
+      else
+        redirect_to new_uploader_path
+      end
     end
   end
 
@@ -74,5 +81,21 @@ class UploadersController < ApplicationController
 
     def uploader_params
       params.require(:uploader).permit(:path, :comment)
+    end
+
+    def find_previous_uploader
+      previous_uploader = nil
+      if file = Roo::Spreadsheet.open(uploader_params[:path].path)
+        total_count = file.last_row - 1
+        if total_count > 1
+          2.upto 2 do |row|
+            indicator_slug  = file.cell(row, 'C').to_s.tr(' ', '-').tr('/', '-').downcase
+            if indicator = Indicator.find_by_slug(indicator_slug)
+              previous_uploader = Uploader.find_by_indicator_id(indicator.id)
+            end
+          end
+        end
+      end
+      previous_uploader
     end
 end

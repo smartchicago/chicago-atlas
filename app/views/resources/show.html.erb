@@ -1,6 +1,7 @@
 <!-- <p id="notice"><%= notice %></p> -->
 
 <h1>Resources View</h1>
+<%= link_to 'Replace indicator', edit_uploader_path(@uploader), class: 'btn btn-primary btn-xs', remote: true if @uploader %>
 <table class="table table-striped">
   <thead>
     <tr>
