@@ -10,7 +10,14 @@
       </ul>
     </div>
   <% end %>
-
+  <% if params[:previous_uploader] && @uploader.errors.empty?  %>
+    <div id="error_explanation">
+      <h2>One error prohibited this uploader from being saved:</h2>
+      <ul>
+        <li>A file with the indicator of the file you are trying to upload already exists. Please replace it. See the indicator <%= link_to 'link', resource_path(@previous_uploader.id) if @previous_uploader %></li>
+      </ul>
+    </div>
+  <% end %>
   <div class="container">
     <div class="col-md-6 col-md-offset-3">
       <h4>Please select a file:</h4>
@@ -31,7 +38,7 @@
       <p>3. Upload the new file</p>
     </div>
   </div>
-  
+
   <div class="modal-footer">
     <div class="text-center">
       <%= f.submit 'Upload File', class: "btn-custom" %>

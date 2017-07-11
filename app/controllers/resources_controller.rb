@@ -8,6 +8,7 @@ class ResourcesController < ApplicationController
   end
 
   def show
+    @uploader = Uploader.find_by_id(params[:id])
     @resources = Resource.where(uploader_id: params[:id]).paginate(:page => params[:page], :per_page => 16)
   end
 end
