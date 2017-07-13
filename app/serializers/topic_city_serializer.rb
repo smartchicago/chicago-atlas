@@ -609,31 +609,31 @@ class TopicCitySerializer < ActiveModel::Serializer
     },
     'school-based-health-services-dental' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight-percent'
+      'weight_percent' => 'weight_percent'
     },
     'school-based-health-services-sti-screening' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight-percent'
+      'weight_percent' => 'weight_percent'
     },
     'school-based-health-services-vision' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight-percent'
+      'weight_percent' => 'weight_percent'
     },
     'seniors-living-alone' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight-percent'
+      'weight_percent' => 'weight_percent'
     },
     'serious-traffic-crash-injuries' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight-percent'
+      'weight_percent' => 'weight_percent'
     },
     'sexual-assault' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight-percent'
+      'weight_percent' => 'weight_percent'
     },
     'violent-crime-in-public-spaces' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight-percent'
+      'weight_percent' => 'weight_percent'
     }
   }
 
