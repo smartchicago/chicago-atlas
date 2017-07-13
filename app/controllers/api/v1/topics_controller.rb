@@ -58,6 +58,7 @@ module Api
 
       def trend
         indicator     = Indicator.find_by_slug(params[:indicator_slug])
+        indicator     = nil if indicator.try(:sub_category).try(:slug) == SubCategory::SLUG_INDICES
         @data         = Resource.includes(:demo_group, :geo_group).where(indicator_id: indicator)
         static        = @data.first
         static_header = []
