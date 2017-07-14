@@ -41,7 +41,7 @@ module Api
 
       def area_show
         @data = Resource.includes(:uploader, :indicator, :geo_group, :demo_group)
-                  .where(year_from: params[:year]..params[:year])
+                  .where(year_from: params[:year], year_to: params[:year])
                   .where(indicator_id: Indicator.find_by_slug(params[:indicator_slug]))
                   .where.not(geo_group_id: GeoGroup.find_by_geography('City'))
 
@@ -119,8 +119,7 @@ module Api
       EOS
       def info
         @area_data     = Resource.includes(:category_group, :sub_category, :indicator, :demo_group)
-                                 .where(indicator_id: Indicator.find_by_slug(params[:indicator_slug]),
-                                  geo_group_id: GeoGroup.find_by_slug(params[:geo_slug])).select { |resource| resource.year_to == resource.year_from }
+                                 .where(indicator_id: Indicator.find_by_slug(params[:indicator_slug]), geo_group_id: GeoGroup.find_by_slug(params[:geo_slug]))
         @city_data     = Resource.includes(:category_group, :sub_category, :indicator, :demo_group)
                                  .where(indicator_id: Indicator.find_by_slug(params[:indicator_slug]), geo_group_id: GeoGroup.find_by_slug('chicago'))
 
