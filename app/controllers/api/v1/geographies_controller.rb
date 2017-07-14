@@ -381,6 +381,26 @@ module Api
         category        = CategoryGroup.where(slug: category_slug)
         render json: category, each_serializer: CommunityAreaDetailSerializer, geo_id: geo_id
       end
+
+      api :GET, '/area_indices/:indicator_slug', 'Fetch detailed data of indicators economic-hardship and child-opportunity-index'
+      param :indicator_slug, String, :desc => 'indicator slug', :required => true
+      formats ['json']
+      description <<-EOS
+        == Fetch detailed data of indicators economic-hardship and child-opportunity-index
+      EOS
+
+      def area_indices
+        indicator = Indicator.find_by_slug(params[:indicator_slug])
+        indicator_valid = indicator.try(:sub_category).try(:slug) == SubCategory::SLUG_INDICES
+
+        if indicator_valid
+          @data  = Resource.includes(:demo_group, :geo_group).where(indicator_id: indicator.id)
+          render json: @data, each_serializer: ResourceIndicesSerializer
+        else
+          render json: []
+        end
+
+      end
     end
   end
 end
