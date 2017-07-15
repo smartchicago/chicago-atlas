@@ -22,27 +22,27 @@ class UploadersController < ApplicationController
   def create
     @uploader = current_user.uploaders.build(uploader_params)
     content_type = uploader_params[:path].original_filename.last(4)
-    previous_uploader = find_previous_uploader
-    if (content_type.include? "csv") || (content_type.include? "xls") && !previous_uploader
-      @uploader.update_name(uploader_params[:path].original_filename)
-      @uploader.initialize_state
-      respond_to do |format|
-        if @uploader.save
-          @uploader.uploaded!
-          UploadProcessingWorker.perform_async(@uploader.id)
-          format.html { redirect_to root_path, notice: 'File successfully uploaded.' }
-          format.json { render :show, status: :created, location: @uploader }
-        else
-          format.html { render :new }
-          format.json { render json: @uploader.errors, status: :unprocessable_entity }
+    if (content_type.include? "csv") || (content_type.include? "xlsx")
+      previous_uploader = find_previous_uploader
+      if  !previous_uploader
+        @uploader.update_name(uploader_params[:path].original_filename)
+        @uploader.initialize_state
+        respond_to do |format|
+          if @uploader.save
+            @uploader.uploaded!
+            UploadProcessingWorker.perform_async(@uploader.id)
+            format.html { redirect_to root_path, notice: 'File successfully uploaded.' }
+            format.json { render :show, status: :created, location: @uploader }
+          else
+            format.html { render :new }
+            format.json { render json: @uploader.errors, status: :unprocessable_entity }
+          end
         end
+      else
+        redirect_to new_uploader_path(previous_uploader: previous_uploader)
       end
     else
-      if previous_uploader
-        redirect_to new_uploader_path(previous_uploader: previous_uploader)
-      else
-        redirect_to new_uploader_path
-      end
+     redirect_to new_uploader_path
     end
   end
 
