@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   apipie
-  resources :uploaders
+  resources :uploaders do
+    collection do
+      get :new_health_care
+      get :health_care_indicators_index
+    end
+  end
   resources :resources
 
   authenticated :user do
@@ -31,6 +36,7 @@ Rails.application.routes.draw do
       get '/topic_detail/:indicator_slug', to: 'topics#trend', as: 'topic_detailed_all'
       get '/topic_recent/:indicator_slug', to: 'topics#recent', as: 'topic_recent'
       get '/topic_info/:geo_slug/:indicator_slug', to: 'topics#info', as: 'topic_info'
+      get '/topic_sources', to: 'topics#topic_sources', as: 'topic_sources'
       get '/resources_all(/:dataset_slug)', to: 'geographies#resources_all', as: 'resources_all'
       get '/resources_category/:category_slug(/:dataset_slug)', to: 'geographies#resources_category', as: 'chicago_resources_category'
       get '/resources(/:dataset_id)/:north/:east/:south/:west' => 'geographies#resources_json'

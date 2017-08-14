@@ -4,7 +4,13 @@ class UploadersController < ApplicationController
   require 'roo'
 
   def index
-    @uploaders = Uploader.all
+    @uploaders = Uploader.where(is_health_care_indicators: false)
+    @hc_uploaders = Uploader.where(is_health_care_indicators: true)
+  end
+
+   def health_care_indicators_index
+     @uploader = Uploader.find_by_id(params[:id])
+     @indicators = HcIndicator.where(uploader_id: params[:id]).paginate(:page => params[:page], :per_page => 16)
   end
 
   def show
@@ -14,6 +20,12 @@ class UploadersController < ApplicationController
   def new
     @previous_uploader = params[:previous_uploader] ? Uploader.find_by_id(params[:previous_uploader]) : nil
     @uploader = Uploader.new
+  end
+
+  def new_health_care
+    @uploader = Uploader.new
+    @uploader.is_health_care_indicators = true
+    render :new
   end
 
   def edit
@@ -47,8 +59,29 @@ class UploadersController < ApplicationController
   end
 
   def update
-    @uploader.remove_resources
-    Indicator.find(@uploader.indicator_id).destroy
+    unless @uploader.is_health_care_indicators
+      @uploader.remove_resources
+      Indicator.find(@uploader.indicator_id).destroy
+    else
+      @uploader.remove_health_care_indicators
+    end
+    @uploader.update_name(uploader_params[:path].original_filename)
+    @uploader.initialize_state
+    respond_to do |format|
+      if @uploader.update(uploader_params)
+        @uploader.uploaded!
+        UploadProcessingWorker.perform_async(@uploader.id)
+        format.html { redirect_to root_path, notice: 'File successfully updated.' }
+        format.json { render :show, status: :ok, location: @uploader }
+      else
+        format.html { render :edit  }
+        format.json { render json: @uploader.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update_health_care_indicators
+    @uploader.remove_health_care_indicators
     @uploader.update_name(uploader_params[:path].original_filename)
     @uploader.initialize_state
     respond_to do |format|
@@ -66,6 +99,9 @@ class UploadersController < ApplicationController
 
   def destroy
     current_indicator = Indicator.find_by_id(@uploader.indicator_id)
+    if @uploader.is_health_care_indicators
+      @uploader.remove_health_care_indicators
+    end
     @uploader.destroy
     current_indicator.destroy if current_indicator
     respond_to do |format|
@@ -80,7 +116,7 @@ class UploadersController < ApplicationController
     end
 
     def uploader_params
-      params.require(:uploader).permit(:path, :comment)
+      params.require(:uploader).permit(:path, :comment, :is_health_care_indicators)
     end
 
     def find_previous_uploader
@@ -89,7 +125,8 @@ class UploadersController < ApplicationController
         total_count = file.last_row - 1
         if total_count > 1
           2.upto 2 do |row|
-            indicator_slug  = file.cell(row, 'C').to_s.tr(' ', '-').tr('/', '-').downcase
+            indicator_name = file.cell(row, 'C').to_s
+            indicator_slug  = CGI.escape(indicator_name.tr(' ', '-').tr('/', '-').tr(',', '-').downcase)
             if indicator = Indicator.find_by_slug(indicator_slug)
               previous_uploader = Uploader.find_by_indicator_id(indicator.id)
             end

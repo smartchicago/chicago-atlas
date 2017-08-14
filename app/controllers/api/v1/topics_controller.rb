@@ -128,6 +128,32 @@ module Api
           :city_data => ActiveModel::Serializer::ArraySerializer.new(@city_data, serializer: TopicCityInfoSerializer)
         }
       end
+
+      api :GET, '/topic_sources', 'Fetch all topic to datasocurce information'
+      formats ['json']
+      description <<-EOS
+        == Fetch all topic to datasocurce information
+      EOS
+      def topic_sources
+
+        render json: {
+          :headings => [ "Indicator", "Citywide Baseline (Most Recent Years)", "Priority Population",
+            "Priority Population Baseline (Most Recent Year)", "2020 Target and Change from Baseline",
+            "Datasource"],
+          :data => hc_indicator
+        }
+      end
+
+      private
+
+      def hc_indicator
+        hc_indicator_group = HcIndicator.all.to_a.group_by { |data| data.category}
+        element = []
+        hc_indicator_group.each do | hc_i|
+          element.push(HcIndicatorSerializer.new(hc_i))
+        end
+        element
+      end
     end
   end
 end
