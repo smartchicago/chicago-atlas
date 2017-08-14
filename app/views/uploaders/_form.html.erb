@@ -33,7 +33,7 @@
                Browse&hellip; <%= f.file_field :path, class:"uploader", required: 'required', style:"display: none" %>
              </span>
            </label>
-
+           <%= f.hidden_field :is_health_care_indicators %>
            <input type="text" class="form-control uploader-display" readonly>
          </div>
          <br>
