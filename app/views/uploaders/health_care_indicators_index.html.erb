@@ -1,7 +1,7 @@
 <!-- <p id="notice"><%= notice %></p> -->
 
-<h1>Indicatos View</h1>
-<%= link_to 'Replace indicators', edit_uploader_path(@uploader), class: 'btn btn-primary btn-xs', remote: true if @uploader %>
+<h1>Data View Health Care 2.0</h1>
+<%= link_to 'Replace file', edit_uploader_path(@uploader), class: 'btn btn-primary btn-xs', remote: true if @uploader %>
 
 <table class="table table-striped">
   <thead>
@@ -15,9 +15,6 @@
       <th>Priority Population Most Recent Year</th>
       <th>2020 Target</th>
       <th>Datasource</th>
-
-      <th>created_at</th>
-      <th>updated_at</th>
     </tr>
   </thead>
 
@@ -32,9 +29,7 @@
         <td><%= indicator.priority_population %></td>
         <td><%= indicator.priority_population_most_recent_year %></td>
         <td><%= indicator.target %></td>
-        <td><a href="<%= indicator.datasource_url %>"><%= indicator.datasource %></a></td>
-        <td><%= indicator.created_at %></td>
-        <td><%= indicator.updated_at %></td>
+        <td><a href="<%= indicator.datasource_url %>" target='_blank'><%= indicator.datasource %></a></td>
       </tr>
     <% end %>
   </tbody>

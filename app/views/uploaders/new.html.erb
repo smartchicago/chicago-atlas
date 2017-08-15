@@ -1,5 +1,8 @@
-<h1>New Uploader</h1>
-
+<% if @uploader.is_health_care_indicators %>
+  <h1>Upload New HC 2.0 File </h1>
+<% else %>
+  <h1>New Uploader</h1>
+<% end %>
 <%= render 'form_new' %>
 
 <%= link_to 'Back', uploaders_path %>

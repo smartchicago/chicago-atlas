@@ -18,6 +18,7 @@
       </ul>
     </div>
   <% end %>
+  <%= f.hidden_field :is_health_care_indicators %>
   <div class="container">
     <div class="col-md-6 col-md-offset-3">
       <h4>Please select a file:</h4>
@@ -32,10 +33,17 @@
         <input type="text" class="form-control uploader-display" readonly>
       </div>
       <br>
-      <p>This form is to be used for Indicator Data Only. There is a 3 step Process</p>
-      <p>1. Download this template file: XXXX.XLS</p>
-      <p>2. Edit the Data and change the file name to be [indicator].xls</p>
-      <p>3. Upload the new file</p>
+      <% unless @uploader.is_health_care_indicators %>
+       <p>This form is to upload Indicator Data. Please follor this 3 step Process</p>
+       <p>1. Download this template file: XXXX.XLSX</p>
+       <p>2. Edit the Data and change the file name to be [indicator].xlsx</p>
+       <p>3. Upload the new file</p>
+      <% else %>
+        <p>This form is to upload Health Care 2.0 Indicators Data. Please follor this 3 step Process</p>
+       <p>1. Download this template file: XXXX.XLSX</p>
+       <p>2. Edit the Data and change the file name to be [file].xlsx</p>
+       <p>3. Upload the new file</p>
+      <% end %>
     </div>
   </div>
 
