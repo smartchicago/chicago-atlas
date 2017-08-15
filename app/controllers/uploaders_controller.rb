@@ -20,6 +20,9 @@ class UploadersController < ApplicationController
   def new
     @previous_uploader = params[:previous_uploader] ? Uploader.find_by_id(params[:previous_uploader]) : nil
     @uploader = Uploader.new
+    if params[:is_health_care_indicators] && params[:is_health_care_indicators] == true
+      @uploader.is_health_care_indicators = true
+    end
   end
 
   def new_health_care
@@ -35,7 +38,11 @@ class UploadersController < ApplicationController
     @uploader = current_user.uploaders.build(uploader_params)
     content_type = uploader_params[:path].original_filename.last(4)
     if (content_type.include? "csv") || (content_type.include? "xlsx")
-      previous_uploader = find_previous_uploader
+      if @uploader.is_health_care_indicators
+        previous_uploader = nil
+      else
+        previous_uploader = find_previous_uploader
+      end
       if  !previous_uploader
         @uploader.update_name(uploader_params[:path].original_filename)
         @uploader.initialize_state
@@ -51,10 +58,10 @@ class UploadersController < ApplicationController
           end
         end
       else
-        redirect_to new_uploader_path(previous_uploader: previous_uploader)
+        redirect_to new_uploader_path(previous_uploader: previous_uploader, is_health_care_indicators: @uploader.is_health_care_indicators)
       end
     else
-     redirect_to new_uploader_path
+     redirect_to new_uploader_path(is_health_care_indicators: @uploader.is_health_care_indicators)
     end
   end
 
