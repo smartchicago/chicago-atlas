@@ -4,6 +4,8 @@ class Uploader < ActiveRecord::Base
     has_many :resources, dependent: :destroy
     belongs_to :user
 
+    TYPES = { default: 0, indicator_2_0: 1, description_template: 2 }
+
     validates :user_id, presence: true
     validates :name, presence: true
 
@@ -30,6 +32,10 @@ class Uploader < ActiveRecord::Base
 
     def remove_health_care_indicators
       HcIndicator.where(uploader_id: id).delete_all
+    end
+
+    def remove_description_template
+      IndicatorProperty.where(uploader_id: id).delete_all
     end
 
     def update_indicator(id)

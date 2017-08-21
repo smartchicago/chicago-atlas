@@ -6,6 +6,7 @@ class CreateIndicatorProperties < ActiveRecord::Migration
       t.string :description
 
       t.timestamps null: false
+
     end
   end
 end

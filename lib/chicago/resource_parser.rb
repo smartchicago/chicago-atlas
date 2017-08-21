@@ -1,6 +1,7 @@
 class ResourceParser < Parser
 
   FIRST_ROW       = 2
+  FIRST_ROW_DESCRIPTION_TEMPLATE       = 3
 
   COLUMNS_HEADER  = {
     category:     'A',
@@ -23,6 +24,12 @@ class ResourceParser < Parser
     target:          'F',
     datasource:      'G',
     datasource_url:  'H'
+  }
+
+  DESCRIPTION_TEMPLATE_HEADER  = {
+    indicator:       'E',
+    description:     'F',
+    order:           'O',
   }
 
   COLUMNS = [
@@ -75,7 +82,14 @@ class ResourceParser < Parser
       current_uploader             = Uploader.find(self.uploader_id)
       total_count                  = ss.last_row - 1
       current_uploader.update_total_row(total_count)
-      current_uploader.is_health_care_indicators ? upload_health_care_indicators(ss, current_uploader) : upload_indicator(ss, current_uploader)
+      case current_uploader.category
+        when Uploader::TYPES[:default]
+          upload_indicator(ss, current_uploader)
+        when Uploader::TYPES[:indicator_2_0]
+          upload_health_care_indicators(ss, current_uploader)
+        else
+          upload_description_template(ss, current_uploader)
+      end
     end
     self.current_sheet.completed!
   end
@@ -157,6 +171,21 @@ class ResourceParser < Parser
       indicator    =  HcIndicator.create(name: name, slug: indicator_slug, category: category, most_recent_year: year,
               priority_population: population, priority_population_most_recent_year: population_year, target: target,
               datasource: datasource, datasource_url: datasource_url, uploader: uploader)
+      work_count += 1
+      uploader.update_current_state(work_count)
+    end
+    work_count
+  end
+
+  def upload_description_template ss, uploader
+    work_count = 0
+    IndicatorProperty.delete_all
+    FIRST_ROW_DESCRIPTION_TEMPLATE.upto ss.last_row do |row|
+      name = ss.cell(row, DESCRIPTION_TEMPLATE_HEADER[:indicator])
+      indicator_slug = CGI.escape(name.to_s.tr(' ', '-').tr('/', '-').tr(',', '-').downcase)
+      order    = ss.cell(row, DESCRIPTION_TEMPLATE_HEADER[:order])
+      description    = ss.cell(row, DESCRIPTION_TEMPLATE_HEADER[:description])
+      indicator    =  IndicatorProperty.create(slug: indicator_slug, description: description, order: order)
       work_count += 1
       uploader.update_current_state(work_count)
     end

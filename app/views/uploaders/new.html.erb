@@ -1,4 +1,4 @@
-<% if @uploader.is_health_care_indicators %>
+<% if @uploader.category == Uploader::TYPES[:indicator_2_0] %>
   <h1>Upload New HC 2.0 File </h1>
 <% else %>
   <h1>New Uploader</h1>
