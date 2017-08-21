@@ -4,7 +4,7 @@ class TopicCitySerializer < ActiveModel::Serializer
              :demography, :number, :cum_number, :ave_annual_number,
              :crude_rate, :lower_95ci_crude_rate, :upper_95ci_crude_rate,
              :percent, :lower_95ci_weight_percent, :upper_95ci_weight_percent,
-             :weight_number, :weight_percent
+             :weight_number, :weight_percent, :value_type
 
   SOURCE_CHANGE_LIST = {
     'accidents' => {
@@ -998,5 +998,16 @@ class TopicCitySerializer < ActiveModel::Serializer
 
   def crude_rate
     object['crude_rate'].present? ? object['crude_rate'] : object['age_adj_rate']
+  end
+
+  def value_type
+    percent_text = 'percent'
+    rate_text = 'rate'
+    unless SOURCE_CHANGE_LIST[object.indicator.slug].present?
+      return percent_text
+    else
+      attr_value = SOURCE_CHANGE_LIST[object.indicator.slug]['weight_percent']
+      return ['percent', 'weight_percent'].include?(attr_value) ? percent_text : rate_text
+    end
   end
 end
