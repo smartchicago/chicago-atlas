@@ -53,27 +53,6 @@ class ResourceParser < Parser
     'flag'
   ]
 
-  HC_COLUMNS = [
-    'number',
-    'cum_number',
-    'ave_annual_number',
-    'crude_rate',
-    'lower_95ci_crude_rate',
-    'upper_95ci_crude_rate',
-    'age_adj_rate',
-    'lower_95ci_adj_rate',
-    'upper_95ci_adj_rate',
-    'percent',
-    'lower_95ci_percent',
-    'upper_95ci_percent',
-    'weight_number',
-    'weight_percent',
-    'lower_95ci_weight_percent',
-    'upper_95ci_weight_percent',
-    'map_key',
-    'flag'
-  ]
-
   #Main engine for analyse of excel file
   def run
     parse do
