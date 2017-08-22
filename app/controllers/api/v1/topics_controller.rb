@@ -63,7 +63,8 @@ module Api
         static        = @data.first
         static_header = []
         if static.present?
-          static_header << { :name => static.indicator.name, :category => static.category_group.name, :sub_category => static.sub_category.name, :slug => static.indicator.slug, :id => static.indicator.id }
+          indicator_property = IndicatorProperty.find_by_slug(params[:indicator_slug])
+          static_header << { :name => static.indicator.name, :category => static.category_group.name, :sub_category => static.sub_category.name, :slug => static.indicator.slug, :id => static.indicator.id, :description => indicator_description(indicator_property), :demography_order => demography_order(indicator_property) }
         end
 
         @demo_list = DemoGroup.joins("INNER JOIN resources ON resources.demo_group_id = demo_groups.id AND resources.indicator_id = #{ indicator.id }").flatten.uniq
@@ -153,6 +154,14 @@ module Api
           element.push(HcIndicatorSerializer.new(hc_i))
         end
         element
+      end
+
+      def indicator_description(indicator_property)
+        indicator_property.try(:description) || ''
+      end
+
+      def demography_order(indicator_property)
+        indicator_property.try(:order) || ''
       end
     end
   end
