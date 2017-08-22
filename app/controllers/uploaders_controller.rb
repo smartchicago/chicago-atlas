@@ -4,8 +4,8 @@ class UploadersController < ApplicationController
   require 'roo'
 
   def index
-    @uploaders = Uploader.where(is_health_care_indicators: false)
-    @hc_uploaders = Uploader.where(is_health_care_indicators: true)
+    @uploaders = Uploader.where(category: Uploader::TYPES[:default])
+    @hc_uploaders = Uploader.where(category: Uploader::TYPES[:indicator_2_0])
   end
 
    def health_care_indicators_index
@@ -20,14 +20,20 @@ class UploadersController < ApplicationController
   def new
     @previous_uploader = params[:previous_uploader] ? Uploader.find_by_id(params[:previous_uploader]) : nil
     @uploader = Uploader.new
-    if params[:is_health_care_indicators] && params[:is_health_care_indicators] == true
-      @uploader.is_health_care_indicators = true
+    if params[:category] && params[:category] == Uploader::TYPES[:indicator_2_0]
+      @uploader.category = Uploader::TYPES[:indicator_2_0]
     end
   end
 
   def new_health_care
     @uploader = Uploader.new
-    @uploader.is_health_care_indicators = true
+    @uploader.category = Uploader::TYPES[:indicator_2_0]
+    render :new
+  end
+
+  def new_description_template
+    @uploader = Uploader.new
+    @uploader.category = Uploader::TYPES[:description_template]
     render :new
   end
 
@@ -38,7 +44,7 @@ class UploadersController < ApplicationController
     @uploader = current_user.uploaders.build(uploader_params)
     content_type = uploader_params[:path].original_filename.last(4)
     if (content_type.include? "csv") || (content_type.include? "xlsx")
-      if @uploader.is_health_care_indicators
+      if @uploader.category != Uploader::TYPES[:default]
         previous_uploader = nil
       else
         previous_uploader = find_previous_uploader
@@ -58,19 +64,20 @@ class UploadersController < ApplicationController
           end
         end
       else
-        redirect_to new_uploader_path(previous_uploader: previous_uploader, is_health_care_indicators: @uploader.is_health_care_indicators)
+        redirect_to new_uploader_path(previous_uploader: previous_uploader, category: @uploader.category)
       end
     else
-     redirect_to new_uploader_path(is_health_care_indicators: @uploader.is_health_care_indicators)
+     redirect_to new_uploader_path(category: @uploader.category)
     end
   end
 
   def update
-    unless @uploader.is_health_care_indicators
-      @uploader.remove_resources
-      Indicator.find(@uploader.indicator_id).destroy
-    else
-      @uploader.remove_health_care_indicators
+    case @uploader.category
+      when Uploader::TYPES[:default]
+        @uploader.remove_resources
+        Indicator.find(@uploader.indicator_id).destroy
+      when Uploader::TYPES[:indicator_2_0]
+        @uploader.remove_health_care_indicators
     end
     @uploader.update_name(uploader_params[:path].original_filename)
     @uploader.initialize_state
@@ -106,7 +113,7 @@ class UploadersController < ApplicationController
 
   def destroy
     current_indicator = Indicator.find_by_id(@uploader.indicator_id)
-    if @uploader.is_health_care_indicators
+    if @uploader.category == Uploader::TYPES[:indicator_2_0]
       @uploader.remove_health_care_indicators
     end
     @uploader.destroy
@@ -123,7 +130,7 @@ class UploadersController < ApplicationController
     end
 
     def uploader_params
-      params.require(:uploader).permit(:path, :comment, :is_health_care_indicators)
+      params.require(:uploader).permit(:path, :comment, :category)
     end
 
     def find_previous_uploader

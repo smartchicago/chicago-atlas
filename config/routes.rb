@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :uploaders do
     collection do
       get :new_health_care
+      get :new_description_template
       get :health_care_indicators_index
     end
   end
