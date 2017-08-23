@@ -4,7 +4,7 @@ class TopicCitySerializer < ActiveModel::Serializer
              :demography, :number, :cum_number, :ave_annual_number,
              :crude_rate, :lower_95ci_crude_rate, :upper_95ci_crude_rate,
              :percent, :lower_95ci_weight_percent, :upper_95ci_weight_percent,
-             :weight_number, :weight_percent, :value_type
+             :weight_number, :weight_percent, :value_type, :flag
 
   SOURCE_CHANGE_LIST = {
     'accidents' => {
