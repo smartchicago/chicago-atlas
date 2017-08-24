@@ -5,7 +5,7 @@ class TopicDetailSerializer < ActiveModel::Serializer
   #   :crude_rate, :lower_95ci_crude_rate, :upper_95ci_crude_rate, :percent,
   #   :lower_95ci_percent, :upper_95ci_percent, :weight_number,
   #   :weight_percent, :lower_95ci_weight_percent, :upper_95ci_weight_percent
-  attributes :id, :year_from, :year_to, :demography, :for_map
+  attributes :id, :year_from, :year_to, :demography, :for_map, :year
 
   def demography
     object.demo_group.demography if object.demo_group.present?
@@ -16,6 +16,14 @@ class TopicDetailSerializer < ActiveModel::Serializer
       true
     else
       false
+    end
+  end
+
+  def year
+    if object.year_from && object.year_to
+      object.year_from == object.year_to ? object.year_from : [object.year_from.to_s, object.year_to.to_s].join('-')
+    else
+      object.year_from
     end
   end
 

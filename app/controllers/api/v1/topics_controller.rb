@@ -22,8 +22,9 @@ module Api
       EOS
 
       def city_show
+        year_from, year_to = Resource.parse_year(params[:year])
         @data = Resource.includes(:demo_group, :uploader, :indicator)
-                  .where(year_from: params[:year] .. params[:year])
+                  .where(year_from: year_from, year_to: year_to)
                   .where(geo_group_id: GeoGroup.find_by_geography('City'))
                   .joins(:indicator).where(indicators: {slug: params[:indicator_slug]})
 
@@ -163,6 +164,7 @@ module Api
       def demography_order(indicator_property)
         indicator_property.try(:order) || ''
       end
+
     end
   end
 end
