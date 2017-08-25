@@ -41,8 +41,9 @@ module Api
       EOS
 
       def area_show
+        year_from, year_to = Resource.parse_year(params[:year])
         @data = Resource.includes(:uploader, :indicator, :geo_group, :demo_group)
-                  .where(year_from: params[:year], year_to: params[:year])
+                  .where(year_from: year_from, year_to: year_to)
                   .where(indicator_id: Indicator.find_by_slug(params[:indicator_slug]))
                   .where.not(geo_group_id: GeoGroup.find_by_geography('City'))
 
