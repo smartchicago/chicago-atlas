@@ -66,7 +66,14 @@ module Api
         static_header = []
         if static.present?
           indicator_property = IndicatorProperty.find_by_slug(params[:indicator_slug])
-          static_header << { :name => static.indicator.name, :category => static.category_group.name, :sub_category => static.sub_category.name, :slug => static.indicator.slug, :id => static.indicator.id, :description => indicator_description(indicator_property), :demography_order => demography_order(indicator_property) }
+          indicator_map_colour = IndicatorMapColour.find_by_slug(params[:indicator_slug])
+          map_type = IndicatorMapColour.map_type_string(indicator,indicator_map_colour)
+          static_header << { :name => static.indicator.name, :category => static.category_group.name,
+                             :sub_category => static.sub_category.name, :slug => static.indicator.slug,
+                             :id => static.indicator.id, :description => indicator_description(indicator_property),
+                             :demography_order => demography_order(indicator_property),
+                             :map_type => map_type,
+                             :map_value_colours => IndicatorMapColour.map_type_colours(params[:indicator_slug], map_type) }
         end
 
         @demo_list = DemoGroup.joins("INNER JOIN resources ON resources.demo_group_id = demo_groups.id AND resources.indicator_id = #{ indicator.id }").flatten.uniq
