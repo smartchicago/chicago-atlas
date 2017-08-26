@@ -583,6 +583,10 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_number'  => 'weight_number',
       'weight_percent' => 'percent'
     },
+    'life-expectancy' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'weight_percent'
+    },
     'mean-age-at-first-birth' => {
       'weight_number'  => 'number',
       'weight_percent' => 'weight_percent'
