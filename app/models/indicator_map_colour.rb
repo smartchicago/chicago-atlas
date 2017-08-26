@@ -18,7 +18,7 @@ class IndicatorMapColour < ActiveRecord::Base
     unless indicator_map_colours.empty?
       colours = []
       indicator_map_colours.each do |imc|
-        colours.push({start: imc.start_value, end: imc.end_value, colour: imc.colour})
+        colours.push({start: imc.start_value, end: imc.end_value, color: imc.colour})
       end
       colours
     else
@@ -32,11 +32,11 @@ class IndicatorMapColour < ActiveRecord::Base
 
   def self.default_quintile
    return [
-            { start: 0, end: 50, colour: '#CCDFEB' },
-            { start: 51, end: 65, colour: '#92C2DF' },
-            { start: 66, end: 80, colour: '#6AA3CE' },
-            { start: 81, end: 95, colour: '#4D81B7' },
-            { start: 96, end: 110, colour: '#4474a7' }
+            { start: 0, end: 50, color: '#CCDFEB' },
+            { start: 51, end: 65, color: '#92C2DF' },
+            { start: 66, end: 80, color: '#6AA3CE' },
+            { start: 81, end: 95, color: '#4D81B7' },
+            { start: 96, end: 110, color: '#4474a7' }
           ]
   end
 

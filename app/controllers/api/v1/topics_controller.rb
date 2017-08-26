@@ -73,7 +73,7 @@ module Api
                              :id => static.indicator.id, :description => indicator_description(indicator_property),
                              :demography_order => demography_order(indicator_property),
                              :map_type => map_type,
-                             :map_value_colours => IndicatorMapColour.map_type_colours(params[:indicator_slug], map_type) }
+                             :map_value_colors => IndicatorMapColour.map_type_colours(params[:indicator_slug], map_type) }
         end
 
         @demo_list = DemoGroup.joins("INNER JOIN resources ON resources.demo_group_id = demo_groups.id AND resources.indicator_id = #{ indicator.id }").flatten.uniq
