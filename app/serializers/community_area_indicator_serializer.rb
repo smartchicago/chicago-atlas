@@ -13,7 +13,7 @@ class CommunityAreaIndicatorSerializer < ActiveModel::Serializer
   def city_value
     city_id = GeoGroup.find_by_slug('chicago').id
     demo_id = DemoGroup.find_by_slug('all-race-ethnicitiesrace-ethnicity').id
-    resource = Resource.where(geo_group_id: city_id, indicator_id: object.id, demo_group_id: demo_id).last
+    resource = Resource.where(geo_group_id: city_id, indicator_id: object.id, demo_group_id: demo_id).order(:year_from).last
     if resource
       source_change_list  = TopicAreaSerializer::SOURCE_CHANGE_LIST
       resource.weight_percent = resource[source_change_list[object.slug]['weight_percent']] if source_change_list[object.slug].present?
