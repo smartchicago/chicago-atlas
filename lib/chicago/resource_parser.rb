@@ -201,10 +201,10 @@ class ResourceParser < Parser
       latitude = ss.cell(row, RESOURCES_HEADER[:latitude])
       longitude = ss.cell(row, RESOURCES_HEADER[:longitude])
       
-      community_area = Geography.find_by(name: community_area)
-      community_area_id = community_area ? community_area.id : nil
-      resource    =  InterventionLocation.create(name: name, address: address, city: city, zip_code: zip_code, community_area_id: community_area_id,
-            categories: categories, phone: phone, program_url: program_url, latitude: latitude, longitude: longitude)
+      geography = Geography.find_by(name: community_area)
+      geography_id = geography ? geography.id : nil
+      resource    =  InterventionLocation.create(program_name: name, address: address, city: city, zip: zip_code, geography_id: geography_id,
+            categories: categories, phone: phone, program_url: program_url, latitude: latitude, longitude: longitude, )
       work_count += 1
       uploader.update_current_state(work_count)
     end

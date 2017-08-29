@@ -19,7 +19,7 @@ class UploadersController < ApplicationController
 
   def resources_index
      @uploader = Uploader.find_by_id(params[:id])
-     @resources = InterventionLocation.where(uploader_id: params[:id]).paginate(:page => params[:page], :per_page => 16)
+     @resources = InterventionLocation.all.paginate(:page => params[:page], :per_page => 16)
   end
 
   def show
