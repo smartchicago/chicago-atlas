@@ -37,7 +37,7 @@
             <td><%= uploader.status %></td>
             <td><%= uploader.total_row %></td>
             <td><%= uploader.current_row %></td>
-            <td><%= link_to 'View Data', resources_index_uploaders_path(uploader.id), class: 'btn btn-primary btn-xs'  %></td>
+            <td><%= link_to 'View Data', resources_index_uploaders_path(id: uploader.id), class: 'btn btn-primary btn-xs'  %></td>
             <td><%= link_to 'Replace', edit_uploader_path(uploader), class: 'btn btn-primary btn-xs', remote: true %></td>
             <td><%= link_to '<i class="glyphicon glyphicon-remove-circle"></i>'.html_safe, uploader, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
