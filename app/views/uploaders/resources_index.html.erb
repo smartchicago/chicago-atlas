@@ -1,6 +1,6 @@
 <!-- <p id="notice"><%= notice %></p> -->
 
-<h1>Data View Health Care 2.0</h1>
+<h1>Data View Maps Corps</h1>
 <%= link_to 'Replace file', edit_uploader_path(@uploader), class: 'btn btn-primary btn-xs', remote: true if @uploader %>
 
 <table class="table table-striped">
@@ -28,7 +28,7 @@
         <td><%= resource.address %></td>
         <td><%= resource.city %></td>
         <td><%= resource.zip %></td>
-        <td><%= resource.geography ? resource.geography.name : nil %></td>
+        <td><%= resource.community_area_name %></td>
         <td><%= resource.categories %></td>
         <td><%= resource.phone %></td>
         <td><a href="<%= resource.program_url %>" target='_blank'><%= resource.program_url != "NULL" ? resource.program_url : nil %></a></td>

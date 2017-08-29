@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170829152529) do
+ActiveRecord::Schema.define(version: 20170829171927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(version: 20170829152529) do
 
   create_table "intervention_locations", force: :cascade do |t|
     t.string   "program_name"
-    t.text     "hours",             default: ""
+    t.text     "hours",               default: ""
     t.string   "phone"
     t.string   "address"
     t.string   "city"
@@ -146,15 +146,16 @@ ActiveRecord::Schema.define(version: 20170829152529) do
     t.float    "latitude"
     t.float    "longitude"
     t.integer  "dataset_id"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.text     "tags",              default: ""
-    t.string   "organization_name", default: ""
-    t.text     "categories",        default: ""
-    t.string   "purple_binder_url", default: ""
-    t.string   "program_url",       default: ""
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.text     "tags",                default: ""
+    t.string   "organization_name",   default: ""
+    t.text     "categories",          default: ""
+    t.string   "purple_binder_url",   default: ""
+    t.string   "program_url",         default: ""
     t.integer  "community_area_id"
     t.integer  "geography_id"
+    t.string   "community_area_name"
   end
 
   add_index "intervention_locations", ["geography_id"], name: "index_intervention_locations_on_geography_id", using: :btree

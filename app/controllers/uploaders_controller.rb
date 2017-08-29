@@ -49,7 +49,7 @@ class UploadersController < ApplicationController
   def new_resources
     @uploader = Uploader.new
     @uploader.category = Uploader::TYPES[:resources]
-    render :new
+    render :resources
   end
 
   def edit

@@ -194,17 +194,20 @@ class ResourceParser < Parser
       address = ss.cell(row, RESOURCES_HEADER[:address])
       city = ss.cell(row, RESOURCES_HEADER[:city])
       zip_code = ss.cell(row, RESOURCES_HEADER[:zip_code])
-      community_area = ss.cell(row, RESOURCES_HEADER[:community_area])
+      community_area_name = ss.cell(row, RESOURCES_HEADER[:community_area])
       categories = ss.cell(row, RESOURCES_HEADER[:categories])
       phone = ss.cell(row, RESOURCES_HEADER[:phone])
       program_url = ss.cell(row, RESOURCES_HEADER[:program_url])
       latitude = ss.cell(row, RESOURCES_HEADER[:latitude])
       longitude = ss.cell(row, RESOURCES_HEADER[:longitude])
       
-      geography = Geography.find_by(name: community_area)
-      geography_id = geography ? geography.id : nil
-      resource    =  InterventionLocation.create(program_name: name, address: address, city: city, zip: zip_code, geography_id: geography_id,
-            categories: categories, phone: phone, program_url: program_url, latitude: latitude, longitude: longitude, )
+      community_area = GeoGroup.find_by_slug(community_area_name.to_s.tr(' ', '-').downcase)
+      community_area_id = community_area ? community_area.id : nil
+      resource    =  InterventionLocation.create(program_name: name, address: address, city: city, zip: zip_code,
+                                                 community_area_id: community_area_id, categories: categories, phone: phone,
+                                                 program_url: program_url, latitude: latitude, longitude: longitude,
+                                                 community_area_name: community_area_name
+      )
       work_count += 1
       uploader.update_current_state(work_count)
     end
