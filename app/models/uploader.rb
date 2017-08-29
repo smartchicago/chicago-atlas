@@ -4,7 +4,7 @@ class Uploader < ActiveRecord::Base
     has_many :resources, dependent: :destroy
     belongs_to :user
 
-    TYPES = { default: 0, indicator_2_0: 1, description_template: 2 }
+    TYPES = { default: 0, indicator_2_0: 1, description_template: 2, resources: 3 }
 
     validates :user_id, presence: true
     validates :name, presence: true

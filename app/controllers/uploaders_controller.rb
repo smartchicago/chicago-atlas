@@ -8,9 +8,18 @@ class UploadersController < ApplicationController
     @hc_uploaders = Uploader.where(category: Uploader::TYPES[:indicator_2_0])
   end
 
-   def health_care_indicators_index
+  def resources
+    @uploaders = Uploader.where(category: Uploader::TYPES[:resources])
+  end
+
+  def health_care_indicators_index
      @uploader = Uploader.find_by_id(params[:id])
      @indicators = HcIndicator.where(uploader_id: params[:id]).paginate(:page => params[:page], :per_page => 16)
+  end
+
+  def resources_index
+     @uploader = Uploader.find_by_id(params[:id])
+     @resources = InterventionLocation.where(uploader_id: params[:id]).paginate(:page => params[:page], :per_page => 16)
   end
 
   def show
@@ -34,6 +43,12 @@ class UploadersController < ApplicationController
   def new_description_template
     @uploader = Uploader.new
     @uploader.category = Uploader::TYPES[:description_template]
+    render :new
+  end
+
+  def new_resources
+    @uploader = Uploader.new
+    @uploader.category = Uploader::TYPES[:resources]
     render :new
   end
 

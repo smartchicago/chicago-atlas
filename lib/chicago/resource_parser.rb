@@ -32,6 +32,19 @@ class ResourceParser < Parser
     order:           'O',
   }
 
+  RESOURCES_HEADER  = {
+    name:             'A',
+    address:          'D',
+    city:             'F',
+    zip_code:         'G',
+    community_area:   'H',
+    categories:       'L',
+    phone:            'N',
+    program_url:      'P',
+    latitude:         'Q',
+    longitude:        'R',
+  }
+
   COLUMNS = [
     'number',
     'cum_number',
@@ -66,6 +79,8 @@ class ResourceParser < Parser
           upload_indicator(ss, current_uploader)
         when Uploader::TYPES[:indicator_2_0]
           upload_health_care_indicators(ss, current_uploader)
+        when Uploader::TYPES[:resources]
+          upload_resources(ss, current_uploader)
         else
           upload_description_template(ss, current_uploader)
       end
@@ -165,6 +180,31 @@ class ResourceParser < Parser
       order    = ss.cell(row, DESCRIPTION_TEMPLATE_HEADER[:order])
       description    = ss.cell(row, DESCRIPTION_TEMPLATE_HEADER[:description])
       indicator    =  IndicatorProperty.create(slug: indicator_slug, description: description, order: order)
+      work_count += 1
+      uploader.update_current_state(work_count)
+    end
+    work_count
+  end
+
+  def upload_resources ss, uploader
+    work_count = 0
+    InterventionLocation.delete_all
+    FIRST_ROW_DESCRIPTION_TEMPLATE.upto ss.last_row do |row|
+      name = ss.cell(row, RESOURCES_HEADER[:name])
+      address = ss.cell(row, RESOURCES_HEADER[:address])
+      city = ss.cell(row, RESOURCES_HEADER[:city])
+      zip_code = ss.cell(row, RESOURCES_HEADER[:zip_code])
+      community_area = ss.cell(row, RESOURCES_HEADER[:community_area])
+      categories = ss.cell(row, RESOURCES_HEADER[:categories])
+      phone = ss.cell(row, RESOURCES_HEADER[:phone])
+      program_url = ss.cell(row, RESOURCES_HEADER[:program_url])
+      latitude = ss.cell(row, RESOURCES_HEADER[:latitude])
+      longitude = ss.cell(row, RESOURCES_HEADER[:longitude])
+      
+      community_area = Geography.find_by(name: community_area)
+      community_area_id = community_area ? community_area.id : nil
+      resource    =  InterventionLocation.create(name: name, address: address, city: city, zip_code: zip_code, community_area_id: community_area_id,
+            categories: categories, phone: phone, program_url: program_url, latitude: latitude, longitude: longitude)
       work_count += 1
       uploader.update_current_state(work_count)
     end
