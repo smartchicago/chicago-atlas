@@ -49,7 +49,7 @@ class UploadersController < ApplicationController
   def new_resources
     @uploader = Uploader.new
     @uploader.category = Uploader::TYPES[:resources]
-    render :resources
+    render :new
   end
 
   def edit
@@ -71,8 +71,13 @@ class UploadersController < ApplicationController
           if @uploader.save
             @uploader.uploaded!
             UploadProcessingWorker.perform_async(@uploader.id)
-            format.html { redirect_to root_path, notice: 'File successfully uploaded.' }
-            format.json { render :show, status: :created, location: @uploader }
+            if @uploader.category != Uploader::TYPES[:resources]
+              format.html { redirect_to root_path, notice: 'File successfully uploaded.' }
+              format.json { render :show, status: :created, location: @uploader }
+            else
+              format.html { redirect_to resources_uploaders_path, notice: 'File successfully uploaded.' }
+              format.json { render :show, status: :created, location: @uploader }
+            end
           else
             format.html { render :new }
             format.json { render json: @uploader.errors, status: :unprocessable_entity }
@@ -100,8 +105,13 @@ class UploadersController < ApplicationController
       if @uploader.update(uploader_params)
         @uploader.uploaded!
         UploadProcessingWorker.perform_async(@uploader.id)
-        format.html { redirect_to root_path, notice: 'File successfully updated.' }
-        format.json { render :show, status: :ok, location: @uploader }
+        if @uploader.category != Uploader::TYPES[:resources]
+          format.html { redirect_to root_path, notice: 'File successfully updated.' }
+          format.json { render :show, status: :ok, location: @uploader }
+        else
+          format.html { redirect_to resources_uploaders_path, notice: 'File successfully uploaded.' }
+          format.json { render :show, status: :created, location: @uploader }
+        end
       else
         format.html { render :edit  }
         format.json { render json: @uploader.errors, status: :unprocessable_entity }
