@@ -302,13 +302,13 @@ module Api
         resources_by_cat = [{:category => 'all', :resources => []}]
         resources_all = []
         resources.each do |r|
-          categories = eval(r[:categories])
+          categories = r[:categories] ? r[:categories].split(",") : []
           categories.each do |c|
-            if resources_by_cat.select {|r_c| r_c[:category] == c }.empty?
-              resources_by_cat << {:category => c, :resources => []}
+            if resources_by_cat.select {|r_c| r_c[:category] == c.strip }.empty?
+              resources_by_cat << {:category => c.strip, :resources => []}
             end
             unless r[:address].empty?
-              resources_by_cat.select {|r_c| r_c[:category] == c }.first[:resources] << r
+              resources_by_cat.select {|r_c| r_c[:category] == c.strip }.first[:resources] << r
               resources_all << r
             end
           end
