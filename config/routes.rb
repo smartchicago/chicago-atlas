@@ -8,6 +8,9 @@ Rails.application.routes.draw do
       get :resources
       get :resources_index
       get :new_resources
+      get :indicators_map_colors
+      get :indicators_map_colors_index
+      get :new_indicators_map_colors
     end
   end
   resources :resources

@@ -12,6 +12,10 @@ class UploadersController < ApplicationController
     @uploaders = Uploader.where(category: Uploader::TYPES[:resources])
   end
 
+  def indicators_map_colors
+    @uploaders = Uploader.where(category: Uploader::TYPES[:indicator_map_color])
+  end
+
   def health_care_indicators_index
      @uploader = Uploader.find_by_id(params[:id])
      @indicators = HcIndicator.where(uploader_id: params[:id]).paginate(:page => params[:page], :per_page => 16)
@@ -22,6 +26,11 @@ class UploadersController < ApplicationController
      @resources = InterventionLocation.all.paginate(:page => params[:page], :per_page => 16)
   end
 
+  def indicators_map_colors_index
+    @uploader = Uploader.find_by_id(params[:id])
+    @indicators_map_colors = IndicatorMapColour.all.paginate(:page => params[:page], :per_page => 16)
+  end
+
   def show
      @uploader = Uploader.find(params[:id])
   end
@@ -29,8 +38,9 @@ class UploadersController < ApplicationController
   def new
     @previous_uploader = params[:previous_uploader] ? Uploader.find_by_id(params[:previous_uploader]) : nil
     @uploader = Uploader.new
-    if params[:category] && params[:category] == Uploader::TYPES[:indicator_2_0]
-      @uploader.category = Uploader::TYPES[:indicator_2_0]
+    category = params[:category]
+    if category
+      @uploader.category = category
     end
   end
 
@@ -49,6 +59,12 @@ class UploadersController < ApplicationController
   def new_resources
     @uploader = Uploader.new
     @uploader.category = Uploader::TYPES[:resources]
+    render :new
+  end
+
+  def new_indicators_map_colors
+    @uploader = Uploader.new
+    @uploader.category = Uploader::TYPES[:indicator_map_color]
     render :new
   end
 
@@ -140,7 +156,14 @@ class UploadersController < ApplicationController
     current_indicator = Indicator.find_by_id(@uploader.indicator_id)
     if @uploader.category == Uploader::TYPES[:indicator_2_0]
       @uploader.remove_health_care_indicators
+    elsif @uploader.category == Uploader::TYPES[:description_template]
+      @uploader.remove_description_template
+    elsif @uploader.category == Uploader::TYPES[:resources]
+      @uploader.remove_intervention_location
+    elsif @uploader.category == Uploader::TYPES[:indicator_map_color]
+      @uploader.remove_indicators_map_colors
     end
+
     @uploader.destroy
     current_indicator.destroy if current_indicator
     respond_to do |format|

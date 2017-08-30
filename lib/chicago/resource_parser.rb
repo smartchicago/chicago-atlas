@@ -1,7 +1,9 @@
 class ResourceParser < Parser
 
-  FIRST_ROW       = 2
-  FIRST_ROW_DESCRIPTION_TEMPLATE       = 3
+  FIRST_ROW                      = 2
+  FIRST_ROW_DESCRIPTION_TEMPLATE = 3
+  FIRST_ROW_RESOURCES            = 2
+  FIRST_INDICATOR_MAP_COLOR      = 2
 
   COLUMNS_HEADER  = {
     category:     'A',
@@ -29,7 +31,7 @@ class ResourceParser < Parser
   DESCRIPTION_TEMPLATE_HEADER  = {
     indicator:       'E',
     description:     'F',
-    order:           'O',
+    order:           'O'
   }
 
   RESOURCES_HEADER  = {
@@ -42,7 +44,15 @@ class ResourceParser < Parser
     phone:            'N',
     program_url:      'P',
     latitude:         'Q',
-    longitude:        'R',
+    longitude:        'R'
+  }
+
+  INDICATOR_MAP_COLOR_HEADER  = {
+    indicator:   'A',
+    type:        'B',
+    range_start: 'C',
+    range_end:   'D',
+    color:       'E'
   }
 
   COLUMNS = [
@@ -81,6 +91,8 @@ class ResourceParser < Parser
           upload_health_care_indicators(ss, current_uploader)
         when Uploader::TYPES[:resources]
           upload_resources(ss, current_uploader)
+        when Uploader::TYPES[:indicator_map_color]
+          upload_indicators_map_color(ss, current_uploader)
         else
           upload_description_template(ss, current_uploader)
       end
@@ -189,7 +201,7 @@ class ResourceParser < Parser
   def upload_resources ss, uploader
     work_count = 0
     InterventionLocation.delete_all
-    FIRST_ROW_DESCRIPTION_TEMPLATE.upto ss.last_row do |row|
+    FIRST_ROW_RESOURCES.upto ss.last_row do |row|
       name = ss.cell(row, RESOURCES_HEADER[:name])
       address = ss.cell(row, RESOURCES_HEADER[:address])
       city = ss.cell(row, RESOURCES_HEADER[:city])
@@ -200,14 +212,31 @@ class ResourceParser < Parser
       program_url = ss.cell(row, RESOURCES_HEADER[:program_url])
       latitude = ss.cell(row, RESOURCES_HEADER[:latitude])
       longitude = ss.cell(row, RESOURCES_HEADER[:longitude])
-      
+
       community_area = GeoGroup.find_by_slug(community_area_name.to_s.tr(' ', '-').downcase)
       community_area_id = community_area ? community_area.id : nil
       resource    =  InterventionLocation.create(program_name: name, address: address, city: city, zip: zip_code,
                                                  community_area_id: community_area_id, categories: categories, phone: phone,
                                                  program_url: program_url, latitude: latitude, longitude: longitude,
-                                                 community_area_name: community_area_name
-      )
+                                                 community_area_name: community_area_name)
+      work_count += 1
+      uploader.update_current_state(work_count)
+    end
+    work_count
+  end
+
+  def upload_indicators_map_color ss, uploader
+    work_count = 0
+    IndicatorMapColour.delete_all
+    FIRST_INDICATOR_MAP_COLOR.upto ss.last_row do |row|
+      indicator_name = ss.cell(row, INDICATOR_MAP_COLOR_HEADER[:indicator])
+      indicator_slug = CGI.escape(indicator_name.to_s.tr(' ', '-').tr('/', '-').tr(',', '-').downcase)
+      type = ss.cell(row, INDICATOR_MAP_COLOR_HEADER[:type])
+      range_start = ss.cell(row, INDICATOR_MAP_COLOR_HEADER[:range_start])
+      range_end = ss.cell(row, INDICATOR_MAP_COLOR_HEADER[:range_end])
+      color = ss.cell(row, INDICATOR_MAP_COLOR_HEADER[:color])
+      indicator_map_colour = IndicatorMapColour.create(slug: indicator_slug, map_key: type, start_value: range_start.to_i,
+                                                       end_value: range_end.to_i, colour: color )
       work_count += 1
       uploader.update_current_state(work_count)
     end

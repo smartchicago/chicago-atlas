@@ -42,8 +42,16 @@
            <p>1. Download this template file: XXXX.XLSX</p>
            <p>2. Edit the Data and change the file name to be [indicator].xlsx</p>
            <p>3. Upload the new file</p>
-          <% elsif Uploader::TYPES[:indicator_2_0] %>
-            <p>This form is to upload Health Care 2.0 Indicators Data. Please follor this 3 step Process</p>
+          <% else %>
+            <% if @uploader.category == Uploader::TYPES[:indicator_2_0] %>
+              <p>This form is to upload Health Care 2.0 Indicators Data. Please follor this 3 step Process</p>
+            <% elsif @uploader.category == Uploader::TYPES[:description_template] %>
+              <p>This form is to upload Description Template Data. Please follor this 3 step Process</p>
+            <% elsif @uploader.category == Uploader::TYPES[:resources] %>
+              <p>This form is to upload Resources Template Data. Please follor this 3 step Process</p>
+            <% elsif @uploader.category == Uploader::TYPES[:indicator_map_color] %>
+              <p>This form is to upload Indicator Map Color Template Data. Please follor this 3 step Process</p>
+            <% end %>
            <p>1. Download this template file: XXXX.XLSX</p>
            <p>2. Edit the Data and change the file name to be [file].xlsx</p>
            <p>3. Upload the new file</p>
