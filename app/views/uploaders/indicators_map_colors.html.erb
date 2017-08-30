@@ -2,8 +2,8 @@
   <div class="col-xs-12">
     <% if @uploaders.count > 0 %>
     <br>
-    <h1>Resource
-      <a  onClick="window.location.reload()" class="btn btn-primary btn-sm">
+    <h1>Indicators Map Colors
+      <a onClick="window.location.reload()" class="btn btn-primary btn-sm">
         refresh <i class="fa fa-refresh" aria-hidden="true"></i>
       </a>
     </h1>
@@ -11,22 +11,16 @@
     <table class="table table-striped table-hover uploaders">
       <thead>
         <tr>
-          <!-- <th>Id</th> -->
           <th>File</th>
           <th>Status</th>
           <th>Total</th>
           <th>Processed</th>
-          <!-- <th>Show</th> -->
-          <th><!--View--></th>
-          <th><!--Edit--></th>
-          <th><!--Destroy--></th>
         </tr>
       </thead>
 
       <tbody>
         <% @uploaders.each do |uploader| %>
           <tr>
-            <!-- <td><%= uploader.id %></td> -->
             <td>
               <a class="btn btn-primary btn-sm" href="<%= uploader.path %>">
                 <%= uploader.name %>
@@ -36,7 +30,7 @@
             <td><%= uploader.status %></td>
             <td><%= uploader.total_row %></td>
             <td><%= uploader.current_row %></td>
-            <td><%= link_to 'View Data', resources_index_uploaders_path(id: uploader.id), class: 'btn btn-primary btn-xs'  %></td>
+            <td><%= link_to 'View Data', indicators_map_colors_index_uploaders_path(id: uploader.id), class: 'btn btn-primary btn-xs'  %></td>
             <td><%= link_to 'Replace', edit_uploader_path(uploader), class: 'btn btn-primary btn-xs', remote: true %></td>
             <td><%= link_to '<i class="glyphicon glyphicon-remove-circle"></i>'.html_safe, uploader, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
@@ -45,9 +39,9 @@
     </table>
     <br>
     <% else %>
-    <h1>Add your First Maps Corps File</h1>
+    <h1>Add your Indicators Map Colors File</h1>
     <br>
-      <%= link_to "Upload New File <i class='fa fa-2 fa-cloud-upload' aria-hidden='true'></i>".html_safe , new_resources_uploaders_path, remote: true, class: "btn-custom" %>
+      <%= link_to "Upload New File <i class='fa fa-2 fa-cloud-upload' aria-hidden='true'></i>".html_safe , new_indicators_map_colors_uploaders_path, remote: true, class: "btn-custom" %>
     <% end %>
   </div>
 </div>
