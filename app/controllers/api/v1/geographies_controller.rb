@@ -334,7 +334,7 @@ module Api
       def resources_all
         resources   = InterventionLocation
 
-        resources_all = resources.all
+        resources_all = resources.all.select(:program_name, :program_url, :address, :phone, :categories, :latitude, :longitude)
         render :json => { :resources_all => resources_all, :geography =>  @geography, :dataset_url_fragment => @dataset_url_fragment, :dataset => @dataset }
 
       end
