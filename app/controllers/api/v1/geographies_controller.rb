@@ -331,11 +331,27 @@ module Api
       description <<-EOS
         == Fetch all of the resources exists in chicago city.
       EOS
-      def resources_all
+      def resources
+        elements_per_request = 5000
+        count = InterventionLocation.all.count
         resources   = InterventionLocation
-
-        resources_all = resources.all.select(:program_name, :program_url, :address, :phone, :categories, :latitude, :longitude)
-        render :json => { :resources_all => resources_all, :geography =>  @geography, :dataset_url_fragment => @dataset_url_fragment, :dataset => @dataset }
+        limit = 0
+        if params[:limit]
+          limit = params[:limit].to_i
+        end
+        next_elements = true
+        if count <= (limit + elements_per_request)
+          next_elements = false
+        end
+        resources_all = resources.all.offset(limit).limit(elements_per_request).order(id: :asc).select(:program_name, :program_url, :address, :phone, :categories, :latitude, :longitude)
+        limit += elements_per_request
+        render :json => { :resources => resources_all,
+          :geography =>  @geography,
+          :dataset_url_fragment => @dataset_url_fragment,
+          :dataset => @dataset,
+          :limit => limit,
+          :next =>  next_elements
+        }
 
       end
 
