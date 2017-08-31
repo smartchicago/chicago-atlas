@@ -1,0 +1,35 @@
+<!-- <p id="notice"><%= notice %></p> -->
+
+<h1>Data View Indicators Map Colors</h1>
+<%= link_to 'Replace file', edit_uploader_path(@uploader), class: 'btn btn-primary btn-xs', remote: true if @uploader %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Indicator</th>
+      <th>Type</th>
+      <th>Range Start</th>
+      <th>Range End</th>
+      <th>Color</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @indicators_map_colors.each do |indicator_map_color| %>
+      <tr>
+        <td><%= indicator_map_color.id %></td>
+        <td><%= indicator_map_color.slug %></td>
+        <td><%= indicator_map_color.map_key %></td>
+        <td><%= indicator_map_color.start_value %></td>
+        <td><%= indicator_map_color.end_value %></td>
+        <td><%= indicator_map_color.colour %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<%= will_paginate @indicators_map_colors %>
+<br>
+<%= link_to 'View Uploaders', uploaders_path, :class => "btn-custom"%>

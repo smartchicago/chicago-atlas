@@ -8,9 +8,27 @@ class UploadersController < ApplicationController
     @hc_uploaders = Uploader.where(category: Uploader::TYPES[:indicator_2_0])
   end
 
-   def health_care_indicators_index
+  def resources
+    @uploaders = Uploader.where(category: Uploader::TYPES[:resources])
+  end
+
+  def indicators_map_colors
+    @uploaders = Uploader.where(category: Uploader::TYPES[:indicator_map_color])
+  end
+
+  def health_care_indicators_index
      @uploader = Uploader.find_by_id(params[:id])
      @indicators = HcIndicator.where(uploader_id: params[:id]).paginate(:page => params[:page], :per_page => 16)
+  end
+
+  def resources_index
+     @uploader = Uploader.find_by_id(params[:id])
+     @resources = InterventionLocation.all.paginate(:page => params[:page], :per_page => 16)
+  end
+
+  def indicators_map_colors_index
+    @uploader = Uploader.find_by_id(params[:id])
+    @indicators_map_colors = IndicatorMapColour.all.paginate(:page => params[:page], :per_page => 16)
   end
 
   def show
@@ -20,8 +38,9 @@ class UploadersController < ApplicationController
   def new
     @previous_uploader = params[:previous_uploader] ? Uploader.find_by_id(params[:previous_uploader]) : nil
     @uploader = Uploader.new
-    if params[:category] && params[:category] == Uploader::TYPES[:indicator_2_0]
-      @uploader.category = Uploader::TYPES[:indicator_2_0]
+    category = params[:category]
+    if category
+      @uploader.category = category
     end
   end
 
@@ -34,6 +53,18 @@ class UploadersController < ApplicationController
   def new_description_template
     @uploader = Uploader.new
     @uploader.category = Uploader::TYPES[:description_template]
+    render :new
+  end
+
+  def new_resources
+    @uploader = Uploader.new
+    @uploader.category = Uploader::TYPES[:resources]
+    render :new
+  end
+
+  def new_indicators_map_colors
+    @uploader = Uploader.new
+    @uploader.category = Uploader::TYPES[:indicator_map_color]
     render :new
   end
 
@@ -56,8 +87,13 @@ class UploadersController < ApplicationController
           if @uploader.save
             @uploader.uploaded!
             UploadProcessingWorker.perform_async(@uploader.id)
-            format.html { redirect_to root_path, notice: 'File successfully uploaded.' }
-            format.json { render :show, status: :created, location: @uploader }
+            if @uploader.category != Uploader::TYPES[:resources]
+              format.html { redirect_to root_path, notice: 'File successfully uploaded.' }
+              format.json { render :show, status: :created, location: @uploader }
+            else
+              format.html { redirect_to resources_uploaders_path, notice: 'File successfully uploaded.' }
+              format.json { render :show, status: :created, location: @uploader }
+            end
           else
             format.html { render :new }
             format.json { render json: @uploader.errors, status: :unprocessable_entity }
@@ -85,8 +121,13 @@ class UploadersController < ApplicationController
       if @uploader.update(uploader_params)
         @uploader.uploaded!
         UploadProcessingWorker.perform_async(@uploader.id)
-        format.html { redirect_to root_path, notice: 'File successfully updated.' }
-        format.json { render :show, status: :ok, location: @uploader }
+        if @uploader.category != Uploader::TYPES[:resources]
+          format.html { redirect_to root_path, notice: 'File successfully updated.' }
+          format.json { render :show, status: :ok, location: @uploader }
+        else
+          format.html { redirect_to resources_uploaders_path, notice: 'File successfully uploaded.' }
+          format.json { render :show, status: :created, location: @uploader }
+        end
       else
         format.html { render :edit  }
         format.json { render json: @uploader.errors, status: :unprocessable_entity }
@@ -115,7 +156,14 @@ class UploadersController < ApplicationController
     current_indicator = Indicator.find_by_id(@uploader.indicator_id)
     if @uploader.category == Uploader::TYPES[:indicator_2_0]
       @uploader.remove_health_care_indicators
+    elsif @uploader.category == Uploader::TYPES[:description_template]
+      @uploader.remove_description_template
+    elsif @uploader.category == Uploader::TYPES[:resources]
+      @uploader.remove_intervention_location
+    elsif @uploader.category == Uploader::TYPES[:indicator_map_color]
+      @uploader.remove_indicators_map_colors
     end
+
     @uploader.destroy
     current_indicator.destroy if current_indicator
     respond_to do |format|
