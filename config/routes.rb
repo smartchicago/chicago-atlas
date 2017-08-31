@@ -44,7 +44,7 @@ Rails.application.routes.draw do
       get '/topic_recent/:indicator_slug', to: 'topics#recent', as: 'topic_recent'
       get '/topic_info/:geo_slug/:indicator_slug', to: 'topics#info', as: 'topic_info'
       get '/topic_sources', to: 'topics#topic_sources', as: 'topic_sources'
-      get '/resources_all(/:dataset_slug)', to: 'geographies#resources_all', as: 'resources_all'
+      get '/resources(/:dataset_slug)', to: 'geographies#resources', as: 'resources'
       get '/resources_category/:category_slug(/:dataset_slug)', to: 'geographies#resources_category', as: 'chicago_resources_category'
       get '/resources(/:dataset_id)/:north/:east/:south/:west' => 'geographies#resources_json'
       get '/resources(/:dataset_id)/:community_area_slug' => 'geographies#resources_json'
