@@ -7,7 +7,7 @@ class IndicatorMapColour < ActiveRecord::Base
       resource = Resource.where(indicator_id: indicator.id)
                   .where.not(geo_group_id: GeoGroup.find_by_geography('City'))
                   .where.not(map_key: '').first
-      resource.try(:map_key) || ''
+      resource.try(:map_key) || 'quintile'
     else
       ''
     end
