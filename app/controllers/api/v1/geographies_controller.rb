@@ -332,8 +332,8 @@ module Api
         == Fetch all of the resources exists in chicago city.
       EOS
       def resources
-        elements_per_request = 5000
-        count = InterventionLocation.all.count
+        elements_per_request = 1600
+        count = InterventionLocation.all.limit(1600).count
         resources   = InterventionLocation
         limit = 0
         if params[:limit]
