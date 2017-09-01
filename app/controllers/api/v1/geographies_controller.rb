@@ -322,7 +322,7 @@ module Api
           r_c[:resources] = r_c[:resources].sort_by { |r| r[:organization_name]}
         end
 
-        render :json => { :resources_all => resources_all }
+        render :json => { :resources => resources_all }
       end
 
       api :GET, '/resources_all(/:dataset_slug)', 'Fetch all resources'
@@ -331,7 +331,7 @@ module Api
       description <<-EOS
         == Fetch all of the resources exists in chicago city.
       EOS
-      def resources
+      def resources_all
         elements_per_request = 1600
         count = InterventionLocation.all.limit(1600).count
         resources   = InterventionLocation
