@@ -633,7 +633,7 @@ class TopicCitySerializer < ActiveModel::Serializer
     },
     'sexual-assault' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight_percent'
+      'weight_percent' => 'crude_rate'
     },
     'violent-crime-in-public-spaces' => {
       'weight_number'  => 'number',
