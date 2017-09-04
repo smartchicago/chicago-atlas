@@ -187,6 +187,10 @@ class TopicAreaSerializer < ActiveModel::Serializer
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
     },
+    'foreign-born' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
     'early-and-adequate-prenatal-care' => {
       'weight_number'  => 'number',
       'weight_percent' => 'percent'
