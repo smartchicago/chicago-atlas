@@ -461,7 +461,7 @@ class TopicAreaSerializer < ActiveModel::Serializer
     },
     'unemployment' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'crude_rate'
+      'weight_percent' => 'percent'
     },
     'vacant-housing' => {
       'weight_number'  => 'number',
