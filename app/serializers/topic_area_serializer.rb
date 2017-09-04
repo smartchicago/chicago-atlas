@@ -409,7 +409,7 @@ class TopicAreaSerializer < ActiveModel::Serializer
     },
     'sexual-assault' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight_percent'
+      'weight_percent' => 'number'
     },
     'single-parent-households' => {
       'weight_number'  => 'number',
