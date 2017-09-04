@@ -513,7 +513,7 @@ class TopicCitySerializer < ActiveModel::Serializer
     },
     'unemployment' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'crude_rate'
+      'weight_percent' => 'percent'
     },
     'vacant-housing' => {
       'weight_number'  => 'number',
@@ -739,10 +739,6 @@ class TopicCitySerializer < ActiveModel::Serializer
       'upper_95ci_weight_percent'  => 'upper_95ci_weight_percent'
     },
     'chlamydia' => {
-      'lower_95ci_weight_percent'  => 'lower_95ci_crude_rate',
-      'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'
-    },
-    'unemployment' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_crude_rate',
       'upper_95ci_weight_percent'  => 'upper_95ci_crude_rate'
     },

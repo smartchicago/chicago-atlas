@@ -123,6 +123,10 @@ class TopicAreaSerializer < ActiveModel::Serializer
       'weight_number'  => 'number',
       'weight_percent' => 'percent'
     },
+    'no-high-school-graduation' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
     'colorectal-cancer-deaths' => {
       'weight_number'  => 'ave_annual_number',
       'weight_percent' => 'age_adj_rate'
@@ -457,7 +461,7 @@ class TopicAreaSerializer < ActiveModel::Serializer
     },
     'unemployment' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'crude_rate'
+      'weight_percent' => 'percent'
     },
     'vacant-housing' => {
       'weight_number'  => 'number',
