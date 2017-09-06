@@ -6,6 +6,7 @@ class CommunityAreaIndicatorSerializer < ActiveModel::Serializer
     if resource
       source_change_list  = TopicAreaSerializer::SOURCE_CHANGE_LIST
       resource.weight_percent = resource[source_change_list[object.slug]['weight_percent']] if source_change_list[object.slug].present?
+      resource.weight_percent = resource.weight_percent.round(1) if resource.weight_percent
     end
     resource
   end
@@ -17,6 +18,7 @@ class CommunityAreaIndicatorSerializer < ActiveModel::Serializer
     if resource
       source_change_list  = TopicAreaSerializer::SOURCE_CHANGE_LIST
       resource.weight_percent = resource[source_change_list[object.slug]['weight_percent']] if source_change_list[object.slug].present?
+      resource.weight_percent = resource.weight_percent.round(1) if resource.weight_percent
     end
     resource
   end
