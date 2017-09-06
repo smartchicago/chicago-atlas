@@ -14,11 +14,11 @@ class IndicatorMapColour < ActiveRecord::Base
   end
 
   def self.map_type_colours(indicator_slug, map_key)
-    indicator_map_colours = IndicatorMapColour.where(slug: indicator_slug).order(start_value: :asc)
+    indicator_map_colours = IndicatorMapColour.where(slug: indicator_slug)
     unless indicator_map_colours.empty?
       colours = []
       indicator_map_colours.each do |imc|
-        colours.push({start: imc.start_value, end: imc.end_value, color: imc.colour})
+        colours.push({start: imc.start_value.to_i, end: imc.end_value.to_i, color: imc.colour})
       end
       colours
     else

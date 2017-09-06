@@ -125,7 +125,7 @@ class TopicCitySerializer < ActiveModel::Serializer
     },
     'child-obesity' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'age_adj_rate'
+      'weight_percent' => 'weight_percent'
     },
     'child-poverty' => {
       'weight_number'  => 'number',
@@ -326,10 +326,6 @@ class TopicCitySerializer < ActiveModel::Serializer
     'lead-poisoning' => {
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
-    },
-    'life-expectancy' => {
-      'weight_number'  => 'number',
-      'weight_percent' => 'number'
     },
     'limited-english-proficiency' => {
       'weight_number'  => 'number',
