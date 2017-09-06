@@ -101,10 +101,14 @@ class TopicAreaSerializer < ActiveModel::Serializer
     },
     'child-obesity' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'age_adj_rate'
+      'weight_percent' => 'weight_percent'
     },
     'child-poverty' => {
       'weight_number'  => 'number',
+      'weight_percent' => 'percent'
+    },
+    'school-attendance' => {
+      'weight_number'  => 'weight_number',
       'weight_percent' => 'percent'
     },
     'chlamydia' => {
