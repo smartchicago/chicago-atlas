@@ -5,7 +5,10 @@ class UploadersController < ApplicationController
 
   def index
     @uploaders = Uploader.where(category: Uploader::TYPES[:default])
-    @hc_uploaders = Uploader.where(category: Uploader::TYPES[:indicator_2_0])
+  end
+
+  def health_care_2_0_show
+    @uploaders = Uploader.where(category: Uploader::TYPES[:indicator_2_0])
   end
 
   def resources

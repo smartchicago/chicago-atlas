@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       get :new_health_care
       get :new_description_template
       get :health_care_indicators_index
+      get :health_care_2_0_show
       get :resources
       get :resources_index
       get :new_resources
