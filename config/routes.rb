@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       get :indicators_map_colors
       get :indicators_map_colors_index
       get :new_indicators_map_colors
+      get :description_template_index
+      get :description_template_show
     end
   end
   resources :resources

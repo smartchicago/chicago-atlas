@@ -7,7 +7,8 @@
   <thead>
     <tr>
       <th>Id</th>
-      <th>Indicator</th>
+      <th>Indicator Name</th>
+      <th>Indicator Slug</th>
       <th>Type</th>
       <th>Range Start</th>
       <th>Range End</th>
@@ -19,6 +20,7 @@
     <% @indicators_map_colors.each do |indicator_map_color| %>
       <tr>
         <td><%= indicator_map_color.id %></td>
+        <td><%= indicator_map_color.name %></td>
         <td><%= indicator_map_color.slug %></td>
         <td><%= indicator_map_color.map_key %></td>
         <td><%= indicator_map_color.start_value %></td>

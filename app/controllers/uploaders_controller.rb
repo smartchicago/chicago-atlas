@@ -21,6 +21,14 @@ class UploadersController < ApplicationController
      @indicators = HcIndicator.where(uploader_id: params[:id]).paginate(:page => params[:page], :per_page => 16)
   end
 
+  def description_template_show
+    @uploaders = Uploader.where(category: Uploader::TYPES[:description_template])
+  end
+
+  def description_template_index
+     @indicators = IndicatorProperty.all.paginate(:page => params[:page], :per_page => 16)
+  end
+
   def resources_index
      @uploader = Uploader.find_by_id(params[:id])
      @resources = InterventionLocation.all.paginate(:page => params[:page], :per_page => 16)
