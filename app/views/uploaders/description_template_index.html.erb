@@ -1,0 +1,33 @@
+<!-- <p id="notice"><%= notice %></p> -->
+
+<h1>Description Template</h1>
+<%= link_to 'Replace file', edit_uploader_path(@uploader), class: 'btn btn-primary btn-xs', remote: true if @uploader %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Indicator Name</th>
+      <th>Indicator Slug</th>
+      <th>Description</th>
+      <th>Order</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @indicators.each do |indicator| %>
+      <tr>
+        <td><%= indicator.id %></td>
+        <td><%= indicator.name %></td>
+        <td><%= indicator.slug %></td>
+        <td><%= indicator.description %></td>
+        <td><%= indicator.order %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<%= will_paginate @indicators %>
+<br>
+<%= link_to 'View Uploaders', description_template_show_uploaders_path, :class => "btn-custom"%>

@@ -5,12 +5,15 @@ Rails.application.routes.draw do
       get :new_health_care
       get :new_description_template
       get :health_care_indicators_index
+      get :health_care_2_0_show
       get :resources
       get :resources_index
       get :new_resources
       get :indicators_map_colors
       get :indicators_map_colors_index
       get :new_indicators_map_colors
+      get :description_template_index
+      get :description_template_show
     end
   end
   resources :resources

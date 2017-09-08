@@ -191,7 +191,7 @@ class ResourceParser < Parser
       indicator_slug = CGI.escape(name.to_s.tr(' ', '-').tr('/', '-').tr(',', '-').downcase)
       order    = ss.cell(row, DESCRIPTION_TEMPLATE_HEADER[:order])
       description    = ss.cell(row, DESCRIPTION_TEMPLATE_HEADER[:description])
-      indicator    =  IndicatorProperty.create(slug: indicator_slug, description: description, order: order)
+      indicator    =  IndicatorProperty.create(name: name, slug: indicator_slug, description: description, order: order)
       work_count += 1
       uploader.update_current_state(work_count)
     end
@@ -235,7 +235,7 @@ class ResourceParser < Parser
       range_start = ss.cell(row, INDICATOR_MAP_COLOR_HEADER[:range_start])
       range_end = ss.cell(row, INDICATOR_MAP_COLOR_HEADER[:range_end])
       color = ss.cell(row, INDICATOR_MAP_COLOR_HEADER[:color])
-      indicator_map_colour = IndicatorMapColour.create(slug: indicator_slug, map_key: type, start_value: range_start.to_i,
+      indicator_map_colour = IndicatorMapColour.create(name: indicator_name, slug: indicator_slug, map_key: type, start_value: range_start.to_i,
                                                        end_value: range_end.to_i, colour: color )
       work_count += 1
       uploader.update_current_state(work_count)

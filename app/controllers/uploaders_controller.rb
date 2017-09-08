@@ -5,7 +5,10 @@ class UploadersController < ApplicationController
 
   def index
     @uploaders = Uploader.where(category: Uploader::TYPES[:default])
-    @hc_uploaders = Uploader.where(category: Uploader::TYPES[:indicator_2_0])
+  end
+
+  def health_care_2_0_show
+    @uploaders = Uploader.where(category: Uploader::TYPES[:indicator_2_0])
   end
 
   def resources
@@ -19,6 +22,14 @@ class UploadersController < ApplicationController
   def health_care_indicators_index
      @uploader = Uploader.find_by_id(params[:id])
      @indicators = HcIndicator.where(uploader_id: params[:id]).paginate(:page => params[:page], :per_page => 16)
+  end
+
+  def description_template_show
+    @uploaders = Uploader.where(category: Uploader::TYPES[:description_template])
+  end
+
+  def description_template_index
+     @indicators = IndicatorProperty.all.paginate(:page => params[:page], :per_page => 16)
   end
 
   def resources_index
