@@ -4,7 +4,7 @@ class TopicCitySerializer < ActiveModel::Serializer
              :demography, :number, :cum_number, :ave_annual_number,
              :crude_rate, :lower_95ci_crude_rate, :upper_95ci_crude_rate,
              :percent, :lower_95ci_weight_percent, :upper_95ci_weight_percent,
-             :weight_number, :weight_percent, :value_type, :flag
+             :weight_number, :weight_percent, :value_type, :flag, :hide_rate_column_summary
 
   SOURCE_CHANGE_LIST = {
     'accidents' => {
@@ -124,7 +124,7 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_percent' => 'percent'
     },
     'child-obesity' => {
-      'weight_number'  => 'number',
+      'weight_number'  => 'weight_number',
       'weight_percent' => 'weight_percent'
     },
     'child-poverty' => {
@@ -173,7 +173,8 @@ class TopicCitySerializer < ActiveModel::Serializer
     },
     'dental-care-emergencies' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'age_adj_rate'
+      'weight_percent' => 'age_adj_rate',
+      'hide_rate_column_summary' => true
     },
     'diabetes' => {
       'weight_number'  => 'weight_number',
@@ -573,7 +574,8 @@ class TopicCitySerializer < ActiveModel::Serializer
     },
     'grandparents-raising-grandchildren' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight_percent'
+      'weight_percent' => 'number',
+      'hide_rate_column_summary' => true
     },
     'income-diversity' => {
       'weight_number'  => 'weight_number',
@@ -581,27 +583,33 @@ class TopicCitySerializer < ActiveModel::Serializer
     },
     'life-expectancy' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight_percent'
+      'weight_percent' => 'number',
+      'hide_rate_column_summary' => true
     },
     'mean-age-at-first-birth' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight_percent'
+      'weight_percent' => 'number',
+      'hide_rate_column_summary' => true
     },
     'median-household-income' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight_percent'
+      'weight_percent' => 'number',
+      'hide_rate_column_summary' => true
     },
     'non-fatal-shootings' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight_percent'
+      'weight_percent' => 'number',
+      'hide_rate_column_summary' => true
     },
     'per-capita-income' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight_percent'
+      'weight_percent' => 'number',
+      'hide_rate_column_summary' => true
     },
     'permanent-supportive-housing' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight_percent'
+      'weight_percent' => 'number',
+      'hide_rate_column_summary' => true
     },
     'school-attendance' => {
       'weight_number'  => 'weight_number',
@@ -609,31 +617,37 @@ class TopicCitySerializer < ActiveModel::Serializer
     },
     'school-based-health-services-dental' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight_percent'
+      'weight_percent' => 'number',
+      'hide_rate_column_summary' => true
     },
     'school-based-health-services-sti-screening' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight_percent'
+      'weight_percent' => 'number',
+      'hide_rate_column_summary' => true
     },
     'school-based-health-services-vision' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight_percent'
+      'weight_percent' => 'number',
+      'hide_rate_column_summary' => true
     },
     'seniors-living-alone' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight_percent'
+      'weight_percent' => 'number',
+      'hide_rate_column_summary' => true
     },
     'serious-traffic-crash-injuries' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight_percent'
+      'weight_percent' => 'number',
+      'hide_rate_column_summary' => true
     },
     'sexual-assault' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'crude_rate'
+      'weight_percent' => 'weight_percent'
     },
     'violent-crime-in-public-spaces' => {
       'weight_number'  => 'number',
-      'weight_percent' => 'weight_percent'
+      'weight_percent' => 'number',
+      'hide_rate_column_summary' => true
     }
   }
 
@@ -1004,6 +1018,14 @@ class TopicCitySerializer < ActiveModel::Serializer
     else
       attr_value = SOURCE_CHANGE_LIST[object.indicator.slug]['weight_percent']
       return ['percent', 'weight_percent'].include?(attr_value) ? percent_text : rate_text
+    end
+  end
+
+  def hide_rate_column_summary
+    if SOURCE_CHANGE_LIST[object.indicator.slug].present?
+      SOURCE_CHANGE_LIST[object.indicator.slug]['hide_rate_column_summary'] || false
+    else
+      false
     end
   end
 end
