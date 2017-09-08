@@ -3,7 +3,7 @@ class HcIndicatorElementSerializer < ActiveModel::Serializer
              :priority_population, :priority_baseline, :target, :source
 
   def indicator
-    object.name.capitalize
+    object.name
   end
 
   def indicator_slug
