@@ -392,6 +392,10 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
     },
+    'opioid-overdose' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'age_adj_rate'
+    },
     'overall-health-status' => {
       'weight_number'  => 'weight_number',
       'weight_percent' => 'weight_percent'
@@ -897,6 +901,10 @@ class TopicCitySerializer < ActiveModel::Serializer
       'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
     },
     'opioid-related-overdose-deaths' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
+    'opioid-overdose' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
       'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
     },

@@ -363,6 +363,10 @@ class TopicAreaSerializer < ActiveModel::Serializer
       'weight_number'  => 'number',
       'weight_percent' => 'age_adj_rate'
     },
+    'opioid-overdose' => {
+      'weight_number'  => 'number',
+      'weight_percent' => 'age_adj_rate'
+    },
     'pertussis' => {
       'weight_number'  => 'number',
       'weight_percent' => 'crude_rate'
