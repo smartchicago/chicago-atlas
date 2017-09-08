@@ -615,7 +615,7 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_number'  => 'weight_number',
       'weight_percent' => 'percent'
     },
-    'school-based-health-services-dental' => {
+    'school-based-health-services--dental' => {
       'weight_number'  => 'number',
       'weight_percent' => 'number',
       'hide_rate_column_summary' => true
