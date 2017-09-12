@@ -1003,7 +1003,15 @@ class TopicCitySerializer < ActiveModel::Serializer
   end
 
   def demo_group_name
-    object.demo_group.name unless object.demo_group.nil?
+    unless object.demo_group.nil?
+      demography = object.demo_group.demography
+      demo_group_name = object.demo_group.name
+      if demography && demography.downcase == 'grade'
+        demo_group_name[0] == '0' ?  demo_group_name[1, demo_group_name.length] : demo_group_name
+      else
+        demo_group_name
+      end
+    end
   end
 
   def demography
@@ -1036,4 +1044,5 @@ class TopicCitySerializer < ActiveModel::Serializer
       false
     end
   end
+
 end
