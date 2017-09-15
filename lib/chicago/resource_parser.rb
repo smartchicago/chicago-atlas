@@ -49,10 +49,11 @@ class ResourceParser < Parser
 
   INDICATOR_MAP_COLOR_HEADER  = {
     indicator:   'A',
-    type:        'B',
-    range_start: 'C',
-    range_end:   'D',
-    color:       'E'
+    year:        'B',
+    type:        'C',
+    range_start: 'D',
+    range_end:   'E',
+    color:       'F'
   }
 
   COLUMNS = [
@@ -231,12 +232,13 @@ class ResourceParser < Parser
     FIRST_INDICATOR_MAP_COLOR.upto ss.last_row do |row|
       indicator_name = ss.cell(row, INDICATOR_MAP_COLOR_HEADER[:indicator])
       indicator_slug = CGI.escape(indicator_name.to_s.tr(' ', '-').tr('/', '-').tr(',', '-').downcase)
+      year = ss.cell(row, INDICATOR_MAP_COLOR_HEADER[:year])
       type = ss.cell(row, INDICATOR_MAP_COLOR_HEADER[:type])
       range_start = ss.cell(row, INDICATOR_MAP_COLOR_HEADER[:range_start])
       range_end = ss.cell(row, INDICATOR_MAP_COLOR_HEADER[:range_end])
       color = ss.cell(row, INDICATOR_MAP_COLOR_HEADER[:color])
-      indicator_map_colour = IndicatorMapColour.create(name: indicator_name, slug: indicator_slug, map_key: type, start_value: range_start.to_i,
-                                                       end_value: range_end.to_i, colour: color )
+      indicator_map_colour = IndicatorMapColour.create(name: indicator_name, slug: indicator_slug, map_key: type, start_value: range_start.to_s,
+                                                       end_value: range_end.to_s, colour: color, year: year )
       work_count += 1
       uploader.update_current_state(work_count)
     end
