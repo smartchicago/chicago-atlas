@@ -26,7 +26,7 @@ module Api
         @data = Resource.includes(:demo_group, :uploader, :indicator)
                   .where(year_from: year_from, year_to: year_to)
                   .where(geo_group_id: GeoGroup.find_by_geography('City'))
-                  .joins(:indicator).where(indicators: {slug: params[:indicator_slug]})
+                  .joins(:indicator).where(indicators: {slug: params[:indicator_slug]}).order(:id)
 
         render json: @data, each_serializer: TopicCitySerializer
       end
