@@ -624,7 +624,7 @@ class TopicCitySerializer < ActiveModel::Serializer
       'weight_percent' => 'number',
       'hide_rate_column_summary' => true
     },
-    'school-based-health-services-sti-screening' => {
+    'school-based-health-services---sti-screening' => {
       'weight_number'  => 'number',
       'weight_percent' => 'number',
       'hide_rate_column_summary' => true
