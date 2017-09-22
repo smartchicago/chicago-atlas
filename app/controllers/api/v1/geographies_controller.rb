@@ -392,11 +392,12 @@ module Api
       EOS
       def community_area_detail
         geo_slug        = params[:geo_slug]
-        geography       = Geography.where(:slug => params[:geo_slug]).first || not_found
+        geography       = Geography.find_by_slug geo_slug
+        zip_code        = geography.name.split(',').first
+        geo_id          = GeoGroup.where("name LIKE '%#{zip_code}%'").first.id
         category_slug   = params[:category_slug]
-        geo_ids      = geography ? JSON.parse(geography.adjacent_community_areas) : []
         category        = CategoryGroup.where(slug: category_slug)
-        render json: category, each_serializer: CommunityAreaDetailSerializer, geo_ids: geo_ids
+        render json: category, each_serializer: CommunityAreaDetailSerializer, geo_id: geo_id
       end
 
       api :GET, '/area_indices/:indicator_slug', 'Fetch detailed data of indicators economic-hardship and child-opportunity-index'
