@@ -712,6 +712,10 @@ class TopicCitySerializer < ActiveModel::Serializer
       'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
       'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
     },
+    'female-breast-cancer-incidence' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
     'avoidable-ed-visits' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
       'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
@@ -805,6 +809,10 @@ class TopicCitySerializer < ActiveModel::Serializer
       'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
     },
     'alcohol-related-hospitalizations' => {
+      'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
+      'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
+    },
+    'colorectal-cancer-incidence' => {
       'lower_95ci_weight_percent'  => 'lower_95ci_adj_rate',
       'upper_95ci_weight_percent'  => 'upper_95ci_adj_rate'
     },
