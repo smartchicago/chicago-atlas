@@ -56,6 +56,7 @@ Rails.application.routes.draw do
       get '/:geo_slug/:category_slug/community_area_detail', to: 'geographies#community_area_detail', as: 'community_area_detail'
       get '/area_indices/:indicator_slug', to: 'geographies#area_indices', as: 'area_indices'
       get '/hospitals', to: 'hospital#hospitals_all', as: 'chicago_hospitals'
+      get '/race/:area_slug', to: 'topics#race', as: 'race'
     end
   end
 end
