@@ -154,7 +154,36 @@ module Api
         }
       end
 
+      api :GET, '/race', 'Fetch all race-ethnicity to datasocurce information'
+      formats ['json']
+      description <<-EOS
+        == Fetch all race-ethnicity to datasocurce information
+      EOS
+      def race
+        render json: race_data(params[:area_slug])
+      end
+
       private
+
+      def race_data(area_slug)
+        geo_group = GeoGroup.find_by_slug(area_slug)
+        sub_category = SubCategory.find_by_slug("race-ethnicity")
+        races = []
+        if !geo_group.nil? && !sub_category.nil?
+          sub_category.indicators.each do |indicator|
+            resource = indicator.resources.where(geo_group_id: geo_group.id).order(year_from: :desc).first
+            if resource
+              races.push({ label: indicator.name, value: [resource.percent.to_s, '%'].join() })
+            end
+          end
+        end
+
+        [{
+          name: area_slug,
+          slug: area_slug,
+          races: races
+        }]
+      end
 
       def hc_indicator
         hc_indicator_group = HcIndicator.all.to_a.group_by { |data| data.category}
