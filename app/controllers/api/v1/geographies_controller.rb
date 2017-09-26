@@ -46,9 +46,10 @@ module Api
                               .having('count(datasets.id) > 0')
                               .order("categories.name")
 
-        male_pop    =   @geography.population_by_sex('MALE')
-        female_pop  =   @geography.population_by_sex('FEMALE')
-        population  =   @geography.population(2010)
+        geo_group   = GeoGroup.find_by_slug(params[:geo_slug])
+        female_pop  = geo_group.female_population
+        male_pop    = geo_group.male_population
+        population  = male_pop + female_pop
 
         @male_percent   = (male_pop.to_f / (male_pop + female_pop) * 100).round(1)
         @female_percent = (female_pop.to_f / (male_pop + female_pop) * 100).round(1)
