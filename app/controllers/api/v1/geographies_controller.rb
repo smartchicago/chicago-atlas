@@ -47,9 +47,15 @@ module Api
                               .order("categories.name")
 
         geo_group   = GeoGroup.find_by_slug(params[:geo_slug])
-        female_pop  = geo_group.female_population
-        male_pop    = geo_group.male_population
-        population  = male_pop + female_pop
+        if geo_group
+          female_pop  = geo_group.female_population
+          male_pop    = geo_group.male_population
+          population  = male_pop + female_pop
+        else
+          female_pop  = 0
+          male_pop    = 0
+          population  = 0
+        end
 
         @male_percent   = (male_pop.to_f / (male_pop + female_pop) * 100).round(1)
         @female_percent = (female_pop.to_f / (male_pop + female_pop) * 100).round(1)
