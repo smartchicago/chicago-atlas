@@ -42,7 +42,7 @@ We like to know if you encounter any issues and certainly are open for improveme
 
 ## File Template for Topic Data
 
-The Chicago Health Atlas consists of 3 parts one of which is Topic Data. The Chicago Health Atlas reports on a range of topics, ranging from Adult Binge Drinking, Homicides, Smoking and other topics that are related to the core mission of the Healthy Chicago 2.0. team, which are to monitor and enhance the livelihood of the wonderful City of Chicago. If you are in need for a template, please have a look in the downloads folder where we placed an example. If you need any help please reach out to John Doe at X.
+The Chicago Health Atlas consists of 3 parts one of which is Topic Data. The Chicago Health Atlas reports on a range of topics, ranging from Adult Binge Drinking, Homicides, Smoking and other topics that are related to the core mission of the Healthy Chicago 2.0. team, which are to monitor and enhance the livelihood of the wonderful City of Chicago. If you are in need for a template, please have a look in the downloads folder where we placed an example. If you need any help please reach out to Leslie Durr at leslie.durr@uilabs.org.
 
 ## API Reference
 
@@ -62,10 +62,10 @@ Now as mentioned, we also have APPsignal running on here, but we removed our API
 
 ## Contributors
 
-This App is build and maintained by Dom & Tom and its development partner Parrolabs who worked between November 2016 and March 2017 to bring this app to a new version. Any feedback can be sent to: John Doe at X.
+This App is build and maintained by Dom & Tom and its development partner Parrolabs who worked between November 2016 and October 2017 to bring this app to a new version. Any feedback can be sent to: Leslie Durr at leslie.durr@uilabs.org. 
 
 If you feel you have an update for us, don't hesitate to make a new Branch and a Pull Request!
 
 ## License
 
-The ChicagoHealth Atlas is Fully Open Source. It means, yes you can do whatever you want with it. The Chicago Team appreciates it if you make a reference to them, but yeah you could turn this map into a map of Lima, Sydney and pretend you made all of it. Don't hesitate to reach out to John Doe at X to tell us about your efforts and we are ready to help you!
+The ChicagoHealth Atlas is Fully Open Source. It means, yes you can do whatever you want with it. The Chicago Team appreciates it if you make a reference to them, but yeah you could turn this map into a map of Lima, Sydney and pretend you made all of it. Don't hesitate to reach out to Leslie Durr at leslie.durr@uilabs.org to tell us about your efforts and we are ready to help you!
