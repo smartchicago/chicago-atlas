@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170915190057) do
+ActiveRecord::Schema.define(version: 20180722014457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,14 +112,10 @@ ActiveRecord::Schema.define(version: 20170915190057) do
     t.string   "slug"
     t.string   "order"
     t.string   "description"
-    t.integer  "upload_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.integer  "uploader_id"
     t.string   "name"
   end
-
-  add_index "indicator_properties", ["uploader_id"], name: "index_indicator_properties_on_uploader_id", using: :btree
 
   create_table "indicators", force: :cascade do |t|
     t.string   "name"
@@ -157,11 +153,18 @@ ActiveRecord::Schema.define(version: 20170915190057) do
     t.string   "purple_binder_url",   default: ""
     t.string   "program_url",         default: ""
     t.integer  "community_area_id"
-    t.integer  "geography_id"
     t.string   "community_area_name"
   end
 
-  add_index "intervention_locations", ["geography_id"], name: "index_intervention_locations_on_geography_id", using: :btree
+  create_table "partners", force: :cascade do |t|
+    t.string   "title"
+    t.string   "description"
+    t.string   "img_src_url"
+    t.string   "img_alt"
+    t.string   "image_url"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "provider_stats", force: :cascade do |t|
     t.integer  "provider_id"
@@ -198,6 +201,7 @@ ActiveRecord::Schema.define(version: 20170915190057) do
     t.string   "url"
     t.string   "report_url"
     t.string   "report_name"
+    t.text     "geometry"
     t.text     "areas"
     t.string   "area_type"
     t.text     "area_alt"
@@ -314,9 +318,7 @@ ActiveRecord::Schema.define(version: 20170915190057) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "hc_indicators", "uploaders"
-  add_foreign_key "indicator_properties", "uploaders"
   add_foreign_key "indicators", "sub_categories"
-  add_foreign_key "intervention_locations", "geographies"
   add_foreign_key "resources", "category_groups"
   add_foreign_key "resources", "demo_groups"
   add_foreign_key "resources", "geo_groups"
