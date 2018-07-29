@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  pool: 5
+  host: localhost
+  timeout: 5000
+
+development:
+  <<: *default
+  database: chicago-atlas_development
+
+test:
+  <<: *default
+  database: chicago-atlas_test
+
+production:
+  # TODO: setup our.postgres ip here with password and user
+  <<: *default
+  database: chicago-atlas_production

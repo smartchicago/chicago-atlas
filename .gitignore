@@ -21,9 +21,6 @@
 !/log/.keep
 /tmp
 
-# Ignore Database Config
-/config/database.yml
-.env
 .DS_Store
 .idea/
 
