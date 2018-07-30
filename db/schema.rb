@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170915190057) do
+ActiveRecord::Schema.define(version: 20180722014457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,6 +162,16 @@ ActiveRecord::Schema.define(version: 20170915190057) do
   end
 
   add_index "intervention_locations", ["geography_id"], name: "index_intervention_locations_on_geography_id", using: :btree
+
+  create_table "partners", force: :cascade do |t|
+    t.string   "title"
+    t.string   "description"
+    t.string   "img_src_url"
+    t.string   "img_alt"
+    t.string   "image_url"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "provider_stats", force: :cascade do |t|
     t.integer  "provider_id"

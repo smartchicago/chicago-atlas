@@ -32,6 +32,8 @@ Rails.application.routes.draw do
       resources :indicators, only: [:index, :show] do
       end
 
+      resources :partners
+
       get '/places', to: 'geographies#index', as: 'community_areas'
       get '/place/:geo_slug', to: 'geographies#show', as: 'community_area'
       get '/place/:geo_slug/resources(/:dataset_slug)', to: 'geographies#resources_json', as: 'community_area_resources'
